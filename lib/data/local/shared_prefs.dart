@@ -2,22 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
   static const String token = "token";
-  static const String schoolType = "schoolType";
-  static const String districtId = "districtId";
-  static const String district = "district";
   static const String userId = "userId";
   static const String fullName = "fullName";
-  static const String schoolName = "schoolName";
   static const String schoolAddress = "schoolAddress";
   static const String lat = "lat";
   static const String long = "long";
-  static const String totalStudents = "totalStudents";
-  static const String noOfClassrooms = "noOfClassrooms";
-  static const String boyStudents = "boyStudents";
-  static const String girlStudents = "girlStudents";
-  static const String sanctionedTeachers = "sanctionedTeachers";
-  static const String workingTeachers = "workingTeachers";
-  static const String crtTeachers = "crtTeachers";
   static const String email = "email";
   static const String phone = "phone";
   static const String avatar = "avatar";
@@ -46,36 +35,6 @@ class Prefs {
   static Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(token);
-  }
-
-  static Future<bool> setSchoolType(String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(schoolType, value);
-  }
-
-  static Future<String?> getSchoolType() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(schoolType);
-  }
-
-  static Future<bool> setDistrictId(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(districtId, value);
-  }
-
-  static Future<int?> getDistrictId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(districtId);
-  }
-
-  static Future<bool> setDistrict(String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(district, value);
-  }
-
-  static Future<String?> getDistrict() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(district);
   }
 
   static Future<bool> setUserId(int value) async {
@@ -126,76 +85,6 @@ class Prefs {
   static Future<String?> getLong() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(long);
-  }
-
-  static Future<bool> setTotalStudents(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(totalStudents, value);
-  }
-
-  static Future<int?> getTotalStudents() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(totalStudents);
-  }
-
-  static Future<bool> setNoOfClassrooms(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(noOfClassrooms, value);
-  }
-
-  static Future<int?> getNoOfClassrooms() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(noOfClassrooms);
-  }
-
-  static Future<bool> setBoyStudents(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(boyStudents, value);
-  }
-
-  static Future<int?> getBoyStudents() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(boyStudents);
-  }
-
-  static Future<bool> setGirlStudents(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(girlStudents, value);
-  }
-
-  static Future<int?> getGirlStudents() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(girlStudents);
-  }
-
-  static Future<bool> setSanctionedTeachers(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(sanctionedTeachers, value);
-  }
-
-  static Future<int?> getSanctionedTeachers() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(sanctionedTeachers);
-  }
-
-  static Future<bool> setWorkingTeachers(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(workingTeachers, value);
-  }
-
-  static Future<int?> getWorkingTeachers() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(workingTeachers);
-  }
-
-  static Future<bool> setCrtTeachers(int value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setInt(crtTeachers, value);
-  }
-
-  static Future<int?> getCrtTeachers() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(crtTeachers);
   }
 
   static Future<bool> setEmail(String value) async {

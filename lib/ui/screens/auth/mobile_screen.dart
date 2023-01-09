@@ -1,6 +1,8 @@
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/main/main_screen.dart';
+import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +77,12 @@ class _MobileScreenState extends State<MobileScreen> {
                   ErrorSnackBar.show(context, 'Enter 10 digit mobile number');
                   return;
                 }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(),
+                  ),
+                );
                 //navigate to otp screen
               },
               child: const Text("Get OTP"),

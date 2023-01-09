@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class MyColors {
@@ -21,4 +22,5 @@ class MyColors {
   static const paleGreen = Color(0xFFECFFEE);
   static const yellow = Color(0xFFFFCE5B);
   static const glacier = Color(0xFFD5DFE6);
+  static const profileCard = Color(0xFFE8F9F7);
 }

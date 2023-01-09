@@ -3,6 +3,8 @@ import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/routes.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -33,12 +35,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             const SizedBox(height: 32),
             ProgressButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.mobile,
+                      (route) => false,
+                );
+              },
               child: const Text("Sign Up With Mobile Number"),
             ),
             const SizedBox(height: 16),
             ProgressButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.email,
+                      (route) => false,
+                );
+              },
               child: const Text("Sign Up With Email Number"),
             ),
             const SizedBox(height: 30),
