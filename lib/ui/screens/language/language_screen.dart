@@ -3,6 +3,8 @@ import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/routes.dart';
+
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
 
@@ -163,7 +165,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
         child: ProgressButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.onBoarding,
+                  (route) => false,
+            );
+          },
           color: MyColors.primaryColor,
           child: const Text("Proceed"),
         ),

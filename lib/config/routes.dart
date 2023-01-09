@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as f;
 
 import '../ui/screens/language/language_screen.dart';
+import '../ui/screens/onboarding/onboarding_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
 extension MaterialFluro on FluroRouter {
@@ -23,6 +24,7 @@ extension RouteString on String {
 class Routes {
   static String root = '/';
   static String language = '/language';
+  static String onBoarding = "/onBoarding";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFoundHandler;
@@ -36,6 +38,12 @@ class Routes {
     router.define(
       language,
       handler: languageHandler,
+      transitionType: TransitionType.material,
+    );
+
+    router.define(
+      onBoarding,
+      handler: onBoardingHandler,
       transitionType: TransitionType.material,
     );
   }
@@ -55,4 +63,8 @@ var rootHandler = Handler(
 
 var languageHandler = Handler(
   handlerFunc: (context, params) => const LanguageScreen(),
+);
+
+var onBoardingHandler = Handler(
+  handlerFunc: (context, params) => const OnBoardingScreen(),
 );
