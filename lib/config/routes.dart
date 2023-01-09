@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as f;
+
 import '../ui/screens/splash/splash_screen.dart';
 
 extension MaterialFluro on FluroRouter {
@@ -14,7 +15,7 @@ extension MaterialFluro on FluroRouter {
 
 extension RouteString on String {
   String setId(String id) {
-    return this.replaceFirst(':id', id);
+    return replaceFirst(':id', id);
   }
 }
 
@@ -35,10 +36,7 @@ class Routes {
 var notFoundHandler = Handler(
   type: HandlerType.function,
   handlerFunc: (context, params) {
-    var path = f.ModalRoute
-        .of(context!)!
-        .settings
-        .name;
+    var path = f.ModalRoute.of(context!)!.settings.name;
     return f.ErrorWidget('$path route was not found!');
   },
 );
