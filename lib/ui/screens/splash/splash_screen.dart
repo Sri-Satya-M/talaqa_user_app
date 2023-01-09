@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../config/routes.dart';
 import '../../../resources/images.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,6 +13,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   checks() async {
     await Future.delayed(const Duration(seconds: 2));
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      Routes.language,
+          (route) => false,
+    );
   }
 
   @override
