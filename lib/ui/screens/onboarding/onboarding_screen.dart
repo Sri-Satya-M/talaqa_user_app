@@ -3,6 +3,8 @@ import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/routes.dart';
+
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
@@ -50,13 +52,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: ProgressButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.signUp,
+                  (route) => false,
+            );
+          },
           child: const Text("Get Started"),
         ),
       ),

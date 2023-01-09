@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as f;
 
+import '../ui/screens/auth/sign_up_screen.dart';
 import '../ui/screens/language/language_screen.dart';
 import '../ui/screens/onboarding/onboarding_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
@@ -25,6 +26,7 @@ class Routes {
   static String root = '/';
   static String language = '/language';
   static String onBoarding = "/onBoarding";
+  static String signUp = "/signUp";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFoundHandler;
@@ -44,6 +46,18 @@ class Routes {
     router.define(
       onBoarding,
       handler: onBoardingHandler,
+      transitionType: TransitionType.material,
+    );
+
+    router.define(
+      onBoarding,
+      handler: onBoardingHandler,
+      transitionType: TransitionType.material,
+    );
+
+    router.define(
+      signUp,
+      handler: signUpHandler,
       transitionType: TransitionType.material,
     );
   }
@@ -67,4 +81,8 @@ var languageHandler = Handler(
 
 var onBoardingHandler = Handler(
   handlerFunc: (context, params) => const OnBoardingScreen(),
+);
+
+var signUpHandler = Handler(
+  handlerFunc: (context, params) => const SignUpScreen(),
 );
