@@ -189,7 +189,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
           ),
           // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           textStyle: headline3,
