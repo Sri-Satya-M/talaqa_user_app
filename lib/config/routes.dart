@@ -1,6 +1,8 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart' as f;
 
+import '../ui/screens/auth/email_screen.dart';
+import '../ui/screens/auth/mobile_screen.dart';
 import '../ui/screens/auth/sign_up_screen.dart';
 import '../ui/screens/language/language_screen.dart';
 import '../ui/screens/onboarding/onboarding_screen.dart';
@@ -27,6 +29,8 @@ class Routes {
   static String language = '/language';
   static String onBoarding = "/onBoarding";
   static String signUp = "/signUp";
+  static String mobile = "/mobile";
+  static String email = "/email";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFoundHandler;
@@ -60,6 +64,18 @@ class Routes {
       handler: signUpHandler,
       transitionType: TransitionType.material,
     );
+
+    router.define(
+      mobile,
+      handler: mobileHandler,
+      transitionType: TransitionType.material,
+    );
+
+    router.define(
+      email,
+      handler: emailHandler,
+      transitionType: TransitionType.material,
+    );
   }
 }
 
@@ -85,4 +101,12 @@ var onBoardingHandler = Handler(
 
 var signUpHandler = Handler(
   handlerFunc: (context, params) => const SignUpScreen(),
+);
+
+var mobileHandler = Handler(
+  handlerFunc: (context, params) => const MobileScreen(),
+);
+
+var emailHandler = Handler(
+  handlerFunc: (context, params) => const EmailScreen(),
 );
