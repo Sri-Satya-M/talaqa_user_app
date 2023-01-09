@@ -7,92 +7,125 @@ class AppTheme {
   static ThemeData get theme {
     var typography = Typography.material2021(platform: defaultTargetPlatform);
     var textTheme = typography.black.apply(
-      fontFamily: 'Poppins',
+      fontFamily: 'ReadexPro',
       bodyColor: Colors.black,
       displayColor: Colors.black,
     );
     var headline6 = const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
-      fontFamily: 'Poppins',
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'ReadexPro',
       color: Colors.black,
-      height: 26 / 16,
+      height: 30 / 24,
       letterSpacing: 0,
     );
     var headline5 = const TextStyle(
-      fontSize: 14,
-      fontFamily: 'Poppins',
+      fontSize: 20,
+      fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w600,
-      height: 21 / 14,
+      height: 26 / 20,
       color: Colors.black,
       letterSpacing: 0,
       fontStyle: FontStyle.normal,
     );
-    var subtitle2 = const TextStyle(
-      fontSize: 13,
-      fontWeight: FontWeight.w400,
-      fontFamily: 'Poppins',
-      height: 20 / 13,
-      letterSpacing: 0,
+    var headline4 = const TextStyle(
+      fontSize: 18,
+      fontFamily: 'ReadexPro',
+      fontWeight: FontWeight.w600,
+      height: 24 / 18,
       color: Colors.black,
-    );
-    var subtitle1 = TextStyle(
-      fontSize: 13,
-      fontWeight: FontWeight.w500,
-      fontFamily: 'Montserrat',
-      color: Colors.black.withOpacity(0.5),
-      height: 20 / 13,
       letterSpacing: 0,
+      fontStyle: FontStyle.normal,
     );
-    var bodyText2 = TextStyle(
+
+    var headline3 = const TextStyle(
+      fontSize: 16,
+      fontFamily: 'ReadexPro',
+      fontWeight: FontWeight.w600,
+      height: 20 / 16,
+      color: Colors.black,
+      letterSpacing: 0,
+      fontStyle: FontStyle.normal,
+    );
+
+    var headline2 = const TextStyle(
       fontSize: 14,
-      fontFamily: 'Poppins',
-      height: 22 / 14,
-      color: Colors.black.withOpacity(0.7),
-      letterSpacing: 0,
+      fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w500,
+      height: 18 / 14,
+      color: Colors.black,
+      letterSpacing: 0,
+      fontStyle: FontStyle.normal,
+    );
+
+    var bodyText2 = const TextStyle(
+      fontSize: 14,
+      fontFamily: 'ReadexPro',
+      height: 18 / 14,
+      color: Colors.black,
+      letterSpacing: 0,
+      fontWeight: FontWeight.w600,
+    );
+    var subtitle2 = TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'ReadexPro',
+      height: 14 / 12,
+      letterSpacing: 0,
+      color: Colors.black.withOpacity(0.7),
     );
     var bodyText1 = const TextStyle(
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: FontWeight.w400,
-      fontFamily: 'Poppins',
-      height: 20 / 13,
+      fontFamily: 'ReadexPro',
+      height: 18 / 14,
       letterSpacing: 0,
       color: Colors.black,
     );
+    var subtitle1 = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'ReadexPro',
+      color: Colors.black,
+      height: 16 / 14,
+      letterSpacing: 0,
+    );
     var button = const TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.w600,
-      fontFamily: 'Poppins',
-      height: 19 / 15,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'ReadexPro',
+      height: 20 / 16,
       color: Colors.white,
       letterSpacing: 0,
     );
     var caption = TextStyle(
-      fontSize: 13,
+      fontSize: 12,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Poppins',
-      height: 16 / 13,
+      fontFamily: 'ReadexPro',
+      height: 16 / 12,
       letterSpacing: 0,
       color: Colors.black.withOpacity(0.5),
     );
 
     var overline = const TextStyle(
-      fontSize: 17,
-      fontFamily: 'Poppins',
+      fontSize: 10,
+      fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w400,
-      height: 44 / 17,
+      height: 12 / 10,
       color: Colors.black,
       letterSpacing: 0,
     );
 
     textTheme = textTheme.copyWith(
-      headline5: headline5,
       headline6: headline6,
-      subtitle1: subtitle1,
+      headline5: headline5,
+      headline4: headline4,
+      headline3: headline3,
+      headline2: headline2,
+      bodyText2: bodyText2,
       subtitle2: subtitle2,
       bodyText1: bodyText1,
-      bodyText2: bodyText2,
+      subtitle1: subtitle1,
       caption: caption,
       button: button,
       overline: overline,
@@ -138,7 +171,7 @@ class AppTheme {
         ),
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: false,
-        titleTextStyle: headline6,
+        titleTextStyle: headline4,
         toolbarTextStyle: textTheme.caption,
       ),
       dialogTheme: DialogTheme(
@@ -148,32 +181,31 @@ class AppTheme {
       ),
       buttonTheme: ButtonThemeData(
         textTheme: ButtonTextTheme.primary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         padding: const EdgeInsets.all(16),
         buttonColor: primaryColor,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          primary: secondaryColor,
-          onPrimary: Colors.white,
+          backgroundColor: primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
           // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          textStyle: headline5,
+          textStyle: headline3,
           fixedSize: const Size(140, 60),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: secondaryColor,
+          backgroundColor: Colors.white,
           padding: EdgeInsets.zero,
-          textStyle: headline5.copyWith(fontSize: 15),
+          textStyle: subtitle1,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            primary: secondaryColor,
+            backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
               side: BorderSide(width: 1, color: primaryColor),
               borderRadius: BorderRadius.circular(15),
@@ -204,20 +236,16 @@ class AppTheme {
           horizontal: 14,
           vertical: 14,
         ),
-        border: border,
-        enabledBorder: border,
-        focusedBorder: border,
+        // border: border,
+        // enabledBorder: border,
+        // focusedBorder: border,
         labelStyle: caption.copyWith(
           fontStyle: FontStyle.normal,
           color: Colors.black.withOpacity(0.5),
           fontSize: 14,
           height: 44 / 14,
         ),
-        hintStyle: bodyText1.copyWith(
-          fontStyle: FontStyle.normal,
-          color: Colors.black.withOpacity(0.5),
-          fontSize: 13,
-        ),
+        hintStyle: caption,
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       iconTheme: const IconThemeData(color: Colors.black, size: 24),
@@ -276,16 +304,16 @@ class AppTheme {
       ),
       tabBarTheme: TabBarTheme(
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: MyColors.primaryColor,
+        labelColor: MyColors.cerulean,
         unselectedLabelColor: Colors.black.withOpacity(0.7),
-        labelStyle: headline6.copyWith(
-          fontWeight: FontWeight.w700,
-          color: MyColors.primaryColor,
-          // fontSize: 14,
+        labelStyle: bodyText1.copyWith(
+          fontWeight: FontWeight.w400,
+          color: MyColors.cerulean,
+          fontSize: 14,
         ),
         unselectedLabelStyle: caption.copyWith(
           fontWeight: FontWeight.w400,
-          // fontSize: 14,
+          fontSize: 14,
         ),
       ),
     );
