@@ -1,4 +1,6 @@
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/main/main_screen.dart';
+import 'package:alsan_app/ui/screens/profile/profile_email_screen.dart';
 import 'package:alsan_app/ui/screens/profile/profile_mobile_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,18 @@ class SuccessScreen extends StatelessWidget {
     required this.type,
     required this.message,
   });
+
+  static Future open(BuildContext context,
+      {required String type, required String message}) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SuccessScreen(
+          type: type,
+          message: message,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +58,12 @@ class SuccessScreen extends StatelessWidget {
               case 'MOBILE':
                 ProfileMobileScreen.open(context);
                 break;
-
+              case 'MAIN':
+                MainScreen.open(context);
+                break;
+              case 'EMAIL':
+                ProfileEmailScreen.open(context);
+                break;
               default:
                 Container();
             }

@@ -1,8 +1,12 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -16,6 +20,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -43,8 +48,21 @@ class _EmailScreenState extends State<EmailScreen> {
             ),
             const SizedBox(height: 40),
             ProgressButton(
-              onPressed: () {
-                //navigate to otp screen
+              onPressed: () async {
+                if (!emailId.contains("@") || !emailId.contains(".")) {
+                  return ErrorSnackBar.show(context, "Add Valid email ID");
+                }
+
+                var body = {"type": "EMAIL", "email": emailId};
+
+                var response =
+                    await userBloc.sendOTP(body: body) as Map<String, dynamic>;
+
+                if (!response.containsKey('token')) {
+                  return ErrorSnackBar.show(context, "Invalid Error");
+                }
+                userBloc.username = emailId;
+                OtpScreen.open(context, token: response['token']);
               },
               child: const Text("Get OTP"),
             ),
@@ -72,7 +90,7 @@ class _EmailScreenState extends State<EmailScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.mobile,
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: const Text("Sign Up With Mobile Number"),

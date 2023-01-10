@@ -1,11 +1,23 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:alsan_app/data/local/shared_prefs.dart';
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ProfileEmailScreen extends StatefulWidget {
   const ProfileEmailScreen({super.key});
+
+  static Future open(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ProfileEmailScreen(),
+      ),
+    );
+  }
 
   @override
   _ProfileEmailScreenState createState() => _ProfileEmailScreenState();
@@ -13,33 +25,20 @@ class ProfileEmailScreen extends StatefulWidget {
 
 class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   bool visibility = true;
-  bool verify = false;
-  bool numberEntered = false;
-  final myController = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    myController.addListener(() {
-      setState(() {
-        numberEntered = myController.text.isNotEmpty;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    myController.dispose();
-    super.dispose();
-  }
+  bool visibility2 = true;
+  var name = '';
+  var gender = '';
+  var age = '';
+  var city = '';
+  var country = '';
+  var password = '';
+  var confirmPassword = '';
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: const Text("Profile Details")),
       body: Form(
@@ -60,6 +59,11 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
                 decoration: const InputDecoration(
                   labelText: "Name*",
                 ),
@@ -77,37 +81,41 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                initialValue: userBloc.username,
+                enabled: false,
                 decoration: const InputDecoration(labelText: "Email Address*"),
                 keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter your email Id';
-                  } else {
-                    return null;
-                  }
-                },
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    gender = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Select Gender"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "MALE",
                     child: Text("Male"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "FEMALE",
                     child: Text("Female"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
+                    value: "OTHER",
                     child: Text("Other"),
                   )
                 ],
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    age = value;
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Age*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -116,44 +124,57 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    city = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "City"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "Agra",
                     child: Text("Agra"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "Hyderabad",
                     child: Text("Hyderabad"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
+                    value: "Delhi",
                     child: Text("Delhi"),
                   )
                 ],
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    country = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Country"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "India",
                     child: Text("India"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "USA",
                     child: Text("USA"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
-                    child: Text("China"),
+                    value: "Dubai",
+                    child: Text("Dubai"),
                   )
                 ],
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    password = value.toString();
+                  });
+                },
                 obscureText: visibility,
                 decoration: InputDecoration(
                   labelText: "New Password*",
@@ -167,62 +188,28 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]")),
-                ],
               ),
               const SizedBox(height: 8),
               TextFormField(
-                obscureText: visibility,
+                onChanged: (value) {
+                  setState(() {
+                    confirmPassword = value.toString();
+                  });
+                },
+                obscureText: visibility2,
                 decoration: InputDecoration(
                   labelText: "Confirm Password*",
                   suffixIcon: IconButton(
                     onPressed: () => setState(() {
-                      visibility = !visibility;
+                      visibility2 = !visibility2;
                     }),
                     icon: Icon(
-                      visibility ? Icons.visibility_off : Icons.visibility,
+                      visibility2 ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
                 ),
                 keyboardType: TextInputType.text,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]")),
-                ],
               ),
-              TextFormField(
-                controller: myController,
-                decoration: InputDecoration(
-                  labelText: "Mobile Number",
-                  suffix: TextButton(
-                    onPressed: numberEntered
-                        ? () => setState(() {
-                              verify = true;
-                            })
-                        : null,
-                    child: const Text("Get OTP"),
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-              ),
-              if (verify)
-                TextFormField(
-                  maxLength: 4,
-                  decoration: InputDecoration(
-                    labelText: "Enter OTP",
-                    suffix: TextButton(
-                      onPressed: () {},
-                      child: const Text("Resend"),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                ),
             ],
           ),
         ),
@@ -230,14 +217,35 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            if (confirmPassword != password) {
+              return ErrorSnackBar.show(context, "Password does not match");
+            }
+            var body = {
+              "fullName": name,
+              "type": "EMAIL",
+              "age": int.parse(age),
+              "city": city,
+              "country": country,
+              "gender": gender,
+              "email": userBloc.username,
+              "password": confirmPassword,
+            };
+
+            var response = await userBloc.patientSignUp(body: body)
+                as Map<String, dynamic>;
+
+            if (!response.containsKey('access_token')) {
+              return ErrorSnackBar.show(context, "Invalid Error");
+            }
+
+            var token = response['access_token'];
+            await Prefs.setToken(token);
+
+            SuccessScreen.open(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const SuccessScreen(
-                      message: "Profile Details has been \n Updated",
-                      type: 'profile',
-                      isEmailCheck: true)),
+              type: 'MAIN',
+              message: "Profile Details Updated Successfully",
             );
           },
           color: MyColors.primaryColor,

@@ -39,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   Routes.mobile,
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: const Text("Sign Up With Mobile Number"),
@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   Routes.email,
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: const Text("Sign Up With Email Number"),

@@ -1,6 +1,8 @@
+import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/routes.dart';
+import '../../../data/local/shared_prefs.dart';
 import '../../../resources/images.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,10 +14,17 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   checks() async {
-    await Future.delayed(const Duration(seconds: 2));
+    var token = await Prefs.getToken();
+    if (token != null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen()),
+        (route) => false,
+      );
+    }
     Navigator.of(context).pushNamedAndRemoveUntil(
       Routes.language,
-          (route) => false,
+      (route) => false,
     );
   }
 

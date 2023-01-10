@@ -1,44 +1,44 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/local/shared_prefs.dart';
 
 class ProfileMobileScreen extends StatefulWidget {
-  const ProfileMobileScreen({super.key});
+  const ProfileMobileScreen({
+    super.key,
+  });
+
+  static Future open(BuildContext context,) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ProfileMobileScreen(),
+      ),
+    );
+  }
 
   @override
   _ProfileMobileScreenState createState() => _ProfileMobileScreenState();
 }
 
 class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
-  bool visibility = true;
-  bool verify = false;
-  bool emailEntered = false;
-  final myController = TextEditingController();
+  var name = '';
+  var gender = '';
+  var age = '';
+  var city = 'Hyderabad';
+  var country = 'India';
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    myController.addListener(() {
-      setState(() {
-        emailEntered = myController.text.isNotEmpty;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    myController.dispose();
-    super.dispose();
-  }
-
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile Details"),
@@ -61,6 +61,11 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
                 decoration: const InputDecoration(
                   labelText: "Name*",
                 ),
@@ -69,46 +74,52 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null || value
+                      .trim()
+                      .isEmpty) {
                     return 'Enter the name';
-                  } else {
-                    return null;
                   }
+                  return null;
                 },
               ),
               const SizedBox(height: 8),
               TextFormField(
-                decoration: const InputDecoration(labelText: "Email Address*"),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter your email Id';
-                  } else {
-                    return null;
-                  }
-                },
+                enabled: false,
+                initialValue: userBloc.username,
+                decoration: const InputDecoration(labelText: "Mobile Number*"),
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    gender = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Select Gender"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "MALE",
                     child: Text("Male"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "FEMALE",
                     child: Text("Female"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
+                    value: "OTHER",
                     child: Text("Other"),
                   )
                 ],
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               TextFormField(
+
+                onChanged: (value) {
+                  setState(() {
+                    age = value;
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Age*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -117,73 +128,50 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    city = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "City"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "Agra",
                     child: Text("Agra"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "Hyderabad",
                     child: Text("Hyderabad"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
+                    value: "Delhi",
                     child: Text("Delhi"),
                   )
                 ],
-                onChanged: (value) {},
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
+                onChanged: (value) {
+                  setState(() {
+                    country = value.toString();
+                  });
+                },
                 decoration: const InputDecoration(labelText: "Country"),
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
+                    value: "India",
                     child: Text("India"),
                   ),
                   DropdownMenuItem(
-                    value: 2,
+                    value: "USA",
                     child: Text("USA"),
                   ),
                   DropdownMenuItem(
-                    value: 3,
-                    child: Text("China"),
+                    value: "Dubai",
+                    child: Text("Dubai"),
                   )
                 ],
-                onChanged: (value) {},
               ),
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: myController,
-                decoration: InputDecoration(
-                  labelText: "Email Address",
-                  suffix: TextButton(
-                    onPressed: emailEntered
-                        ? () => setState(() {
-                              verify = true;
-                            })
-                        : null,
-                    child: const Text("Get OTP"),
-                  ),
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              if (verify)
-                TextFormField(
-                  maxLength: 4,
-                  decoration: InputDecoration(
-                    labelText: "Enter OTP",
-                    suffix: TextButton(
-                      onPressed: () {},
-                      child: const Text("Resend"),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                ),
             ],
           ),
         ),
@@ -191,15 +179,31 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            var body = {
+              'fullName': name,
+              'type': 'MOBILE',
+              'mobileNumber': userBloc.username,
+              "age": int.parse(age),
+              "city": city,
+              "country": country,
+              "gender": gender,
+            };
+
+            var response = await userBloc.patientSignUp(body: body)
+            as Map<String, dynamic>;
+
+            if (!response.containsKey('access_token')) {
+              return ErrorSnackBar.show(context, "Invalid Error");
+            }
+
+            var token = response['access_token'];
+            await Prefs.setToken(token);
+
+            SuccessScreen.open(
               context,
-              MaterialPageRoute(
-                builder: (context) => const SuccessScreen(
-                    message: "Profile Details has been \n Updated",
-                    type: 'profile',
-                    isEmailCheck: true),
-              ),
+              type: 'MAIN',
+              message: "Profile Details Updated Successfully",
             );
           },
           color: MyColors.primaryColor,
