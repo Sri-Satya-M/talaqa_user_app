@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
 
-  String username='';
+  String username = '';
 
   Future sendOTP({body}) {
     return _userRepo.sendOTP(body: body);
@@ -14,4 +14,7 @@ class UserBloc with ChangeNotifier {
     return _userRepo.verifyOTP(body: body);
   }
 
+  Future patientSignUp({body}) {
+    return _userRepo.patientSignUp(body: body);
+  }
 }

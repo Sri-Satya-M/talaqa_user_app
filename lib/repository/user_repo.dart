@@ -9,4 +9,9 @@ class UserRepo {
   Future verifyOTP({body}) async {
     return await apiClient.post(Api.verifyOtp, body);
   }
+
+  Future patientSignUp({body}) async {
+    return await apiClient.post(Api.signUp, body);
+  }
+
 }
