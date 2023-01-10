@@ -1,22 +1,33 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TermsConditions extends StatefulWidget {
-  final bool isEmail;
+  static Future open(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TermsConditions(),
+      ),
+    );
+  }
 
-  const TermsConditions({super.key, required this.isEmail});
+  const TermsConditions({super.key});
 
   @override
   _TermsConditionsState createState() => _TermsConditionsState();
 }
 
 class _TermsConditionsState extends State<TermsConditions> {
-  bool? check = false;
+  bool check = false;
+  late bool isEmail;
 
   @override
   Widget build(BuildContext context) {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    isEmail = userBloc.username.contains("@");
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -61,7 +72,7 @@ class _TermsConditionsState extends State<TermsConditions> {
                   value: check,
                   onChanged: (value) {
                     setState(() {
-                      check = value;
+                      check = value as bool;
                     });
                   },
                 ),
@@ -71,31 +82,32 @@ class _TermsConditionsState extends State<TermsConditions> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          bottom: 32,
-        ),
-        child: ProgressButton(
-          onPressed: () {
-            var message = widget.isEmail
-                ? "Your Email Id has been \n Successfully Verified"
-                : "Your Mobile Number has been \n Successfully Verified";
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SuccessScreen(
-                  message: message,
-                  type: 'otp',
-                  isEmailCheck: widget.isEmail,
-                ),
+      bottomNavigationBar: (!check)
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: 32,
               ),
-            );
-          },
-          child: const Text("Proceed"),
-        ),
-      ),
+              child: ProgressButton(
+                onPressed: () {
+                  var message = isEmail
+                      ? "Your Email Id has been \n Successfully Verified"
+                      : "Your Mobile Number has been \n Successfully Verified";
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SuccessScreen(
+                        message: message,
+                        type: isEmail ? 'EMAIL' : 'MOBILE',
+                      ),
+                    ),
+                  );
+                },
+                child: const Text("Proceed"),
+              ),
+            ),
     );
   }
 }

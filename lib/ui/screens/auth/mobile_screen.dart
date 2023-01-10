@@ -1,12 +1,13 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
-import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
 
 class MobileScreen extends StatefulWidget {
   const MobileScreen({super.key});
@@ -72,18 +73,23 @@ class _MobileScreenState extends State<MobileScreen> {
             ),
             const SizedBox(height: 40),
             ProgressButton(
-              onPressed: () {
+              onPressed: () async {
                 if (mobileNumber.length < 10) {
                   ErrorSnackBar.show(context, 'Enter 10 digit mobile number');
                   return;
                 }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainScreen(),
-                  ),
-                );
-                //navigate to otp screen
+
+                var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
+
+                var userBloc = Provider.of<UserBloc>(context, listen: false);
+                var response =
+                    await userBloc.sendOTP(body: body) as Map<String, dynamic>;
+
+                if (!response.containsKey('token')) {
+                  return ErrorSnackBar.show(context, 'Invalid Error');
+                }
+                userBloc.username = mobileNumber;
+                OtpScreen.open(context, token: response['token']);
               },
               child: const Text("Get OTP"),
             ),
@@ -111,7 +117,7 @@ class _MobileScreenState extends State<MobileScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.email,
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: const Text("Sign Up With Email Address"),

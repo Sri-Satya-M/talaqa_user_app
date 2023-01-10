@@ -1,19 +1,18 @@
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/profile/profile_mobile_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessScreen extends StatelessWidget {
-  final String message;
   final String type;
-  final bool isEmailCheck;
+  final String message;
 
-  const SuccessScreen(
-      {super.key,
-      required this.message,
-      required this.type,
-      required this.isEmailCheck});
-
+  const SuccessScreen({
+    super.key,
+    required this.type,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +40,14 @@ class SuccessScreen extends StatelessWidget {
         ),
         child: ProgressButton(
           onPressed: () {
-            // isEmailCheck
-            //     ? Navigator.of(context).pushNamedAndRemoveUntil(
-            //         Routes.emailProfile, (route) => false)
-            //     : Navigator.of(context).pushNamedAndRemoveUntil(
-            //         Routes.mobileProfile, (route) => false);
+            switch (type) {
+              case 'MOBILE':
+                ProfileMobileScreen.open(context);
+                break;
+
+              default:
+                Container();
+            }
           },
           child: const Text("Continue"),
         ),

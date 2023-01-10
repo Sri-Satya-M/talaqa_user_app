@@ -1,41 +1,42 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/auth/mobile_screen.dart';
 import 'package:alsan_app/ui/screens/terms_conditions/terms_conditions.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class OtpScreen extends StatefulWidget {
-  final String userName;
+  String token;
 
-  const OtpScreen({super.key, required this.userName});
+  OtpScreen({super.key, required this.token});
+
+  static Future open(
+    BuildContext context, {
+    required String token,
+  }) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => OtpScreen(token: token),
+      ),
+    );
+  }
 
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  static Future open({
-    required BuildContext context,
-    required String userName,
-  }) {
-    return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => OtpScreen(
-          userName: userName,
-        ),
-      ),
-    );
-  }
-
   var otp = '';
 
   @override
   Widget build(BuildContext context) {
-    var isEmail = widget.userName.contains('@');
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var isEmail = userBloc.username.contains('@');
     var text = isEmail ? "email id" : "mobile number";
-    var digit = isEmail ? 5 : 4;
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -54,7 +55,7 @@ class _OtpScreenState extends State<OtpScreen> {
               textAlign: TextAlign.center,
             ),
             Text(
-              "Enter the $digit digit code sent on your \n$text ",
+              "Enter the otp code sent on your \n$text ",
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
@@ -62,7 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.userName,
+                  userBloc.username,
                   style: const TextStyle(color: MyColors.primaryColor),
                 ),
                 TextButton(
@@ -87,15 +88,19 @@ class _OtpScreenState extends State<OtpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                for (int i = 0; i < digit; i++)
+                for (int i = 0; i < 4; i++)
                   SizedBox(
                     width: 40,
                     height: 64,
                     child: TextField(
                       onChanged: (value) {
-                        otp += value;
                         if (value.length == 1) {
+                          otp += value;
                           FocusScope.of(context).nextFocus();
+                        } else {
+                          otp = otp.substring(0, i);
+                          print(otp);
+                          FocusScope.of(context).previousFocus();
                         }
                       },
                       textAlign: TextAlign.center,
@@ -115,7 +120,20 @@ class _OtpScreenState extends State<OtpScreen> {
               children: [
                 const Text("Didn't receive the OTP?\t"),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    var body = {};
+                    body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
+                    body[isEmail ? 'email' : 'mobileNumber'] =
+                        userBloc.username;
+
+                    var response = await userBloc.sendOTP(body: body)
+                        as Map<String, dynamic>;
+
+                    if (!response.containsKey('token')) {
+                      return ErrorSnackBar.show(context, 'Invalid Error');
+                    }
+                    widget.token = response['token'];
+                  },
                   child: const Text(
                     "Resend",
                     style: TextStyle(color: MyColors.primaryColor),
@@ -129,14 +147,25 @@ class _OtpScreenState extends State<OtpScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
         child: ProgressButton(
-          onPressed: () {
-            // print(otp);
-            // return;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TermsConditions(isEmail: isEmail)),
-            );
+          onPressed: () async {
+            if (otp.length == 4) {
+              var body = {'token': widget.token, 'otp': otp};
+
+              body[isEmail ? 'email' : 'mobileNumber'] = userBloc.username;
+              body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
+
+              print(body);
+              var response =
+                  await userBloc.verifyOTP(body: body) as Map<String, dynamic>;
+
+              if (!response.containsKey('success')) {
+                return ErrorSnackBar.show(context, 'Invalid OTP');
+              }
+
+              TermsConditions.open(context);
+            } else {
+              ErrorSnackBar.show(context, 'Enter 4-digit otp');
+            }
           },
           child: const Text("Submit"),
         ),
