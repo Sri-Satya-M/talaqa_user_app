@@ -7,6 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+  
+  static Future open(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MainScreen(),
+      ),
+    );
+  }
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
