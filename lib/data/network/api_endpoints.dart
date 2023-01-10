@@ -1,4 +1,6 @@
 class Api {
-  static const sendOtp = "/users/otp";
-  static const verifyOtp = "/users/otp-verify";
+  static const users = "/users";
+  static const otp = "$users/otp";
+  static const verifyOtp = "$users/otp-verify";
+
 }

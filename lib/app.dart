@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/theme.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class App extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => ProgressBloc()),
           ChangeNotifierProvider(create: (_) => MainBloc()),
+          ChangeNotifierProvider(create: (_) => UserBloc()),
         ],
         child: ProgressBlockWidget(
           child: MaterialApp(
