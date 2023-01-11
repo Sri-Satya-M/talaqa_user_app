@@ -5,6 +5,8 @@ import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatefulWidget {
+  const MenuScreen({super.key});
+
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
@@ -19,7 +21,7 @@ class _MenuScreenState extends State<MenuScreen> {
         Container(
           padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
           decoration: BoxDecoration(
-            color: MyColors.paleBlue,
+            color: MyColors.profileCardColor,
             border: Border.all(color: Colors.grey.shade300),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
