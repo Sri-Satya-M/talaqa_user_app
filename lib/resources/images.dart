@@ -5,6 +5,9 @@ class Images {
   static const profileIcon = 'assets/icons/profile.png';
   static const phone = 'assets/icons/phone.png';
   static const email = 'assets/icons/email.png';
+  static const patient = 'assets/icons/patient.png';
+  static const pendingSession = 'assets/icons/pendingSession.png';
+
 
   ///images
   static const logo = 'assets/images/logo.png';
