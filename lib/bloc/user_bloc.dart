@@ -1,6 +1,8 @@
 import 'package:alsan_app/repository/user_repo.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../data/local/shared_prefs.dart';
+
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
 
@@ -16,5 +18,13 @@ class UserBloc with ChangeNotifier {
 
   Future patientSignUp({body}) {
     return _userRepo.patientSignUp(body: body);
+  }
+
+  Future signInEmail({body}) {
+    return _userRepo.signInEmail(body: body);
+  }
+
+  void logout() async {
+    await Prefs.clearPrefs();
   }
 }

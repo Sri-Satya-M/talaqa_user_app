@@ -2,12 +2,15 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/auth/mobile_screen.dart';
+import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:alsan_app/ui/screens/terms_conditions/terms_conditions.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import '../../../data/local/shared_prefs.dart';
 
 class OtpScreen extends StatefulWidget {
   String token;
@@ -132,6 +135,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     if (!response.containsKey('token')) {
                       return ErrorSnackBar.show(context, 'Invalid Error');
                     }
+
                     widget.token = response['token'];
                   },
                   child: const Text(
@@ -152,17 +156,18 @@ class _OtpScreenState extends State<OtpScreen> {
               var body = {'token': widget.token, 'otp': otp};
 
               body[isEmail ? 'email' : 'mobileNumber'] = userBloc.username;
-              body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
-
               print(body);
               var response =
                   await userBloc.verifyOTP(body: body) as Map<String, dynamic>;
 
-              if (!response.containsKey('success')) {
-                return ErrorSnackBar.show(context, 'Invalid OTP');
+              if (response.containsKey('message')) {
+                TermsConditions.open(context);
+              } else if (response.containsKey('access_token')) {
+                await Prefs.setToken(response['access_token']);
+                MainScreen.open(context);
+              } else {
+                ErrorSnackBar.show(context, 'Invalid Error');
               }
-
-              TermsConditions.open(context);
             } else {
               ErrorSnackBar.show(context, 'Enter 4-digit otp');
             }

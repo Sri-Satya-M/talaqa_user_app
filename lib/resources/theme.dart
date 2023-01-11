@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'colors.dart';
 
 class AppTheme {
@@ -205,7 +206,6 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
               side: BorderSide(width: 1, color: primaryColor),
               borderRadius: BorderRadius.circular(15),
@@ -261,8 +261,8 @@ class AppTheme {
           borderRadius: BorderRadius.circular(4),
         ),
         side: MaterialStateBorderSide.resolveWith(
-              (states) =>
-          const BorderSide(width: 1, color: MyColors.secondaryColor),
+          (states) =>
+              const BorderSide(width: 1, color: MyColors.secondaryColor),
         ),
         checkColor: MaterialStateProperty.all(MyColors.primaryColor),
         fillColor: MaterialStateProperty.resolveWith((states) {

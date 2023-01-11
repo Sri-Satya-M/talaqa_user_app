@@ -14,4 +14,8 @@ class UserRepo {
     return await apiClient.post(Api.signUp, body);
   }
 
+  Future signInEmail({body}) async {
+    return await apiClient.post(Api.signInEmail, body);
+  }
+
 }

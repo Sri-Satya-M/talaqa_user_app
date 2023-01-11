@@ -1,7 +1,7 @@
+import 'package:alsan_app/ui/screens/language/language_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/routes.dart';
 import '../../../data/local/shared_prefs.dart';
 import '../../../resources/images.dart';
 
@@ -14,18 +14,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   checks() async {
-    var token = await Prefs.getToken();
-    if (token != null) {
+    Future.delayed(const Duration(seconds: 2), () async {
+      var token = await Prefs.getToken();
+
+      var nextScreen = (token == null) ? LanguageScreen() : MainScreen();
+
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
+        MaterialPageRoute(
+          builder: (context) => nextScreen,
+        ),
         (route) => false,
       );
-    }
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      Routes.language,
-      (route) => false,
-    );
+    });
   }
 
   @override

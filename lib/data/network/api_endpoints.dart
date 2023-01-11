@@ -3,4 +3,6 @@ class Api {
   static const otp = "$users/otp";
   static const verifyOtp = "$users/otp-verify";
   static const signUp = "$users/patient-signup";
+  static const signInEmail = "$users/patient-signin-with-email";
+
 }
