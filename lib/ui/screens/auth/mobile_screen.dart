@@ -2,6 +2,7 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/auth/login/mobile_login_screen.dart';
 import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -45,7 +46,10 @@ class _MobileScreenState extends State<MobileScreen> {
                 InternationalPhoneNumberInput(
                   onInputChanged: (value) {
                     if (value.phoneNumber == null) return;
-                    mobileNumber = value.phoneNumber.toString().trim();
+                    mobileNumber = value.phoneNumber
+                        .toString()
+                        .replaceFirst(value.dialCode.toString(), '')
+                        .trim();
                   },
                   textStyle: const TextStyle(color: Colors.black),
                   formatInput: false,
@@ -128,7 +132,12 @@ class _MobileScreenState extends State<MobileScreen> {
               children: [
                 const Text("Already an existing user?\t"),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MobileLogin()),
+                    );
+                  },
                   child: const Text(
                     "Login to your account",
                     style: TextStyle(color: MyColors.primaryColor),

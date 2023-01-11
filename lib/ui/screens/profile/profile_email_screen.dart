@@ -65,7 +65,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   });
                 },
                 decoration: const InputDecoration(
-                  labelText: "Name*",
+                  hintText: "Name*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
@@ -83,7 +83,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               TextFormField(
                 initialValue: userBloc.username,
                 enabled: false,
-                decoration: const InputDecoration(labelText: "Email Address*"),
+                decoration: const InputDecoration(hintText: "Email Address*"),
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 8),
@@ -93,7 +93,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     gender = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "Select Gender"),
+                decoration: const InputDecoration(hintText: "Select Gender"),
                 items: const [
                   DropdownMenuItem(
                     value: "MALE",
@@ -116,7 +116,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     age = value;
                   });
                 },
-                decoration: const InputDecoration(labelText: "Age*"),
+                decoration: const InputDecoration(hintText: "Age*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -129,7 +129,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     city = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "City"),
+                decoration: const InputDecoration(hintText: "City"),
                 items: const [
                   DropdownMenuItem(
                     value: "Agra",
@@ -152,7 +152,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     country = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "Country"),
+                decoration: const InputDecoration(hintText: "Country"),
                 items: const [
                   DropdownMenuItem(
                     value: "India",
@@ -177,7 +177,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
                 obscureText: visibility,
                 decoration: InputDecoration(
-                  labelText: "New Password*",
+                  hintText: "New Password*",
                   suffixIcon: IconButton(
                     onPressed: () => setState(() {
                       visibility = !visibility;
@@ -198,7 +198,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
                 obscureText: visibility2,
                 decoration: InputDecoration(
-                  labelText: "Confirm Password*",
+                  hintText: "Confirm Password*",
                   suffixIcon: IconButton(
                     onPressed: () => setState(() {
                       visibility2 = !visibility2;

@@ -14,7 +14,9 @@ class ProfileMobileScreen extends StatefulWidget {
     super.key,
   });
 
-  static Future open(BuildContext context,) {
+  static Future open(
+    BuildContext context,
+  ) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ProfileMobileScreen(),
@@ -67,16 +69,14 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   });
                 },
                 decoration: const InputDecoration(
-                  labelText: "Name*",
+                  hintText: "Name*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
-                  if (value == null || value
-                      .trim()
-                      .isEmpty) {
+                  if (value == null || value.trim().isEmpty) {
                     return 'Enter the name';
                   }
                   return null;
@@ -86,7 +86,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               TextFormField(
                 enabled: false,
                 initialValue: userBloc.username,
-                decoration: const InputDecoration(labelText: "Mobile Number*"),
+                decoration: const InputDecoration(hintText: "Mobile Number*"),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 8),
@@ -96,7 +96,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                     gender = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "Select Gender"),
+                decoration: const InputDecoration(hintText: "Select Gender"),
                 items: const [
                   DropdownMenuItem(
                     value: "MALE",
@@ -114,13 +114,12 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
-
                 onChanged: (value) {
                   setState(() {
                     age = value;
                   });
                 },
-                decoration: const InputDecoration(labelText: "Age*"),
+                decoration: const InputDecoration(hintText: "Age*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -133,7 +132,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                     city = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "City"),
+                decoration: const InputDecoration(hintText: "City"),
                 items: const [
                   DropdownMenuItem(
                     value: "Agra",
@@ -156,7 +155,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                     country = value.toString();
                   });
                 },
-                decoration: const InputDecoration(labelText: "Country"),
+                decoration: const InputDecoration(hintText: "Country"),
                 items: const [
                   DropdownMenuItem(
                     value: "India",
@@ -191,7 +190,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             };
 
             var response = await userBloc.patientSignUp(body: body)
-            as Map<String, dynamic>;
+                as Map<String, dynamic>;
 
             if (!response.containsKey('access_token')) {
               return ErrorSnackBar.show(context, "Invalid Error");

@@ -1,5 +1,6 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/auth/login/email_login_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 const Text("Already an existing user?\t"),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EmailLogin()),
+                    );
+                  },
                   child: const Text(
                     "Login to your account",
                     style: TextStyle(color: MyColors.primaryColor),
