@@ -134,7 +134,10 @@ class AppTheme {
 
     var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(color: MyColors.divider, width: 1),
+      borderSide: BorderSide(
+        color: MyColors.divider.withOpacity(0.5),
+        width: 1,
+      ),
     );
     return ThemeData(
       colorScheme: ColorScheme.light(
@@ -223,29 +226,32 @@ class AppTheme {
         elevation: 0,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: secondaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        iconSize: 22,
+        backgroundColor: primaryColor,
+        iconSize: 32,
         elevation: 0,
         disabledElevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 14,
           vertical: 14,
         ),
-        // border: border,
-        // enabledBorder: border,
-        // focusedBorder: border,
+        // border: border
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: primaryColor.withOpacity(0.7),
+            width: 1.5,
+          ),
+        ),
         labelStyle: caption.copyWith(
           fontStyle: FontStyle.normal,
           color: Colors.black.withOpacity(0.5),
-          fontSize: 14,
-          height: 44 / 14,
+          fontSize: 12,
+          height: 25 / 12,
         ),
-        hintStyle: caption,
+        hintStyle: caption.copyWith(color: Colors.black.withOpacity(0.3)),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       iconTheme: const IconThemeData(color: Colors.black, size: 24),
