@@ -233,7 +233,8 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.symmetric(
-          vertical: 14,
+          horizontal: 6,
+          vertical: 8,
         ),
         // border: border
         enabledBorder: UnderlineInputBorder(
