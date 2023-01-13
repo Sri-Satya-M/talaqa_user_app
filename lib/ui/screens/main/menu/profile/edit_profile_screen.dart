@@ -12,13 +12,24 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  var name = "";
-  var mob = "";
-  var gender = "";
-  var age = "";
-  var email = "";
+  String? name;
+
+  String? gender;
+  String? city;
+  int? age;
 
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var profile = userBloc.profile;
+    name = profile!.user!.fullName!;
+    gender = profile.gender!;
+    age = profile.age;
+    city = profile.city!;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 24),
               TextFormField(
-                initialValue: userBloc.profile?.user?.fullName,
+                initialValue: name,
                 onChanged: (value) {
                   setState(() {
                     name = value;
@@ -66,12 +77,9 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 12),
               TextFormField(
+                enabled: false,
                 initialValue: userBloc.profile?.user?.mobileNumber,
-                onChanged: (value) {
-                  setState(() {
-                    mob = value;
-                  });
-                },
+                onChanged: (value) {},
                 decoration: InputDecoration(
                   hintText: "Number",
                   counter: SizedBox(),
@@ -90,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 12),
               DropdownButtonFormField(
-                value: userBloc.profile?.gender,
+                value: gender,
                 onChanged: (value) {
                   setState(() {
                     gender = value.toString();
@@ -121,10 +129,10 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 12),
               TextFormField(
-                initialValue: userBloc.profile?.age.toString(),
+                initialValue: age.toString(),
                 onChanged: (value) {
                   setState(() {
-                    age = value;
+                    age = int.tryParse(value.trim());
                   });
                 },
                 decoration: const InputDecoration(hintText: "Age"),
@@ -143,9 +151,7 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(height: 12),
               TextFormField(
                 initialValue: userBloc.profile?.user?.email,
-                onChanged: (value) {
-                  email = value;
-                },
+                onChanged: (value) {},
                 decoration: const InputDecoration(hintText: "Email Address"),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -158,6 +164,30 @@ class _EditProfileState extends State<EditProfile> {
                   }
                 },
               ),
+              SizedBox(height: 12),
+              DropdownButtonFormField(
+                value: city,
+                onChanged: (value) {
+                  setState(() {
+                    city = value.toString();
+                  });
+                },
+                decoration: const InputDecoration(hintText: "City"),
+                items: const [
+                  DropdownMenuItem(
+                    value: "Agra",
+                    child: Text("Agra"),
+                  ),
+                  DropdownMenuItem(
+                    value: "Hyderabad",
+                    child: Text("Hyderabad"),
+                  ),
+                  DropdownMenuItem(
+                    value: "Delhi",
+                    child: Text("Delhi"),
+                  )
+                ],
+              ),
             ],
           ),
         ),
@@ -165,7 +195,7 @@ class _EditProfileState extends State<EditProfile> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
-          onPressed: () {
+          onPressed: () async {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
@@ -174,8 +204,16 @@ class _EditProfileState extends State<EditProfile> {
               return;
             }
 
-            var body = {name, mob, gender, age, email};
-            print(body);
+            var body = {
+              "city": city,
+              // "image": image,
+              "fullName": name,
+              "age": age,
+              "gender": gender,
+            };
+
+            await userBloc.updateProfile(body: body);
+            Navigator.pop(context);
           },
           child: Text("Save Changes"),
         ),
