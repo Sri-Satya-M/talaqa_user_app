@@ -34,7 +34,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   var password = '';
   var confirmPassword = '';
 
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("Profile Details")),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -72,7 +72,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return 'Enter the name';
                   } else {
                     return null;
@@ -85,6 +85,15 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 enabled: false,
                 decoration: const InputDecoration(hintText: "Email Address*"),
                 keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter the email Id";
+                  } else if (!value.contains("@") || !value.contains('.')) {
+                    return "Enter valid email id";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
@@ -92,6 +101,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   setState(() {
                     gender = value.toString();
                   });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter the gender";
+                  } else {
+                    return null;
+                  }
                 },
                 decoration: const InputDecoration(hintText: "Select Gender"),
                 items: const [
@@ -121,6 +137,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter the age";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
@@ -188,6 +211,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter the password";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -209,6 +239,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter the confirm password";
+                  } else {
+                    return null;
+                  }
+                },
               ),
             ],
           ),
@@ -218,9 +255,18 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
           onPressed: () async {
+            if (!formKey.currentState!.validate()) {
+              ErrorSnackBar.show(
+                context,
+                "Fill Mandatory Fields to Continue",
+              );
+              return;
+            }
+
             if (confirmPassword != password) {
               return ErrorSnackBar.show(context, "Password does not match");
             }
+
             var body = {
               "fullName": name,
               "type": "EMAIL",

@@ -36,7 +36,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
   var country = 'India';
 
   @override
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
         title: const Text("Profile Details"),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -76,7 +76,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return 'Enter the name';
                   }
                   return null;
@@ -88,6 +88,14 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 initialValue: userBloc.username,
                 decoration: const InputDecoration(hintText: "Mobile Number*"),
                 keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter the mobile number';
+                  } else if (value.length < 10) {
+                    return 'Enter 10 digit mobile number';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
@@ -95,6 +103,12 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   setState(() {
                     gender = value.toString();
                   });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter the gender';
+                  }
+                  return null;
                 },
                 decoration: const InputDecoration(hintText: "Select Gender"),
                 items: const [
@@ -124,6 +138,12 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Enter the age';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
@@ -179,6 +199,14 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
           onPressed: () async {
+            if (!formKey.currentState!.validate()) {
+              ErrorSnackBar.show(
+                context,
+                "Fill Mandatory Fields to Continue",
+              );
+              return null;
+            }
+
             var body = {
               'fullName': name,
               'type': 'MOBILE',
