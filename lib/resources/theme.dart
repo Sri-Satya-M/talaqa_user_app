@@ -209,14 +209,15 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: primaryColor),
-              borderRadius: BorderRadius.circular(15),
-            ),
+          shape: RoundedRectangleBorder(
             side: BorderSide(width: 1, color: primaryColor),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            textStyle: headline5,
-            fixedSize: const Size(250, 50)),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          side: BorderSide(width: 1, color: primaryColor),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          textStyle: headline5,
+          fixedSize: const Size(100, 50),
+        ),
       ),
       popupMenuTheme: PopupMenuThemeData(
         shape: RoundedRectangleBorder(
