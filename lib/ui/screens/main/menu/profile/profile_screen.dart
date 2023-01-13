@@ -1,6 +1,7 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/session_details_card.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -141,7 +142,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   child: IconButton(
                     iconSize: 14,
-                    onPressed: null,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PatientProfile(),
+                        ),
+                      );
+                    },
                     icon: const Icon(Icons.arrow_forward_ios),
                   ),
                 ),
