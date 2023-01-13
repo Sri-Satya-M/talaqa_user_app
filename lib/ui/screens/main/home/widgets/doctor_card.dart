@@ -1,4 +1,5 @@
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
@@ -15,12 +16,12 @@ class _DoctorCardState extends State<DoctorCard> {
     var textTheme = Theme.of(context).textTheme;
     return CustomCard(
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const ImageFromNet(
                   imageUrl:
@@ -28,15 +29,24 @@ class _DoctorCardState extends State<DoctorCard> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
+                  height: 100,
+                  width: 100,
                 ),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const DetailsTile(
-                      title: Text("Dr. Akbar"),
-                      value: Text("Language therapist"),
+                    DetailsTile(
+                      title: Text(
+                        "Dr. Akbar",
+                        style: textTheme.headline2,
+                      ),
+                      value: Text(
+                        "Language therapist",
+                        style: textTheme.caption
+                            ?.copyWith(color: MyColors.cerulean),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -56,95 +66,42 @@ class _DoctorCardState extends State<DoctorCard> {
                           ),
                         ),
                         const SizedBox(width: 18),
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.star,
-                              color: MyColors.cerulean,
-                              size: 15,
-                            ),
-                            Text("5.0")
-                          ],
-                        )
                       ],
-                    )
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Image.asset(
+                          Images.voice,
+                          height: 16,
+                          width: 16,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "Arabic, English",
+                          style: textTheme.bodyText1,
+                        ),
+                      ],
+                    ),
                   ],
-                )
-              ],
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                const Icon(Icons.school),
-                const SizedBox(width: 8),
-                Text(
-                  "MBBS, MS, SLP",
-                  style: textTheme.subtitle1,
-                )
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                const Icon(Icons.school),
-                const SizedBox(width: 8),
-                Text(
-                  "MBBS, MS, SLP",
-                  style: textTheme.subtitle1,
-                )
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                const Icon(Icons.school),
-                const SizedBox(width: 8),
-                Text(
-                  "MBBS, MS, SLP",
-                  style: textTheme.subtitle1,
-                )
-              ],
-            ),
-            const SizedBox(height: 14),
-            Text(
-              "Consultation Starting from 400 AED",
-              style: textTheme.subtitle2,
-              textAlign: TextAlign.start,
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(160, 40),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.video_call),
-                      SizedBox(width: 5),
-                      Text(
-                        'Book Online',
-                      ),
-                    ],
-                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(170, 40),
-                  ),
-                  child: Row(
-                    children: const [
-                      Icon(Icons.home),
-                      SizedBox(width: 5),
-                      Text('Book Offline'),
-                    ],
-                  ),
-                ),
+                const SizedBox(height: 14),
               ],
-            )
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.navyBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                textStyle: textTheme.headline3,
+                fixedSize: const Size(140, 50),
+              ),
+              onPressed: () {},
+              child: Text('Book a session'),
+            ),
           ],
         ),
       ),
