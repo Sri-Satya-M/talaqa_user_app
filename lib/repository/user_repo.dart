@@ -1,5 +1,6 @@
 import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/data/network/api_endpoints.dart';
+import 'package:alsan_app/model/profile.dart';
 
 class UserRepo {
   Future sendOTP({body}) async {
@@ -18,4 +19,8 @@ class UserRepo {
     return await apiClient.post(Api.signInEmail, body);
   }
 
+  Future<Profile> getProfile() async {
+    var response = await apiClient.get(Api.profile);
+    return Profile.fromJson(response);
+  }
 }

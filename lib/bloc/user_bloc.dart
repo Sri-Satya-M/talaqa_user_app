@@ -1,3 +1,4 @@
+import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -7,6 +8,8 @@ class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
 
   String username = '';
+
+  Profile? profile;
 
   Future sendOTP({body}) {
     return _userRepo.sendOTP(body: body);
@@ -26,5 +29,9 @@ class UserBloc with ChangeNotifier {
 
   void logout() async {
     await Prefs.clearPrefs();
+  }
+
+  Future getProfile() async {
+    profile = await _userRepo.getProfile();
   }
 }
