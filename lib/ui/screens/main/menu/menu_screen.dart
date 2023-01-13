@@ -1,6 +1,9 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
+import 'package:alsan_app/ui/screens/main/menu/refer/refer_screen.dart';
+import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +15,35 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  List<Map<String,dynamic>> userList = [
+    {
+      'image': Images.profileIcon,
+      'title': 'Profile',
+      'screen': ProfileScreen()
+    },
+    {
+      'image': Images.sessionsIcon,
+      'title': 'My Sessions',
+      'screen': ProfileScreen()
+    },
+    {
+      'image': Images.reportIcon,
+      'title': 'My Reports',
+      'screen': ReportScreen()
+    },
+    {
+      'image': Images.supportIcon,
+      'title': 'Support',
+      'screen': ProfileScreen()
+    },
+    {
+      'image': Images.referIcon,
+      'title': 'Refer a friend',
+      'screen': ReferScreen(),
+    },
+    {'image': Images.faqIcon, 'title': 'FAQ', 'screen': ProfileScreen()},
+  ];
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -61,44 +93,25 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ),
         ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            Images.profileIcon,
-                            height: 30,
-                            width: 30,
-                          ),
-                          const SizedBox(width: 14),
-                          const Text("Profile"),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: MyColors.divider,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ProfileScreen(),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      ),
-                    ],
+          shrinkWrap: true,
+          itemCount: 6,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(8),
+            child: MenuList(
+              icon: userList[index]['image'],
+              title: userList[index]['title'],
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => userList[index]['screen'],
                   ),
-                ),
-            separatorBuilder: (context, index) => const Divider(),
-            itemCount: 6),
+                );
+              },
+            ),
+          ),
+          separatorBuilder: (context, index) => const Divider(),
+        ),
         const Divider(),
         const SizedBox(height: 20),
         Text("Privacy Policy", style: textTheme.subtitle1),
