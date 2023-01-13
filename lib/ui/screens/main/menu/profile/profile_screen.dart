@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: true);
     return Scaffold(
       appBar: AppBar(title: const Text("Profile")),
       body: ListView(

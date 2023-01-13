@@ -6,6 +6,7 @@ import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
 import 'package:alsan_app/ui/screens/main/menu/refer/refer_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
+import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: true);
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
@@ -87,7 +88,10 @@ class _MenuScreenState extends State<MenuScreen> {
                     decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(3)),
-                    child: Text(userBloc.profile?.gender ?? 'NA',
+                    child: Text(
+                        Helper.textCapitalization(
+                          text: userBloc.profile?.gender ?? 'NA',
+                        ),
                         style: textTheme.subtitle2),
                   ),
                 ],
