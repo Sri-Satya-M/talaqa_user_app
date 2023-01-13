@@ -33,5 +33,17 @@ class UserBloc with ChangeNotifier {
 
   Future getProfile() async {
     profile = await _userRepo.getProfile();
+    notifyListeners();
+  }
+
+  Future updateProfile({body}) async {
+    var response = await _userRepo.updateProfile(
+      body: body,
+    ) as Map<String, dynamic>;
+    if (response.containsKey('status') && response["status"] == "success") {
+      await getProfile();
+      notifyListeners();
+      return (response);
+    }
   }
 }

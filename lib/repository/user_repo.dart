@@ -23,4 +23,8 @@ class UserRepo {
     var response = await apiClient.get(Api.profile);
     return Profile.fromJson(response);
   }
+
+  Future updateProfile({body}) async {
+    return await apiClient.patch(Api.profile, body);
+  }
 }
