@@ -1,6 +1,8 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/screens/language/language_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../data/local/shared_prefs.dart';
 import '../../../resources/images.dart';
@@ -18,6 +20,11 @@ class _SplashScreenState extends State<SplashScreen> {
       var token = await Prefs.getToken();
 
       var nextScreen = (token == null) ? LanguageScreen() : MainScreen();
+      if(token != null)
+        {
+          var userBloc = Provider.of<UserBloc>(context, listen: false);
+          await userBloc.getProfile();
+        }
 
       Navigator.pushAndRemoveUntil(
         context,

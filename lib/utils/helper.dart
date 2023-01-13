@@ -24,4 +24,13 @@ class Helper {
     await dio.download(url, saveTo);
     return saveTo;
   }
+
+  static textCapitalization({required String text}) {
+    var a = text
+            .split(' ')
+            .map((e) => e[0].toUpperCase() + e.substring(1,).toLowerCase())
+            .toList()
+            .join(' ');
+    return a;
+  }
 }

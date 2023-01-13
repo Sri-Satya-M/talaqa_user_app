@@ -1,11 +1,13 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
 import 'package:alsan_app/ui/screens/main/menu/refer/refer_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
-import 'package:alsan_app/ui/widgets/image_from_net.dart';
+import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -15,7 +17,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  List<Map<String,dynamic>> userList = [
+  List<Map<String, dynamic>> userList = [
     {
       'image': Images.profileIcon,
       'title': 'Profile',
@@ -47,6 +49,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
@@ -63,12 +66,11 @@ class _MenuScreenState extends State<MenuScreen> {
           width: 320,
           child: Row(
             children: [
-              const ImageFromNet(
-                imageUrl:
-                    'https://miro.medium.com/fit/c/88/88/1*0HhsaB_S9yiF-hi9AESZTg.jpeg',
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50),
-                ),
+              Avatar(
+                url: userBloc.profile?.image,
+                name: userBloc.profile?.user?.fullName,
+                borderRadius: const BorderRadius.all(Radius.circular(35)),
+                size: 75,
               ),
               const SizedBox(width: 14),
               Column(
@@ -76,7 +78,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Marshall Mathers",
+                    userBloc.profile?.user?.fullName ?? 'NA',
                     style: textTheme.headline4,
                   ),
                   const SizedBox(height: 8),
@@ -85,7 +87,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(3)),
-                    child: Text("Male", style: textTheme.subtitle2),
+                    child: Text(userBloc.profile?.gender ?? 'NA',
+                        style: textTheme.subtitle2),
                   ),
                 ],
               )

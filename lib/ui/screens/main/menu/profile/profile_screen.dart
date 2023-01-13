@@ -7,6 +7,7 @@ import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
+import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,15 +46,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Avatar(
-                            url:
-                                'https://miro.medium.com/fit/c/88/88/1*0HhsaB_S9yiF-hi9AESZTg.jpeg',
-                            name: 'Marshall Mathers',
+                            url: userBloc.profile?.image,
+                            name: userBloc.profile?.user?.fullName,
                             borderRadius: BorderRadius.circular(35),
                             size: 70,
                           ),
                           const SizedBox(width: 12),
                           DetailsTile(
-                            title: const Text('Marshall Mathers'),
+                            title:
+                                Text(userBloc.profile?.user?.fullName ?? 'NA'),
                             value: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 4,
@@ -63,7 +64,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: Colors.grey.shade300,
                                 borderRadius: BorderRadius.circular(3),
                               ),
-                              child: Text("Male", style: textTheme.subtitle2),
+                              child: Text(
+                                Helper.textCapitalization(
+                                  text: userBloc.profile?.gender ?? 'NA',
+                                ),
+                                style: textTheme.subtitle2,
+                              ),
                             ),
                           ),
                         ],
@@ -76,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 16,
                           ),
                           const SizedBox(width: 12),
-                          const Text('+91 1234567890')
+                          Text(userBloc.profile?.user?.mobileNumber ?? 'NA')
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -87,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 16,
                           ),
                           const SizedBox(width: 12),
-                          const Text('rishab@janaspandana.in')
+                          Text(userBloc.profile?.user?.email ?? 'NA')
                         ],
                       ),
                     ],
