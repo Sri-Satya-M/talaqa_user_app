@@ -28,7 +28,7 @@ class DetailsTile extends StatelessWidget {
             style: textTheme.bodyText2!,
             child: title!,
           ),
-          SizedBox(height: gap ?? 8),
+          SizedBox(height: gap ?? 4),
           DefaultTextStyle(
             style: textTheme.bodyText1!,
             child: value!,
