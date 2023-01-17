@@ -1,8 +1,11 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class CreatePatient extends StatefulWidget {
   @override
@@ -10,17 +13,24 @@ class CreatePatient extends StatefulWidget {
 }
 
 class _CreatePatientState extends State<CreatePatient> {
-  final _formKey = GlobalKey<FormState>();
+  String? name;
+  var age = '';
+  String? city;
+  String? country;
+  String? gender;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("Patient Profile"),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -50,7 +60,11 @@ class _CreatePatientState extends State<CreatePatient> {
               ),
               SizedBox(height: 8),
               TextFormField(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
                 decoration: const InputDecoration(
                   hintText: "Name*",
                 ),
@@ -59,22 +73,44 @@ class _CreatePatientState extends State<CreatePatient> {
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return 'Enter the name';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                onChanged: (value) {},
-                decoration: const InputDecoration(hintText: "Mobile Number*"),
-                keyboardType: TextInputType.number,
-              ),
+              // TextFormField(
+              //   onChanged: null,
+              //   decoration: const InputDecoration(
+              //     hintText: "Mobile Number",
+              //     counter: SizedBox.shrink(),
+              //   ),
+              //   keyboardType: TextInputType.number,
+              //   maxLength: 10,
+              //   validator: (value) {
+              //     if (value == null || value.trim().isEmpty) {
+              //       return "Enter the mobile number";
+              //     } else if (value.length < 10) {
+              //       return "Enter 10 digit mobile number";
+              //     }
+              //   },
+              // ),
               const SizedBox(height: 12),
               DropdownButtonFormField(
-                onChanged: (value) {},
-                decoration: const InputDecoration(hintText: "Select Gender"),
+                onChanged: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
+                decoration: const InputDecoration(hintText: "Select Gender*"),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter the gender";
+                  } else {
+                    return null;
+                  }
+                },
                 items: const [
                   DropdownMenuItem(
                     value: "MALE",
@@ -88,21 +124,39 @@ class _CreatePatientState extends State<CreatePatient> {
                     value: "OTHER",
                     child: Text("Other"),
                   )
-                ].toList (),
+                ].toList(),
               ),
               const SizedBox(height: 12),
               TextFormField(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  age = value;
+                },
                 decoration: const InputDecoration(hintText: "Age*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter the age";
+                  } else {
+                    return null;
+                  }
+                },
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField(
-                onChanged: (value) {},
-                decoration: const InputDecoration(hintText: "City"),
+                onChanged: (value) {
+                  city = value;
+                },
+                decoration: const InputDecoration(hintText: "City*"),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter the city";
+                  } else {
+                    return null;
+                  }
+                },
                 items: const [
                   DropdownMenuItem(
                     value: "Agra",
@@ -120,8 +174,17 @@ class _CreatePatientState extends State<CreatePatient> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField(
-                onChanged: (value) {},
-                decoration: const InputDecoration(hintText: "Country"),
+                onChanged: (value) {
+                  country = value;
+                },
+                decoration: const InputDecoration(hintText: "Country*"),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter the country";
+                  } else {
+                    return null;
+                  }
+                },
                 items: const [
                   DropdownMenuItem(
                     value: "India",
@@ -163,7 +226,31 @@ class _CreatePatientState extends State<CreatePatient> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
-          onPressed: () {},
+          onPressed: () async {
+            if (!formKey.currentState!.validate()) {
+              ErrorSnackBar.show(
+                context,
+                'Fill Mandatory Fields to Continue',
+              );
+              return;
+            }
+
+            var body = {
+              "fullName": name,
+              "age": int.parse(age),
+              "city": city,
+              "country": country,
+              "gender": gender,
+            };
+
+            var response = await userBloc.createPatient(body: body)
+                as Map<String, dynamic>;
+
+            if (!response.containsKey('status')) {
+              return ErrorSnackBar.show(context, "Invalid Error");
+            }
+            Navigator.of(context).pop(true);
+          },
           color: MyColors.primaryColor,
           child: const Text("Create Profile"),
         ),
