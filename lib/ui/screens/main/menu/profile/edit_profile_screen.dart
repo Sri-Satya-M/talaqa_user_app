@@ -13,7 +13,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   String? name;
-
   String? gender;
   String? city;
   int? age;
@@ -61,9 +60,7 @@ class _EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: name,
                 onChanged: (value) {
-                  setState(() {
-                    name = value;
-                  });
+                  name = value;
                 },
                 decoration: InputDecoration(hintText: "Name"),
                 keyboardType: TextInputType.name,
@@ -100,9 +97,7 @@ class _EditProfileState extends State<EditProfile> {
               DropdownButtonFormField(
                 value: gender,
                 onChanged: (value) {
-                  setState(() {
-                    gender = value.toString();
-                  });
+                  gender = value.toString();
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -131,9 +126,7 @@ class _EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: age.toString(),
                 onChanged: (value) {
-                  setState(() {
-                    age = int.tryParse(value.trim());
-                  });
+                  age = int.tryParse(value.trim());
                 },
                 decoration: const InputDecoration(hintText: "Age"),
                 keyboardType: TextInputType.number,
@@ -168,9 +161,7 @@ class _EditProfileState extends State<EditProfile> {
               DropdownButtonFormField(
                 value: city,
                 onChanged: (value) {
-                  setState(() {
-                    city = value.toString();
-                  });
+                  city = value.toString();
                 },
                 decoration: const InputDecoration(hintText: "City"),
                 items: const [

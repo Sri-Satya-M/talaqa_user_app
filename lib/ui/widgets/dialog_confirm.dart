@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../resources/colors.dart';
 
 class ConfirmDialog {
   static Future<bool?> show(
@@ -12,20 +11,21 @@ class ConfirmDialog {
       builder: (context) {
         var textTheme = Theme.of(context).textTheme;
         return AlertDialog(
+          titlePadding: EdgeInsets.all(16),
           title: title != null
               ? Text(
                   title,
-                  style: textTheme.bodyText1!.copyWith(color: Colors.white),
+                  style: textTheme.headline6!.copyWith(color: Colors.black),
                 )
               : null,
           content: Text(
             message,
-            style: textTheme.headline6!.copyWith(color: Colors.white),
+            style: textTheme.bodyText1!.copyWith(color: Colors.black),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          backgroundColor: MyColors.background,
+          backgroundColor: Colors.white,
           actions: [
             TextButton(
               onPressed: () {
