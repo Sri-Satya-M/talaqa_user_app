@@ -6,5 +6,6 @@ class Api {
   static const signInEmail = "$users/patient-signin-with-email";
   static const patient = '/patients';
   static const profile = '$patient/profile';
+  static const patientProfiles = '$patient/patient-profiles';
 
 }

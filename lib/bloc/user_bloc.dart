@@ -46,4 +46,23 @@ class UserBloc with ChangeNotifier {
       return (response);
     }
   }
+
+  Future createPatient({body}) {
+    return _userRepo.createPatient(body: body);
+  }
+
+  Future<List<Profile>> getPatients() {
+    return _userRepo.getPatients();
+  }
+
+  Future updatePatients({id, body}) async {
+    return await _userRepo.updatePatients(id: id, body: body);
+  }
+
+  Future<bool> deletePatients(id) async {
+    var response = await _userRepo.deletePatients(
+      id: id,
+    ) as Map<String, dynamic>;
+    return response.containsKey('id') ? true : false;
+  }
 }

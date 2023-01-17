@@ -27,4 +27,22 @@ class UserRepo {
   Future updateProfile({body}) async {
     return await apiClient.patch(Api.profile, body);
   }
+
+  Future createPatient({body}) async {
+    return await apiClient.post(Api.patientProfiles, body);
+  }
+
+  Future<List<Profile>> getPatients() async {
+    var response = await apiClient.get(Api.patientProfiles);
+    var list = response as List;
+    return list.map((e) => Profile.fromJson(e)).toList();
+  }
+
+  Future updatePatients({id, body}) async {
+    return await apiClient.patch('${Api.patientProfiles}/$id', body);
+  }
+
+  Future deletePatients({id}) async {
+    return await apiClient.delete('${Api.patientProfiles}/$id');
+  }
 }
