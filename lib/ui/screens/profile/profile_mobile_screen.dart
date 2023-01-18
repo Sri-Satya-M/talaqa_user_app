@@ -227,6 +227,8 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             var token = response['access_token'];
             await Prefs.setToken(token);
 
+            await userBloc.getProfile();
+
             SuccessScreen.open(
               context,
               type: 'MAIN',

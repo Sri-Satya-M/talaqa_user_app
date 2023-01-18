@@ -288,6 +288,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             var token = response['access_token'];
             await Prefs.setToken(token);
 
+            await userBloc.getProfile();
             SuccessScreen.open(
               context,
               type: 'MAIN',
