@@ -13,7 +13,7 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-  String? language;
+  String language="English";
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                       ),
                       Radio(
-                        toggleable: true,
                         value: "English",
                         groupValue: language,
                         onChanged: (value) {
@@ -124,7 +123,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         ),
                       ),
                       Radio(
-                        toggleable: true,
                         value: "Arabic",
                         groupValue: language,
                         onChanged: (value) {
