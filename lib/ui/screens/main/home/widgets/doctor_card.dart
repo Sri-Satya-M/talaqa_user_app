@@ -6,6 +6,20 @@ import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 
 class DoctorCard extends StatefulWidget {
+  final String name;
+  final String image;
+  final String languages;
+  final String specialization;
+  final int experience;
+
+  const DoctorCard(
+      {super.key,
+      required this.name,
+      required this.image,
+      required this.languages,
+      required this.specialization,
+      required this.experience});
+
   @override
   _DoctorCardState createState() => _DoctorCardState();
 }
@@ -15,6 +29,8 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return CustomCard(
+      height: 220,
+      width: double.maxFinite,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -23,9 +39,8 @@ class _DoctorCardState extends State<DoctorCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const ImageFromNet(
-                  imageUrl:
-                      'https://miro.medium.com/fit/c/88/88/1*0HhsaB_S9yiF-hi9AESZTg.jpeg',
+                ImageFromNet(
+                  imageUrl: widget.image,
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -39,11 +54,11 @@ class _DoctorCardState extends State<DoctorCard> {
                   children: [
                     DetailsTile(
                       title: Text(
-                        "Dr. Akbar",
+                        widget.name,
                         style: textTheme.headline2,
                       ),
                       value: Text(
-                        "Language therapist",
+                        widget.specialization,
                         style: textTheme.caption
                             ?.copyWith(color: MyColors.cerulean),
                       ),
@@ -61,7 +76,7 @@ class _DoctorCardState extends State<DoctorCard> {
                             ),
                           ),
                           child: Text(
-                            "8 years Exp.",
+                            '${widget.experience} years Exp.',
                             style: textTheme.subtitle2,
                           ),
                         ),
@@ -78,7 +93,7 @@ class _DoctorCardState extends State<DoctorCard> {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          "Arabic, English",
+                          widget.languages,
                           style: textTheme.bodyText1,
                         ),
                       ],

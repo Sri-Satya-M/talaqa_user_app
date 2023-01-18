@@ -1,5 +1,6 @@
 import 'package:alsan_app/resources/colors.dart';
-import 'package:alsan_app/ui/screens/main/home/widgets/doctor_card.dart';
+import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/widgets/clinician_api_card.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,37 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        DoctorCard(),
+        SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Featured Clinicians",
+              style: textTheme.bodyText1,
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SelectClinicians(),
+                  ),
+                );
+              },
+              child: Text(
+                "See all",
+                style:
+                    textTheme.headline2?.copyWith(color: MyColors.primaryColor),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 300,
+          child: ClinicianAPiCard(
+            scrollDirection: Axis.horizontal,
+          ),
+        ),
         PatientCard()
       ],
     );
