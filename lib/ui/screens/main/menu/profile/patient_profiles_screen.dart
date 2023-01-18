@@ -51,8 +51,8 @@ class _PatientProfileState extends State<PatientProfile> {
               child: Row(
                 children: [
                   Avatar(
-                    url: profiles[index]?.image,
-                    name: profiles[index]?.fullName,
+                    url: profiles[index].image,
+                    name: profiles[index].fullName,
                     borderRadius: BorderRadius.circular(10),
                     size: 72,
                   ),
@@ -60,12 +60,12 @@ class _PatientProfileState extends State<PatientProfile> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(profiles[index]?.fullName ?? 'NA'),
+                      Text(profiles[index].fullName ?? 'NA'),
                       const SizedBox(height: 4),
                       Row(
                         children: [
                           Text(
-                            profiles[index]?.age.toString() ?? 'NA',
+                            profiles[index].age?.toString() ?? 'NA',
                             style: textTheme.caption,
                           ),
                           const SizedBox(width: 12),
@@ -78,7 +78,7 @@ class _PatientProfileState extends State<PatientProfile> {
                               color: Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(3),
                             ),
-                            child: Text(profiles[index]?.gender ?? 'NA',
+                            child: Text(profiles[index].gender ?? 'NA',
                                 style: textTheme.subtitle2),
                           ),
                         ],
@@ -87,11 +87,11 @@ class _PatientProfileState extends State<PatientProfile> {
                       Row(
                         children: [
                           Text(
-                            '${profiles[index]?.city ?? 'NA'}, ',
+                            '${profiles[index].city ?? 'NA'}, ',
                             style: textTheme.subtitle2,
                           ),
                           Text(
-                            profiles[index]?.country ?? 'NA',
+                            profiles[index].country ?? 'NA',
                             style: textTheme.subtitle2,
                           ),
                         ],

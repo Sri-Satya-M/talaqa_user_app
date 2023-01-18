@@ -1,8 +1,8 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
-import 'package:alsan_app/ui/screens/main/home/widgets/clinician_api_card.dart';
-import 'package:alsan_app/ui/screens/main/sessions/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/clinician_list.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       children: [
         Container(
           padding: const EdgeInsets.fromLTRB(14, 20, 14, 10),
@@ -70,13 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        SizedBox(
-          height: 300,
-          child: ClinicianAPiCard(
-            scrollDirection: Axis.horizontal,
-          ),
+        const SizedBox(
+          height: 230,
+          child: ClinicianList(scrollDirection: Axis.horizontal),
         ),
-        PatientCard()
       ],
     );
   }

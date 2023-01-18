@@ -61,7 +61,7 @@ class ImagePickerContainer extends StatefulWidget {
         images = response.files!;
       }
     }
-    return images?.map((e) => File(e.path)).toList();
+    return images.map((e) => File(e.path)).toList();
   }
 
   static Future<File?> getVideo(

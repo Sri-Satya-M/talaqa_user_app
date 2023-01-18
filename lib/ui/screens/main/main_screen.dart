@@ -44,6 +44,7 @@ class _MainScreenState extends State<MainScreen> {
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 16,
         title: Text(userBloc.profile?.user?.fullName ?? ''),
         actions: [
           IconButton(

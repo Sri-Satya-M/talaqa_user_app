@@ -3,6 +3,8 @@ import 'package:alsan_app/ui/screens/main/menu/reports/widgets/time_slot.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
+import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
+import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
 
 class PatientCard extends StatefulWidget {
@@ -27,22 +29,20 @@ class _PatientCardState extends State<PatientCard> {
                   "ALSOO34",
                   style: textTheme.headline4,
                 ),
-                ElevatedButton(
-                  onPressed: null,
-                  style: ElevatedButton.styleFrom(
-                    disabledBackgroundColor: MyColors.yellow,
-                    backgroundColor: MyColors.yellow,
-                    foregroundColor: MyColors.secondaryColor,
-                    fixedSize: const Size(140, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: MyColors.yellow,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 12,
                   ),
                   child: Text(
                     'PENDING',
                     style: textTheme.bodyText1,
                   ),
-                ),
+                )
               ],
             ),
             const SizedBox(height: 20),
@@ -51,9 +51,7 @@ class _PatientCardState extends State<PatientCard> {
                 const Avatar(
                   url:
                       'https://miro.medium.com/fit/c/88/88/1*0HhsaB_S9yiF-hi9AESZTg.jpeg',
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 const SizedBox(width: 8),
                 DetailsTile(
@@ -66,43 +64,37 @@ class _PatientCardState extends State<PatientCard> {
               ],
             ),
             const SizedBox(height: 12),
-            Row(
+            DynamicGridView(
+              spacing: 5,
+              count: 2,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Patient", style: textTheme.caption),
-                    const SizedBox(height: 4),
-                    Text(
-                      "ALex Oliver",
-                      style: textTheme.headline3
-                          ?.copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                ReverseDetailsTile(
+                  title: Text("Patient", style: textTheme.caption),
+                  value: Text(
+                    "ALex Oliver",
+                    style: textTheme.headline3
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
                 ),
-                const SizedBox(width: 102),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Speciality", style: textTheme.caption),
-                    const SizedBox(height: 4),
-                    Text(
-                      "Speech Therapy",
-                      style: textTheme.headline3
-                          ?.copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                ReverseDetailsTile(
+                  title: Text("Mode of consultation", style: textTheme.caption),
+                  value: Text(
+                    "ALex Oliver",
+                    style: textTheme.headline3
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                ),
+                ReverseDetailsTile(
+                  title: Text("Speciality", style: textTheme.caption),
+                  value: Text(
+                    "Speech Therapy",
+                    style: textTheme.headline3
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 14),
-            Text("Mode of consultation", style: textTheme.caption),
-            const SizedBox(height: 5),
-            Text(
-              "At Home",
-              style: textTheme.headline3?.copyWith(fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             TimeSlot()
           ],
         ),

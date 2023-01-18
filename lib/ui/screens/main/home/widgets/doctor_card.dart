@@ -27,14 +27,17 @@ class DoctorCard extends StatefulWidget {
 class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
     return CustomCard(
       height: 220,
-      width: double.maxFinite,
+      width: size.width * 0.8,
+      radius: 5,
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,7 +106,7 @@ class _DoctorCardState extends State<DoctorCard> {
                 const SizedBox(height: 14),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.navyBlue,
