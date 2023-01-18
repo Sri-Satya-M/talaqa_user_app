@@ -19,6 +19,7 @@ class MyColors {
   static const cerulean = Color(0xFF1268AE);
   static const navyBlue = Color(0xFF04457A);
   static const lightGreen = Color(0xFF1B9B20);
+  static const paleViolet = Color(0xFFE6EAFF);
   static const paleGreen = Color(0xFFECFFEE);
   static const yellow = Color(0xFFFFCE5B);
   static const glacier = Color(0xFFD5DFE6);

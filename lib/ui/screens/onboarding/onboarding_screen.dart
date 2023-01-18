@@ -19,38 +19,43 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: 550,
-            padding: const EdgeInsets.fromLTRB(70, 87, 70, 47),
-            decoration: const BoxDecoration(
-              color: MyColors.paleGreen,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(150),
+          Expanded(
+            flex: 5,
+            child: Container(
+              height: 550,
+              padding: const EdgeInsets.fromLTRB(70, 87, 70, 47),
+              decoration: const BoxDecoration(
+                color: MyColors.paleGreen,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(120),
+                ),
+              ),
+              child: Image.asset(
+                Images.onBoardingImage,
+                fit: BoxFit.contain,
               ),
             ),
-            child: Image.asset(
-              Images.onBoardingImage,
-              height: 292,
-              width: 220,
-            ),
           ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: const [
-                Text(
-                  "Book Speech Therapy \n Sessions Online",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 15),
-                Text(
-                  "Users can search and book online/offline sessions with speech therapy consultants right from their fingertips",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
-                )
-              ],
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Book Speech Therapy \n Sessions Online",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    "Users can search and book online/offline sessions with speech therapy consultants right from their fingertips",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -61,7 +66,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           onPressed: () {
             Navigator.of(context).pushNamedAndRemoveUntil(
               Routes.signUp,
-                  (route) => false,
+              (route) => false,
             );
           },
           child: const Text("Get Started"),
