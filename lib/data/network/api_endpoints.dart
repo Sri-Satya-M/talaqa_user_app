@@ -7,5 +7,6 @@ class Api {
   static const patient = '/patients';
   static const profile = '$patient/profile';
   static const patientProfiles = '$patient/patient-profiles';
+  static const clinicians = '/clinicians';
 
 }

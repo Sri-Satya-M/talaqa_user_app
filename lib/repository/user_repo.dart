@@ -1,5 +1,6 @@
 import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/data/network/api_endpoints.dart';
+import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 
 class UserRepo {
@@ -44,5 +45,11 @@ class UserRepo {
 
   Future deletePatients({id}) async {
     return await apiClient.delete('${Api.patientProfiles}/$id');
+  }
+
+  Future<List<Clinicians>> getClinicians() async {
+    var response = await apiClient.get(Api.clinicians);
+    var list = response as List;
+    return list.map((e) => Clinicians.fromJson(e)).toList();
   }
 }

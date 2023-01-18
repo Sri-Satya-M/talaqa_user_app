@@ -1,3 +1,4 @@
+import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,5 +65,9 @@ class UserBloc with ChangeNotifier {
       id: id,
     ) as Map<String, dynamic>;
     return response.containsKey('id') ? true : false;
+  }
+
+  Future<List<Clinicians>> getClinicians() {
+    return _userRepo.getClinicians();
   }
 }
