@@ -1,14 +1,17 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/theme.dart';
+import 'package:alsan_app/ui/screens/main/browse/browse_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/home_screen.dart';
+
 import 'package:alsan_app/ui/screens/main/menu/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
-  
+
   static Future open(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute(
@@ -37,10 +40,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hi Marshall"),
+        title: Text(userBloc.profile?.user?.fullName ?? ''),
         actions: [
           IconButton(
             onPressed: () {},
@@ -96,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
             case 0:
               return HomeScreen();
             case 1:
-              return Container();
+              return BrowseScreen();
             case 2:
               return Container();
             case 3:
