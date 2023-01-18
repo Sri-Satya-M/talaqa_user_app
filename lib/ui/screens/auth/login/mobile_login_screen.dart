@@ -27,7 +27,7 @@ class _MobileLoginState extends State<MobileLogin> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 120),
+            const SizedBox(height: 60),
             Image.asset(Images.logo, height: 60, width: 200),
             const SizedBox(height: 72),
             const Text(

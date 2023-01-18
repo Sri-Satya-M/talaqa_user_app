@@ -29,15 +29,15 @@ class _EmailLoginState extends State<EmailLogin> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 120),
+            const SizedBox(height: 48),
             Image.asset(Images.logo, height: 60, width: 200),
-            const SizedBox(height: 72),
+            const SizedBox(height: 48),
             const Text(
               "Login with Email Address",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             TextFormField(
               onChanged: (value) {
                 email = value.toString();
@@ -48,7 +48,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 hintText: "Enter your email ID",
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             TextFormField(
               onChanged: (value) {
                 password = value.toString();
@@ -111,7 +111,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             ProgressButton(
               onPressed: () {
                 Navigator.push(
