@@ -17,6 +17,7 @@ class _PatientCardState extends State<PatientCard> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return CustomCard(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -70,27 +71,22 @@ class _PatientCardState extends State<PatientCard> {
               children: [
                 ReverseDetailsTile(
                   title: Text("Patient", style: textTheme.caption),
-                  value: Text(
-                    "ALex Oliver",
-                    style: textTheme.headline3
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
+                  value: Text("ALex Oliver", style: textTheme.bodyText1),
                 ),
                 ReverseDetailsTile(
                   title: Text("Mode of consultation", style: textTheme.caption),
-                  value: Text(
-                    "ALex Oliver",
-                    style: textTheme.headline3
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
+                  value: Text("ALex Oliver", style: textTheme.bodyText1),
                 ),
                 ReverseDetailsTile(
                   title: Text("Speciality", style: textTheme.caption),
                   value: Text(
                     "Speech Therapy",
-                    style: textTheme.headline3
-                        ?.copyWith(fontWeight: FontWeight.w400),
+                    style: textTheme.bodyText1,
                   ),
+                ),
+                ReverseDetailsTile(
+                  title: Text("Speciality", style: textTheme.caption),
+                  value: Text("Speech Therapy", style: textTheme.bodyText1),
                 ),
               ],
             ),
