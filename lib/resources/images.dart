@@ -21,5 +21,6 @@ class Images {
   static const animatedLogo = 'assets/images/animated_logo.gif';
   static const success = 'assets/images/success.json';
   static const referImage = 'assets/images/referImage.png';
+  static const articleImage = 'assets/images/article.png';
 
 }
