@@ -14,11 +14,11 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   static Future open(BuildContext context) {
-    return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const MainScreen(),
-      ),
-    );
+    return Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const MainScreen(),
+        ),
+        (route) => false);
   }
 
   @override
@@ -27,6 +27,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late TabController tabController;
+
   int tabLength(int index) {
     switch (index) {
       case 2:
@@ -41,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: true);

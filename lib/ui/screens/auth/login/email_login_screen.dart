@@ -85,6 +85,8 @@ class _EmailLoginState extends State<EmailLogin> {
                 var token = response['access_token'];
                 await Prefs.setToken(token);
 
+                await userBloc.getProfile();
+
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => MainScreen()),
