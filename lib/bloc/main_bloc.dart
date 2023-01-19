@@ -9,7 +9,7 @@ class MainBloc with ChangeNotifier{
     notifyListeners();
   }
 
-  void ChangeTab(int index){
+  void changeTab(int index){
     tab = index;
     notifyListeners();
   }
