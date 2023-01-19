@@ -54,7 +54,7 @@ class Profile {
     "patientId": patientId,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
-    "user": user!.toJson(),
+    "user": user?.toJson(),
   };
 }
 
