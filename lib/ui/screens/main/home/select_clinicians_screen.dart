@@ -1,6 +1,7 @@
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 
+import 'booking/booking_screen.dart';
 import 'widgets/clinician_list.dart';
 
 class SelectClinicians extends StatefulWidget {
@@ -35,7 +36,12 @@ class _SelectCliniciansState extends State<SelectClinicians> {
               ),
             ),
           ),
-          const ClinicianList(scrollDirection: Axis.vertical)
+          ClinicianList(
+            scrollDirection: Axis.vertical,
+            onTap: (clinician) {
+              BookingScreen.open(context, clinician: clinician);
+            },
+          )
         ],
       ),
     );

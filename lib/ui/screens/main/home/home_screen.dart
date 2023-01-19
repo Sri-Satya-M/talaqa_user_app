@@ -1,4 +1,5 @@
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return ListView(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       children: [
         Container(
           padding: const EdgeInsets.fromLTRB(14, 20, 14, 10),
@@ -70,9 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        const SizedBox(
+        SizedBox(
           height: 230,
-          child: ClinicianList(scrollDirection: Axis.horizontal),
+          child: ClinicianList(
+            scrollDirection: Axis.horizontal,
+            onTap: (clinician) {
+              BookingScreen.open(context, clinician: clinician);
+            },
+          ),
         ),
       ],
     );

@@ -5,20 +5,17 @@ import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 
-class DoctorCard extends StatefulWidget {
-  final String name;
-  final String image;
-  final String languages;
-  final String specialization;
-  final int experience;
+import '../../../../../model/clinicians.dart';
 
-  const DoctorCard(
-      {super.key,
-      required this.name,
-      required this.image,
-      required this.languages,
-      required this.specialization,
-      required this.experience});
+class DoctorCard extends StatefulWidget {
+  final Clinician clinician;
+  final Function onTap;
+
+  const DoctorCard({
+    super.key,
+    required this.clinician,
+    required this.onTap,
+  });
 
   @override
   _DoctorCardState createState() => _DoctorCardState();
@@ -43,8 +40,8 @@ class _DoctorCardState extends State<DoctorCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ImageFromNet(
-                  imageUrl: widget.image,
-                  borderRadius: BorderRadius.all(
+                  imageUrl: widget.clinician.image,
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
                   height: 100,
@@ -57,11 +54,11 @@ class _DoctorCardState extends State<DoctorCard> {
                   children: [
                     DetailsTile(
                       title: Text(
-                        widget.name,
+                        widget.clinician.user?.fullName ?? ' NA',
                         style: textTheme.headline2,
                       ),
                       value: Text(
-                        widget.specialization,
+                        widget.clinician.designation ?? 'NA',
                         style: textTheme.caption
                             ?.copyWith(color: MyColors.cerulean),
                       ),
@@ -79,14 +76,14 @@ class _DoctorCardState extends State<DoctorCard> {
                             ),
                           ),
                           child: Text(
-                            '${widget.experience} years Exp.',
+                            '${widget.clinician.experience} years Exp.',
                             style: textTheme.subtitle2,
                           ),
                         ),
                         const SizedBox(width: 18),
                       ],
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Row(
                       children: [
                         Image.asset(
@@ -94,9 +91,9 @@ class _DoctorCardState extends State<DoctorCard> {
                           height: 16,
                           width: 16,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          widget.languages,
+                          widget.clinician.languagesKnown ?? 'NA',
                           style: textTheme.bodyText1,
                         ),
                       ],
@@ -113,12 +110,13 @@ class _DoctorCardState extends State<DoctorCard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 textStyle: textTheme.headline3,
                 fixedSize: const Size(140, 50),
               ),
-              onPressed: () {},
-              child: Text('Book a session'),
+              onPressed: () {
+                widget.onTap(widget.clinician);
+              },
+              child: const Text('Book a session'),
             ),
           ],
         ),

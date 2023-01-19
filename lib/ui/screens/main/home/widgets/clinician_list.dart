@@ -11,8 +11,13 @@ import 'doctor_card.dart';
 
 class ClinicianList extends StatefulWidget {
   final Axis scrollDirection;
+  final Function onTap;
 
-  const ClinicianList({super.key, required this.scrollDirection});
+  const ClinicianList({
+    super.key,
+    required this.scrollDirection,
+    required this.onTap,
+  });
 
   @override
   _ClinicianListState createState() => _ClinicianListState();
@@ -22,7 +27,7 @@ class _ClinicianListState extends State<ClinicianList> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    return FutureBuilder<List<Clinicians>>(
+    return FutureBuilder<List<Clinician>>(
       future: userBloc.getClinicians(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -39,13 +44,8 @@ class _ClinicianListState extends State<ClinicianList> {
             right: (widget.scrollDirection == Axis.horizontal) ? 8 : 0,
           ),
           physics: const ScrollPhysics(),
-          itemBuilder: (context, index) => DoctorCard(
-            name: clinicians[index].user?.fullName ?? 'NA',
-            image: clinicians[index].image ?? 'NA',
-            languages: "English",
-            specialization: clinicians[index].designation ?? 'NA',
-            experience: clinicians[index].experience ?? -1,
-          ),
+          itemBuilder: (context, index) =>
+              DoctorCard(clinician: clinicians[index], onTap: widget.onTap),
         );
       },
     );
