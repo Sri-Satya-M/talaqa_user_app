@@ -26,13 +26,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Widget> tabBars = [
-    const Center(child: Text("Actions")),
-    const Center(child: Text("Videos")),
-  ];
-
+  late TabController tabController;
   int tabLength(int index) {
     switch (index) {
+      case 2:
+        return 3;
       case 3:
         return 2;
     }
@@ -40,8 +38,12 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    var mainBloc = Provider.of<MainBloc>(context, listen: false);
+    var mainBloc = Provider.of<MainBloc>(context, listen: true);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
     return DefaultTabController(
@@ -65,9 +67,27 @@ class _MainScreenState extends State<MainScreen> {
             child: Builder(
               builder: (context) {
                 switch (mainBloc.index) {
+                  case 2:
+                    return TabBar(
+                      onTap: (value) {
+                        setState(() {
+                          mainBloc.changeTab(value);
+                        });
+                      },
+                      tabs: const [
+                        Tab(text: 'Upcoming'),
+                        Tab(text: 'Completed'),
+                        Tab(text: "Cancelled"),
+                      ],
+                    );
                   case 3:
-                    return const TabBar(
-                      tabs: [
+                    return TabBar(
+                      onTap: (value) {
+                        setState(() {
+                          mainBloc.changeTab(value);
+                        });
+                      },
+                      tabs: const [
                         Tab(text: 'Articles'),
                         Tab(text: 'Videos'),
                       ],
@@ -86,7 +106,9 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: mainBloc.index,
           onTap: (value) {
             setState(() {
-              mainBloc.index = value;
+              mainBloc.changeIndex(value);
+              mainBloc.changeTab(0);
+              print(mainBloc.tab);
             });
           },
           selectedItemColor: MyColors.cerulean,
