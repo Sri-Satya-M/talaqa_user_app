@@ -13,6 +13,9 @@ class Images {
   static const patient = 'assets/icons/patient.png';
   static const pendingSession = 'assets/icons/pendingSession.png';
   static const voice = 'assets/icons/voice.png';
+  static const video = 'assets/icons/video.png';
+  static const call = 'assets/icons/call.png';
+  static const home = 'assets/icons/home.png';
 
 
   ///images
