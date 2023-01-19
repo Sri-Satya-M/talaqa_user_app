@@ -1,5 +1,5 @@
-class Clinicians {
-  Clinicians({
+class Clinician {
+  Clinician({
     this.id,
     this.image,
     this.alternateEmail,
@@ -31,7 +31,7 @@ class Clinicians {
   DateTime? updatedAt;
   User? user;
 
-  factory Clinicians.fromJson(Map<String, dynamic> json) => Clinicians(
+  factory Clinician.fromJson(Map<String, dynamic> json) => Clinician(
     id: json["id"],
     image: json["image"],
     alternateEmail: json["alternateEmail"],

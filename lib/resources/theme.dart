@@ -292,11 +292,11 @@ class AppTheme {
         }),
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: MyColors.card,
-        disabledColor: Colors.grey,
+        backgroundColor: Colors.white,
+        disabledColor: Colors.grey[400],
         selectedColor: primaryColor,
         secondarySelectedColor: primaryColor,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
         labelStyle: bodyText1.copyWith(height: 1.2, color: Colors.black),
         secondaryLabelStyle: bodyText1.copyWith(
           height: 1.2,

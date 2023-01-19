@@ -47,9 +47,9 @@ class UserRepo {
     return await apiClient.delete('${Api.patientProfiles}/$id');
   }
 
-  Future<List<Clinicians>> getClinicians() async {
+  Future<List<Clinician>> getClinicians() async {
     var response = await apiClient.get(Api.clinicians);
     var list = response as List;
-    return list.map((e) => Clinicians.fromJson(e)).toList();
+    return list.map((e) => Clinician.fromJson(e)).toList();
   }
 }
