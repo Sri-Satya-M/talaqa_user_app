@@ -1,7 +1,11 @@
+import 'package:alsan_app/bloc/main_bloc.dart';
+import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/clinician_list.dart';
 
@@ -11,42 +15,57 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, dynamic>> bannerList = [
+    {
+      'image': Images.topBanner1,
+    },
+    {
+      'image': Images.topBanner2,
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
+    var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
+    var size = MediaQuery.of(context).size;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Container(
-          padding: const EdgeInsets.fromLTRB(14, 20, 14, 10),
-          decoration: BoxDecoration(
-            color: MyColors.paleBlue,
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          height: 140,
-          width: 320,
-          child: Row(
+        SizedBox(
+          height: 160,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Speech Therapy",
-                    style: textTheme.subtitle2,
+              for (var i = 0; i < 2; i++)
+                GestureDetector(
+                  onTap: () {
+                    BookingScreen.open(context, clinician: Clinician());
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 6),
+                    child: Image.asset(
+                      bannerList[i]['image'].toString(),
+                      fit: BoxFit.fitWidth,
+                      width: size.width * 0.9,
+                    ),
                   ),
-                  Text(
-                    "at your Fingertips",
-                    style: textTheme.headline6,
-                  )
-                ],
-              )
+                ),
             ],
           ),
         ),
-        SizedBox(height: 12),
+        const SizedBox(height: 16),
+        GestureDetector(
+          onTap: () {
+            BookingScreen.open(context, clinician: Clinician());
+          },
+          child: Container(
+            child: Image.asset(
+              Images.midBanner,
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -78,6 +97,32 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: (clinician) {
               BookingScreen.open(context, clinician: clinician);
             },
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          "Resources",
+          style: textTheme.bodyText1,
+        ),
+        const SizedBox(height: 12),
+        GestureDetector(
+          onTap: () {
+            mainBloc.changeIndex(3);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: Colors.black.withOpacity(0.1),
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                Images.resourcesBanner,
+              ),
+            ),
           ),
         ),
       ],
