@@ -16,7 +16,7 @@ class Images {
   static const video = 'assets/icons/video.png';
   static const call = 'assets/icons/call.png';
   static const home = 'assets/icons/home.png';
-
+  static const marker = 'assets/icons/marker.png';
 
   ///images
   static const logo = 'assets/images/logo.png';
@@ -25,5 +25,4 @@ class Images {
   static const success = 'assets/images/success.json';
   static const referImage = 'assets/images/referImage.png';
   static const articleImage = 'assets/images/article.png';
-
 }
