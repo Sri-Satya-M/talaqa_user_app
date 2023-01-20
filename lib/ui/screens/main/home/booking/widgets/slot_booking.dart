@@ -1,5 +1,7 @@
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
+import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
@@ -9,8 +11,9 @@ import '../../../../../widgets/image_from_net.dart';
 
 class SlotBooking extends StatefulWidget {
   final Clinician clinician;
+  final Function onTap;
 
-  const SlotBooking({super.key, required this.clinician});
+  const SlotBooking({super.key, required this.clinician, required this.onTap});
 
   @override
   _SlotBookingState createState() => _SlotBookingState();
@@ -18,6 +21,9 @@ class SlotBooking extends StatefulWidget {
 
 class _SlotBookingState extends State<SlotBooking> {
   String? selectDate;
+  String? modeOfConsultation;
+  var currentDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -96,44 +102,51 @@ class _SlotBookingState extends State<SlotBooking> {
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: MyColors.divider),
-          ),
+          decoration: (modeOfConsultation == null)
+              ? DottedDecoration(
+                  shape: Shape.box,
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(10),
+                )
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: MyColors.divider),
+                ),
           child: DetailsTile(
             gap: 6,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Video Call Consultation',
-                  style: textTheme.bodyText2,
-                ),
+                (modeOfConsultation == null)
+                    ? Text('Select Consultation Mode',style: textTheme.caption,)
+                    : Text(
+                        'Video Call Consultation',
+                        style: textTheme.bodyText2,
+                      ),
                 GestureDetector(
-                  onTap: () async{
-                    var result = await ConsultationDialog.open(context);
+                  onTap: () async {
+                    modeOfConsultation = await ConsultationDialog.open(context);
+                    widget.onTap(modeOfConsultation);
                   },
-                  child: Image.asset(
-                    Images.editIcon,
-                    width: 15,
-                    height: 15,
-                  ),
+                  child: Image.asset(Images.editIcon, width: 15, height: 15),
                 ),
               ],
             ),
-            value: Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 10,
-              ),
-              decoration: BoxDecoration(
-                  color: MyColors.paleBlue,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Text(
-                '${widget.clinician.experience} years Exp.',
-                style: textTheme.subtitle2,
-              ),
-            ),
+            value: (modeOfConsultation == null)
+                ? SizedBox()
+                : Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 10,
+                    ),
+                    decoration: BoxDecoration(
+                        color: MyColors.paleBlue,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      '${widget.clinician.experience} years Exp.',
+                      style: textTheme.subtitle2,
+                    ),
+                  ),
           ),
         ),
         const SizedBox(height: 16),
@@ -145,36 +158,62 @@ class _SlotBookingState extends State<SlotBooking> {
         SizedBox(
           height: 80,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: 7,
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Container(
-                height: 80,
-                width: 70,
-                margin: const EdgeInsets.only(right: 8),
-                decoration: BoxDecoration(
-                  color: MyColors.primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Today',
-                      style: textTheme.caption?.copyWith(color: Colors.white),
-                    ),
-                    Text(
-                      '16 Dec',
-                      style: textTheme.caption?.copyWith(color: Colors.white),
-                    ),
-                    Text(
-                      'Avaiable',
-                      style: textTheme.caption
-                          ?.copyWith(fontSize: 10, color: Colors.white),
-                    ),
-                  ],
+              var date = DateFormat('dd MMM')
+                  .format(currentDate.add(Duration(days: index)));
+              var day = DateFormat('E')
+                  .format(currentDate.add(Duration(days: index)));
+              var dateString = DateFormat('yyyy-MM-dd')
+                  .format(currentDate.add(Duration(days: index)));
+              var textColor = getTextColor(day, dateString);
+              return GestureDetector(
+                onTap: () {
+                  if (day == "Sun") return;
+                  selectedDate = currentDate.add(Duration(days: index));
+                  setState(() {});
+                },
+                child: Container(
+                  height: 80,
+                  width: 70,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: (day == 'Sun')
+                        ? Colors.grey.withOpacity(0.4)
+                        : getColor(day, dateString),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: (day == 'Sun')
+                            ? Colors.grey.withOpacity(0.4)
+                            : MyColors.primaryColor),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        day,
+                        style: textTheme.caption?.copyWith(
+                          color: textColor,
+                        ),
+                      ),
+                      Text(
+                        date,
+                        style: textTheme.caption?.copyWith(
+                          color: textColor,
+                        ),
+                      ),
+                      Text(
+                        'Available',
+                        style: textTheme.caption?.copyWith(
+                          fontSize: 10,
+                          color: textColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -185,7 +224,7 @@ class _SlotBookingState extends State<SlotBooking> {
           'Available Time Slots',
           style: textTheme.caption?.copyWith(color: Colors.black),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           'Morning',
           style: textTheme.caption?.copyWith(
@@ -234,21 +273,15 @@ class _SlotBookingState extends State<SlotBooking> {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: MyColors.divider,
-              ),
+              borderSide: const BorderSide(color: MyColors.divider),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: MyColors.divider,
-              ),
+              borderSide: const BorderSide(color: MyColors.divider),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
-                color: MyColors.cerulean,
-              ),
+              borderSide: const BorderSide(color: MyColors.cerulean),
             ),
           ),
           minLines: 3,
@@ -257,5 +290,24 @@ class _SlotBookingState extends State<SlotBooking> {
         const SizedBox(height: 32),
       ],
     );
+  }
+
+  getColor(String day, String dateString) {
+    if (day == 'Sun') {
+      return Colors.grey.withOpacity(0.4);
+    } else if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString) {
+      return MyColors.primaryColor;
+    } else {
+      return Colors.transparent;
+    }
+  }
+
+  getTextColor(String day, String dateString) {
+    if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString ||
+        day == 'Sun') {
+      return Colors.white;
+    } else {
+      return MyColors.primaryColor;
+    }
   }
 }

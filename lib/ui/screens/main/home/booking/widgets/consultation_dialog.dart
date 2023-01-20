@@ -6,15 +6,15 @@ import '../../../../../widgets/details_tile.dart';
 class ConsultationDialog extends StatefulWidget {
   static Future open(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return showDialog<bool>(
+    return showDialog<String>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          titlePadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           title: Row(
             children: [
               Text('Mode of Consultation', style: textTheme.headline4),
-              Spacer(),
+              const Spacer(),
               IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(
@@ -111,7 +111,9 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context, 'HOME');
+              },
               child: const Text('Book Now'),
             ),
           ),
