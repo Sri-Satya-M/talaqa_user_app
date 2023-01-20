@@ -4,6 +4,7 @@ import 'package:alsan_app/repository/user_repo.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../data/local/shared_prefs.dart';
+import '../model/resources.dart';
 
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
@@ -69,5 +70,9 @@ class UserBloc with ChangeNotifier {
 
   Future<List<Clinician>> getClinicians() {
     return _userRepo.getClinicians();
+  }
+
+  Future<List<Resources>> getResources({query}) {
+    return _userRepo.getResources(query: query);
   }
 }
