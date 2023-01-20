@@ -1,4 +1,5 @@
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/booking_details.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_profiles.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking.dart';
@@ -35,15 +36,17 @@ class _BookingScreenState extends State<BookingScreen> {
     'Slot Booking',
     'Booking Details'
   ];
+  String? modeOfConsultation;
 
   late PageController controller;
   Clinician? selectedClinician;
   late Profile selectedPatient;
 
   addExtraStep() {
+    if(titles.length == 5) return;
     setState(() {
       steps += 1;
-      titles.insert(3, 'Extra Step');
+      titles.insert(3, 'Select Address');
     });
   }
 
@@ -68,7 +71,6 @@ class _BookingScreenState extends State<BookingScreen> {
         actions: [
           TextButton(
             onPressed: () async {
-              // addExtraStep();
               if (pageIndex < steps) {
                 pageIndex += 1;
                 controller.animateToPage(
@@ -102,9 +104,9 @@ class _BookingScreenState extends State<BookingScreen> {
                         for (int i = 1; i <= steps; i++) getPageIndex(i),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
-                      '${titles[pageIndex - 1]}',
+                      titles[pageIndex - 1],
                       style: textTheme.headline4,
                     ),
                   ],
@@ -115,6 +117,7 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
@@ -164,8 +167,26 @@ class _BookingScreenState extends State<BookingScreen> {
                       top: Radius.circular(28),
                     ),
                   ),
-                  child: SlotBooking(clinician: selectedClinician!),
+                  child: SlotBooking(
+                    clinician: selectedClinician!,
+                    onTap: (value) {
+                      modeOfConsultation = value;
+                      if (modeOfConsultation == 'HOME') {
+                        addExtraStep();
+                      }
+                    },
+                  ),
                 ),
+                if (modeOfConsultation == 'HOME')
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(28),
+                      ),
+                    ),
+                    child: AddAddress(),
+                  ),
                 Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
