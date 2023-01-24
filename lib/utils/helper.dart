@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Helper {
@@ -27,10 +28,21 @@ class Helper {
 
   static textCapitalization({required String text}) {
     var a = text
-            .split(' ')
-            .map((e) => e[0].toUpperCase() + e.substring(1,).toLowerCase())
-            .toList()
-            .join(' ');
+        .split(' ')
+        .map((e) =>
+            e[0].toUpperCase() +
+            e
+                .substring(
+                  1,
+                )
+                .toLowerCase())
+        .toList()
+        .join(' ');
     return a;
+  }
+
+  static String formatDate({required DateTime? date, String pattern='yyyy-mm-dd'}) {
+    if (date == null) return 'NA';
+    return DateFormat(pattern).format(date);
   }
 }

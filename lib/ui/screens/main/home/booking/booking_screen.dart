@@ -37,11 +37,16 @@ class _BookingScreenState extends State<BookingScreen> {
     'Slot Booking',
     'Booking Details'
   ];
-  ModeOfConsultation? modeOfConsultation;
 
   late PageController controller;
+
   Clinician? selectedClinician;
   late Profile selectedPatient;
+
+  ModeOfConsultation? selectedModeOfConsultation;
+  DateTime? selectedDate;
+  List<String>? selectedTimeSlot;
+  String description = '';
 
   addExtraStep() {
     if (titles.length == 5) return;
@@ -174,15 +179,15 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: SlotBooking(
                     clinician: selectedClinician!,
                     onTap: (value) {
-                      modeOfConsultation = value;
-                      if (modeOfConsultation != null) {
+                      selectedModeOfConsultation = value;
+                      if (selectedModeOfConsultation != null) {
                         addExtraStep();
                         setState(() {});
                       }
                     },
                   ),
                 ),
-                if (modeOfConsultation == 'HOME')
+                if (selectedModeOfConsultation?.type == 'HOME')
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
