@@ -1,3 +1,4 @@
+import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/booking_details.dart';
@@ -36,14 +37,14 @@ class _BookingScreenState extends State<BookingScreen> {
     'Slot Booking',
     'Booking Details'
   ];
-  String? modeOfConsultation;
+  ModeOfConsultation? modeOfConsultation;
 
   late PageController controller;
   Clinician? selectedClinician;
   late Profile selectedPatient;
 
   addExtraStep() {
-    if(titles.length == 5) return;
+    if (titles.length == 5) return;
     setState(() {
       steps += 1;
       titles.insert(3, 'Select Address');
@@ -88,28 +89,31 @@ class _BookingScreenState extends State<BookingScreen> {
       body: Column(
         children: [
           const SizedBox(height: 16),
-          Expanded(
-            flex: 1,
-            child: SizedBox(
-              height: 50,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        for (int i = 1; i <= steps; i++) getPageIndex(i),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      titles[pageIndex - 1],
-                      style: textTheme.headline4,
-                    ),
-                  ],
+          SizedBox(
+            height: 100,
+            child: Expanded(
+              flex: 1,
+              child: SizedBox(
+                height: 50,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          for (int i = 1; i <= steps; i++) getPageIndex(i),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        titles[pageIndex - 1],
+                        style: textTheme.headline4,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -117,7 +121,7 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
@@ -171,8 +175,9 @@ class _BookingScreenState extends State<BookingScreen> {
                     clinician: selectedClinician!,
                     onTap: (value) {
                       modeOfConsultation = value;
-                      if (modeOfConsultation == 'HOME') {
+                      if (modeOfConsultation != null) {
                         addExtraStep();
+                        setState(() {});
                       }
                     },
                   ),

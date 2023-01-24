@@ -1,3 +1,4 @@
+import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class SlotBooking extends StatefulWidget {
 
 class _SlotBookingState extends State<SlotBooking> {
   String? selectDate;
-  String? modeOfConsultation;
+  ModeOfConsultation? modeOfConsultation;
   var currentDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
 
@@ -30,6 +31,8 @@ class _SlotBookingState extends State<SlotBooking> {
     var textTheme = Theme.of(context).textTheme;
     return ListView(
       padding: const EdgeInsets.all(20),
+      scrollDirection: Axis.vertical,
+      physics: const ScrollPhysics(),
       children: [
         Text(
           'Clinician Details',
@@ -77,8 +80,9 @@ class _SlotBookingState extends State<SlotBooking> {
                                 horizontal: 10,
                               ),
                               decoration: BoxDecoration(
-                                  color: MyColors.paleBlue,
-                                  borderRadius: BorderRadius.circular(10)),
+                                color: MyColors.paleBlue,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               child: Text(
                                 '${widget.clinician.experience} years Exp.',
                                 style: textTheme.subtitle2,
@@ -118,30 +122,45 @@ class _SlotBookingState extends State<SlotBooking> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 (modeOfConsultation == null)
-                    ? Text('Select Consultation Mode',style: textTheme.caption,)
-                    : Text(
-                        'Video Call Consultation',
-                        style: textTheme.bodyText2,
+                    ? Text(
+                        'Select Consultation Mode',
+                        style: textTheme.caption,
+                      )
+                    : Row(
+                        children: [
+                          ImageFromNet(
+                            imageUrl: modeOfConsultation!.imageUrl,
+                            height: 12,
+                            width: 12,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '${modeOfConsultation?.title}',
+                            style: textTheme.bodyText2,
+                          ),
+                        ],
                       ),
                 GestureDetector(
                   onTap: () async {
                     modeOfConsultation = await ConsultationDialog.open(context);
                     widget.onTap(modeOfConsultation);
+
                   },
                   child: Image.asset(Images.editIcon, width: 15, height: 15),
                 ),
               ],
             ),
             value: (modeOfConsultation == null)
-                ? SizedBox()
+                ? const SizedBox()
                 : Container(
                     padding: const EdgeInsets.symmetric(
                       vertical: 5,
                       horizontal: 10,
                     ),
                     decoration: BoxDecoration(
-                        color: MyColors.paleBlue,
-                        borderRadius: BorderRadius.circular(10)),
+                      color: MyColors.paleBlue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Text(
                       '${widget.clinician.experience} years Exp.',
                       style: textTheme.subtitle2,
