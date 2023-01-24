@@ -1,12 +1,21 @@
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../widgets/details_tile.dart';
+import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_widget.dart';
+import '../../../../../widgets/loading_widget.dart';
 
 class ConsultationDialog extends StatefulWidget {
+  const ConsultationDialog({super.key});
+
   static Future open(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return showDialog<String>(
+    return showDialog<ModeOfConsultation?>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -16,7 +25,7 @@ class ConsultationDialog extends StatefulWidget {
               Text('Mode of Consultation', style: textTheme.headline4),
               const Spacer(),
               IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(context, null),
                 icon: Icon(
                   Icons.close_rounded,
                   color: Colors.black.withOpacity(0.5),
@@ -30,7 +39,8 @@ class ConsultationDialog extends StatefulWidget {
           backgroundColor: Colors.white,
           contentPadding: EdgeInsets.zero,
           elevation: 5,
-          content: ConsultationDialog(),
+          content: const ConsultationDialog(),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 16),
         );
       },
     );
@@ -41,83 +51,112 @@ class ConsultationDialog extends StatefulWidget {
 }
 
 class _ConsultationDialogState extends State<ConsultationDialog> {
-  var consultations = [
-    'Video Call Consultation Fee',
-    'Audio Call Consultation Fee',
-    'At Home Consultation Fee'
-  ];
-  int selected = 0;
+  int? selected;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return SizedBox(
-      height: 400,
+      height: 450,
       width: double.maxFinite,
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-        children: [
-          const Divider(),
-          const SizedBox(height: 8),
-          for (int i = 0; i < consultations.length; i++)
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selected = i;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: (selected == i)
-                        ? MyColors.primaryColor
-                        : Colors.grey.shade300,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    DetailsTile(
-                      title: Text(consultations[i]),
-                      value: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 2,
-                        ),
-                        decoration: const BoxDecoration(
-                          color: MyColors.lightBlue,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: const Text('100 Dirham'),
+      child: FutureBuilder<List<ModeOfConsultation>>(
+        future: sessionBloc.getModeOfConsultation(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return CustomErrorWidget(error: snapshot.error);
+          }
+          if (!snapshot.hasData) return const LoadingWidget();
+
+          var consultations = snapshot.data ?? [];
+          if (consultations.isEmpty) return const EmptyWidget();
+          return ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            physics: const ScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            children: [
+              const Divider(),
+              const SizedBox(height: 8),
+              for (int i = 0; i < consultations.length; i++)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selected = consultations[i].id!;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: (selected == consultations[i].id)
+                            ? MyColors.primaryColor
+                            : Colors.grey.shade300,
                       ),
                     ),
-                    const Spacer(),
-                    Radio(
-                      value: i,
-                      groupValue: selected,
-                      onChanged: (value) {
-                        setState(() {
-                          selected = value as int;
-                        });
-                      },
+                    child: Row(
+                      children: [
+                        DetailsTile(
+                          title: Row(
+                            children: [
+                              ImageFromNet(
+                                imageUrl: consultations[i].imageUrl,
+                                width: 12,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(consultations[i].title ?? 'NA'),
+                            ],
+                          ),
+                          value: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 2,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: MyColors.lightBlue,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Text('${consultations[i].price} Dirham'),
+                          ),
+                        ),
+                        const Spacer(),
+                        Radio(
+                          value: consultations[i].id,
+                          groupValue: selected,
+                          onChanged: (value) {
+                            setState(() {
+                              selected = value as int;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    var consultationMode = consultations.firstWhere(
+                      (e) => e.id == selected,
+                    );
+                    Navigator.pop(context, consultationMode);
+                  },
+                  child: const Text('Book Now'),
                 ),
               ),
-            ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, 'HOME');
-              },
-              child: const Text('Book Now'),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
