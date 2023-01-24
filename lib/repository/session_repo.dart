@@ -1,4 +1,5 @@
 import 'package:alsan_app/data/network/api_client.dart';
+import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
 import '../model/mode_of_consultation.dart';
@@ -8,5 +9,13 @@ class SessionRepo {
     var response = await apiClient.get(Api.modeOfConsultation);
     var list = response as List;
     return list.map((e) => ModeOfConsultation.fromMap(e)).toList();
+  }
+
+  Future<TimeOfDay> getTimeSlots({required String id, query}) async {
+    var response = await apiClient.get(
+      '${Api.clinicianTimeSlot}${Api.clinician}/$id',
+      query: query,
+    );
+    return TimeOfDay.fromMap(response);
   }
 }
