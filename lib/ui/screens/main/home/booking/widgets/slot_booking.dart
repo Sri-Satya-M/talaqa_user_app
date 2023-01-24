@@ -1,5 +1,6 @@
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking_widgets/time_slots_widget.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +26,7 @@ class _SlotBookingState extends State<SlotBooking> {
   ModeOfConsultation? modeOfConsultation;
   var currentDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
+  List timeSlotsIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +146,6 @@ class _SlotBookingState extends State<SlotBooking> {
                   onTap: () async {
                     modeOfConsultation = await ConsultationDialog.open(context);
                     widget.onTap(modeOfConsultation);
-
                   },
                   child: Image.asset(Images.editIcon, width: 15, height: 15),
                 ),
@@ -224,13 +225,13 @@ class _SlotBookingState extends State<SlotBooking> {
                           color: textColor,
                         ),
                       ),
-                      Text(
-                        'Available',
-                        style: textTheme.caption?.copyWith(
-                          fontSize: 10,
-                          color: textColor,
-                        ),
-                      ),
+                      // Text(
+                      //   'Available',
+                      //   style: textTheme.caption?.copyWith(
+                      //     fontSize: 10,
+                      //     color: textColor,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -243,44 +244,15 @@ class _SlotBookingState extends State<SlotBooking> {
           'Available Time Slots',
           style: textTheme.caption?.copyWith(color: Colors.black),
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Morning',
-          style: textTheme.caption?.copyWith(
-            color: Colors.black.withOpacity(0.5),
-            fontSize: 10,
-          ),
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 30,
-          child: ListView.builder(
-            itemCount: 10,
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return ChoiceChip(
-                labelStyle: textTheme.caption?.copyWith(
-                  color: Colors.white,
-                  fontSize: 10,
-                ),
-                label: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('10:00 AM - 11:00 AM'),
-                    SizedBox(height: 8),
-                    Icon(
-                      Icons.check,
-                      size: 15,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
-                selected: false,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              );
-            },
-          ),
+        const SizedBox(height: 16),
+        TimeSlotsWidget(
+          date: selectedDate,
+          clinicianId: 2,
+          onTap: (timeSlotIds) {
+            timeSlotsIds = timeSlotIds;
+            print('timeSlotIds: $timeSlotsIds');
+            setState(() {});
+          },
         ),
         const SizedBox(height: 16),
         Text(
