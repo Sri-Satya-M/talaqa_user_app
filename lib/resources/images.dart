@@ -25,4 +25,9 @@ class Images {
   static const success = 'assets/images/success.json';
   static const referImage = 'assets/images/referImage.png';
   static const articleImage = 'assets/images/article.png';
+  static const topBanner1 = 'assets/images/topBanner1.png';
+  static const topBanner2 = 'assets/images/topBanner2.png';
+  static const midBanner = 'assets/images/midBanner.png';
+  static const resourcesBanner = 'assets/images/resourcesBanner.png';
+
 }

@@ -11,4 +11,6 @@ class Api {
   static const clinician = '/clinician';
   static const modeOfConsultation = '/mode-of-consultation';
   static const clinicianTimeSlot = '/clinician-time-slot';
+  static const resources = '/resources';
+
 }

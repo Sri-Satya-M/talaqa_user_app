@@ -39,8 +39,9 @@ class _PatientProfileState extends State<PatientProfile> {
 
           return ListView.builder(
             padding: const EdgeInsets.all(20),
-            shrinkWrap: true,
             itemCount: profiles.length,
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
             itemBuilder: (context, index) => Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(vertical: 8),
