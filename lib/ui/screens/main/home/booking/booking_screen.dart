@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart';
@@ -6,6 +7,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_profiles.d
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../model/clinicians.dart';
 import '../../../../../model/profile.dart';
@@ -40,13 +42,6 @@ class _BookingScreenState extends State<BookingScreen> {
 
   late PageController controller;
 
-  Clinician? selectedClinician;
-  late Profile selectedPatient;
-
-  ModeOfConsultation? selectedModeOfConsultation;
-  DateTime? selectedDate;
-  List<String>? selectedTimeSlot;
-  String description = '';
 
   addExtraStep() {
     if (titles.length == 5) return;
@@ -56,11 +51,21 @@ class _BookingScreenState extends State<BookingScreen> {
     });
   }
 
+  removeExtraStep() {
+    if (titles.length <= 4) return;
+    setState(() {
+      steps -= 1;
+      titles.removeAt(3);
+    });
+  }
+
   @override
   void initState() {
-    selectedClinician = widget.clinician;
-    selectedPatient = Profile();
-    if (selectedClinician?.id != null) {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    sessionBloc.selectedClinician = widget.clinician;
+    sessionBloc.selectedDate = DateTime.now();
+    sessionBloc.selectedPatient = Profile();
+    if (sessionBloc.selectedClinician?.id != null) {
       pageIndex = 2;
     }
     controller = PageController(initialPage: pageIndex - 1);
@@ -70,6 +75,7 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return Scaffold(
       backgroundColor: MyColors.bookingBgColor,
       appBar: AppBar(
@@ -145,7 +151,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: ClinicianList(
                     scrollDirection: Axis.vertical,
                     onTap: (clinician) {
-                      selectedClinician = clinician;
+                      sessionBloc.selectedClinician = clinician;
                       pageIndex += 1;
                       controller.animateToPage(
                         pageIndex - 1,
@@ -165,7 +171,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   ),
                   child: SelectPatientProfile(
                     onTap: (Profile profile) {
-                      selectedPatient = profile;
+                      sessionBloc.selectedPatient = profile;
                     },
                   ),
                 ),
@@ -177,17 +183,17 @@ class _BookingScreenState extends State<BookingScreen> {
                     ),
                   ),
                   child: SlotBooking(
-                    clinician: selectedClinician!,
-                    onTap: (value) {
-                      selectedModeOfConsultation = value;
-                      if (selectedModeOfConsultation != null) {
-                        addExtraStep();
+                    onTap: (ModeOfConsultation value) {
+                      if (value != null) {
+                        print('value $value');
+                        if (value.type == 'HOME') addExtraStep();
+                        else removeExtraStep();
                         setState(() {});
                       }
                     },
                   ),
                 ),
-                if (selectedModeOfConsultation?.type == 'HOME')
+                if (sessionBloc.selectedModeOfConsultation?.type == 'HOME')
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -204,10 +210,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       top: Radius.circular(28),
                     ),
                   ),
-                  child: BookingDetailsScreen(
-                    selectedClinician: selectedClinician!,
-                    selectedPatient: selectedPatient,
-                  ),
+                  child: const BookingDetailsScreen(),
                 ),
               ],
             ),

@@ -1,9 +1,11 @@
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/widgets/time_slot.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
 import '../../../../../widgets/avatar.dart';
@@ -11,14 +13,7 @@ import '../../../../../widgets/details_tile.dart';
 import '../../../../../widgets/image_from_net.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
-  final Clinician selectedClinician;
-  final Profile selectedPatient;
-
-  const BookingDetailsScreen({
-    super.key,
-    required this.selectedClinician,
-    required this.selectedPatient,
-  });
+  const BookingDetailsScreen({super.key});
 
   @override
   _BookingDetailsScreenState createState() => _BookingDetailsScreenState();
@@ -28,6 +23,18 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+    var body = {
+      'clinic_id': sessionBloc?.selectedClinician?.toJson(),
+      'patient_id': sessionBloc.selectedPatient?.toJson(),
+      'mode_of_consultation': sessionBloc.selectedModeOfConsultation?.toJson(),
+      'date': sessionBloc.selectedDate,
+      'timsSlots': sessionBloc.selectedTimeSlotIds,
+      'description': sessionBloc.description,
+    };
+
+    print('body: $body');
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -48,8 +55,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               Row(
                 children: [
                   Avatar(
-                    url: widget.selectedPatient.image,
-                    name: widget.selectedPatient.fullName,
+                    url: sessionBloc.selectedPatient?.image,
+                    name: sessionBloc.selectedPatient?.fullName,
                     borderRadius: BorderRadius.circular(10),
                     size: 72,
                   ),
@@ -57,12 +64,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.selectedPatient.fullName ?? 'NA'),
+                      Text(sessionBloc.selectedPatient?.fullName ?? 'NA'),
                       const SizedBox(height: 4),
                       Row(
                         children: [
                           Text(
-                            widget.selectedPatient.age?.toString() ?? 'NA',
+                            sessionBloc.selectedPatient?.age?.toString() ??
+                                'NA',
                             style: textTheme.caption,
                           ),
                           const SizedBox(width: 12),
@@ -75,7 +83,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                               color: Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(3),
                             ),
-                            child: Text(widget.selectedPatient.gender ?? 'NA',
+                            child: Text(
+                                sessionBloc.selectedPatient?.gender ?? 'NA',
                                 style: textTheme.subtitle2),
                           ),
                         ],
@@ -84,11 +93,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       Row(
                         children: [
                           Text(
-                            '${widget.selectedPatient.city ?? 'NA'}, ',
+                            '${sessionBloc.selectedPatient?.city ?? 'NA'}, ',
                             style: textTheme.subtitle2,
                           ),
                           Text(
-                            widget.selectedPatient.country ?? 'NA',
+                            sessionBloc.selectedPatient?.country ?? 'NA',
                             style: textTheme.subtitle2,
                           ),
                         ],
@@ -118,13 +127,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ImageFromNet(
-                    imageUrl: widget.selectedClinician.image,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    height: 75,
-                    width: 75,
+                  Avatar(
+                    url: sessionBloc.selectedClinician?.image,
+                    name: sessionBloc.selectedClinician?.user?.fullName,
+                    borderRadius: BorderRadius.circular(10),
+                    size: 72,
                   ),
                   const SizedBox(width: 16),
                   Column(
@@ -133,14 +140,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     children: [
                       DetailsTile(
                         title: Text(
-                          widget.selectedClinician.user?.fullName ?? ' NA',
+                          sessionBloc.selectedClinician?.user?.fullName ??
+                              ' NA',
                           style: textTheme.bodyText2,
                         ),
                         value: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.selectedClinician.designation ?? 'NA',
+                              sessionBloc.selectedClinician?.designation ??
+                                  'NA',
                               style: textTheme.caption?.copyWith(
                                 color: MyColors.cerulean,
                               ),
@@ -157,7 +166,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                       color: MyColors.paleBlue,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Text(
-                                    '${widget.selectedClinician.experience} years Exp.',
+                                    '${sessionBloc.selectedClinician?.experience} years Exp.',
                                     style: textTheme.subtitle2,
                                   ),
                                 ),
@@ -202,7 +211,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                   ReverseDetailsTile(
                     title: const Text('Mode of consultation'),
                     value: Text(
-                      'Lorem',
+                      '${sessionBloc.selectedModeOfConsultation?.type}',
                       style: textTheme.bodyText1,
                     ),
                   ),
@@ -221,7 +230,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               ReverseDetailsTile(
                 title: const Text('Description'),
                 value: Text(
-                  'Vivamus eget aliquam dui. Integer eu arcu vel arcu suscipit ultrices quis non mauris. Aenean scelerisque, sem eu dictum commodo, velit nisi blandit magna, quis scelerisque ipsum lectus ut libero. Sed elit diam, dignissim ac congue quis, aliquam in purus. Proin ligula nulla, scelerisque quis venenatis pulvinar, congue eget neque. Proin scelerisque metus sit amet dolor tempor vehicula. Sed laoreet quis velit vitae facilisis. Duis ut sapien eu urna laoreet maximus.',
+                  '${sessionBloc.description}',
                   style: textTheme.bodyText1,
                 ),
               ),

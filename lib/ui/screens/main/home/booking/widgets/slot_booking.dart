@@ -1,21 +1,21 @@
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking_widgets/time_slots_widget.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../widgets/details_tile.dart';
 import '../../../../../widgets/image_from_net.dart';
 
 class SlotBooking extends StatefulWidget {
-  final Clinician clinician;
   final Function onTap;
 
-  const SlotBooking({super.key, required this.clinician, required this.onTap});
+  const SlotBooking({super.key, required this.onTap});
 
   @override
   _SlotBookingState createState() => _SlotBookingState();
@@ -26,11 +26,11 @@ class _SlotBookingState extends State<SlotBooking> {
   ModeOfConsultation? modeOfConsultation;
   var currentDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
-  List timeSlotsIds = [];
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     return ListView(
       padding: const EdgeInsets.all(20),
       scrollDirection: Axis.vertical,
@@ -47,7 +47,7 @@ class _SlotBookingState extends State<SlotBooking> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ImageFromNet(
-                imageUrl: widget.clinician.image,
+                imageUrl: sessionBloc.selectedClinician?.image,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -62,7 +62,7 @@ class _SlotBookingState extends State<SlotBooking> {
                   Expanded(
                     child: DetailsTile(
                       title: Text(
-                        widget.clinician.user?.fullName ?? ' NA',
+                        sessionBloc.selectedClinician?.user?.fullName ?? ' NA',
                         style: textTheme.bodyText2,
                       ),
                       value: Expanded(
@@ -71,7 +71,8 @@ class _SlotBookingState extends State<SlotBooking> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              widget.clinician.designation ?? 'NA',
+                              sessionBloc.selectedClinician?.designation ??
+                                  'NA',
                               style: textTheme.caption?.copyWith(
                                 color: MyColors.cerulean,
                               ),
@@ -86,7 +87,7 @@ class _SlotBookingState extends State<SlotBooking> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
-                                '${widget.clinician.experience} years Exp.',
+                                '${sessionBloc.selectedClinician?.experience} years Exp.',
                                 style: textTheme.subtitle2,
                               ),
                             ),
@@ -145,6 +146,7 @@ class _SlotBookingState extends State<SlotBooking> {
                 GestureDetector(
                   onTap: () async {
                     modeOfConsultation = await ConsultationDialog.open(context);
+                    sessionBloc.setModeOfConsultation(modeOfConsultation: modeOfConsultation);
                     widget.onTap(modeOfConsultation);
                   },
                   child: Image.asset(Images.editIcon, width: 15, height: 15),
@@ -163,7 +165,7 @@ class _SlotBookingState extends State<SlotBooking> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      '${widget.clinician.experience} years Exp.',
+                      '${sessionBloc.selectedClinician?.experience} years Exp.',
                       style: textTheme.subtitle2,
                     ),
                   ),
@@ -192,8 +194,10 @@ class _SlotBookingState extends State<SlotBooking> {
               return GestureDetector(
                 onTap: () {
                   if (day == "Sun") return;
+                  sessionBloc.setDate(
+                      date: currentDate.add(Duration(days: index)));
                   selectedDate = currentDate.add(Duration(days: index));
-                  setState(() {});
+                  // setState(() {});
                 },
                 child: Container(
                   height: 80,
@@ -245,15 +249,7 @@ class _SlotBookingState extends State<SlotBooking> {
           style: textTheme.caption?.copyWith(color: Colors.black),
         ),
         const SizedBox(height: 16),
-        TimeSlotsWidget(
-          date: selectedDate,
-          clinicianId: 2,
-          onTap: (timeSlotIds) {
-            timeSlotsIds = timeSlotIds;
-            print('timeSlotIds: $timeSlotsIds');
-            setState(() {});
-          },
-        ),
+        const TimeSlotsWidget(),
         const SizedBox(height: 16),
         Text(
           'Description',
@@ -277,6 +273,9 @@ class _SlotBookingState extends State<SlotBooking> {
           ),
           minLines: 3,
           maxLines: 10,
+          onChanged: (value) {
+            sessionBloc.description = value;
+          },
         ),
         const SizedBox(height: 32),
       ],

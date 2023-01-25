@@ -28,7 +28,7 @@ class ModeOfConsultation {
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "type": type,
         "imageUrl": imageUrl,

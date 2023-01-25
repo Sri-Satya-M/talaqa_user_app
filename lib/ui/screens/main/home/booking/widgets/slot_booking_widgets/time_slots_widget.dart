@@ -9,16 +9,7 @@ import '../../../../../../widgets/error_widget.dart';
 import '../../../../../../widgets/loading_widget.dart';
 
 class TimeSlotsWidget extends StatefulWidget {
-  final DateTime date;
-  final int clinicianId;
-  final Function onTap;
-
-  const TimeSlotsWidget({
-    super.key,
-    required this.date,
-    required this.clinicianId,
-    required this.onTap,
-  });
+  const TimeSlotsWidget({super.key});
 
   @override
   _TimeSlotsWidgetState createState() => _TimeSlotsWidgetState();
@@ -30,13 +21,13 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     return FutureBuilder<t.TimeOfDay>(
       future: sessionBloc.getTimeSlots(
-        id: widget.clinicianId.toString(),
+        id: sessionBloc.selectedClinician!.id.toString(),
         query: {
-          'date': Helper.formatDate(date: widget.date),
-          'day': Helper.formatDate(date: DateTime.now(), pattern: 'EEEE'),
+          'date': Helper.formatDate(date: sessionBloc.selectedDate),
+          'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
         },
       ),
       builder: (context, snapshot) {
@@ -86,7 +77,8 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                           timeSlotIds.contains(timeSlot.id)
                               ? timeSlotIds.remove(timeSlot.id)
                               : timeSlotIds.add(timeSlot.id!);
-                          widget.onTap(timeSlotIds);
+                          sessionBloc.selectedTimeSlotIds = timeSlotIds;
+                          setState(() {});
                         },
                       ),
                     ],
