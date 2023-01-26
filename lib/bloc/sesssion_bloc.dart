@@ -25,9 +25,13 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getTimeSlots(id: id, query: query);
   }
 
+  Future createSessions({body}) {
+    return sessionRepo.createSessions(body: body);
+  }
+
   setDate({required DateTime date}) {
+    selectedTimeSlotIds?.clear();
     selectedDate = date;
-    print('selectedDate: $selectedDate');
     notifyListeners();
   }
 

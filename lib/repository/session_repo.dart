@@ -18,4 +18,8 @@ class SessionRepo {
     );
     return TimeOfDay.fromMap(response);
   }
+
+  Future createSessions({body}) {
+    return apiClient.post(Api.sessions, body);
+  }
 }
