@@ -15,5 +15,6 @@ class Api {
   static const sessions = '/sessions';
   static const mapAutoComplete = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
   static const mapDecodePlace = 'https://maps.googleapis.com/maps/api/place/details/json';
+  static const addresses = '/addresses';
 
 }
