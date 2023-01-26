@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../resources/images.dart';
 import '../../../../../widgets/details_tile.dart';
-import 'add_location_screen.dart';
+import '../../../../location/location_screen.dart';
 
 class AddAddress extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _AddAddressState extends State<AddAddress> {
           'Select your saved location',
           style: textTheme.caption?.copyWith(color: Colors.black),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
             selectedAddress = 0;
@@ -78,7 +78,7 @@ class _AddAddressState extends State<AddAddress> {
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            AddLocationScreen.open(context);
+            LocationScreen.open(context);
           },
           child: Container(
             height: 80,

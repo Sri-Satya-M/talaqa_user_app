@@ -6,6 +6,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/booking_details.d
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_profiles.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,6 @@ class _BookingScreenState extends State<BookingScreen> {
   ];
 
   late PageController controller;
-
 
   addExtraStep() {
     if (titles.length == 5) return;
@@ -81,20 +81,47 @@ class _BookingScreenState extends State<BookingScreen> {
       appBar: AppBar(
         title: const Text('Book Session'),
         actions: [
-          TextButton(
-            onPressed: () async {
-              if (pageIndex < steps) {
-                pageIndex += 1;
-                controller.animateToPage(
-                  pageIndex - 1,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                );
-                setState(() {});
-              }
-            },
-            child: const Text('Next'),
-          ),
+          (pageIndex == steps)
+              ? SizedBox()
+              : TextButton(
+                  onPressed: () async {
+                    var flag = false;
+                    switch (pageIndex) {
+                      case 1:
+                        if (sessionBloc.selectedClinician?.id == null)
+                          flag = true;
+                        break;
+                      case 2:
+                        if (sessionBloc.selectedPatient?.id == null)
+                          flag = true;
+                        break;
+                      case 3:
+                        if (sessionBloc.selectedDate == null ||
+                            sessionBloc.selectedModeOfConsultation == null ||
+                            sessionBloc.selectedTimeSlotIds == null)
+                          flag = true;
+                        break;
+                    }
+
+                    if (flag == true) {
+                      return ErrorSnackBar.show(
+                        context,
+                        'Please select all the fields',
+                      );
+                    }
+
+                    if (pageIndex < steps) {
+                      pageIndex += 1;
+                      controller.animateToPage(
+                        pageIndex - 1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                      setState(() {});
+                    }
+                  },
+                  child: const Text('Next'),
+                ),
         ],
       ),
       body: Column(
@@ -186,8 +213,10 @@ class _BookingScreenState extends State<BookingScreen> {
                     onTap: (ModeOfConsultation value) {
                       if (value != null) {
                         print('value $value');
-                        if (value.type == 'HOME') addExtraStep();
-                        else removeExtraStep();
+                        if (value.type == 'HOME')
+                          addExtraStep();
+                        else
+                          removeExtraStep();
                         setState(() {});
                       }
                     },

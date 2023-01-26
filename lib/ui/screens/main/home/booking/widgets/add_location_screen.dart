@@ -1,7 +1,10 @@
+import 'package:alsan_app/bloc/location_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../widgets/error_snackbar.dart';
 
@@ -15,7 +18,7 @@ class AddLocationScreen extends StatefulWidget {
   ) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AddLocationScreen(),
+        builder: (context) => const AddLocationScreen(),
       ),
     );
   }
@@ -36,8 +39,21 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   @override
   final formKey = GlobalKey<FormState>();
 
+  initialize(Placemark? address) async {
+    if (address != null) {
+      addressLine1 = address.name!;
+      addressLine2 = address.street!;
+      landmark = address.subLocality!;
+      pincode = address.postalCode!;
+      city = address.locality!;
+      country = address.country!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var locationBloc = Provider.of<LocationBloc>(context, listen: true);
+    initialize(locationBloc.address);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Location"),
@@ -55,6 +71,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                initialValue: addressLine1,
                 onChanged: (value) {
                   setState(() {
                     addressLine1 = value;
@@ -76,6 +93,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                initialValue: addressLine2,
                 onChanged: (value) {
                   setState(() {
                     addressLine2 = value;
@@ -97,6 +115,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                initialValue: pincode,
                 onChanged: (value) {
                   setState(() {
                     pincode = value;
@@ -116,6 +135,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                initialValue: landmark,
                 onChanged: (value) {
                   setState(() {
                     landmark = value;
@@ -133,52 +153,46 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField(
+              TextFormField(
+                initialValue: city,
                 onChanged: (value) {
                   setState(() {
-                    city = value.toString();
+                    city = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "City"),
-                items: const [
-                  DropdownMenuItem(
-                    value: "Agra",
-                    child: Text("Agra"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Hyderabad",
-                    child: Text("Hyderabad"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Delhi",
-                    child: Text("Delhi"),
-                  )
-                ],
+                decoration: const InputDecoration(
+                  hintText: "City*",
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter City';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 8),
-              DropdownButtonFormField(
+              TextFormField(
+                initialValue: country,
                 onChanged: (value) {
                   setState(() {
-                    country = value.toString();
+                    country = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "Country"),
-                items: const [
-                  DropdownMenuItem(
-                    value: "India",
-                    child: Text("India"),
-                  ),
-                  DropdownMenuItem(
-                    value: "USA",
-                    child: Text("USA"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Dubai",
-                    child: Text("Dubai"),
-                  )
-                ],
+                decoration: const InputDecoration(
+                  hintText: "Country",
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter Country';
+                  }
+                  return null;
+                },
               ),
+              const SizedBox(height: 8),
               TextFormField(
+                initialValue: mobileNumber,
                 onChanged: (value) {
                   setState(() {
                     mobileNumber = value;
