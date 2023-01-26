@@ -8,6 +8,7 @@ class DioClient implements ApiClient {
   late Dio dio;
   String accessToken = "Bearer fiakb9318uishfsksn5oibbynn86gb3w";
   String baseUrl = false ?  'https://api-alsan.7t6.in' : 'http://192.168.0.6:7000';
+  String mapsKey = 'AIzaSyBTQ-RrVQbGz2ymNmdSkenm8vlkVR8Q_ec';
 
   DioClient() {
     dio = Dio();
