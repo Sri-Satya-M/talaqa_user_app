@@ -12,5 +12,8 @@ class Api {
   static const modeOfConsultation = '/mode-of-consultation';
   static const clinicianTimeSlot = '/clinician-time-slot';
   static const resources = '/resources';
+  static const sessions = '/sessions';
+  static const mapAutoComplete = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  static const mapDecodePlace = 'https://maps.googleapis.com/maps/api/place/details/json';
 
 }
