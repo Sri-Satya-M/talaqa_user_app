@@ -1,3 +1,4 @@
+import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
@@ -74,5 +75,9 @@ class UserBloc with ChangeNotifier {
 
   Future<List<Resources>> getResources({query}) {
     return _userRepo.getResources(query: query);
+  }
+
+  Future<List<Address>> getAddresses() {
+    return _userRepo.getAddresses();
   }
 }

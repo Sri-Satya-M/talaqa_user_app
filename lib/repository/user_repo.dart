@@ -1,5 +1,6 @@
 import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/data/network/api_endpoints.dart';
+import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
@@ -55,8 +56,14 @@ class UserRepo {
   }
 
   Future<List<Resources>> getResources({query}) async {
-    var response = await apiClient.get(Api.resources,query: query);
+    var response = await apiClient.get(Api.resources, query: query);
     var list = response as List;
     return list.map((e) => Resources.fromJson(e)).toList();
+  }
+
+  Future<List<Address>> getAddresses() async {
+    var response = await apiClient.get(Api.patient + Api.addresses);
+    var list = response as List;
+    return list.map((e) => Address.fromMap(e)).toList();
   }
 }
