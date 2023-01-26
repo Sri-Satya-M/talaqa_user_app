@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/location_bloc.dart';
 import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
@@ -30,6 +31,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => MainBloc()),
           ChangeNotifierProvider(create: (_) => UserBloc()),
           ChangeNotifierProvider(create: (_) => SessionBloc()),
+          ChangeNotifierProvider(create: (_) => LocationBloc()),
         ],
         child: ProgressBlockWidget(
           child: MaterialApp(
