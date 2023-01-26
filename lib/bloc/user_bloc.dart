@@ -80,4 +80,10 @@ class UserBloc with ChangeNotifier {
   Future<List<Address>> getAddresses() {
     return _userRepo.getAddresses();
   }
+
+  Future<Address> postAddress({body}) async {
+    var response =  await _userRepo.postAddress(body: body);
+    notifyListeners();
+    return response;
+  }
 }

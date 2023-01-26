@@ -66,4 +66,9 @@ class UserRepo {
     var list = response as List;
     return list.map((e) => Address.fromMap(e)).toList();
   }
+
+  Future<Address> postAddress({body}) async {
+    var response = await apiClient.post(Api.patient + Api.addresses, body);
+    return Address.fromMap(response);
+  }
 }
