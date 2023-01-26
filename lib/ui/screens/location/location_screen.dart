@@ -100,10 +100,14 @@ class _LocationScreenState extends State<LocationScreen> {
         child: Expanded(
           child: ProgressButton(
             onPressed: () {
+              locationBloc.currentPosition = latLng;
               locationBloc.setAddress(address);
+
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const AddLocationScreen(),
+                  builder: (BuildContext context) {
+                    return const AddLocationScreen();
+                  },
                 ),
               );
             },

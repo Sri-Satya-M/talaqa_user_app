@@ -40,7 +40,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       'patientId': userBloc.profile!.id,
       'patientProfileId': sessionBloc.selectedPatient!.id,
       'clinicianId': sessionBloc.selectedClinician!.id,
-      'totalAmount': totalAmount
+      'totalAmount': totalAmount,
+      'patientAddressId': sessionBloc.selectedAddressId,
     };
 
     return ListView(
@@ -323,7 +324,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
         const SizedBox(height: 32),
         ProgressButton(
           onPressed: () async {
-             var response = await sessionBloc.createSessions(body: body)
+            var response = await sessionBloc.createSessions(body: body)
                 as Map<String, dynamic>;
             if (response.containsKey('status') && response['status'] != null) {
               SuccessScreen.open(

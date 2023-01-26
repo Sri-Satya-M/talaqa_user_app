@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/location_bloc.dart';
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,8 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   var addressLine2 = '';
   var pincode = '';
   var landmark = '';
-  var city = 'Hyderabad';
-  var country = 'India';
+  var city = '';
+  var country = '';
   var mobileNumber = '';
 
   @override
@@ -53,6 +54,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   @override
   Widget build(BuildContext context) {
     var locationBloc = Provider.of<LocationBloc>(context, listen: true);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     initialize(locationBloc.address);
     return Scaffold(
       appBar: AppBar(
@@ -106,32 +108,6 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter the address line 2';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                initialValue: pincode,
-                onChanged: (value) {
-                  setState(() {
-                    pincode = value;
-                  });
-                },
-                decoration: const InputDecoration(hintText: "Pincode*"),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Enter pincode';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -167,6 +143,26 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Enter City';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                initialValue: pincode,
+                onChanged: (value) {
+                  setState(() {
+                    pincode = value;
+                  });
+                },
+                decoration: const InputDecoration(hintText: "Pincode*"),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Enter pincode';
                   }
                   return null;
                 },
@@ -216,7 +212,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
-          onPressed: () {
+          onPressed: () async {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
@@ -233,8 +229,14 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
               "city": city,
               "country": country,
               'mobileNumber': mobileNumber,
+              'latitude': locationBloc.currentPosition!.latitude.toString(),
+              'longitude': locationBloc.currentPosition!.longitude.toString(),
             };
-            print(body);
+
+            var address = await userBloc.postAddress(body: body);
+            if (address.id != null) {
+              Navigator.pop(context, true);
+            }
           },
           color: MyColors.primaryColor,
           child: const Text("Submit"),
