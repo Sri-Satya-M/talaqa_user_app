@@ -16,6 +16,7 @@ class SessionBloc with ChangeNotifier {
   DateTime? selectedDate;
   List<int>? selectedTimeSlotIds;
   String? description;
+  int? selectedAddressId;
 
   Future<List<ModeOfConsultation>> getModeOfConsultation() {
     return sessionRepo.getModeOfConsultation();
