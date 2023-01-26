@@ -45,4 +45,20 @@ class SessionBloc with ChangeNotifier {
     this.description = description;
     notifyListeners();
   }
+
+  setAddress({int? addressId}) {
+    selectedAddressId = addressId;
+    notifyListeners();
+  }
+
+  clear() {
+    selectedClinician = null;
+    selectedPatient = null;
+    selectedModeOfConsultation = null;
+    selectedDate = null;
+    selectedTimeSlotIds?.clear();
+    description = null;
+    selectedAddressId = null;
+    notifyListeners();
+  }
 }

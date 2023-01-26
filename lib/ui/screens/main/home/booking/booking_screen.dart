@@ -62,6 +62,7 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    sessionBloc.clear();
     sessionBloc.selectedClinician = widget.clinician;
     sessionBloc.selectedDate = DateTime.now();
     sessionBloc.selectedPatient = Profile();
@@ -82,31 +83,49 @@ class _BookingScreenState extends State<BookingScreen> {
         title: const Text('Book Session'),
         actions: [
           (pageIndex == steps)
-              ? SizedBox()
+              ? const SizedBox()
               : TextButton(
                   onPressed: () async {
+                    var msg = 'Please select all the fields';
                     var flag = false;
                     switch (pageIndex) {
                       case 1:
-                        if (sessionBloc.selectedClinician?.id == null)
+                        if (sessionBloc.selectedClinician?.id == null) {
                           flag = true;
+                          msg = 'Please select a clinician';
+                        }
                         break;
                       case 2:
-                        if (sessionBloc.selectedPatient?.id == null)
+                        if (sessionBloc.selectedPatient?.id == null) {
                           flag = true;
+                          msg = 'Please select a patient';
+                        }
                         break;
                       case 3:
                         if (sessionBloc.selectedDate == null ||
                             sessionBloc.selectedModeOfConsultation == null ||
-                            sessionBloc.selectedTimeSlotIds == null)
+                            sessionBloc.selectedTimeSlotIds == null ||
+                            sessionBloc.selectedTimeSlotIds!.isEmpty) {
                           flag = true;
+                          msg =
+                              'Please select date, slot and mode of consultation';
+                        }
                         break;
+                      case 4:
+                        print(sessionBloc.selectedAddressId);
+                        if (sessionBloc.selectedAddressId == null) {
+                          flag = true;
+                          msg = 'Please select an address';
+                        }
+                        break;
+                      default:
+                        return;
                     }
 
                     if (flag == true) {
                       return ErrorSnackBar.show(
                         context,
-                        'Please select all the fields',
+                        msg,
                       );
                     }
 

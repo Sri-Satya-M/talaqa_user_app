@@ -29,12 +29,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
     var noOfSlots = sessionBloc.selectedTimeSlotIds!.length;
     var totalAmount = sessionBloc.selectedModeOfConsultation!.price! *
         sessionBloc.selectedTimeSlotIds!.length;
+    var description =
+        sessionBloc.description == null || sessionBloc.description!.isEmpty
+            ? 'NA'
+            : sessionBloc.description;
 
     var body = {
       'timeSlotIds': sessionBloc.selectedTimeSlotIds,
       'date': Helper.formatDate(date: sessionBloc.selectedDate),
       'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
-      'description': sessionBloc.description,
+      'description': description,
       'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
       'consultationFee': totalAmount,
       'patientId': userBloc.profile!.id,
@@ -263,7 +267,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                     ReverseDetailsTile(
                       title: const Text('Description'),
                       value: Text(
-                        '${sessionBloc.description}',
+                        description!,
                         style: textTheme.bodyText1,
                       ),
                     ),

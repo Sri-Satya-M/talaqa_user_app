@@ -39,6 +39,7 @@ class _AddAddressState extends State<AddAddress> {
 
         return ListView(
           shrinkWrap: true,
+          physics: const ScrollPhysics(),
           padding: const EdgeInsets.all(16),
           children: [
             Text(
@@ -48,6 +49,7 @@ class _AddAddressState extends State<AddAddress> {
             const SizedBox(height: 16),
             ListView.builder(
               shrinkWrap: true,
+              physics: const ScrollPhysics(),
               itemCount: addresses.length,
               itemBuilder: (context, index) {
                 var address = addresses[index];
@@ -56,7 +58,7 @@ class _AddAddressState extends State<AddAddress> {
                     GestureDetector(
                       onTap: () {
                         selectedAddress = index;
-                        sessionBloc.selectedAddressId = address.id;
+                        sessionBloc.setAddress(addressId: address.id!);
                         setState(() {});
                       },
                       child: Container(
@@ -99,6 +101,7 @@ class _AddAddressState extends State<AddAddress> {
                                 groupValue: selectedAddress,
                                 onChanged: (value) {
                                   selectedAddress = value as int;
+                                  sessionBloc.setAddress(addressId: address.id!);
                                   setState(() {});
                                 },
                               ),
