@@ -41,7 +41,7 @@ class Helper {
     return a;
   }
 
-  static String formatDate({required DateTime? date, String pattern='yyyy-mm-dd'}) {
+  static String formatDate({required DateTime? date, String pattern='yyyy-MM-dd'}) {
     if (date == null) return 'NA';
     return DateFormat(pattern).format(date);
   }

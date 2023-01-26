@@ -132,7 +132,7 @@ class AppTheme {
       overline: overline,
     );
 
-    var border = OutlineInputBorder(
+    var   border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         color: MyColors.divider.withOpacity(0.5),
@@ -171,7 +171,7 @@ class AppTheme {
         titleSpacing: 0,
         backgroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
         ),
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: false,

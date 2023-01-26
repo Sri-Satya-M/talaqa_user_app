@@ -65,7 +65,11 @@ class SuccessScreen extends StatelessWidget {
                 ProfileEmailScreen.open(context);
                 break;
               default:
-                Container();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                  (route) => false,
+                );
             }
           },
           child: const Text("Continue"),
