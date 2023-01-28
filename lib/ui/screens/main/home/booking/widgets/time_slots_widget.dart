@@ -27,7 +27,8 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
         id: sessionBloc.selectedClinician!.id.toString(),
         query: {
           'date': Helper.formatDate(date: sessionBloc.selectedDate),
-          'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
+          'day': Helper.formatDate(
+              date: sessionBloc.selectedDate, pattern: 'EEEE'),
         },
       ),
       builder: (context, snapshot) {
@@ -43,9 +44,10 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
           timeOfDay?.evening,
           timeOfDay?.night
         ];
+
         list = list.where((element) => element != null).toList();
         if (list.isEmpty) return const EmptyWidget();
-        // return Container();
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -74,10 +76,15 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                         selected: timeSlotIds.contains(timeSlot.id),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         onSelected: (value) {
-                          timeSlotIds.contains(timeSlot.id)
-                              ? timeSlotIds.remove(timeSlot.id)
-                              : timeSlotIds.add(timeSlot.id!);
+                          if (timeSlotIds.contains(timeSlot.id)) {
+                            timeSlotIds.remove(timeSlot.id);
+                            sessionBloc.timeslots.remove(timeSlot.id);
+                          } else {
+                            timeSlotIds.add(timeSlot.id!);
+                            sessionBloc.timeslots[timeSlot.id!] = timeSlot;
+                          }
                           sessionBloc.selectedTimeSlotIds = timeSlotIds;
+
                           setState(() {});
                         },
                       ),

@@ -17,6 +17,7 @@ class SessionBloc with ChangeNotifier {
   List<int>? selectedTimeSlotIds;
   String? description;
   int? selectedAddressId;
+  Map<int,TimeSlot> timeslots={};
 
   Future<List<ModeOfConsultation>> getModeOfConsultation() {
     return sessionRepo.getModeOfConsultation();
@@ -59,6 +60,7 @@ class SessionBloc with ChangeNotifier {
     selectedTimeSlotIds?.clear();
     description = null;
     selectedAddressId = null;
+    timeslots.clear();
     notifyListeners();
   }
 }
