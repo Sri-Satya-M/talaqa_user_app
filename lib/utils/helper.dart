@@ -41,8 +41,23 @@ class Helper {
     return a;
   }
 
-  static String formatDate({required DateTime? date, String pattern='yyyy-MM-dd'}) {
+  static String formatDate(
+      {required DateTime? date, String pattern = 'yyyy-MM-dd'}) {
     if (date == null) return 'NA';
     return DateFormat(pattern).format(date);
+  }
+
+  ///Parameter format
+  ///List<dynamic> collection=>send a list of objects in json format
+  ///key=> send a key in string format which is in the above collection
+  ///object=> send a fromMap function that is in the model
+  ///example: sortByKey(collection: currentObj.map((co)=>co.toJson()).toList(), key: "parameterName",obj: (json)=>ClassName.fromMap(json))
+  static List<dynamic> sortByKey({
+    required List<dynamic> collection,
+    required String key,
+    required Function(Map<String, dynamic>) obj,
+  }) {
+    collection.sort((a, b) => a[key].compareTo(b[key]));
+    return collection.map((json) => obj.call(json)).toList();
   }
 }
