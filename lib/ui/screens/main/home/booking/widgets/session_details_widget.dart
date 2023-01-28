@@ -1,11 +1,11 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
 import '../../../../../widgets/dynamic_grid_view.dart';
 import '../../../../../widgets/reverse_details_tile.dart';
-import '../../../menu/reports/widgets/time_slot.dart';
 
 class SessionDetailsWidget extends StatelessWidget {
   const SessionDetailsWidget({super.key});
@@ -65,7 +65,12 @@ class SessionDetailsWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                TimeSlot(),
+                TimeslotDetailsWidget(
+                  dateTime: sessionBloc.selectedDate!,
+                  timeslots: sessionBloc.timeslots.values
+                      .map((e) => "${e.startAt} - ${e.endAt}")
+                      .toList(),
+                ),
                 const SizedBox(height: 8),
                 ReverseDetailsTile(
                   title: const Text('Description'),
