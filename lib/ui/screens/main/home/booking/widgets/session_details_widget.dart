@@ -1,9 +1,11 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/model/time_of_day.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/dynamic_grid_view.dart';
 import '../../../../../widgets/reverse_details_tile.dart';
 
@@ -67,9 +69,9 @@ class SessionDetailsWidget extends StatelessWidget {
                 const SizedBox(height: 8),
                 TimeslotDetailsWidget(
                   dateTime: sessionBloc.selectedDate!,
-                  timeslots: sessionBloc.timeslots.values
-                      .map((e) => "${e.startAt} - ${e.endAt}")
-                      .toList(),
+                  timeslots: showTimeslots(
+                    sessionBloc.timeslots.values,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 ReverseDetailsTile(
@@ -85,5 +87,13 @@ class SessionDetailsWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  List<TimeSlot> showTimeslots(dynamic collection) {
+    return Helper.sortByKey(
+      collection: collection.map((c) => c.toMap()).toList(),
+      key: 'startAt',
+      obj: (json) => TimeSlot.fromMap(json),
+    ).map((e) => e as TimeSlot).toList();
   }
 }

@@ -1,10 +1,11 @@
+import 'package:alsan_app/model/time_of_day.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../utils/helper.dart';
 
 class TimeslotDetailsWidget extends StatelessWidget {
   final DateTime dateTime;
-  final dynamic timeslots;
+  final List<TimeSlot> timeslots;
 
   const TimeslotDetailsWidget({
     super.key,
@@ -48,7 +49,10 @@ class TimeslotDetailsWidget extends StatelessWidget {
                 Text("Time Slot", style: textTheme.caption),
                 const SizedBox(height: 4),
                 for (var timeslot in timeslots)
-                  Text(timeslot, style: textTheme.subtitle1),
+                  Text(
+                    "${timeslot.startAt} - ${timeslot.endAt}",
+                    style: textTheme.subtitle1,
+                  ),
               ],
             ),
           ),
