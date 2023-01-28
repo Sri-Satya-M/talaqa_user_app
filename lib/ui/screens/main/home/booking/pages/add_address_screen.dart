@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../../widgets/error_snackbar.dart';
 
-class AddLocationScreen extends StatefulWidget {
-  const AddLocationScreen({
+class AddAddressScreen extends StatefulWidget {
+  const AddAddressScreen({
     super.key,
   });
 
@@ -19,16 +19,16 @@ class AddLocationScreen extends StatefulWidget {
   ) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const AddLocationScreen(),
+        builder: (context) => const AddAddressScreen(),
       ),
     );
   }
 
   @override
-  _AddLocationScreenState createState() => _AddLocationScreenState();
+  _AddAddressScreenState createState() => _AddAddressScreenState();
 }
 
-class _AddLocationScreenState extends State<AddLocationScreen> {
+class _AddAddressScreenState extends State<AddAddressScreen> {
   var addressLine1 = '';
   var addressLine2 = '';
   var pincode = '';
@@ -37,7 +37,6 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   var country = '';
   var mobileNumber = '';
 
-  @override
   final formKey = GlobalKey<FormState>();
 
   initialize(Placemark? address) async {
