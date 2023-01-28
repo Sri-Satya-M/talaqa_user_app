@@ -44,8 +44,10 @@ class _ClinicianListState extends State<ClinicianList> {
             right: (widget.scrollDirection == Axis.horizontal) ? 8 : 0,
           ),
           physics: const ScrollPhysics(),
-          itemBuilder: (context, index) =>
-              DoctorCard(clinician: clinicians[index], onTap: widget.onTap),
+          itemBuilder: (context, index) => DoctorCard(
+            clinician: clinicians[index],
+            onTap: widget.onTap,
+          ),
         );
       },
     );
