@@ -40,6 +40,9 @@ class App extends StatelessWidget {
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router?.generator,
+            scrollBehavior: const ScrollBehavior().copyWith(
+              overscroll: false,
+            ),
           ),
         ),
       ),
