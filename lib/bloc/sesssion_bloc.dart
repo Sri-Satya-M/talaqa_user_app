@@ -61,6 +61,6 @@ class SessionBloc with ChangeNotifier {
     description = null;
     selectedAddressId = null;
     timeslots.clear();
-    notifyListeners();
+    // notifyListeners();
   }
 }

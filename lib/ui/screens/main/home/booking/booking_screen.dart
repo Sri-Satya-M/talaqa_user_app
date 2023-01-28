@@ -144,30 +144,24 @@ class _BookingScreenState extends State<BookingScreen> {
     var textTheme = Theme.of(context).textTheme;
     return SizedBox(
       height: 100,
-      child: Expanded(
-        flex: 1,
-        child: SizedBox(
-          height: 50,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    for (int i = 1; i <= steps; i++) getPageIndex(i),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  titles[pageIndex - 1],
-                  style: textTheme.headline4,
-                ),
+                for (int i = 1; i <= steps; i++) getPageIndex(i),
               ],
             ),
-          ),
+            const SizedBox(height: 16),
+            Text(
+              titles[pageIndex - 1],
+              style: textTheme.headline4,
+            ),
+          ],
         ),
       ),
     );
