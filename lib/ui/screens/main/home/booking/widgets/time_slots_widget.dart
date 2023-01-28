@@ -3,10 +3,10 @@ import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../../model/time_of_day.dart' as t;
-import '../../../../../../widgets/empty_widget.dart';
-import '../../../../../../widgets/error_widget.dart';
-import '../../../../../../widgets/loading_widget.dart';
+import '../../../../../../model/time_of_day.dart' as t;
+import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_widget.dart';
+import '../../../../../widgets/loading_widget.dart';
 
 class TimeSlotsWidget extends StatefulWidget {
   const TimeSlotsWidget({super.key});

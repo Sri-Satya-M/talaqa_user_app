@@ -10,7 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../main/home/booking/widgets/add_location_screen.dart';
+import '../main/home/booking/pages/add_location_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({super.key});

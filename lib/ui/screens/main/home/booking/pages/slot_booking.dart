@@ -1,7 +1,7 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/slot_booking_widgets/time_slots_widget.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/time_slots_widget.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
