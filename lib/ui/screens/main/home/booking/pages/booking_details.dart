@@ -1,5 +1,6 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/details_box.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/session_details_widget.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../bloc/user_bloc.dart';
-import '../../../../../../resources/colors.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({super.key});
@@ -59,28 +59,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           PatientDetailsWidget(patient: sessionBloc.selectedPatient!),
           ClinicianDetailsWidget(clinician: sessionBloc.selectedClinician!),
           const SessionDetailsWidget(),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                color: MyColors.divider.withOpacity(0.1),
-              ),
-            ),
+          DetailsBox(
+            title: 'Consultation Bill Details',
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text("Consultation Bill Details"),
-                ),
-                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Consultation fee (${noOfSlots} Slots) Fee",
+                        "Consultation fee ($noOfSlots Slots) Fee",
                         style: textTheme.subtitle2
                             ?.copyWith(color: Colors.black.withOpacity(1)),
                       ),
@@ -102,7 +91,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                       Text("$totalAmount Dirham")
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

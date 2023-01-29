@@ -1,10 +1,10 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/time_of_day.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/details_box.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../resources/colors.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/dynamic_grid_view.dart';
 import '../../../../../widgets/reverse_details_tile.dart';
@@ -20,71 +20,57 @@ class SessionDetailsWidget extends StatelessWidget {
         sessionBloc.description == null || sessionBloc.description!.isEmpty
             ? 'NA'
             : sessionBloc.description;
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: MyColors.divider),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text('Session Details'),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+    return DetailsBox(
+      title: 'Session Details',
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DynamicGridView(
+              count: 2,
+              spacing: 8,
               children: [
-                DynamicGridView(
-                  count: 2,
-                  spacing: 8,
-                  children: [
-                    ReverseDetailsTile(
-                      title: const Text('Specialty'),
-                      value: Text(
-                        'Lorem',
-                        style: textTheme.bodyText1,
-                      ),
-                    ),
-                    ReverseDetailsTile(
-                      title: const Text('Mode of consultation'),
-                      value: Text(
-                        '${sessionBloc.selectedModeOfConsultation?.type}',
-                        style: textTheme.bodyText1,
-                      ),
-                    ),
-                    ReverseDetailsTile(
-                      title: const Text('Duration'),
-                      value: Text(
-                        'Lorem',
-                        style: textTheme.bodyText1,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                TimeslotDetailsWidget(
-                  dateTime: sessionBloc.selectedDate!,
-                  timeslots: showTimeslots(
-                    sessionBloc.timeslots.values,
+                ReverseDetailsTile(
+                  title: const Text('Specialty'),
+                  value: Text(
+                    'Lorem',
+                    style: textTheme.bodyText1,
                   ),
                 ),
-                const SizedBox(height: 8),
                 ReverseDetailsTile(
-                  title: const Text('Description'),
+                  title: const Text('Mode of consultation'),
                   value: Text(
-                    description!,
+                    '${sessionBloc.selectedModeOfConsultation?.type}',
+                    style: textTheme.bodyText1,
+                  ),
+                ),
+                ReverseDetailsTile(
+                  title: const Text('Duration'),
+                  value: Text(
+                    'Lorem',
                     style: textTheme.bodyText1,
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            TimeslotDetailsWidget(
+              dateTime: sessionBloc.selectedDate!,
+              timeslots: showTimeslots(
+                sessionBloc.timeslots.values,
+              ),
+            ),
+            const SizedBox(height: 8),
+            ReverseDetailsTile(
+              title: const Text('Description'),
+              value: Text(
+                description!,
+                style: textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
