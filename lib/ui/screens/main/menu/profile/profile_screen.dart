@@ -2,7 +2,6 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
-import 'package:alsan_app/ui/screens/main/menu/profile/widget/session_details_card.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
@@ -13,8 +12,11 @@ import 'package:provider/provider.dart';
 
 import '../../../../../resources/images.dart';
 import '../../../../widgets/confirm_logout.dart';
+import 'widget/session_overview_card.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -122,9 +124,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
           Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey.shade300),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -135,8 +137,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Row(
                   children: [
                     Image.asset(Images.patient, width: 18),
-                    SizedBox(width: 12),
-                    Text("View Patient Profiles"),
+                    const SizedBox(width: 12),
+                    const Text("View Patient Profiles"),
                   ],
                 ),
                 Container(
@@ -162,55 +164,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text("Session Analystics", style: textTheme.headline2),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           Text(
             "Session Details",
             style: textTheme.subtitle2?.copyWith(
               color: Colors.black.withOpacity(1),
             ),
           ),
-          SizedBox(height: 10),
-          DynamicGridView(
-              spacing: 0,
-              children: [
-                SessionCard(),
-                SessionCard(),
-                SessionCard(),
-              ],
-              count: 2),
-          SizedBox(height: 24),
+          const SizedBox(height: 10),
+          const DynamicGridView(spacing: 0, count: 2, children: [
+            SessionOverviewCard(),
+            SessionOverviewCard(),
+            SessionOverviewCard(),
+          ]),
+          const SizedBox(height: 24),
           Text(
             "Mode of Consultaion",
             style: textTheme.subtitle2?.copyWith(
               color: Colors.black.withOpacity(1),
             ),
           ),
-          SizedBox(height: 10),
-          DynamicGridView(
-              spacing: 0,
-              children: [
-                SessionCard(),
-                SessionCard(),
-              ],
-              count: 2),
-          SizedBox(height: 24),
+          const SizedBox(height: 10),
+          const DynamicGridView(spacing: 0, count: 2, children: [
+            SessionOverviewCard(),
+            SessionOverviewCard(),
+          ]),
+          const SizedBox(height: 24),
           Text(
             "Session Information",
             style: textTheme.subtitle2?.copyWith(
               color: Colors.black.withOpacity(1),
             ),
           ),
-          SizedBox(height: 10),
-          DynamicGridView(
-              spacing: 0,
-              children: [
-                SessionCard(),
-                SessionCard(),
-                SessionCard(),
-              ],
-              count: 2),
+          const SizedBox(height: 10),
+          const DynamicGridView(spacing: 0, count: 2, children: [
+            SessionOverviewCard(),
+            SessionOverviewCard(),
+            SessionOverviewCard(),
+          ]),
           const SizedBox(height: 16),
           OutlinedButton(
             onPressed: () async {
