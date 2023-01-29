@@ -1,4 +1,3 @@
-import 'package:alsan_app/ui/screens/main/menu/reports/widgets/time_slot.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +12,12 @@ class _ReportScreenState extends State<ReportScreen> {
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Reports'),
+        title: const Text('My Reports'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade300),
             borderRadius: const BorderRadius.all(
@@ -34,14 +33,14 @@ class _ReportScreenState extends State<ReportScreen> {
                 "ALSOO34",
                 style: textTheme.headline4,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Patient", style: textTheme.caption),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         "ALex Oliver",
                         style: textTheme.headline3
@@ -49,12 +48,12 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(width: 112),
+                  const SizedBox(width: 112),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Clinican", style: textTheme.caption),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         "Dr. Taslim",
                         style: textTheme.headline3
@@ -62,15 +61,15 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                 ],
               ),
-              SizedBox(height: 16),
-              TimeSlot(),
-              SizedBox(height: 30),
+              const SizedBox(height: 16),
+              // TimeSlot(),
+              const SizedBox(height: 30),
               ProgressButton(
                 onPressed: () {},
-                child: Text("Download Report"),
+                child: const Text("Download Report"),
               )
             ],
           ),

@@ -59,7 +59,7 @@ class _AddressDetailsWidgetState extends State<AddressDetailsWidget> {
                   DetailsTile(
                     title: Text('${widget.address.addressLine1}'),
                     value: Text(
-                      formatAddress(widget.address),
+                      Address().formatAddress(widget.address),
                     ),
                   ),
                   const Text('7702165416'),
@@ -81,17 +81,5 @@ class _AddressDetailsWidgetState extends State<AddressDetailsWidget> {
         ),
       ),
     );
-  }
-
-  String formatAddress(Address address) {
-    String formattedAddress = '';
-    formattedAddress +=
-        address.addressLine1 == null ? '' : '${address.addressLine1!}, ';
-    formattedAddress +=
-        address.addressLine2 == null ? '' : '${address.addressLine2!}, ';
-    formattedAddress += address.city == null ? '' : '${address.city!}, ';
-    formattedAddress += address.country == null ? '' : '${address.country!}, ';
-    formattedAddress += address.pincode == null ? '' : '${address.pincode!}, ';
-    return formattedAddress;
   }
 }
