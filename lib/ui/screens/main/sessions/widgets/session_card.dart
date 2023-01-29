@@ -6,18 +6,19 @@ import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../../model/session.dart';
 
-class PatientCard extends StatefulWidget {
+class SessionCard extends StatefulWidget {
   final Session session;
 
-  const PatientCard({super.key, required this.session});
+  const SessionCard({super.key, required this.session});
 
   @override
-  _PatientCardState createState() => _PatientCardState();
+  _SessionCardState createState() => _SessionCardState();
 }
 
-class _PatientCardState extends State<PatientCard> {
+class _SessionCardState extends State<SessionCard> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;

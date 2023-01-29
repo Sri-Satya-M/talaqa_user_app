@@ -1,4 +1,3 @@
-import 'package:alsan_app/ui/screens/main/sessions/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +6,7 @@ import '../../../../../../model/session.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
+import '../widgets/session_card.dart';
 
 class CompletedTab extends StatefulWidget {
   const CompletedTab({super.key});
@@ -35,7 +35,7 @@ class _CompletedTabState extends State<CompletedTab> {
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
           itemBuilder: (context, index) {
-            return PatientCard(session: sessions[index]);
+            return SessionCard(session: sessions[index]);
           },
         );
       },
