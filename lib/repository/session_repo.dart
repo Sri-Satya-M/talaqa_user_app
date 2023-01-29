@@ -3,6 +3,7 @@ import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
 import '../model/mode_of_consultation.dart';
+import '../model/session.dart';
 
 class SessionRepo {
   Future<List<ModeOfConsultation>> getModeOfConsultation() async {
@@ -21,5 +22,14 @@ class SessionRepo {
 
   Future createSessions({body}) {
     return apiClient.post(Api.sessions, body);
+  }
+
+  Future<List<Session>> getSessions({query}) async {
+    var response = await apiClient.get(
+      Api.sessions + Api.patientSessions,
+      query: query,
+    );
+    var list = response as List;
+    return list.map((e) => Session.fromMap(e)).toList();
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../model/clinicians.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
+import '../model/session.dart';
 import '../model/time_of_day.dart';
 import '../repository/session_repo.dart';
 
@@ -17,7 +18,7 @@ class SessionBloc with ChangeNotifier {
   List<int>? selectedTimeSlotIds;
   String? description;
   int? selectedAddressId;
-  Map<int,TimeSlot> timeslots={};
+  Map<int, TimeSlot> timeslots = {};
 
   Future<List<ModeOfConsultation>> getModeOfConsultation() {
     return sessionRepo.getModeOfConsultation();
@@ -62,5 +63,11 @@ class SessionBloc with ChangeNotifier {
     selectedAddressId = null;
     timeslots.clear();
     // notifyListeners();
+  }
+
+  ///Apis
+
+  Future<List<Session>> getSessions({query}) {
+    return sessionRepo.getSessions(query: query);
   }
 }
