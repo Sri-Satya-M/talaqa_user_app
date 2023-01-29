@@ -1,26 +1,26 @@
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../bloc/sesssion_bloc.dart';
-import '../../../../../model/session.dart';
-import '../../../widgets/empty_widget.dart';
-import '../../../widgets/error_widget.dart';
-import '../../../widgets/loading_widget.dart';
+import '../../../../widgets/empty_widget.dart';
+import '../../../../widgets/error_widget.dart';
+import '../../../../widgets/loading_widget.dart';
 
-class CompletedScreen extends StatefulWidget {
-  const CompletedScreen({super.key});
+class UpcomingTab extends StatefulWidget {
+  const UpcomingTab({super.key});
 
   @override
-  _CompletedScreenState createState() => _CompletedScreenState();
+  _UpcomingTabState createState() => _UpcomingTabState();
 }
 
-class _CompletedScreenState extends State<CompletedScreen> {
+class _UpcomingTabState extends State<UpcomingTab> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {"status": "COMPLETED"}),
+      future: sessionBloc.getSessions(query: {"status": "PENDING"}),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);

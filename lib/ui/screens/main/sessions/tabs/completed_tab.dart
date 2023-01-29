@@ -2,25 +2,25 @@ import 'package:alsan_app/ui/screens/main/sessions/widgets/patient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../bloc/sesssion_bloc.dart';
-import '../../../../model/session.dart';
-import '../../../widgets/empty_widget.dart';
-import '../../../widgets/error_widget.dart';
-import '../../../widgets/loading_widget.dart';
+import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../model/session.dart';
+import '../../../../widgets/empty_widget.dart';
+import '../../../../widgets/error_widget.dart';
+import '../../../../widgets/loading_widget.dart';
 
-class CancelledScreen extends StatefulWidget {
-  const CancelledScreen({super.key});
+class CompletedTab extends StatefulWidget {
+  const CompletedTab({super.key});
 
   @override
-  _CancelledScreenState createState() => _CancelledScreenState();
+  _CompletedTabState createState() => _CompletedTabState();
 }
 
-class _CancelledScreenState extends State<CancelledScreen> {
+class _CompletedTabState extends State<CompletedTab> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {"status": "CANCELLED"}),
+      future: sessionBloc.getSessions(query: {"status": "COMPLETED"}),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);
