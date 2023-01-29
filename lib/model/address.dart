@@ -41,8 +41,8 @@ class Address {
         country: json["country"],
         mobileNumber: json["mobileNumber"],
         patientId: json["patientId"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toMap() => {

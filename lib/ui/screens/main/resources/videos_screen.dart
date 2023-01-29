@@ -35,7 +35,7 @@ class _VideoScreenState extends State<VideoScreen> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                PlayVideoScreen.open(context, link: resources[index].link);
+                PlayVideoScreen.open(context, link: resources[index].link!);
               },
               child: Container(
                 margin: const EdgeInsets.all(20),
@@ -63,12 +63,12 @@ class _VideoScreenState extends State<VideoScreen> {
                     DetailsTile(
                       padding: const EdgeInsets.all(15),
                       gap: 15,
-                      title: Text(resources[index].title),
+                      title: Text(resources[index].title!),
                       value: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Updated on ${DateFormat('dd MMM, yyyy').format(resources[index].updatedAt)}',
+                            'Updated on ${DateFormat('dd MMM, yyyy').format(resources[index].updatedAt!)}',
                             style: textTheme.caption,
                           ),
                           const Icon(Icons.share, size: 18)

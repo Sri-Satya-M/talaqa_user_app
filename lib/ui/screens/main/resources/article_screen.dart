@@ -28,11 +28,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
             return CustomErrorWidget(error: snapshot.error);
           }
           if (!snapshot.hasData) return const LoadingWidget();
-          var resouces = snapshot.data ?? [];
-          if (resouces.isEmpty) return const EmptyWidget();
+          var resources = snapshot.data ?? [];
+          if (resources.isEmpty) return const EmptyWidget();
           return ListView.builder(
             padding: const EdgeInsets.all(20),
-            itemCount: resouces.length,
+            itemCount: resources.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
@@ -40,8 +40,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
                   onTap: () {
                     WebviewScreen.open(
                       context,
-                      url: resouces[index].link,
-                      title: resouces[index].title,
+                      url: resources[index].link!,
+                      title: resources[index].title!,
                     );
                   },
                   child: Container(
@@ -60,7 +60,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                           height: 150,
                           width: double.maxFinite,
                           child: ImageFromNet(
-                            imageUrl: resouces[index].thumbnail,
+                            imageUrl: resources[index].thumbnail,
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               topLeft: Radius.circular(10),
@@ -71,12 +71,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
                         DetailsTile(
                           padding: const EdgeInsets.all(15),
                           gap: 8,
-                          title: Text(resouces[index].title),
+                          title: Text(resources[index].title!),
                           value: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                resouces[index].description,
+                                resources[index].description!,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 3,
                                 style: textTheme.caption,

@@ -1,3 +1,5 @@
+import 'user.dart';
+
 class Clinician {
   Clinician({
     this.id,
@@ -18,20 +20,20 @@ class Clinician {
 
   int? id;
   String? image;
-  dynamic alternateEmail;
-  dynamic alternateMobileNumber;
+  String? alternateEmail;
+  String? alternateMobileNumber;
   DateTime? dob;
   String? gender;
   String? location;
   int? experience;
   int? userId;
-  dynamic designation;
-  dynamic languagesKnown;
+  String? designation;
+  String? languagesKnown;
   DateTime? createdAt;
   DateTime? updatedAt;
   User? user;
 
-  factory Clinician.fromJson(Map<String, dynamic> json) => Clinician(
+  factory Clinician.fromMap(Map<String, dynamic> json) => Clinician(
     id: json["id"],
     image: json["image"],
     alternateEmail: json["alternateEmail"],
@@ -43,12 +45,12 @@ class Clinician {
     userId: json["userId"],
     designation: json["designation"],
     languagesKnown: json["languagesKnown"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    user: User.fromJson(json["user"]),
+    createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
+    user: json["user"]== null? null: User.fromMap(json["user"]),
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
     "id": id,
     "image": image,
     "alternateEmail": alternateEmail,
@@ -62,50 +64,6 @@ class Clinician {
     "languagesKnown": languagesKnown,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
-    "user": user!.toJson(),
-  };
-}
-
-class User {
-  User({
-    this.id,
-    this.fullName,
-    this.email,
-    this.mobileNumber,
-    this.password,
-    this.userType,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int? id;
-  String? fullName;
-  String? email;
-  String? mobileNumber;
-  String? password;
-  String? userType;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    fullName: json["fullName"],
-    email: json["email"],
-    mobileNumber: json["mobileNumber"],
-    password: json["password"],
-    userType: json["UserType"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "fullName": fullName,
-    "email": email,
-    "mobileNumber": mobileNumber,
-    "password": password,
-    "UserType": userType,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
+    "user": user?.toJson(),
   };
 }

@@ -1,0 +1,105 @@
+import 'package:alsan_app/model/patient.dart';
+import 'package:alsan_app/model/time_of_day.dart';
+
+import 'address.dart';
+import 'clinicians.dart';
+
+class Session {
+  Session({
+    this.id,
+    this.sessionId,
+    this.clinicianTimeSlotIds,
+    this.date,
+    this.day,
+    this.description,
+    this.consultationMode,
+    this.consultationFee,
+    this.totalAmount,
+    this.patientId,
+    this.patientProfileId,
+    this.patientAddressId,
+    this.clinicianId,
+    this.status,
+    this.reportDocument,
+    this.createdAt,
+    this.updatedAt,
+    this.patient,
+    this.patientProfile,
+    this.patientAddress,
+    this.clinician,
+    this.clinicianTimeSlots,
+  });
+
+  int? id;
+  String? sessionId;
+  List<String>? clinicianTimeSlotIds;
+  DateTime? date;
+  String? day;
+  String? description;
+  String? consultationMode;
+  int? consultationFee;
+  int? totalAmount;
+  int? patientId;
+  int? patientProfileId;
+  int? patientAddressId;
+  int? clinicianId;
+  String? status;
+  String? reportDocument;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  Patient? patient;
+  Patient? patientProfile;
+  Address? patientAddress;
+  Clinician? clinician;
+  List<TimeSlot>? clinicianTimeSlots;
+
+  factory Session.fromMap(Map<String, dynamic> json) => Session(
+    id: json["id"],
+    sessionId: json["sessionId"],
+    clinicianTimeSlotIds: json["clinicianSlotIds"],
+    date: json["date"] ==null? null : DateTime.parse(json["date"]),
+    day: json["day"],
+    description: json["description"],
+    consultationMode: json["consultationMode"],
+    consultationFee: json["consultationFee"],
+    totalAmount: json["totalAmount"],
+    patientId: json["patientId"],
+    patientProfileId: json["patientProfileId"],
+    patientAddressId: json["patientAddressId"],
+    clinicianId: json["clinicianId"],
+    status: json["status"],
+    reportDocument: json["reportDocument"],
+    createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
+    patient: Patient.fromMap(json["patient"]),
+    patientProfile: Patient.fromMap(json["patientProfile"]),
+    patientAddress: Address.fromMap(json["patientAddress"]),
+    clinician: Clinician.fromMap(json["clinician"]),
+    clinicianTimeSlots: List<TimeSlot>.from(json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x))??[]),
+  );
+
+  Map<String, dynamic> toMap() => {
+    "id": id,
+    "sessionId": sessionId,
+    "clinicianTimeSlotIds": clinicianTimeSlotIds,
+    "date": "${date?.year.toString().padLeft(4, '0')}-${date?.month.toString().padLeft(2, '0')}-${date?.day.toString().padLeft(2, '0')}",
+    "day": day,
+    "description": description,
+    "consultationMode": consultationMode,
+    "consultationFee": consultationFee,
+    "totalAmount": totalAmount,
+    "patientId": patientId,
+    "patientProfileId": patientProfileId,
+    "patientAddressId": patientAddressId,
+    "clinicianId": clinicianId,
+    "status": status,
+    "reportDocument": reportDocument,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "patient": patient?.toMap(),
+    "patientProfile": patientProfile?.toMap(),
+    "patientAddress": patientAddress?.toMap(),
+    "clinician": clinician?.toMap(),
+    "clinicianTimeSlots": List<dynamic>.from(clinicianTimeSlots?.map((x) => x.toMap()) ?? []),
+  };
+}

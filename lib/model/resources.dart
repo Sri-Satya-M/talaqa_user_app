@@ -10,14 +10,14 @@ class Resources {
     required this.updatedAt,
   });
 
-  int id;
-  String title;
-  String description;
-  String thumbnail;
-  String link;
-  String type;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? title;
+  String? description;
+  String? thumbnail;
+  String? link;
+  String? type;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Resources.fromJson(Map<String, dynamic> json) => Resources(
     id: json["id"],
@@ -26,8 +26,8 @@ class Resources {
     thumbnail: json["thumbnail"],
     link: json["link"],
     type: json["type"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
+    createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,7 +37,7 @@ class Resources {
     "thumbnail": thumbnail,
     "link": link,
     "type": type,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
   };
 }
