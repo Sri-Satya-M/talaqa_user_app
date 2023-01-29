@@ -1,3 +1,5 @@
+import '../utils/helper.dart';
+
 class TimeOfDay {
   TimeOfDay({
     this.morning,
@@ -76,4 +78,12 @@ class TimeSlot {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
   };
+
+  List<TimeSlot> showTimeslots(dynamic collection) {
+    return Helper.sortByKey(
+      collection: collection.map((c) => c.toMap()).toList(),
+      key: 'startAt',
+      obj: (json) => TimeSlot.fromMap(json),
+    ).map((e) => e as TimeSlot).toList();
+  }
 }

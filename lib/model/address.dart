@@ -60,4 +60,16 @@ class Address {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
       };
+
+  String formatAddress(Address address) {
+    String formattedAddress = '';
+    formattedAddress +=
+    address.addressLine1 == null ? '' : '${address.addressLine1!}, ';
+    formattedAddress +=
+    address.addressLine2 == null ? '' : '${address.addressLine2!}, ';
+    formattedAddress += address.city == null ? '' : '${address.city!}, ';
+    formattedAddress += address.country == null ? '' : '${address.country!}, ';
+    formattedAddress += address.pincode == null ? '' : '${address.pincode!}, ';
+    return formattedAddress;
+  }
 }

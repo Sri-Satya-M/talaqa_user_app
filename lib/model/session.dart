@@ -1,4 +1,4 @@
-import 'package:alsan_app/model/patient.dart';
+import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 
 import 'address.dart';
@@ -47,8 +47,8 @@ class Session {
   String? reportDocument;
   DateTime? createdAt;
   DateTime? updatedAt;
-  Patient? patient;
-  Patient? patientProfile;
+  Profile? patient;
+  Profile? patientProfile;
   Address? patientAddress;
   Clinician? clinician;
   List<TimeSlot>? clinicianTimeSlots;
@@ -71,8 +71,8 @@ class Session {
     reportDocument: json["reportDocument"],
     createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
-    patient: Patient.fromMap(json["patient"]),
-    patientProfile: Patient.fromMap(json["patientProfile"]),
+    patient: Profile.fromJson(json["patient"]),
+    patientProfile: Profile.fromJson(json["patientProfile"]),
     patientAddress: Address.fromMap(json["patientAddress"]),
     clinician: Clinician.fromMap(json["clinician"]),
     clinicianTimeSlots: List<TimeSlot>.from(json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x))??[]),
@@ -96,8 +96,8 @@ class Session {
     "reportDocument": reportDocument,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
-    "patient": patient?.toMap(),
-    "patientProfile": patientProfile?.toMap(),
+    "patient": patient?.toJson(),
+    "patientProfile": patientProfile?.toJson(),
     "patientAddress": patientAddress?.toMap(),
     "clinician": clinician?.toMap(),
     "clinicianTimeSlots": List<dynamic>.from(clinicianTimeSlots?.map((x) => x.toMap()) ?? []),
