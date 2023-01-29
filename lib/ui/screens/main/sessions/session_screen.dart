@@ -1,9 +1,10 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/ui/screens/main/sessions/cancelled_screen.dart';
-import 'package:alsan_app/ui/screens/main/sessions/completed_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/upcoming_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'completed_screen.dart';
 
 class SessionScreen extends StatefulWidget {
   @override
@@ -18,11 +19,11 @@ class _SessionScreenState extends State<SessionScreen> {
       builder: (context) {
         switch (mainBloc.tab) {
           case 0:
-            return UpcomingScreen();
+            return const UpcomingScreen();
           case 1:
-            return CompletedScreen();
+            return const CompletedScreen();
           case 2:
-            return CancelledScreen();
+            return const CancelledScreen();
           default:
             return const SizedBox();
         }
