@@ -34,7 +34,7 @@ class SessionDetailsWidget extends StatelessWidget {
                 ReverseDetailsTile(
                   title: const Text('Specialty'),
                   value: Text(
-                    'Lorem',
+                    '${sessionBloc.selectedClinician?.designation}',
                     style: textTheme.bodyText1,
                   ),
                 ),
