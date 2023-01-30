@@ -73,7 +73,7 @@ class Session {
     updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
     patient: Profile.fromJson(json["patient"]),
     patientProfile: Profile.fromJson(json["patientProfile"]),
-    patientAddress: Address.fromMap(json["patientAddress"]),
+    patientAddress: json["patientAddress"] == null ? null: Address.fromMap(json["patientAddress"]),
     clinician: Clinician.fromMap(json["clinician"]),
     clinicianTimeSlots: List<TimeSlot>.from(json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x))??[]),
   );
