@@ -20,7 +20,9 @@ class _CompletedTabState extends State<CompletedTab> {
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {"status": "COMPLETED"}),
+      future: sessionBloc.getSessions(query: {
+        "status": ["COMPLETED"]
+      }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);

@@ -20,7 +20,9 @@ class _UpcomingTabState extends State<UpcomingTab> {
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {"status": "PENDING"}),
+      future: sessionBloc.getSessions(query: {
+        "status": ["PENDING", "APPROVED"]
+      }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);

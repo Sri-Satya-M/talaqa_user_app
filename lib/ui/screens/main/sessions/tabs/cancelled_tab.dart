@@ -20,7 +20,9 @@ class _CancelledTabState extends State<CancelledTab> {
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {"status": "CANCELLED"}),
+      future: sessionBloc.getSessions(query: {
+        "status": ["REJECTED"]
+      }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);
