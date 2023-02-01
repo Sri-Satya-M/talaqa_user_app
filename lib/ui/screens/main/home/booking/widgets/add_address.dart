@@ -4,7 +4,6 @@ import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
 import '../../../../location/location_screen.dart';
@@ -30,7 +29,6 @@ class _AddAddressState extends State<AddAddress> {
         }
         if (!snapshot.hasData) return const LoadingWidget();
         var addresses = snapshot.data ?? [];
-        if (addresses.isEmpty) return const EmptyWidget();
 
         return Container(
           decoration: const BoxDecoration(
@@ -49,7 +47,7 @@ class _AddAddressState extends State<AddAddress> {
                 style: textTheme.caption?.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 16),
-              AddressList(addresses: addresses),
+              if (addresses.isNotEmpty) AddressList(addresses: addresses),
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () async {
