@@ -35,8 +35,8 @@ class SessionCard extends StatelessWidget {
                     style: textTheme.headline4,
                   ),
                   Container(
-                    decoration: const BoxDecoration(
-                      color: MyColors.yellow,
+                    decoration: BoxDecoration(
+                      color: getColor(session.status),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -45,7 +45,7 @@ class SessionCard extends StatelessWidget {
                     ),
                     child: Text(
                       '${session.status}',
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyText1?.copyWith(color: Colors.white),
                     ),
                   )
                 ],
@@ -103,5 +103,19 @@ class SessionCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color getColor(String? status) {
+    switch (status) {
+      case "PENDING":
+        return MyColors.yellow;
+      case "APPROVED":
+        return MyColors.lightGreen;
+      case "REJECTED":
+      case "CANCELLED":
+        return MyColors.red;
+      default:
+        return MyColors.yellow;
+    }
   }
 }
