@@ -21,9 +21,10 @@ class ConsultationDialog extends StatefulWidget {
         return AlertDialog(
           titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Text('Mode of Consultation', style: textTheme.headline4),
-              const Spacer(),
               IconButton(
                 onPressed: () => Navigator.pop(context, null),
                 icon: Icon(
@@ -127,7 +128,7 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
                             child: Text('${consultations[i].price} Dirham'),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(height: 5),
                         Radio(
                           value: consultations[i].id,
                           groupValue: selected,
@@ -141,18 +142,17 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
                     ),
                   ),
                 ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  onPressed: () {
-                    var consultationMode = consultations.firstWhere(
-                      (e) => e.id == selected,
-                    );
-                    Navigator.pop(context, consultationMode);
-                  },
-                  child: const Text('Book Now'),
-                ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(padding: const EdgeInsets.all(16)),
+                onPressed: () {
+                  var consultationMode = consultations.firstWhere(
+                    (e) => e.id == selected,
+                  );
+                  Navigator.pop(context, consultationMode);
+                },
+                child: const Text('Book Now'),
               ),
             ],
           );
