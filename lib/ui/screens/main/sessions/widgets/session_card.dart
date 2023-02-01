@@ -109,6 +109,7 @@ class SessionCard extends StatelessWidget {
     switch (status) {
       case "PENDING":
         return MyColors.yellow;
+      case "COMPLETED":
       case "APPROVED":
         return MyColors.lightGreen;
       case "REJECTED":
