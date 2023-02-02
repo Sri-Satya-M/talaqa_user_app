@@ -37,4 +37,8 @@ class SessionRepo {
     var response = await apiClient.get("${Api.sessions}/$id");
     return Session.fromMap(response);
   }
+
+  Future updateSession({body}) {
+    return apiClient.post(Api.updateSession, body);
+  }
 }

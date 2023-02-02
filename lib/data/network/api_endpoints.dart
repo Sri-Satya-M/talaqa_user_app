@@ -17,6 +17,6 @@ class Api {
   static const mapDecodePlace = 'https://maps.googleapis.com/maps/api/place/details/json';
   static const addresses = '/addresses';
   static const patientSessions = '/patient-sessions';
-
+  static const updateSession = '$sessions/update-session-status';
 
 }
