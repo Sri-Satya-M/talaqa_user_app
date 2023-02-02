@@ -22,7 +22,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   Map<String, Event> events = {
     "PENDING": Event("Session Pending"),
     "APPROVED": Event("Session Approved"),
-    "PAYMENT": Event("Payment completed"),
+    "PAID": Event("Payment completed"),
     "STARTED": Event("Session Started"),
     "COMPLETED": Event("Session Completed"),
     "SENT": Event("Report Sent"),

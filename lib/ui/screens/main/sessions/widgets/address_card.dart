@@ -1,6 +1,7 @@
 import 'package:alsan_app/model/address.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../resources/colors.dart';
 import '../../../../../resources/images.dart';
 import '../../../../widgets/details_tile.dart';
 
@@ -18,7 +19,7 @@ class AddressCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: MyColors.divider),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -64,6 +64,13 @@ class SuccessScreen extends StatelessWidget {
               case 'EMAIL':
                 ProfileEmailScreen.open(context);
                 break;
+              case 'Payment':
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                      (route) => false,
+                );
+                break;
               default:
                 Navigator.pushAndRemoveUntil(
                   context,

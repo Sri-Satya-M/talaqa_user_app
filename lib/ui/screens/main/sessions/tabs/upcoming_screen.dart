@@ -21,7 +21,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["PENDING", "APPROVED"]
+        "status": ["PENDING", "APPROVED","PAID"]
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -32,7 +32,6 @@ class _UpcomingTabState extends State<UpcomingTab> {
         }
         var sessions = snapshot.data ?? [];
         if (sessions.isEmpty) return const EmptyWidget();
-
         return ListView.builder(
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
