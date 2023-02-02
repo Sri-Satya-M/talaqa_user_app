@@ -21,7 +21,10 @@ class SessionCard extends StatelessWidget {
     return CustomCard(
       margin: const EdgeInsets.only(bottom: 20),
       child: InkWell(
-        onTap: () => SessionDetailsScreen.open(context, session: session),
+        onTap: () => SessionDetailsScreen.open(
+          context,
+          id: session.id.toString(),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(

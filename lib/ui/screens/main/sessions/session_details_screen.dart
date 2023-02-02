@@ -20,16 +20,14 @@ import '../home/booking/widgets/details_box.dart';
 import '../home/booking/widgets/timeslot_details_widget.dart';
 
 class SessionDetailsScreen extends StatefulWidget {
-  final Session session;
+  final String id;
 
-  const SessionDetailsScreen({super.key, required this.session});
+  const SessionDetailsScreen({super.key, required this.id});
 
-  static Future open(BuildContext context, {required Session session}) {
+  static Future open(BuildContext context, {required String id}) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SessionDetailsScreen(
-          session: session,
-        ),
+        builder: (context) => SessionDetailsScreen(id: id),
       ),
     );
   }
@@ -50,7 +48,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         title: const Text('Session Details'),
       ),
       body: FutureBuilder<Session>(
-        future: sessionBloc.getSessionById(widget.session.id.toString()),
+        future: sessionBloc.getSessionById(widget.id),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
@@ -81,13 +79,13 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                         color: const Color(0xFF5BFF9F),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: Text('${widget.session.sessionId}'),
+                      child: Text('${session.sessionId}'),
                     ),
                   ],
                 ),
               ),
-              PatientDetailsWidget(patient: widget.session.patientProfile!),
-              ClinicianDetailsWidget(clinician: widget.session.clinician!),
+              PatientDetailsWidget(patient: session.patientProfile!),
+              ClinicianDetailsWidget(clinician: session.clinician!),
               DetailsBox(
                 title: 'Session Details',
                 child: Padding(
@@ -102,14 +100,14 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                           ReverseDetailsTile(
                             title: const Text('Specialty'),
                             value: Text(
-                              '${widget.session.clinician?.designation}',
+                              '${session.clinician?.designation}',
                               style: textTheme.bodyText1,
                             ),
                           ),
                           ReverseDetailsTile(
                             title: const Text('Mode of consultation'),
                             value: Text(
-                              '${widget.session.consultationMode}',
+                              '${session.consultationMode}',
                               style: textTheme.bodyText1,
                             ),
                           ),
@@ -124,15 +122,15 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       ),
                       const SizedBox(height: 8),
                       TimeslotDetailsWidget(
-                        dateTime: widget.session.date!,
+                        dateTime: session.date!,
                         timeslots: TimeSlot()
-                            .showTimeslots(widget.session.clinicianTimeSlots!),
+                            .showTimeslots(session.clinicianTimeSlots!),
                       ),
                       const SizedBox(height: 8),
                       ReverseDetailsTile(
                         title: const Text('Description'),
                         value: Text(
-                          widget.session.description!,
+                          session.description!,
                           style: textTheme.bodyText1,
                         ),
                       ),
@@ -140,8 +138,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ),
               ),
-              (widget.session.consultationMode == "HOME")
-                  ? AddressCard(address: widget.session.patientAddress!)
+              (session.consultationMode == "HOME")
+                  ? AddressCard(address: session.patientAddress!)
                   : const SizedBox(),
               DetailsBox(
                 title: 'Consultation Bill Details',
@@ -179,7 +177,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ],
                 ),
               ),
-              TimelineWidget(statuses: widget.session.sessionStatuses!),
+              const SizedBox(height: 32),
+              TimelineWidget(statuses: session.sessionStatuses!),
               const SizedBox(height: 16),
               if (session.status == "APPROVED") ...[
                 ProgressButton(

@@ -1,4 +1,5 @@
 import 'package:alsan_app/model/session.dart';
+import 'package:alsan_app/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelines/timelines.dart';
@@ -12,6 +13,7 @@ class TimelineWidget extends StatefulWidget {
     super.key,
     required this.statuses,
   });
+
   final List<SessionStatus> statuses;
 
   @override
@@ -19,7 +21,7 @@ class TimelineWidget extends StatefulWidget {
 }
 
 class _TimelineWidgetState extends State<TimelineWidget> {
-  Map<String, Event> events = {
+  Map<String, Event> eventsMap = {
     "PENDING": Event("Session Pending"),
     "APPROVED": Event("Session Approved"),
     "PAID": Event("Payment completed"),
@@ -27,15 +29,26 @@ class _TimelineWidgetState extends State<TimelineWidget> {
     "COMPLETED": Event("Session Completed"),
     "SENT": Event("Report Sent"),
   };
+
+  Widget getConnector(String? time) {
+    if (time == null) {
+      return const DashedLineConnector(color: Colors.grey);
+    } else {
+      return const SolidLineConnector(color: MyColors.primaryColor);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    for (SessionStatus status in widget.statuses) {
-      var newFormat = DateFormat("dd MMM, yyyy at HH:Hm");
-      events[status.status]?.time = newFormat.format(status.updatedAt!);
+    for (var status in widget.statuses) {
+      var formateDate = DateFormat("dd MMM, yyyy a HH:Hm");
+      eventsMap[status.status]?.time = formateDate.format(status.updatedAt!);
     }
-    var values = events.values.toList();
+
+    var eventsList = eventsMap.values.toList();
+
     return FixedTimeline.tileBuilder(
       theme: TimelineTheme.of(context).copyWith(
         nodePosition: 0,
@@ -46,104 +59,41 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               size: 20.0,
             ),
       ),
+
       builder: TimelineTileBuilder(
-        indicatorBuilder: (_, index) => (index == 0 || index == 5)
-            ? (index != 5)
-                ? SizedBox(
-                    height: 100.0,
-                    child: TimelineNode(
-                      indicator: Card(
-                        margin: EdgeInsets.zero,
-                        child: (values[index].time == null)
-                            ? Image.asset(
-                                Images.notDoneIcon,
-                                height: 50,
-                                width: 50,
-                              )
-                            : Image.asset(
-                                Images.doneIcon,
-                                height: 50,
-                                width: 50,
-                              ),
-                      ),
-                      endConnector: (values[index].time == null)
-                          ? const DashedLineConnector(
-                              color: Colors.grey,
-                            )
-                          : const SolidLineConnector(),
-                    ),
-                  )
-                : SizedBox(
-                    height: 100.0,
-                    child: TimelineNode(
-                        indicator: Card(
-                          margin: EdgeInsets.zero,
-                          child: (values[index].time == null)
-                              ? Image.asset(
-                                  Images.notDoneIcon,
-                                  height: 50,
-                                  width: 50,
-                                )
-                              : Image.asset(
-                                  Images.doneIcon,
-                                  height: 50,
-                                  width: 50,
-                                ),
-                        ),
-                        startConnector: (values[index].time == null)
-                            ? const DashedLineConnector(
-                                color: Colors.grey,
-                              )
-                            : const SolidLineConnector()),
-                  )
-            : SizedBox(
-                height: 100.0,
-                child: TimelineNode(
-                  indicator: Card(
-                    margin: EdgeInsets.zero,
-                    child: (values[index].time == null)
-                        ? Image.asset(
-                            Images.notDoneIcon,
-                            height: 50,
-                            width: 50,
-                          )
-                        : Image.asset(
-                            Images.doneIcon,
-                            height: 50,
-                            width: 50,
-                          ),
-                  ),
-                  startConnector: (values[index].time == null)
-                      ? const DashedLineConnector(
-                          color: Colors.grey,
-                        )
-                      : const SolidLineConnector(),
-                  endConnector: (values[index].time == null)
-                      ? const DashedLineConnector(
-                          color: Colors.grey,
-                        )
-                      : const SolidLineConnector(),
-                ),
+        itemCount: eventsList.length,
+        indicatorBuilder: (_, index) => SizedBox(
+          height: 80.0,
+          child: TimelineNode(
+            indicator: Card(
+              margin: EdgeInsets.zero,
+              child: Image.asset(
+                (eventsList[index].time == null)
+                    ? Images.notDoneIcon
+                    : Images.doneIcon,
+                height: 50,
+                width: 50,
               ),
+            ),
+            startConnector: getConnector(eventsList[index].time),
+            endConnector: (index == eventsList.length - 1)
+                ? null
+                : getConnector(eventsList[index].time),
+          ),
+        ),
+        itemExtentBuilder: (_, index) => 80,
+        nodeItemOverlapBuilder: (_, index) =>
+        (index != 0 || index != 5) ? true : null,
         contentsBuilder: (_, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: DetailsTile(
-              title: Text(values[index].title),
-              value: (values[index].time != null)
-                  ? Text(
-                      values[index].time.toString(),
-                      style: textTheme.caption,
-                    )
-                  : Text(""),
+          return DetailsTile(
+            padding: const EdgeInsets.only(left: 16, top: 16),
+            title: Text(eventsList[index].title),
+            value: Text(
+              eventsList[index].time?.toString() ?? "",
+              style: textTheme.caption,
             ),
           );
         },
-        itemExtentBuilder: (_, index) =>
-            100, //isEdgeIndex(index) ? 20.0 : 100.0,
-        nodeItemOverlapBuilder: (_, index) =>
-            (index != 0 || index != 5) ? true : null,
-        itemCount: values.length,
       ),
     );
   }
