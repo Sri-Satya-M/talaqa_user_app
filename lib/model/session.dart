@@ -85,8 +85,9 @@ class Session {
         clinician: Clinician.fromMap(json["clinician"]),
         sessionStatuses: json["sessionStatuses"] == null
             ? []
-            : List<SessionStatus>.from(
-                json["sessionStatuses"]!.map((x) => SessionStatus.fromJson(x))),
+            : List<SessionStatus>.from(json["sessionStatuses"]
+                    ?.map((x) => SessionStatus.fromJson(x)) ??
+                []),
         clinicianTimeSlots: List<TimeSlot>.from(
             json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x)) ?? []),
       );
@@ -116,6 +117,8 @@ class Session {
         "clinician": clinician?.toMap(),
         "clinicianTimeSlots":
             List<dynamic>.from(clinicianTimeSlots?.map((x) => x.toMap()) ?? []),
+        "sessionStatuses":
+            List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
       };
 }
 
