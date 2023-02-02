@@ -186,6 +186,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_paytabs_bridge:
+    dependency: "direct main"
+    description:
+      name: flutter_paytabs_bridge
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -295,7 +302,7 @@ packages:
     source: hosted
     version: "2.2.5"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
