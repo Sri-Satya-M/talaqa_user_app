@@ -23,6 +23,7 @@ class Images {
   static const onBoardingImage = 'assets/images/onboarding.png';
   static const animatedLogo = 'assets/images/animated_logo.gif';
   static const success = 'assets/images/success.json';
+  static const errorMark = 'assets/images/error_mark.json';
   static const referImage = 'assets/images/referImage.png';
   static const articleImage = 'assets/images/article.png';
   static const topBanner1 = 'assets/images/topBanner1.png';
