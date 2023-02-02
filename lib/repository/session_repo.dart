@@ -32,4 +32,9 @@ class SessionRepo {
     var list = response as List;
     return list.map((e) => Session.fromMap(e)).toList();
   }
+
+  Future<Session> getSessionById(String id) async {
+    var response = await apiClient.get("${Api.sessions}/$id");
+    return Session.fromMap(response);
+  }
 }

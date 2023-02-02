@@ -70,4 +70,8 @@ class SessionBloc with ChangeNotifier {
   Future<List<Session>> getSessions({query}) {
     return sessionRepo.getSessions(query: query);
   }
+
+  Future<Session> getSessionById(String id) async {
+    return await sessionRepo.getSessionById(id);
+  }
 }
