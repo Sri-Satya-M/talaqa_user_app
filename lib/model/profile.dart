@@ -7,6 +7,7 @@ class Profile {
     this.gender,
     this.city,
     this.country,
+    this.pincode,
     this.userId,
     this.patientId,
     this.createdAt,
@@ -21,6 +22,7 @@ class Profile {
   String? gender;
   String? city;
   String? country;
+  int? pincode;
   int? userId;
   int? patientId;
   DateTime? createdAt;
@@ -36,6 +38,7 @@ class Profile {
     city: json["city"],
     country: json["country"],
     userId: json["userId"],
+    pincode: json["pincode"],
     patientId: json["patientId"],
     createdAt: json["createdAt"]==null ? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"]==null ? null: DateTime.parse(json["updatedAt"]),
@@ -52,6 +55,7 @@ class Profile {
     "country": country,
     "userId": userId,
     "patientId": patientId,
+    "pincode": pincode,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "user": user?.toJson(),
