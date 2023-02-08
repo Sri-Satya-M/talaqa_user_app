@@ -65,17 +65,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
     var theme = IOSThemeConfigurations();
 
     theme.logoImage = Images.logo;
-    theme.secondaryColor = "FFFFFF";
-    theme.titleFontColor = "FFFFFF";
+    theme.secondaryColor = "FBF2F2";
+    theme.titleFontColor = "191919";
     theme.backgroundColor = "FFFFFF";
-    theme.primaryColor = "0052CC";
+    theme.primaryColor = "FFFFFF";
     theme.secondaryFontColor = "0052CC";
     theme.primaryFontColor = "FFFFFF";
     theme.buttonColor = "0052CC";
     theme.placeholderColor = "000000";
-    theme.buttonColor = "0052CC";
-
     configuration.iOSThemeConfigurations = theme;
+
     // configuration.tokeniseType = PaymentSdkTokeniseType.MERCHANT_MANDATORY;
     // configuration.tokenFormat = PaymentSdkTokenFormat.AlphaNum20Format;
     return configuration;
@@ -135,14 +134,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void getBillingDetails() {
     billingDetails = BillingDetails(
-      name: "${widget.session.patientProfile!.fullName}",
-      email: "yashwanth@janaspandana.in",
-      phone: "${widget.session.patientAddress?.mobileNumber}",
-      addressLine: "${widget.session.patientAddress?.addressLine1}",
-      country: "IN",
-      city: "${widget.session.patientAddress?.city}",
-      state: "${widget.session.patientAddress?.country}",
-      zipCode: "${widget.session.patientAddress?.pincode}",
+      "${widget.session.patientProfile!.fullName}",
+      "",
+      "",
+      "${widget.session.patientAddress?.addressLine1??'Road 16'}",
+      "IN",
+      "${widget.session.patientAddress?.city?? "Hyderabad"}",
+      "${widget.session.patientAddress?.country??"IN"}",
+      "${widget.session.patientAddress?.pincode?? "500089"}",
     );
     print(
         'billingDetails: \n${billingDetails.name} \n${billingDetails.email} \n${billingDetails.phone} \n${billingDetails.addressLine} \n${billingDetails.country} \n${billingDetails.city} \n${billingDetails.state} \n${billingDetails.zipCode}');
