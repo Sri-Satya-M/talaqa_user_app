@@ -2,6 +2,7 @@ import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
+import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/session.dart';
 
@@ -40,5 +41,10 @@ class SessionRepo {
 
   Future updateSession({body}) {
     return apiClient.post(Api.updateSession, body);
+  }
+
+  Future<Meeting> joinMeeting({required int id}) async {
+    var response = await  apiClient.get('${Api.meeting}/$id');
+    return Meeting.fromJson(response);
   }
 }

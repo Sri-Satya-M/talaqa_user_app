@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../model/clinicians.dart';
+import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
 import '../model/session.dart';
@@ -77,5 +78,9 @@ class SessionBloc with ChangeNotifier {
 
   Future updateSession({body}) async {
     return await sessionRepo.updateSession(body: body);
+  }
+
+  Future<Meeting> joinMeeting({required int id})async {
+    return await sessionRepo.joinMeeting(id: id);
   }
 }
