@@ -43,13 +43,10 @@ class _HandlePaymentScreenState extends State<HandlePaymentScreen> {
 
   handlePayment() async {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-    var response = await sessionBloc.updateSession(
-      body: {
-        "id": widget.session.id,
-        "status": "PAID",
-        "paymentDetails": widget.transactionDetails,
-        "paymentJson": widget.transactionDetails.toString()
-      },
+    widget.transactionDetails["additionalDetails"]=widget.transactionDetails.toString();
+    var response = await sessionBloc.postPaymentDetails(
+      id: widget.session.id!,
+      body: widget.transactionDetails,
     ) as Map<String, dynamic>;
     if (response.containsKey('status') && response['status'] == 'success') {
       SuccessScreen.open(
