@@ -44,7 +44,12 @@ class SessionRepo {
   }
 
   Future<Meeting> joinMeeting({required int id}) async {
-    var response = await  apiClient.get('${Api.meeting}/$id');
+    var response = await apiClient.get('${Api.meeting}/$id');
     return Meeting.fromJson(response);
+  }
+
+  Future postPaymentDetails({required int id, required body}) async {
+    var response = await apiClient.post('${Api.payment}/$id',body);
+    return response;
   }
 }

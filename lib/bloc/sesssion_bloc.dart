@@ -80,7 +80,11 @@ class SessionBloc with ChangeNotifier {
     return await sessionRepo.updateSession(body: body);
   }
 
-  Future<Meeting> joinMeeting({required int id})async {
+  Future postPaymentDetails({required int id, required body}) async {
+    return await sessionRepo.postPaymentDetails(id: id, body: body);
+  }
+
+  Future<Meeting> joinMeeting({required int id}) async {
     return await sessionRepo.joinMeeting(id: id);
   }
 }
