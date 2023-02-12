@@ -18,5 +18,6 @@ class Api {
   static const addresses = '/addresses';
   static const patientSessions = '/patient-sessions';
   static const updateSession = '$sessions/update-session-status';
-  static const meeting = '/sessions/meeting';
+  static const meeting = '$sessions/meeting';
+  static const payment = '$sessions/payment';
 }
