@@ -18,6 +18,7 @@ import '../../../widgets/reverse_details_tile.dart';
 import '../home/booking/payment_screen.dart';
 import '../home/booking/widgets/details_box.dart';
 import '../home/booking/widgets/timeslot_details_widget.dart';
+import 'agora/agora_meet_call.dart';
 
 class SessionDetailsScreen extends StatefulWidget {
   final String id;
@@ -133,6 +134,13 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                           session.description!,
                           style: textTheme.bodyText1,
                         ),
+                      ),
+                      const SizedBox(height: 16),
+                      ProgressButton(
+                        onPressed: () {
+                          AgoraMeetScreen.open(context);
+                        },
+                        child: const Text("Join Session"),
                       ),
                     ],
                   ),
