@@ -17,6 +17,11 @@ class Images {
   static const call = 'assets/icons/call.png';
   static const home = 'assets/icons/home.png';
   static const marker = 'assets/icons/marker.png';
+  static const mic = 'assets/icons/mic.png';
+  static const micOff = 'assets/icons/mic_off.png';
+  static const videoOn = 'assets/icons/video_on.png';
+  static const videoOff = 'assets/icons/video_off.png';
+  static const clockPlus = 'assets/icons/clock_plus.png';
 
   ///images
   static const logo = 'assets/images/logo.png';
