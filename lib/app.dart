@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
 
+import 'bloc/agora_bloc.dart';
 import 'bloc/progress_bloc.dart';
 import 'config/application.dart';
 import 'config/routes.dart';
@@ -32,6 +33,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => UserBloc()),
           ChangeNotifierProvider(create: (_) => SessionBloc()),
           ChangeNotifierProvider(create: (_) => LocationBloc()),
+          ChangeNotifierProvider(create: (_) => AgoraBloc()),
         ],
         child: ProgressBlockWidget(
           child: MaterialApp(
