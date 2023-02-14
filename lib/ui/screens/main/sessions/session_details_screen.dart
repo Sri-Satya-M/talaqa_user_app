@@ -138,7 +138,14 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       const SizedBox(height: 16),
                       ProgressButton(
                         onPressed: () {
-                          AgoraMeetScreen.open(context);
+                          AgoraMeetScreen.open(
+                            context,
+                            token: "007eJxTYNg95QCT+6r1q+9aPFhuXP197qLE8IvbZ7YbKB3eoKmZK7BXgcHSzCIx1dg42cQizdzEJM0wKTnZMMk8zdDIwNjEItnchEn1dXJDICPDjo5QJkYGCATx2RlKUotLMvPSGRgA/Z4hHQ==",
+                            channelName: 'testing',
+                            uid: 0,
+                            patientProfile: session.patientProfile!,
+                            clinician: session.clinician!,
+                          );
                         },
                         child: const Text("Join Session"),
                       ),
