@@ -1,45 +1,38 @@
+import 'dart:convert';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:alsan_app/model/clinicians.dart';
-import 'package:alsan_app/model/profile.dart';
+import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/remote_user_preview.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/user_preview.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
+import 'package:alsan_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bloc/agora_bloc.dart';
 import '../../../../../resources/images.dart';
 
 class AgoraMeetScreen extends StatefulWidget {
-  final String token;
-  final String channelName;
   final int? uid;
-  final Profile patientProfile;
-  final Clinician clinician;
+  final Session session;
 
   const AgoraMeetScreen({
     super.key,
-    required this.token,
-    required this.channelName,
     this.uid,
-    required this.patientProfile,
-    required this.clinician,
+    required this.session,
   });
 
-  static Future open(BuildContext context,
-      {required String token,
-      required String channelName,
-      required int uid,
-      required Profile patientProfile,
-      required Clinician clinician}) {
+  static Future open(
+    BuildContext context, {
+    required int uid,
+    required Session session,
+  }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => AgoraMeetScreen(
-          token: token,
-          channelName: channelName,
           uid: uid,
-          patientProfile: patientProfile,
-          clinician: clinician,
+          session: session,
         ),
       ),
     );
@@ -50,36 +43,84 @@ class AgoraMeetScreen extends StatefulWidget {
 }
 
 class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
-  String appId = "968ae33c48f744f1bcc1b7f120348c74";
-
   int? _remoteUid; // uid of the remote user
   bool? isJoined = false; // Indicates if the local user has joined the channel
   late RtcEngine agoraEngine; // Agora engine instance
 
   bool audio = true;
-  bool video = false;
+  bool video = true;
   bool volume = false;
 
   AssetImage audioIcon = const AssetImage(Images.mic);
-  AssetImage videoIcon = const AssetImage(Images.videoOff);
+  AssetImage videoIcon = const AssetImage(Images.videoOn);
   Icon volumeIcon = const Icon(Icons.volume_down_outlined);
 
   initializeSDK() async {
     // Set up an instance of Agora engine
-    var callBloc = Provider.of<AgoraBloc>(context, listen: false);
-
-    agoraEngine = await callBloc.setupVideoSDKEngine(
-      token: widget.token,
-      channel: widget.channelName,
-    );
+    agoraEngine = await setupVideoSDKEngine();
     isJoined = true;
-    callBloc.join();
+    join();
     setState(() {});
+  }
+
+  Future<RtcEngine> setupVideoSDKEngine() async {
+    // retrieve or request camera and microphone permissions
+    await [Permission.microphone, Permission.camera].request();
+
+    //create an instance of the Agora engine
+    agoraEngine = createAgoraRtcEngine();
+
+    await agoraEngine.initialize(
+      const RtcEngineContext(appId: Constants.appId),
+    );
+
+    // Register the event handler
+    agoraEngine.registerEventHandler(
+      RtcEngineEventHandler(
+        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          isJoined = true;
+          setState(() {});
+        },
+        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+          _remoteUid = remoteUid;
+          setState(() {});
+        },
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
+          _remoteUid = null;
+          setState(() {});
+        },
+      ),
+    );
+    return agoraEngine;
+  }
+
+  void join() async {
+    await agoraEngine.startPreview();
+    agoraEngine.enableAudio();
+    if (widget.session.consultationMode == "VIDEO") {
+      agoraEngine.enableVideo();
+    }
+    await agoraEngine.setDefaultAudioRouteToSpeakerphone(true);
+    // Set channel options including the client role and channel profile
+    ChannelMediaOptions options = const ChannelMediaOptions(
+      clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      channelProfile: ChannelProfileType.channelProfileCommunication,
+    );
+
+    await agoraEngine.joinChannel(
+      token:
+          '007eJxTYHC08WllCNygHa+8JF9D3JVdWnfXae0ARy//kp67ifkzOBQYLM0sElONjZNNLNLMTUzSDJOSkw2TzNMMjQyMTSySzU3EJd8lNwQyMsxaL8HKyACBID47g6NPsIGBgSEDAwD6zxoX',
+      channelId: true ? "ALS0001" : widget.session.sessionId!,
+      options: options,
+      uid: widget.session.patientProfile!.id!,
+    );
   }
 
   @override
   void initState() {
     super.initState();
+    video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
   }
 
@@ -104,8 +145,11 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                       isJoined: isJoined!,
                       agoraEngine: agoraEngine,
                       remoteUid: _remoteUid,
-                      channelName: widget.channelName,
-                      userName: "Dr. ${widget.clinician.user!.fullName!}",
+                      channelName: widget.session.sessionId!,
+                      isVideo: video,
+                      userName:
+                          "Dr. ${widget.session.clinician!.user!.fullName!}",
+                      imageUrl: widget.session.clinician?.image,
                     ),
                   ),
                   Positioned(
@@ -117,8 +161,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                       child: UserPreview(
                         isVideo: video,
                         agoraEngine: agoraEngine,
-                        username: widget.patientProfile.fullName!,
-                        imageUrl: widget.patientProfile.image,
+                        username: widget.session.patientProfile!.fullName!,
+                        imageUrl: widget.session.patientProfile?.image,
                       ),
                     ),
                   ),
@@ -136,7 +180,10 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                               ProgressUtils.handleProgress(
                                 context,
                                 task: () async {
-                                  callBloc.leave();
+                                  // callBloc.leave();
+                                  isJoined = false;
+                                  _remoteUid = null;
+                                  // agoraEngine.leaveChannel();
                                   Navigator.pop(context);
                                 },
                               );
@@ -150,14 +197,27 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             const Spacer(),
-                            SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: FloatingActionButton(
-                                onPressed: setVideoEnabled,
-                                child: ImageIcon(videoIcon, size: 25),
+                            if (widget.session.consultationMode == "VIDEO") ...[
+                              SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: FloatingActionButton(
+                                  onPressed: switchCamera,
+                                  child: const Icon(
+                                      Icons.flip_camera_android_sharp,
+                                      size: 25),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 24),
+                              SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: FloatingActionButton(
+                                  onPressed: setVideoEnabled,
+                                  child: ImageIcon(videoIcon, size: 25),
+                                ),
+                              ),
+                            ],
                             const SizedBox(width: 24),
                             SizedBox(
                               height: 60,
@@ -188,41 +248,88 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     );
   }
 
+  switchCamera() async {
+    await agoraEngine.switchCamera();
+  }
+
   setAudioEnabled() async {
     audio = !audio;
     audioIcon = AssetImage((audio) ? Images.mic : Images.micOff);
-    // (audio)
-    //     ? await agoraEngine.disableAudio()
-    //     : await agoraEngine.enableAudio();
-    await agoraEngine.muteLocalAudioStream(!audio);
-    setState(() {});
+    await agoraEngine.muteLocalAudioStream(!audio).then(
+          (value) => setState(() {}),
+        );
   }
 
   setVideoEnabled() async {
     video = !video;
     videoIcon = AssetImage((video) ? Images.videoOn : Images.videoOff);
-    (video)
-        ? await agoraEngine.enableVideo()
-        : await agoraEngine.disableVideo();
+    await agoraEngine.enableLocalVideo(video);
     setState(() {});
   }
 
   setSpeakerPhone() async {
     volume = !volume;
-
-    await agoraEngine.setEnableSpeakerphone(volume);
-    await agoraEngine.muteLocalAudioStream(volume);
-
     volumeIcon = Icon(
       (volume) ? Icons.volume_up_outlined : Icons.volume_down_outlined,
     );
-    setState(() {});
+
+    await agoraEngine.setDefaultAudioRouteToSpeakerphone(volume).then(
+          (value) => setState(() {}),
+        );
+  }
+
+  String generateToken({
+    required int uid,
+    required String channelName,
+  }) {
+    // replace with your Agora App Id
+    String appId = Constants.appId;
+
+    // replace with your Agora App Certificate
+    String appCertificate = Constants.primaryCertificatte;
+
+    int expirationTimeInSeconds = 3600 *
+        widget.session.clinicianTimeSlotIds!
+            .length; // token expiration time in seconds
+    int currentTimeInSeconds = DateTime.now().toUtc().hour ~/ 1000;
+    int privilegeExpiredTs = currentTimeInSeconds + expirationTimeInSeconds;
+
+    String originToken =
+        '1:$appId:$privilegeExpiredTs:$uid:$channelName:$appCertificate';
+
+    String token = generateAccessToken(
+      appId: Constants.appId,
+      appCertificate: Constants.primaryCertificatte,
+      channelName: channelName,
+      uid: uid,
+      privilegeExpiredTs: privilegeExpiredTs,
+    );
+    return token;
+  }
+
+  String generateAccessToken({
+    required String appId,
+    required String appCertificate,
+    required String channelName,
+    required int uid,
+    required int privilegeExpiredTs,
+  }) {
+    String originToken =
+        '1:$appId:$privilegeExpiredTs:$uid:$channelName:$appCertificate';
+    return generateTokenWithOriginToken(originToken: originToken);
+  }
+
+  String generateTokenWithOriginToken({required String originToken}) {
+    var bytes = utf8.encode(originToken);
+    String token = base64.encode(bytes);
+    return token;
   }
 
   @override
   void dispose() {
     agoraEngine.disableVideo();
     agoraEngine.disableAudio();
+    agoraEngine.release();
     super.dispose();
   }
 }
