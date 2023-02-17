@@ -4,6 +4,7 @@ import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
+import 'package:dio/dio.dart';
 
 class UserRepo {
   Future sendOTP({body}) async {
@@ -70,5 +71,12 @@ class UserRepo {
   Future<Address> postAddress({body}) async {
     var response = await apiClient.post(Api.patient + Api.addresses, body);
     return Address.fromMap(response);
+  }
+
+  Future uploadFile({required String path}) async {
+    print(path);
+    var body = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
+    var response = await apiClient.post(Api.upload, body);
+    return response;
   }
 }
