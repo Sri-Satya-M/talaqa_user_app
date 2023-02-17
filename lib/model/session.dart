@@ -20,6 +20,7 @@ class Session {
     this.patientAddressId,
     this.clinicianId,
     this.status,
+    this.otp,
     this.reportDocument,
     this.createdAt,
     this.updatedAt,
@@ -45,6 +46,7 @@ class Session {
   int? patientAddressId;
   int? clinicianId;
   String? status;
+  int? otp;
   String? reportDocument;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -70,6 +72,7 @@ class Session {
         patientAddressId: json["patientAddressId"],
         clinicianId: json["clinicianId"],
         status: json["status"],
+        otp: json["otp"],
         reportDocument: json["reportDocument"],
         createdAt: json["createdAt"] == null
             ? null
@@ -108,6 +111,7 @@ class Session {
         "patientAddressId": patientAddressId,
         "clinicianId": clinicianId,
         "status": status,
+        "otp": otp,
         "reportDocument": reportDocument,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),

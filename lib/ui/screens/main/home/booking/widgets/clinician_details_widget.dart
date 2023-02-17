@@ -22,7 +22,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Avatar(
-              url: clinician.image,
+              url: clinician.imageUrl,
               name: clinician.user?.fullName,
               borderRadius: BorderRadius.circular(10),
               size: 72,

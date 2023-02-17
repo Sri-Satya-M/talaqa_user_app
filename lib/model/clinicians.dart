@@ -3,7 +3,7 @@ import 'user.dart';
 class Clinician {
   Clinician({
     this.id,
-    this.image,
+    this.imageUrl,
     this.alternateEmail,
     this.alternateMobileNumber,
     this.dob,
@@ -19,7 +19,7 @@ class Clinician {
   });
 
   int? id;
-  String? image;
+  String? imageUrl;
   String? alternateEmail;
   String? alternateMobileNumber;
   DateTime? dob;
@@ -35,7 +35,7 @@ class Clinician {
 
   factory Clinician.fromMap(Map<String, dynamic> json) => Clinician(
     id: json["id"],
-    image: json["image"],
+    imageUrl: json["imageUrl"],
     alternateEmail: json["alternateEmail"],
     alternateMobileNumber: json["alternateMobileNumber"],
     dob: DateTime.parse(json["dob"]),
@@ -52,7 +52,7 @@ class Clinician {
 
   Map<String, dynamic> toMap() => {
     "id": id,
-    "image": image,
+    "imageUrl": imageUrl,
     "alternateEmail": alternateEmail,
     "alternateMobileNumber": alternateMobileNumber,
     "dob": dob?.toIso8601String(),

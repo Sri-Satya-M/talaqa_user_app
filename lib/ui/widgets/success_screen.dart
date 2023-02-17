@@ -6,23 +6,32 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../model/session.dart';
+
 class SuccessScreen extends StatelessWidget {
   final String type;
   final String message;
+  final Session? session;
 
   const SuccessScreen({
     super.key,
     required this.type,
     required this.message,
+    this.session,
   });
 
-  static Future open(BuildContext context,
-      {required String type, required String message}) {
+  static Future open(
+    BuildContext context, {
+    required String type,
+    required String message,
+    Session? session,
+  }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => SuccessScreen(
           type: type,
           message: message,
+          session: session,
         ),
       ),
     );
@@ -39,6 +48,7 @@ class SuccessScreen extends StatelessWidget {
           children: [
             Lottie.asset(Images.success, height: 250, width: 250),
             const SizedBox(height: 24),
+            if (session?.id != null) ...[],
             Text(
               message,
               textAlign: TextAlign.center,
@@ -68,7 +78,7 @@ class SuccessScreen extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const MainScreen()),
-                      (route) => false,
+                  (route) => false,
                 );
                 break;
               default:

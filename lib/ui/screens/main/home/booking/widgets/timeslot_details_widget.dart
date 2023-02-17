@@ -17,7 +17,7 @@ class TimeslotDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return SizedBox(
-      height: 80,
+      height: 75,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -6,6 +6,7 @@ import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
+import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../model/session.dart';
@@ -40,7 +41,7 @@ class SessionCard extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: getColor(session.status),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 4,
@@ -57,7 +58,7 @@ class SessionCard extends StatelessWidget {
               Row(
                 children: [
                   Avatar(
-                    url: session.clinician?.image,
+                    url: session.clinician?.imageUrl,
                     name: session.clinician?.user?.fullName,
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
@@ -65,8 +66,8 @@ class SessionCard extends StatelessWidget {
                   DetailsTile(
                     title: Text("${session.clinician?.user?.fullName}"),
                     value: Text(
-                      "${session.clinician?.experience} years exp",
-                      style: textTheme.caption,
+                      "${session.clinician?.designation}",
+                      style: textTheme.bodyText1,
                     ),
                   ),
                 ],
@@ -76,24 +77,50 @@ class SessionCard extends StatelessWidget {
                 spacing: 5,
                 count: 2,
                 children: [
-                  ReverseDetailsTile(
-                    title: Text("Speciality", style: textTheme.caption),
+                  DetailsTile(
+                    title: Text("Experience", style: textTheme.caption),
                     value: Text(
-                      "${session.clinician?.designation}",
+                      "${session.clinician?.experience} years exp",
                       style: textTheme.bodyText1,
                     ),
                   ),
                   ReverseDetailsTile(
                     title:
                         Text("Mode of consultation", style: textTheme.caption),
-                    value: Text("${session.consultationMode}",
-                        style: textTheme.bodyText1),
+                    value: Text(
+                      "${session.consultationMode}",
+                      style: textTheme.bodyText1,
+                    ),
                   ),
                   ReverseDetailsTile(
                     title: Text("Patient", style: textTheme.caption),
                     value: Text("${session.patientProfile?.fullName}",
                         style: textTheme.bodyText1),
                   ),
+                  if (session.consultationMode == "HOME" &&
+                      session.status == 'PAID') ...[
+                    Container(
+                      height: 25,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF2F2F2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Your Session OTP:",
+                            style: textTheme.caption?.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                          getOtp(session),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
               const SizedBox(height: 16),
@@ -113,8 +140,11 @@ class SessionCard extends StatelessWidget {
       case "PENDING":
         return MyColors.yellow;
       case "APPROVED":
+        return Colors.deepOrange;
       case "PAID":
+        return Colors.lightBlueAccent;
       case "STARTED":
+        return Colors.blue;
       case "COMPLETED":
         return MyColors.lightGreen;
       case "REJECTED":
@@ -124,4 +154,11 @@ class SessionCard extends StatelessWidget {
         return MyColors.lightGreen;
     }
   }
+}
+
+Widget getOtp(Session session) {
+  return (Helper.formatDate(date: session.date) ==
+          Helper.formatDate(date: DateTime.now()))
+      ? Text('${session.otp}')
+      : const Text('XXXX');
 }

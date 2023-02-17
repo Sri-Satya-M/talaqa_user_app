@@ -137,21 +137,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                             style: textTheme.bodyText1,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        if (session.status == "STARTED" &&
-                            session.consultationMode != 'HOME' &&
-                            Helper.formatDate(date: date) ==
-                                Helper.formatDate(date: session.date))
-                          ProgressButton(
-                            onPressed: () {
-                              AgoraMeetScreen.open(
-                                context,
-                                uid: session.id!,
-                                session: session,
-                              );
-                            },
-                            child: const Text("Join Session"),
-                          ),
                       ],
                     ),
                   ),
@@ -205,6 +190,21 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       PaymentScreen.open(context, session: session);
                     },
                     child: const Text('Pay Now'),
+                  ),
+                ],
+                if (session.status == "STARTED" &&
+                    session.consultationMode != 'HOME' &&
+                    Helper.formatDate(date: date) ==
+                        Helper.formatDate(date: session.date)) ...[
+                  ProgressButton(
+                    onPressed: () {
+                      AgoraMeetScreen.open(
+                        context,
+                        uid: session.id!,
+                        session: session,
+                      );
+                    },
+                    child: const Text("Join Session"),
                   ),
                 ],
               ],

@@ -54,7 +54,7 @@ class _SlotBookingState extends State<SlotBooking> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ImageFromNet(
-                  imageUrl: sessionBloc.selectedClinician?.image,
+                  imageUrl: sessionBloc.selectedClinician?.imageUrl,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),

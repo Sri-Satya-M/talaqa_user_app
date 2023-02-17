@@ -40,7 +40,7 @@ class _DoctorCardState extends State<DoctorCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ImageFromNet(
-                  imageUrl: widget.clinician.image,
+                  imageUrl: widget.clinician.imageUrl,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),

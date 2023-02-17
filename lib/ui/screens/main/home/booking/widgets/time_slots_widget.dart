@@ -71,6 +71,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                           color: Colors.white,
                           fontSize: 10,
                         ),
+                        shape: StadiumBorder(side: BorderSide()),
                         backgroundColor: Colors.grey.withOpacity(0.5),
                         label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         selected: timeSlotIds.contains(timeSlot.id),
