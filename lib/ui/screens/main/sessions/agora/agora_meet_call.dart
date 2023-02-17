@@ -149,7 +149,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                       isVideo: video,
                       userName:
                           "Dr. ${widget.session.clinician!.user!.fullName!}",
-                      imageUrl: widget.session.clinician?.image,
+                      imageUrl: widget.session.clinician?.imageUrl,
                     ),
                   ),
                   Positioned(
