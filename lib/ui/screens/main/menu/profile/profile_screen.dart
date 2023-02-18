@@ -1,6 +1,5 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
-import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -101,26 +100,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfile(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "Edit",
-                      style: textTheme.subtitle1?.copyWith(
-                        color: MyColors.cerulean,
-                      ),
-                    ),
-                  ),
-                )
+                // Positioned(
+                //   top: 12,
+                //   right: 12,
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => EditProfile(),
+                //         ),
+                //       );
+                //     },
+                //     child: Text(
+                //       "Edit",
+                //       style: textTheme.subtitle1?.copyWith(
+                //         color: MyColors.cerulean,
+                //       ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

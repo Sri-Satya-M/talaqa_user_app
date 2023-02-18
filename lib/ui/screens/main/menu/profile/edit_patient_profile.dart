@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -5,7 +7,10 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../widgets/image_picker.dart';
 
 class EditPatientProfile extends StatefulWidget {
   final Profile profile;
@@ -30,7 +35,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   final TextEditingController city = TextEditingController();
   final TextEditingController country = TextEditingController();
   final TextEditingController age = TextEditingController();
-
+  File? profileImage;
   @override
   void initState() {
     name.text = widget.profile.fullName ?? '';
@@ -53,13 +58,35 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Avatar(
-                url: widget.profile.image,
-                name: widget.profile.fullName,
-                borderRadius: BorderRadius.circular(36),
-                size: 72,
+              Stack(
+                children: [
+                  (profileImage == null)
+                      ? Avatar(
+                          url: widget.profile.image,
+                          name: widget.profile.fullName,
+                          borderRadius: BorderRadius.circular(20),
+                          size: 90,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.file(
+                            profileImage!,
+                            width: 90,
+                            height: 90,
+                          )),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GestureDetector(
+                          onTap: () async {
+                            profileImage = await ImagePickerContainer.getImage(
+                                context, ImageSource.gallery);
+                            setState(() {});
+                          },
+                          child: const Icon(Icons.edit)))
+                ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: name,
                 decoration: const InputDecoration(
@@ -186,12 +213,18 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
         ),
         child: ProgressButton(
           onPressed: () async {
+            var imageResponse = {};
+
+            if (profileImage != null) {
+              imageResponse = await userBloc.uploadFile(profileImage!.path);
+            }
             var body = {
               "fullName": name.text,
               "age": int.tryParse(age.text),
               "city": city.text,
               "country": country.text,
-              "gender": gender.text
+              "gender": gender.text,
+              if (profileImage != null) "image": imageResponse['key']
             };
             var response = await userBloc.updatePatients(
                 id: widget.profile.id, body: body) as Map<String, dynamic>;

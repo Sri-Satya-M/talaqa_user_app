@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -5,7 +7,10 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../widgets/image_picker.dart';
 
 class CreatePatient extends StatefulWidget {
   @override
@@ -18,7 +23,7 @@ class _CreatePatientState extends State<CreatePatient> {
   String? city;
   String? country;
   String? gender;
-
+  File? profileImage;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -49,14 +54,42 @@ class _CreatePatientState extends State<CreatePatient> {
                     ?.copyWith(color: Colors.black.withOpacity(0.7)),
               ),
               const SizedBox(height: 18),
-              Center(
-                child: Avatar(
-                  url:
-                      'https://miro.medium.com/fit/c/88/88/1*0HhsaB_S9yiF-hi9AESZTg.jpeg',
-                  name: "ALex",
-                  borderRadius: BorderRadius.circular(36),
-                  size: 72,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      (profileImage == null)
+                          ? Avatar(
+                              url: "widget.profile.image",
+                              name: "@",
+                              borderRadius: BorderRadius.circular(20),
+                              size: 90,
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.file(
+                                profileImage!,
+                                width: 90,
+                                height: 90,
+                              )),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () async {
+                            profileImage = await ImagePickerContainer.getImage(
+                              context,
+                              ImageSource.gallery,
+                            );
+                            setState(() {});
+                          },
+                          child: const Icon(Icons.edit),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
               SizedBox(height: 8),
               TextFormField(
@@ -234,13 +267,18 @@ class _CreatePatientState extends State<CreatePatient> {
               );
               return;
             }
+            var imageResponse = {};
 
+            if (profileImage != null) {
+              imageResponse = await userBloc.uploadFile(profileImage!.path);
+            }
             var body = {
               "fullName": name,
               "age": int.parse(age),
               "city": city,
               "country": country,
               "gender": gender,
+              if (profileImage != null) "image": imageResponse['key']
             };
 
             var response = await userBloc.createPatient(body: body)

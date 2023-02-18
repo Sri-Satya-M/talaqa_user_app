@@ -13,11 +13,14 @@ class Api {
   static const clinicianTimeSlot = '/clinician-time-slot';
   static const resources = '/resources';
   static const sessions = '/sessions';
-  static const mapAutoComplete = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-  static const mapDecodePlace = 'https://maps.googleapis.com/maps/api/place/details/json';
+  static const mapAutoComplete =
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  static const mapDecodePlace =
+      'https://maps.googleapis.com/maps/api/place/details/json';
   static const addresses = '/addresses';
   static const patientSessions = '/patient-sessions';
   static const updateSession = '$sessions/update-session-status';
   static const meeting = '$sessions/meeting';
   static const payment = '$sessions/payment';
+  static const upload = '/common/upload';
 }

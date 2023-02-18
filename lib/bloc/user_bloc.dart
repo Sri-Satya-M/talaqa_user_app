@@ -81,8 +81,12 @@ class UserBloc with ChangeNotifier {
     return _userRepo.getAddresses();
   }
 
+  Future uploadFile(String path) {
+    return _userRepo.uploadFile(path: path);
+  }
+
   Future<Address> postAddress({body}) async {
-    var response =  await _userRepo.postAddress(body: body);
+    var response = await _userRepo.postAddress(body: body);
     notifyListeners();
     return response;
   }
