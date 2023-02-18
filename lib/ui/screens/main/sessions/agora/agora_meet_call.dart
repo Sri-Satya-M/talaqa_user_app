@@ -8,9 +8,7 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../bloc/agora_bloc.dart';
 import '../../../../../resources/images.dart';
 
 class AgoraMeetScreen extends StatefulWidget {
@@ -30,10 +28,7 @@ class AgoraMeetScreen extends StatefulWidget {
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AgoraMeetScreen(
-          uid: uid,
-          session: session,
-        ),
+        builder: (context) => AgoraMeetScreen(uid: uid, session: session),
       ),
     );
   }
@@ -50,6 +45,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   bool audio = true;
   bool video = true;
   bool volume = false;
+  bool remoteVideo=false;
 
   AssetImage audioIcon = const AssetImage(Images.mic);
   AssetImage videoIcon = const AssetImage(Images.videoOn);
@@ -83,10 +79,16 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           _remoteUid = remoteUid;
+          if(widget.session.consultationMode=="VIDEO"){
+            remoteVideo=true;
+          }
           setState(() {});
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
+          if(widget.session.consultationMode=="VIDEO"){
+            remoteVideo=true;
+          }
           _remoteUid = null;
           setState(() {});
         },
@@ -110,7 +112,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
     await agoraEngine.joinChannel(
       token:
-          '007eJxTYHC08WllCNygHa+8JF9D3JVdWnfXae0ARy//kp67ifkzOBQYLM0sElONjZNNLNLMTUzSDJOSkw2TzNMMjQyMTSySzU3EJd8lNwQyMsxaL8HKyACBID47g6NPsIGBgSEDAwD6zxoX',
+          '007eJxTYFi7/nxkTsjdO3GSCtu7JvBMM/y9YqJRzd+sviu3F/6aUMCqwGBpZpGYamycbGKRZm5ikmaYlJxsmGSeZmhkYGxikWxuYpnyPrkhkJFhHpMBKyMDBIL47AyOPsEGBgaGDAwAIzsgSQ==',
       channelId: true ? "ALS0001" : widget.session.sessionId!,
       options: options,
       uid: widget.session.patientProfile!.id!,
@@ -126,7 +128,6 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var callBloc = Provider.of<AgoraBloc>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         extendBody: true,
@@ -145,11 +146,11 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                       isJoined: isJoined!,
                       agoraEngine: agoraEngine,
                       remoteUid: _remoteUid,
-                      channelName: widget.session.sessionId!,
-                      isVideo: video,
+                      channelName: true ? "ALS0001" : widget.session.sessionId!,
+                      isVideo: remoteVideo,
                       userName:
                           "Dr. ${widget.session.clinician!.user!.fullName!}",
-                      imageUrl: widget.session.clinician?.image,
+                      imageUrl: widget.session.clinician?.imageUrl,
                     ),
                   ),
                   Positioned(
