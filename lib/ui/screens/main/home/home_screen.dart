@@ -4,6 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/widgets/upcoming_sessions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,13 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             BookingScreen.open(context, clinician: Clinician());
           },
-          child: Container(
-            child: Image.asset(
-              Images.midBanner,
-            ),
-          ),
+          child: Image.asset(Images.midBanner),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
+        const UpcomingSessions(),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -99,12 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
         Text(
           "Resources",
           style: textTheme.bodyText1,
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
             mainBloc.changeIndex(3);

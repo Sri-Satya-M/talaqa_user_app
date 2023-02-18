@@ -19,8 +19,9 @@ class SessionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var size = MediaQuery.of(context).size;
     return CustomCard(
-      margin: const EdgeInsets.only(bottom: 20),
+      width: size.width * 0.85,
       child: InkWell(
         onTap: () => SessionDetailsScreen.open(
           context,
@@ -30,6 +31,7 @@ class SessionCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
