@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 16,
-          title: Text(userBloc.profile?.user?.fullName ?? ''),
+          title: Text("Hi ${userBloc.profile?.user?.fullName ?? ''}"),
           actions: [
             IconButton(
               onPressed: () {},
