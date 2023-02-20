@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/remote_user_preview.dart';
@@ -12,23 +10,23 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../../resources/images.dart';
 
 class AgoraMeetScreen extends StatefulWidget {
-  final int? uid;
   final Session session;
+  final String token;
 
-  const AgoraMeetScreen({
-    super.key,
-    this.uid,
-    required this.session,
-  });
+  const AgoraMeetScreen(
+      {super.key, required this.session, required this.token});
 
   static Future open(
     BuildContext context, {
-    required int uid,
     required Session session,
+    required String token,
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AgoraMeetScreen(uid: uid, session: session),
+        builder: (context) => AgoraMeetScreen(
+          session: session,
+          token: token,
+        ),
       ),
     );
   }
@@ -45,7 +43,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   bool audio = true;
   bool video = true;
   bool volume = false;
-  bool remoteVideo=false;
+  bool remoteVideo = false;
 
   AssetImage audioIcon = const AssetImage(Images.mic);
   AssetImage videoIcon = const AssetImage(Images.videoOn);
@@ -79,15 +77,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           _remoteUid = remoteUid;
-          if(widget.session.consultationMode=="VIDEO"){
-            remoteVideo=true;
+          if (widget.session.consultationMode == "VIDEO") {
+            remoteVideo = true;
           }
           setState(() {});
         },
         onUserOffline: (RtcConnection connection, int remoteUid,
             UserOfflineReasonType reason) {
-          if(widget.session.consultationMode=="VIDEO"){
-            remoteVideo=true;
+          if (widget.session.consultationMode == "VIDEO") {
+            remoteVideo = true;
           }
           _remoteUid = null;
           setState(() {});
@@ -104,6 +102,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
       agoraEngine.enableVideo();
     }
     await agoraEngine.setDefaultAudioRouteToSpeakerphone(true);
+
     // Set channel options including the client role and channel profile
     ChannelMediaOptions options = const ChannelMediaOptions(
       clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -111,9 +110,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     );
 
     await agoraEngine.joinChannel(
-      token:
-          '007eJxTYFi7/nxkTsjdO3GSCtu7JvBMM/y9YqJRzd+sviu3F/6aUMCqwGBpZpGYamycbGKRZm5ikmaYlJxsmGSeZmhkYGxikWxuYpnyPrkhkJFhHpMBKyMDBIL47AyOPsEGBgaGDAwAIzsgSQ==',
-      channelId: true ? "ALS0001" : widget.session.sessionId!,
+      token: widget.token,
+      channelId: widget.session.sessionId!,
       options: options,
       uid: widget.session.patientProfile!.id!,
     );
@@ -144,13 +142,11 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                   Center(
                     child: RemoteUserPreview(
                       isJoined: isJoined!,
-                      agoraEngine: agoraEngine,
-                      remoteUid: _remoteUid,
-                      channelName: true ? "ALS0001" : widget.session.sessionId!,
                       isVideo: remoteVideo,
-                      userName:
-                          "Dr. ${widget.session.clinician!.user!.fullName!}",
-                      imageUrl: widget.session.clinician?.imageUrl,
+                      remoteUid: _remoteUid,
+                      agoraEngine: agoraEngine,
+                      channelName: widget.session.sessionId!,
+                      session: widget.session,
                     ),
                   ),
                   Positioned(
@@ -181,10 +177,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                               ProgressUtils.handleProgress(
                                 context,
                                 task: () async {
-                                  // callBloc.leave();
                                   isJoined = false;
                                   _remoteUid = null;
-                                  // agoraEngine.leaveChannel();
                                   Navigator.pop(context);
                                 },
                               );
@@ -256,14 +250,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   setAudioEnabled() async {
     audio = !audio;
     audioIcon = AssetImage((audio) ? Images.mic : Images.micOff);
-    await agoraEngine.muteLocalAudioStream(!audio).then(
-          (value) => setState(() {}),
-        );
+
+    await agoraEngine.muteLocalAudioStream(!audio);
+    setState(() {});
   }
 
   setVideoEnabled() async {
     video = !video;
     videoIcon = AssetImage((video) ? Images.videoOn : Images.videoOff);
+
     await agoraEngine.enableLocalVideo(video);
     setState(() {});
   }
@@ -274,56 +269,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
       (volume) ? Icons.volume_up_outlined : Icons.volume_down_outlined,
     );
 
-    await agoraEngine.setDefaultAudioRouteToSpeakerphone(volume).then(
-          (value) => setState(() {}),
-        );
-  }
-
-  String generateToken({
-    required int uid,
-    required String channelName,
-  }) {
-    // replace with your Agora App Id
-    String appId = Constants.appId;
-
-    // replace with your Agora App Certificate
-    String appCertificate = Constants.primaryCertificatte;
-
-    int expirationTimeInSeconds = 3600 *
-        widget.session.clinicianTimeSlotIds!
-            .length; // token expiration time in seconds
-    int currentTimeInSeconds = DateTime.now().toUtc().hour ~/ 1000;
-    int privilegeExpiredTs = currentTimeInSeconds + expirationTimeInSeconds;
-
-    String originToken =
-        '1:$appId:$privilegeExpiredTs:$uid:$channelName:$appCertificate';
-
-    String token = generateAccessToken(
-      appId: Constants.appId,
-      appCertificate: Constants.primaryCertificatte,
-      channelName: channelName,
-      uid: uid,
-      privilegeExpiredTs: privilegeExpiredTs,
-    );
-    return token;
-  }
-
-  String generateAccessToken({
-    required String appId,
-    required String appCertificate,
-    required String channelName,
-    required int uid,
-    required int privilegeExpiredTs,
-  }) {
-    String originToken =
-        '1:$appId:$privilegeExpiredTs:$uid:$channelName:$appCertificate';
-    return generateTokenWithOriginToken(originToken: originToken);
-  }
-
-  String generateTokenWithOriginToken({required String originToken}) {
-    var bytes = utf8.encode(originToken);
-    String token = base64.encode(bytes);
-    return token;
+    await agoraEngine.setDefaultAudioRouteToSpeakerphone(volume);
+    setState(() {});
   }
 
   @override

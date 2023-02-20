@@ -1,32 +1,42 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:alsan_app/model/session.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../widgets/avatar.dart';
 
 class RemoteUserPreview extends StatefulWidget {
   final bool isJoined;
-  final RtcEngine agoraEngine;
+  final bool isVideo;
   final int? remoteUid;
   final String channelName;
-  final String userName;
-  final bool isVideo;
-  final String? imageUrl;
+  final RtcEngine agoraEngine;
+  final Session session;
 
-  const RemoteUserPreview(
-      {super.key,
-      required this.isJoined,
-      required this.agoraEngine,
-      this.remoteUid,
-      required this.channelName,
-      required this.userName,
-      required this.isVideo,
-      this.imageUrl});
+  const RemoteUserPreview({
+    super.key,
+    required this.isJoined,
+    required this.isVideo,
+    this.remoteUid,
+    required this.agoraEngine,
+    required this.channelName,
+    required this.session,
+  });
 
   @override
   _RemoteUserPreviewState createState() => _RemoteUserPreviewState();
 }
 
 class _RemoteUserPreviewState extends State<RemoteUserPreview> {
+  late String name;
+  String? imageUrl;
+
+  @override
+  void initState() {
+    name = widget.session.clinician!.user!.fullName!;
+    imageUrl = widget.session.clinician?.imageUrl;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -47,14 +57,14 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Avatar(
-                    name: widget.userName,
-                    url: widget.imageUrl,
+                    name: name,
+                    url: imageUrl,
                     borderRadius: BorderRadius.circular(75),
                     size: 150,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.userName,
+                    name,
                     style: textTheme.headline4?.copyWith(color: Colors.black),
                   )
                 ],
@@ -64,18 +74,9 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
       return RichText(
         text: TextSpan(
           children: [
-            TextSpan(
-              text: "Waiting for ",
-              style: textTheme.headline3,
-            ),
-            TextSpan(
-              text: widget.userName,
-              style: textTheme.headline4,
-            ),
-            TextSpan(
-              text: " to join",
-              style: textTheme.headline3,
-            ),
+            TextSpan(text: "Waiting for ", style: textTheme.headline3),
+            TextSpan(text: name, style: textTheme.headline4),
+            TextSpan(text: " to join", style: textTheme.headline3),
           ],
         ),
       );
