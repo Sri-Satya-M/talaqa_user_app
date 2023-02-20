@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/ui/widgets/error_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   late BillingDetails billingDetails;
-  String _instructions = 'Tap on "Pay" Button to try PayTabs plugin';
+  final String _instructions = 'Tap on "Pay" Button to try PayTabs plugin';
 
   @override
   void initState() {
@@ -46,17 +47,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
     ];
 
     var configuration = PaymentSdkConfigurationDetails(
-      profileId: "something",
-      serverKey: "",
-      clientKey: "",
+      profileId: Environment.profileId,
+      serverKey: Environment.serverKey,
+      clientKey: Environment.clientKey,
       cartId: "${widget.session.sessionId}",
       cartDescription: "${widget.session.sessionId}",
-      merchantName: "",
+      merchantName: Environment.merchantName,
       screentTitle: "Pay with Card",
       amount: widget.session.totalAmount!.toDouble(),
       locale: PaymentSdkLocale.EN,
-      currencyCode: "INR",
-      merchantCountryCode: "IN",
+      currencyCode: Environment.currencyCode,
+      merchantCountryCode: Environment.merchantCountryCode,
       billingDetails: billingDetails,
       alternativePaymentMethods: apms,
       linkBillingNameWithCardHolderName: false,
@@ -135,13 +136,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void getBillingDetails() {
     billingDetails = BillingDetails(
       "${widget.session.patientProfile!.fullName}",
-      "",
-      "",
-      "${widget.session.patientAddress?.addressLine1??'Road 16'}",
+      "yashwanth@janaspandana.in",
+      "+917702165416",
+      "${widget.session.patientAddress?.addressLine1 ?? 'Road 16'}",
       "IN",
-      "${widget.session.patientAddress?.city?? "Hyderabad"}",
-      "${widget.session.patientAddress?.country??"IN"}",
-      "${widget.session.patientAddress?.pincode?? "500089"}",
+      "${widget.session.patientAddress?.city ?? "Hyderabad"}",
+      "${widget.session.patientAddress?.country ?? "IN"}",
+      "${widget.session.patientAddress?.pincode ?? "500089"}",
     );
     print(
         'billingDetails: \n${billingDetails.name} \n${billingDetails.email} \n${billingDetails.phone} \n${billingDetails.addressLine} \n${billingDetails.country} \n${billingDetails.city} \n${billingDetails.state} \n${billingDetails.zipCode}');
@@ -156,7 +157,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Text('$_instructions'),
             const SizedBox(height: 16),
             TextButton(

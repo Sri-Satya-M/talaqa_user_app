@@ -1,9 +1,9 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/remote_user_preview.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/user_preview.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
-import 'package:alsan_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -65,7 +65,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     agoraEngine = createAgoraRtcEngine();
 
     await agoraEngine.initialize(
-      const RtcEngineContext(appId: Constants.appId),
+      RtcEngineContext(appId: Environment.agoraAppId),
     );
 
     // Register the event handler
