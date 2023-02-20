@@ -195,13 +195,15 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 if (session.status == "STARTED" &&
                     session.consultationMode != 'HOME' &&
                     Helper.formatDate(date: date) ==
-                        Helper.formatDate(date: session.date)) ...[
+                        Helper.formatDate(date: session.date)||true) ...[
                   ProgressButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      var token = await sessionBloc.generateToken(session.sessionId!, session.patientProfile!.id!) as Map<String, dynamic>;
                       AgoraMeetScreen.open(
                         context,
                         uid: session.id!,
                         session: session,
+                        token: token['token']
                       );
                     },
                     child: const Text("Join Session"),

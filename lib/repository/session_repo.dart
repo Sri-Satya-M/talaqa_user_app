@@ -52,4 +52,14 @@ class SessionRepo {
     var response = await apiClient.post('${Api.payment}/$id',body);
     return response;
   }
+
+  Future generateToken(String channel, int userId) async {
+    return await apiClient.post(
+        '${Api.sessions}/token',
+        {
+          "channel": channel,
+          "userId": userId
+        }
+    );
+  }
 }

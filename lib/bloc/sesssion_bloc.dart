@@ -87,4 +87,8 @@ class SessionBloc with ChangeNotifier {
   Future<Meeting> joinMeeting({required int id}) async {
     return await sessionRepo.joinMeeting(id: id);
   }
+
+  Future generateToken(String channel, int userId) {
+    return sessionRepo.generateToken(channel, userId);
+  }
 }
