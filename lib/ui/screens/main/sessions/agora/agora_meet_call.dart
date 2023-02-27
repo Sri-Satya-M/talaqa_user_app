@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/session.dart';
@@ -5,9 +9,13 @@ import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/remote_user_pre
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/user_preview.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../resources/images.dart';
+import 'agora_chat_screen.dart';
 
 class AgoraMeetScreen extends StatefulWidget {
   final Session session;
@@ -16,8 +24,8 @@ class AgoraMeetScreen extends StatefulWidget {
   const AgoraMeetScreen(
       {super.key, required this.session, required this.token});
 
-  static Future open(
-    BuildContext context, {
+  static Future open({
+    required BuildContext context,
     required Session session,
     required String token,
   }) {
@@ -48,6 +56,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   AssetImage audioIcon = const AssetImage(Images.mic);
   AssetImage videoIcon = const AssetImage(Images.videoOn);
   Icon volumeIcon = const Icon(Icons.volume_down_outlined);
+  DateTime startTime = DateTime.now();
+  int? streamId;
 
   initializeSDK() async {
     // Set up an instance of Agora engine
@@ -90,6 +100,19 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           _remoteUid = null;
           setState(() {});
         },
+        onStreamMessage: (
+          RtcConnection connection,
+          int remoteUid,
+          int streamId,
+          Uint8List data,
+          int length,
+          int sentTs,
+        ) {
+          print('Chat message');
+          String msg = String.fromCharCodes(data);
+          print(sentTs);
+          print(msg);
+        },
       ),
     );
     return agoraEngine;
@@ -115,6 +138,12 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
       options: options,
       uid: widget.session.patientProfile!.id!,
     );
+
+    try {
+      await createDataStream();
+    } on ChatError catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -128,6 +157,23 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                AgoraChatScreen.open(
+                  context,
+                  token: widget.token,
+                  session: widget.session,
+                  agoraEngine: agoraEngine,
+                  streamId: streamId!,
+                );
+              },
+              icon: const Icon(Icons.chat),
+            ),
+            const SizedBox(width: 16),
+          ],
+        ),
         extendBody: true,
         body: isJoined == false
             ? const Center(
@@ -179,7 +225,21 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                                 task: () async {
                                   isJoined = false;
                                   _remoteUid = null;
-                                  Navigator.pop(context);
+                                  var duration =
+                                      DateTime.now().difference(startTime);
+                                  var sessionBloc = Provider.of<SessionBloc>(
+                                    context,
+                                    listen: false,
+                                  );
+                                  await sessionBloc.updateSession(
+                                    id: widget.session.id!,
+                                    body: {
+                                      "status": "COMPLETED",
+                                      "duration": 30
+                                    },
+                                  ).then(
+                                    (value) => Navigator.pop(context),
+                                  );
                                 },
                               );
                             },
@@ -236,7 +296,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
       ),
@@ -271,6 +331,12 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
     await agoraEngine.setDefaultAudioRouteToSpeakerphone(volume);
     setState(() {});
+  }
+
+  Future<void> createDataStream() async {
+    streamId = await agoraEngine.createDataStream(
+      const DataStreamConfig(syncWithAudio: false, ordered: true),
+    );
   }
 
   @override
