@@ -39,8 +39,8 @@ class SessionRepo {
     return Session.fromMap(response);
   }
 
-  Future updateSession({body}) {
-    return apiClient.post(Api.updateSession, body);
+  Future updateSession({required int id, body}) {
+    return apiClient.patch('${Api.updateSession}/$id', body);
   }
 
   Future<Meeting> joinMeeting({required int id}) async {
@@ -49,17 +49,18 @@ class SessionRepo {
   }
 
   Future postPaymentDetails({required int id, required body}) async {
-    var response = await apiClient.post('${Api.payment}/$id',body);
+    var response = await apiClient.post('${Api.payment}/$id', body);
     return response;
   }
 
   Future generateToken(String channel, int userId) async {
     return await apiClient.post(
-        '${Api.sessions}/token',
-        {
-          "channel": channel,
-          "userId": userId
-        }
+      '${Api.sessions}/token',
+      {"channel": channel, "userId": userId},
     );
+  }
+
+  Future postSessionFeedback({required int id, body}) {
+    return apiClient.post('${Api.sessions}/feedback/$id', body);
   }
 }

@@ -76,8 +76,8 @@ class SessionBloc with ChangeNotifier {
     return await sessionRepo.getSessionById(id);
   }
 
-  Future updateSession({body}) async {
-    return await sessionRepo.updateSession(body: body);
+  Future updateSession({required int id, body}) async {
+    return await sessionRepo.updateSession(id: id, body: body);
   }
 
   Future postPaymentDetails({required int id, required body}) async {
@@ -90,5 +90,9 @@ class SessionBloc with ChangeNotifier {
 
   Future generateToken(String channel, int userId) {
     return sessionRepo.generateToken(channel, userId);
+  }
+
+  Future postSessionFeedback({required int id,body}){
+    return sessionRepo.postSessionFeedback(id:id,body:body);
   }
 }
