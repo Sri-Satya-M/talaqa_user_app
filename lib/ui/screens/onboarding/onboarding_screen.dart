@@ -25,7 +25,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               height: 550,
               padding: const EdgeInsets.fromLTRB(70, 87, 70, 47),
               decoration: const BoxDecoration(
-                color: MyColors.paleGreen,
+                color: MyColors.lightOrange,
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(120),
                 ),

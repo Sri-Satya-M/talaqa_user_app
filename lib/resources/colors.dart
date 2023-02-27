@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MyColors {
-  static const primaryColor = Color(0xFF0052CC);
+  static const primaryColor = Color(0xFF1A5C6E);
   static const secondaryColor = Color(0xFF24272C);
   static const accentColor1 = Color(0xFF0d47a1);
   static const accentColor2 = Color(0xFF0c4091);
@@ -14,15 +14,28 @@ class MyColors {
   static const border = Color(0xFF111129);
   static const red = Color(0xFFFF3333);
   static const green = Color(0xFF397D54);
-  static const paleBlue = Color(0xFFECF7FF);
+  static const paleBlue = Color(0xFFE5F9FF);
   static const lightBlue = Color(0xFFCFF9FF);
   static const cerulean = Color(0xFF1268AE);
   static const navyBlue = Color(0xFF04457A);
   static const lightGreen = Color(0xFF1B9B20);
   static const paleViolet = Color(0xFFE6EAFF);
-  static const paleGreen = Color(0xFFECFFEE);
+
+  // static const paleGreen = Color(0xFFECFFEE);
+  static const paleOrange = Color(0xFFFFF9EB);
+  static const lightOrange = Color(0xFFFFECC2);
   static const yellow = Color(0xFFFFCE5B);
   static const glacier = Color(0xFFD5DFE6);
   static const profileCardColor = Color(0xFFE8F9F7);
   static const bookingBgColor = Color(0xFFFBF2F2);
+
+  //status colors
+  static const Color pending = Color(0xFFCED500);
+  static const Color rejected = Color(0xFF195BF6);
+  static const Color approved = Color(0xFF00BD41);
+  static const Color paid = Color(0xFF185A6C);
+  static const Color started = Color(0xFF1988F6);
+  static const Color completed = Color(0xFF7F7F7F);
+  static const Color reportSubmitted = Color(0xFF195BF6);
 }
+
