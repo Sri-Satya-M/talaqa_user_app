@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -58,6 +57,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   Icon volumeIcon = const Icon(Icons.volume_down_outlined);
   DateTime startTime = DateTime.now();
   int? streamId;
+  List<Chat> chat = [];
 
   initializeSDK() async {
     // Set up an instance of Agora engine
@@ -81,39 +81,37 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     // Register the event handler
     agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
-        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          isJoined = true;
-          setState(() {});
-        },
-        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-          _remoteUid = remoteUid;
-          if (widget.session.consultationMode == "VIDEO") {
-            remoteVideo = true;
-          }
-          setState(() {});
-        },
-        onUserOffline: (RtcConnection connection, int remoteUid,
-            UserOfflineReasonType reason) {
-          if (widget.session.consultationMode == "VIDEO") {
-            remoteVideo = true;
-          }
-          _remoteUid = null;
-          setState(() {});
-        },
-        onStreamMessage: (
-          RtcConnection connection,
-          int remoteUid,
-          int streamId,
-          Uint8List data,
-          int length,
-          int sentTs,
-        ) {
-          print('Chat message');
-          String msg = String.fromCharCodes(data);
-          print(sentTs);
-          print(msg);
-        },
-      ),
+          onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        isJoined = true;
+        setState(() {});
+      }, onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+        _remoteUid = remoteUid;
+        if (widget.session.consultationMode == "VIDEO") {
+          remoteVideo = true;
+        }
+        setState(() {});
+      }, onUserOffline: (RtcConnection connection, int remoteUid,
+              UserOfflineReasonType reason) {
+        if (widget.session.consultationMode == "VIDEO") {
+          remoteVideo = true;
+        }
+        _remoteUid = null;
+        setState(() {});
+      }, onStreamMessage: (
+        RtcConnection connection,
+        int remoteUid,
+        int streamId,
+        Uint8List data,
+        int length,
+        int sentTs,
+      ) {
+        print('Chat message');
+        String msg = String.fromCharCodes(data);
+        print(sentTs);
+        print(msg);
+        chat.add(Chat(uid: remoteUid, streamId: streamId, msg: msg));
+        setState(() {});
+      }),
     );
     return agoraEngine;
   }
@@ -161,13 +159,13 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                AgoraChatScreen.open(
-                  context,
-                  token: widget.token,
-                  session: widget.session,
-                  agoraEngine: agoraEngine,
-                  streamId: streamId!,
-                );
+                AgoraChatScreen.open(context,
+                    token: widget.token,
+                    session: widget.session,
+                    agoraEngine: agoraEngine,
+                    streamId: streamId!, onMessage: (Chat chat) {
+                  this.chat.add(chat);
+                }, chat: chat);
               },
               icon: const Icon(Icons.chat),
             ),
@@ -231,15 +229,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                                     context,
                                     listen: false,
                                   );
-                                  await sessionBloc.updateSession(
-                                    id: widget.session.id!,
-                                    body: {
-                                      "status": "COMPLETED",
-                                      "duration": 30
-                                    },
-                                  ).then(
-                                    (value) => Navigator.pop(context),
-                                  );
+                                  // await sessionBloc.updateSession(
+                                  //   id: widget.session.id!,
+                                  //   body: {
+                                  //     "status": "COMPLETED",
+                                  //     "duration": 30
+                                  //   },
+                                  // ).then(
+                                  //   (value) => Navigator.pop(context),
+                                  // );
                                 },
                               );
                             },
@@ -346,4 +344,28 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     agoraEngine.release();
     super.dispose();
   }
+}
+
+class Chat {
+  Chat({
+    this.uid,
+    this.streamId,
+    this.msg,
+  });
+
+  int? uid;
+  int? streamId;
+  String? msg;
+
+  factory Chat.fromJson(Map<String, dynamic> json) => Chat(
+        uid: json["uid"],
+        streamId: json["streamId"],
+        msg: json["msg"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "uid": uid,
+        "streamId": streamId,
+        "msg": msg,
+      };
 }
