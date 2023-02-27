@@ -3,6 +3,7 @@ import 'package:alsan_app/model/time_of_day.dart';
 
 import 'address.dart';
 import 'clinicians.dart';
+import 'duration_time.dart';
 
 class Session {
   Session({
@@ -20,6 +21,7 @@ class Session {
     this.patientAddressId,
     this.clinicianId,
     this.status,
+    this.duration,
     this.otp,
     this.reportDocument,
     this.createdAt,
@@ -46,6 +48,7 @@ class Session {
   int? patientAddressId;
   int? clinicianId;
   String? status;
+  List<DurationTime>? duration;
   int? otp;
   String? reportDocument;
   DateTime? createdAt;
@@ -72,6 +75,7 @@ class Session {
         patientAddressId: json["patientAddressId"],
         clinicianId: json["clinicianId"],
         status: json["status"],
+        duration: List<DurationTime>.from(json["duration"].map((x) => DurationTime.fromJson(x))),
         otp: json["otp"],
         reportDocument: json["reportDocument"],
         createdAt: json["createdAt"] == null
@@ -111,6 +115,7 @@ class Session {
         "patientAddressId": patientAddressId,
         "clinicianId": clinicianId,
         "status": status,
+        "duration": List<dynamic>.from(duration?.map((x) => x.toJson())??[]),
         "otp": otp,
         "reportDocument": reportDocument,
         "createdAt": createdAt?.toIso8601String(),

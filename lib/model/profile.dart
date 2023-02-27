@@ -1,3 +1,5 @@
+import 'user.dart';
+
 class Profile {
   Profile({
     this.id,
@@ -62,46 +64,3 @@ class Profile {
   };
 }
 
-class User {
-  User({
-    this.id,
-    this.fullName,
-    this.email,
-    this.mobileNumber,
-    this.password,
-    this.userType,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int? id;
-  String? fullName;
-  String? email;
-  String? mobileNumber;
-  String? password;
-  String? userType;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    fullName: json["fullName"],
-    email: json["email"],
-    mobileNumber: json["mobileNumber"],
-    password: json["password"],
-    userType: json["UserType"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "fullName": fullName,
-    "email": email,
-    "mobileNumber": mobileNumber,
-    "password": password,
-    "UserType": userType,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-  };
-}

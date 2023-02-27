@@ -19,7 +19,7 @@ class User {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
     fullName: json["fullName"],
     email: json["email"],

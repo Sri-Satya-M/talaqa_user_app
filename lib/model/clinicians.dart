@@ -47,7 +47,7 @@ class Clinician {
     languagesKnown: json["languagesKnown"],
     createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
-    user: json["user"]== null? null: User.fromMap(json["user"]),
+    user: json["user"]== null? null: User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toMap() => {
