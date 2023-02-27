@@ -25,7 +25,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 100),
-            Image.asset(Images.logo, height: 64, width: 250),
+            Image.asset(Images.logo, height: 120),
             const SizedBox(height: 40),
             Text(
               "Choose",
@@ -104,7 +104,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               height: 120,
               width: 390,
               decoration: const BoxDecoration(
-                color: MyColors.paleGreen,
+                color: MyColors.paleOrange,
                 borderRadius: BorderRadius.all(
                   Radius.circular(12),
                 ),
