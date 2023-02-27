@@ -3,6 +3,7 @@ import 'package:alsan_app/model/time_of_day.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
+import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/timeline_widget.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -200,13 +201,16 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ProgressButton(
                     onPressed: () async {
                       var token = await sessionBloc.generateToken(
-                              session.sessionId!, session.patientProfile!.id!)
-                          as Map<String, dynamic>;
+                        session.sessionId!,
+                        session.patientProfile!.id!,
+                      ) as Map<String, dynamic>;
                       AgoraMeetScreen.open(
-                        context,
+                        context: context,
                         session: session,
                         token: token['token'],
-                      );
+                      ).then((value) async {
+                        FeedbackScreen.open(context, session: session);
+                      });
                     },
                     child: const Text("Join Session"),
                   ),

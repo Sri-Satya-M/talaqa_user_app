@@ -102,7 +102,6 @@ class SessionCard extends StatelessWidget {
                   if (session.consultationMode == "HOME" &&
                       session.status == 'PAID') ...[
                     Container(
-                      height: 25,
                       decoration: BoxDecoration(
                         color: const Color(0xFFF2F2F2),
                         borderRadius: BorderRadius.circular(10),
@@ -112,13 +111,14 @@ class SessionCard extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Your Session OTP:",
-                            style: textTheme.caption?.copyWith(
-                              color: Colors.black,
+                          Expanded(
+                            child: Text(
+                              getOtp(session),
+                              style: textTheme.caption?.copyWith(
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          getOtp(session),
                         ],
                       ),
                     ),
@@ -140,27 +140,26 @@ class SessionCard extends StatelessWidget {
   Color getColor(String? status) {
     switch (status) {
       case "PENDING":
-        return MyColors.yellow;
+        return MyColors.pending;
       case "APPROVED":
-        return Colors.deepOrange;
+        return MyColors.approved;
       case "PAID":
-        return Colors.lightBlueAccent;
+        return MyColors.paid;
       case "STARTED":
-        return Colors.blue;
+        return MyColors.started;
       case "COMPLETED":
-        return MyColors.lightGreen;
+        return MyColors.completed;
       case "REJECTED":
       case "CANCELLED":
-        return MyColors.red;
+        return MyColors.rejected;
       default:
-        return MyColors.lightGreen;
+        return MyColors.yellow;
     }
   }
 }
 
-Widget getOtp(Session session) {
-  return (Helper.formatDate(date: session.date) ==
-          Helper.formatDate(date: DateTime.now()))
-      ? Text('${session.otp}')
-      : const Text('XXXX');
+String getOtp(Session session) {
+  String otp =
+      "Your Session\nOTP : ${(Helper.formatDate(date: session.date) == Helper.formatDate(date: DateTime.now())) ? session.otp.toString() : 'XXXX'}";
+  return otp;
 }
