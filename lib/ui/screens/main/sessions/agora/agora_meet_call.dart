@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:alsan_app/model/chat.dart';
 import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/remote_user_preview.dart';
@@ -57,7 +58,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   Icon volumeIcon = const Icon(Icons.volume_down_outlined);
   DateTime startTime = DateTime.now();
   int? streamId;
-  List<Chat> chat = [];
+  List<Message> chat = [];
 
   initializeSDK() async {
     // Set up an instance of Agora engine
@@ -107,9 +108,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
       ) {
         print('Chat message');
         String msg = String.fromCharCodes(data);
-        print(sentTs);
         print(msg);
-        chat.add(Chat(uid: remoteUid, streamId: streamId, msg: msg));
+        var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+        sessionsBloc.addMessage(
+          Message(
+            uid: remoteUid,
+            streamId: streamId,
+            msg: msg,
+          ),
+        );
         setState(() {});
       }),
     );
@@ -138,7 +145,9 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     );
 
     try {
+      var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
       await createDataStream();
+      sessionsBloc.initializeStream();
     } on ChatError catch (e) {
       print(e);
     }
@@ -163,7 +172,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                     token: widget.token,
                     session: widget.session,
                     agoraEngine: agoraEngine,
-                    streamId: streamId!, onMessage: (Chat chat) {
+                    streamId: streamId!, onMessage: (Message chat) {
                   this.chat.add(chat);
                 }, chat: chat);
               },
@@ -229,15 +238,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                                     context,
                                     listen: false,
                                   );
-                                  // await sessionBloc.updateSession(
-                                  //   id: widget.session.id!,
-                                  //   body: {
-                                  //     "status": "COMPLETED",
-                                  //     "duration": 30
-                                  //   },
-                                  // ).then(
-                                  //   (value) => Navigator.pop(context),
-                                  // );
+                                  await sessionBloc.updateSession(
+                                    id: widget.session.id!,
+                                    body: {
+                                      "status": "COMPLETED",
+                                      "duration": 30
+                                    },
+                                  ).then(
+                                    (value) => Navigator.pop(context),
+                                  );
                                 },
                               );
                             },
@@ -339,33 +348,11 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
   @override
   void dispose() {
+    var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+    sessionsBloc.dispose();
     agoraEngine.disableVideo();
     agoraEngine.disableAudio();
     agoraEngine.release();
     super.dispose();
   }
-}
-
-class Chat {
-  Chat({
-    this.uid,
-    this.streamId,
-    this.msg,
-  });
-
-  int? uid;
-  int? streamId;
-  String? msg;
-
-  factory Chat.fromJson(Map<String, dynamic> json) => Chat(
-        uid: json["uid"],
-        streamId: json["streamId"],
-        msg: json["msg"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "uid": uid,
-        "streamId": streamId,
-        "msg": msg,
-      };
 }

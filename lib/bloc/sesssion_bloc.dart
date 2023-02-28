@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 
+import '../model/chat.dart';
 import '../model/clinicians.dart';
 import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
@@ -20,6 +23,13 @@ class SessionBloc with ChangeNotifier {
   String? description;
   int? selectedAddressId;
   Map<int, TimeSlot> timeslots = {};
+
+
+  ///chat
+  List<Message> messages = [];
+  late StreamController<List<Message>> messageController;
+  Stream<List<Message>> get messageListStream => messageController.stream;
+
 
   Future<List<ModeOfConsultation>> getModeOfConsultation() {
     return sessionRepo.getModeOfConsultation();
@@ -94,5 +104,24 @@ class SessionBloc with ChangeNotifier {
 
   Future postSessionFeedback({required int id,body}){
     return sessionRepo.postSessionFeedback(id:id,body:body);
+  }
+
+  ///Handling chat in bloc
+  ///
+
+  initializeStream(){
+    messages.clear();
+    messageController = StreamController<List<Message>>.broadcast();
+  }
+
+  void addMessage(Message message) {
+    messages.add(message);
+    messageController.add(messages);
+  }
+
+  @override
+  dispose() {
+    messages.clear();
+    messageController.close();
   }
 }
