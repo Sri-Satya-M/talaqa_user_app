@@ -132,7 +132,7 @@ class AppTheme {
       overline: overline,
     );
 
-    var   border = OutlineInputBorder(
+    var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
         color: MyColors.divider.withOpacity(0.5),
@@ -323,6 +323,9 @@ class AppTheme {
           fontWeight: FontWeight.w400,
           fontSize: 14,
         ),
+      ),
+      bottomSheetTheme: const BottomSheetThemeData(
+        backgroundColor: Colors.transparent,
       ),
     );
   }
