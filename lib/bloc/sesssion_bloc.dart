@@ -18,6 +18,7 @@ class SessionBloc with ChangeNotifier {
   Profile? selectedPatient;
 
   ModeOfConsultation? selectedModeOfConsultation;
+  String? type;
   DateTime? selectedDate;
   List<int>? selectedTimeSlotIds;
   String? description;

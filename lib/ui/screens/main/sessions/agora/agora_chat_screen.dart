@@ -72,6 +72,7 @@ class _AgoraChatScreenState extends State<AgoraChatScreen> {
         builder: (context, snapshot) {
           var chatMessages = snapshot.data ?? [];
           return ListView.builder(
+            padding: EdgeInsets.only(bottom: 100),
             itemCount: chatMessages.length,
             itemBuilder: (context, index) {
               return (widget.session.patientProfile!.id ==
@@ -91,6 +92,7 @@ class _AgoraChatScreenState extends State<AgoraChatScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: TextFormField(
             keyboardType: TextInputType.multiline,
+            scrollPadding: const EdgeInsets.only(bottom: 20),
             maxLines: null,
             controller: msgController,
             decoration: InputDecoration(

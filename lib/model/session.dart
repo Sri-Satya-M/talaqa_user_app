@@ -6,33 +6,33 @@ import 'clinicians.dart';
 import 'duration_time.dart';
 
 class Session {
-  Session({
-    this.id,
-    this.sessionId,
-    this.clinicianTimeSlotIds,
-    this.date,
-    this.day,
-    this.description,
-    this.consultationMode,
-    this.consultationFee,
-    this.totalAmount,
-    this.patientId,
-    this.patientProfileId,
-    this.patientAddressId,
-    this.clinicianId,
-    this.status,
-    this.duration,
-    this.otp,
-    this.reportDocument,
-    this.createdAt,
-    this.updatedAt,
-    this.patient,
-    this.patientProfile,
-    this.patientAddress,
-    this.clinician,
-    this.sessionStatuses,
-    this.clinicianTimeSlots,
-  });
+  Session(
+      {this.id,
+      this.sessionId,
+      this.clinicianTimeSlotIds,
+      this.date,
+      this.day,
+      this.description,
+      this.consultationMode,
+      this.consultationFee,
+      this.totalAmount,
+      this.patientId,
+      this.patientProfileId,
+      this.patientAddressId,
+      this.clinicianId,
+      this.status,
+      this.duration,
+      this.otp,
+      this.reportDocument,
+      this.createdAt,
+      this.updatedAt,
+      this.patient,
+      this.patientProfile,
+      this.patientAddress,
+      this.clinician,
+      this.sessionStatuses,
+      this.clinicianTimeSlots,
+      this.type});
 
   int? id;
   String? sessionId;
@@ -59,45 +59,45 @@ class Session {
   Clinician? clinician;
   List<SessionStatus>? sessionStatuses;
   List<TimeSlot>? clinicianTimeSlots;
+  String? type;
 
   factory Session.fromMap(Map<String, dynamic> json) => Session(
-        id: json["id"],
-        sessionId: json["sessionId"],
-        clinicianTimeSlotIds: json["clinicianSlotIds"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        day: json["day"],
-        description: json["description"],
-        consultationMode: json["consultationMode"],
-        consultationFee: json["consultationFee"],
-        totalAmount: json["totalAmount"],
-        patientId: json["patientId"],
-        patientProfileId: json["patientProfileId"],
-        patientAddressId: json["patientAddressId"],
-        clinicianId: json["clinicianId"],
-        status: json["status"],
-        duration: List<DurationTime>.from(json["duration"].map((x) => DurationTime.fromJson(x))),
-        otp: json["otp"],
-        reportDocument: json["reportDocument"],
-        createdAt: json["createdAt"] == null
-            ? null
-            : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
-        patient: Profile.fromJson(json["patient"]),
-        patientProfile: Profile.fromJson(json["patientProfile"]),
-        patientAddress: json["patientAddress"] == null
-            ? null
-            : Address.fromMap(json["patientAddress"]),
-        clinician: Clinician.fromMap(json["clinician"]),
-        sessionStatuses: json["sessionStatuses"] == null
-            ? []
-            : List<SessionStatus>.from(json["sessionStatuses"]
-                    ?.map((x) => SessionStatus.fromJson(x)) ??
-                []),
-        clinicianTimeSlots: List<TimeSlot>.from(
-            json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x)) ?? []),
-      );
+      id: json["id"],
+      sessionId: json["sessionId"],
+      clinicianTimeSlotIds: json["clinicianSlotIds"],
+      date: json["date"] == null ? null : DateTime.parse(json["date"]),
+      day: json["day"],
+      description: json["description"],
+      consultationMode: json["consultationMode"],
+      consultationFee: json["consultationFee"],
+      totalAmount: json["totalAmount"],
+      patientId: json["patientId"],
+      patientProfileId: json["patientProfileId"],
+      patientAddressId: json["patientAddressId"],
+      clinicianId: json["clinicianId"],
+      status: json["status"],
+      duration: List<DurationTime>.from(
+          json["duration"].map((x) => DurationTime.fromJson(x))),
+      otp: json["otp"],
+      reportDocument: json["reportDocument"],
+      createdAt:
+          json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+      updatedAt:
+          json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+      patient: Profile.fromJson(json["patient"]),
+      patientProfile: Profile.fromJson(json["patientProfile"]),
+      patientAddress: json["patientAddress"] == null
+          ? null
+          : Address.fromMap(json["patientAddress"]),
+      clinician: Clinician.fromMap(json["clinician"]),
+      sessionStatuses: json["sessionStatuses"] == null
+          ? []
+          : List<SessionStatus>.from(
+              json["sessionStatuses"]?.map((x) => SessionStatus.fromJson(x)) ??
+                  []),
+      clinicianTimeSlots: List<TimeSlot>.from(
+          json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x)) ?? []),
+      type: json["type"]);
 
   Map<String, dynamic> toMap() => {
         "id": id,
@@ -115,7 +115,7 @@ class Session {
         "patientAddressId": patientAddressId,
         "clinicianId": clinicianId,
         "status": status,
-        "duration": List<dynamic>.from(duration?.map((x) => x.toJson())??[]),
+        "duration": List<dynamic>.from(duration?.map((x) => x.toJson()) ?? []),
         "otp": otp,
         "reportDocument": reportDocument,
         "createdAt": createdAt?.toIso8601String(),
@@ -128,6 +128,7 @@ class Session {
             List<dynamic>.from(clinicianTimeSlots?.map((x) => x.toMap()) ?? []),
         "sessionStatuses":
             List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
+        "type": type
       };
 }
 

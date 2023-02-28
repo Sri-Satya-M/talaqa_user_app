@@ -44,6 +44,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       'clinicianId': sessionBloc.selectedClinician!.id,
       'totalAmount': totalAmount,
       'patientAddressId': sessionBloc.selectedAddressId,
+      'type': sessionBloc.type
     };
 
     return Container(
@@ -98,6 +99,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           const SizedBox(height: 32),
           ProgressButton(
             onPressed: () async {
+              print(body);
               var response = await sessionBloc.createSessions(body: body)
                   as Map<String, dynamic>;
               if (response.containsKey('status') &&

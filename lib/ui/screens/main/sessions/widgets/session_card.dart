@@ -99,6 +99,13 @@ class SessionCard extends StatelessWidget {
                     value: Text("${session.patientProfile?.fullName}",
                         style: textTheme.bodyText1),
                   ),
+                  ReverseDetailsTile(
+                    title: const Text('type'),
+                    value: Text(
+                      session.type.toString(),
+                      style: textTheme.bodyText1,
+                    ),
+                  ),
                   if (session.consultationMode == "HOME" &&
                       session.status == 'PAID') ...[
                     Container(

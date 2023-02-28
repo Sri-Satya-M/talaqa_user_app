@@ -182,6 +182,40 @@ class _SlotBookingState extends State<SlotBooking> {
             ),
           ),
           const SizedBox(height: 16),
+          DropdownButtonFormField(
+            hint: Text("Select a Type"),
+            items: [
+              DropdownMenuItem<String>(
+                child: Text("Speech"),
+                value: "Speech",
+              ),
+              DropdownMenuItem<String>(
+                child: Text("Communication"),
+                value: "Communication",
+              ),
+              DropdownMenuItem<String>(
+                child: Text("Voice"),
+                value: "Voice",
+              ),
+              DropdownMenuItem<String>(
+                child: Text("Shuttering"),
+                value: "Shuttering",
+              ),
+              DropdownMenuItem<String>(
+                child: Text("Language Development"),
+                value: "Language Development",
+              ),
+              DropdownMenuItem<String>(
+                child: Text("Articulation"),
+                value: "Articulation",
+              ),
+            ],
+            onChanged: (value) {
+              sessionBloc.type = value;
+              setState(() {});
+            },
+          ),
+          const SizedBox(height: 16),
           Text(
             'Select Date',
             style: textTheme.caption?.copyWith(color: Colors.black),

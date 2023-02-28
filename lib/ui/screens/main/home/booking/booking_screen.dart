@@ -240,9 +240,10 @@ class _BookingScreenState extends State<BookingScreen> {
         if (sessionBloc.selectedDate == null ||
             sessionBloc.selectedModeOfConsultation == null ||
             sessionBloc.selectedTimeSlotIds == null ||
-            sessionBloc.selectedTimeSlotIds!.isEmpty) {
+            sessionBloc.selectedTimeSlotIds!.isEmpty ||
+            sessionBloc.type == null) {
           flag = true;
-          msg = 'Please select date, slot and mode of consultation';
+          msg = 'Please select date, slot, type and mode of consultation';
         }
         break;
       case 4:

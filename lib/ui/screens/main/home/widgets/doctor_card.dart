@@ -106,7 +106,7 @@ class _DoctorCardState extends State<DoctorCard> {
             const SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: MyColors.navyBlue,
+                backgroundColor: MyColors.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),

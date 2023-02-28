@@ -48,7 +48,14 @@ class SessionDetailsWidget extends StatelessWidget {
                 ReverseDetailsTile(
                   title: const Text('Duration'),
                   value: Text(
-                    'Lorem',
+                    '01:00 hrs',
+                    style: textTheme.bodyText1,
+                  ),
+                ),
+                ReverseDetailsTile(
+                  title: const Text('type'),
+                  value: Text(
+                    sessionBloc.type.toString(),
                     style: textTheme.bodyText1,
                   ),
                 ),

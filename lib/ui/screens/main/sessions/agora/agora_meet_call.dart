@@ -232,21 +232,24 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                                 task: () async {
                                   isJoined = false;
                                   _remoteUid = null;
-                                  var duration =
-                                      DateTime.now().difference(startTime);
-                                  var sessionBloc = Provider.of<SessionBloc>(
-                                    context,
-                                    listen: false,
-                                  );
-                                  await sessionBloc.updateSession(
-                                    id: widget.session.id!,
-                                    body: {
-                                      "status": "COMPLETED",
-                                      "duration": 30
-                                    },
-                                  ).then(
-                                    (value) => Navigator.pop(context),
-                                  );
+                                  // var duration =
+                                  //     DateTime.now().difference(startTime);
+                                  // var sessionBloc = Provider.of<SessionBloc>(
+                                  //   context,
+                                  //   listen: false,
+                                  // );
+                                  // agoraEngine.disableVideo();
+                                  // agoraEngine.disableAudio();
+                                  // await sessionBloc.updateSession(
+                                  //   id: widget.session.id!,
+                                  //   body: {
+                                  //     "status": "COMPLETED",
+                                  //     "duration": 30
+                                  //   },
+                                  // ).then(
+                                  //   (value) => Navigator.pop(context),
+                                  // );
+                                  Navigator.pop(context);
                                 },
                               );
                             },
@@ -348,8 +351,8 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
   @override
   void dispose() {
-    var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
-    sessionsBloc.dispose();
+    // var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+    // sessionsBloc.dispose();
     agoraEngine.disableVideo();
     agoraEngine.disableAudio();
     agoraEngine.release();

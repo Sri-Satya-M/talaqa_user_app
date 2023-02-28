@@ -118,7 +118,14 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                             ReverseDetailsTile(
                               title: const Text('Duration'),
                               value: Text(
-                                'Lorem',
+                                '01:00 Hrs',
+                                style: textTheme.bodyText1,
+                              ),
+                            ),
+                            ReverseDetailsTile(
+                              title: const Text('Type'),
+                              value: Text(
+                                session.type.toString(),
                                 style: textTheme.bodyText1,
                               ),
                             ),
@@ -194,10 +201,9 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ],
                 if (session.status == "STARTED" &&
-                        session.consultationMode != 'HOME' &&
-                        Helper.formatDate(date: date) ==
-                            Helper.formatDate(date: session.date) ||
-                    true) ...[
+                    session.consultationMode != 'HOME' &&
+                    Helper.formatDate(date: date) ==
+                        Helper.formatDate(date: session.date)) ...[
                   ProgressButton(
                     onPressed: () async {
                       var token = await sessionBloc.generateToken(
