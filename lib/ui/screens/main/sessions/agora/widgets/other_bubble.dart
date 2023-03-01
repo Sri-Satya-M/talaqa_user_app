@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../model/session.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../widgets/avatar.dart';
 
 class OtherBubble extends StatelessWidget {
-  const OtherBubble({Key? key, required this.message}) : super(key: key);
+  const OtherBubble({Key? key, required this.message, required this.session})
+      : super(key: key);
 
   final String message;
+  final Session session;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +17,16 @@ class OtherBubble extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: 0.8,
       alignment: Alignment.centerLeft,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Avatar(
+            url: session.clinician?.imageUrl,
+            name: session.clinician?.user?.fullName,
+            size: 30,
+            borderRadius: BorderRadius.circular(15),
+          ),
           Card(
             elevation: 0,
             color: MyColors.lightOrange,
@@ -35,7 +46,11 @@ class OtherBubble extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(message, style: textTheme.subtitle2),
+                  Text(message,
+                      style: textTheme.subtitle2?.copyWith(
+                        color: Colors.black,
+                        fontSize: 18,
+                      )),
                 ],
               ),
             ),

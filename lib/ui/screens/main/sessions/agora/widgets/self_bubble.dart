@@ -1,11 +1,15 @@
+import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../model/session.dart';
 import '../../../../../../resources/colors.dart';
 
 class SelfBubble extends StatelessWidget {
-  const SelfBubble({Key? key, required this.message}) : super(key: key);
+  const SelfBubble({Key? key, required this.message, required this.session})
+      : super(key: key);
 
   final String message;
+  final Session session;
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +17,15 @@ class SelfBubble extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: 0.8,
       alignment: Alignment.centerRight,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Card(
             elevation: 3,
             color: MyColors.primaryColor,
             margin: const EdgeInsets.symmetric(
-              horizontal: 16,
+              horizontal: 6,
               vertical: 8,
             ),
             shape: const RoundedRectangleBorder(
@@ -42,12 +47,18 @@ class SelfBubble extends StatelessWidget {
                     message,
                     style: textTheme.subtitle2?.copyWith(
                       color: Colors.white,
-                      fontSize: 13,
+                      fontSize: 18,
                     ),
                   ),
                 ],
               ),
             ),
+          ),
+          Avatar(
+            url: session.patientProfile?.image,
+            name: session.patientProfile?.user?.fullName,
+            size: 30,
+            borderRadius: BorderRadius.circular(15),
           ),
         ],
       ),

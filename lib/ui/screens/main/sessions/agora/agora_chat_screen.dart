@@ -66,19 +66,25 @@ class _AgoraChatScreenState extends State<AgoraChatScreen> {
     var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color(0xFFF8F2F2),
-      appBar: AppBar(title: const Text("Chat")),
+      appBar: AppBar(title: Text(widget.session.sessionId!)),
       body: StreamBuilder<List<Message>>(
         stream: sessionsBloc.messageListStream,
         builder: (context, snapshot) {
           var chatMessages = snapshot.data ?? [];
           return ListView.builder(
-            padding: EdgeInsets.only(bottom: 100),
+            padding: const EdgeInsets.only(bottom: 100),
             itemCount: chatMessages.length,
             itemBuilder: (context, index) {
               return (widget.session.patientProfile!.id ==
                       chatMessages[index].uid)
-                  ? SelfBubble(message: chatMessages[index].msg!)
-                  : OtherBubble(message: chatMessages[index].msg!);
+                  ? SelfBubble(
+                      message: chatMessages[index].msg!,
+                      session: widget.session,
+                    )
+                  : OtherBubble(
+                      message: chatMessages[index].msg!,
+                      session: widget.session,
+                    );
             },
           );
         },

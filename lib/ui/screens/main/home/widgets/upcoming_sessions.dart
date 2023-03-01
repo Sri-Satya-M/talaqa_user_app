@@ -59,7 +59,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
               ],
             ),
             SizedBox(
-              height: 350,
+              height: 380,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: sessions.length,
