@@ -41,6 +41,7 @@ dependencies:
   webview_flutter: ^3.0.4
   youtube_player_flutter: ^8.1.2
   agora_chat_sdk: ^1.0.9
+  file_picker: ^5.2.5
 
 dev_dependencies:
   flutter_test:

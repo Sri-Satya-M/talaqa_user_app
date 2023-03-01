@@ -5,6 +5,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +26,15 @@ class _CreatePatientState extends State<CreatePatient> {
   String? gender;
   File? profileImage;
   final formKey = GlobalKey<FormState>();
+  FilePickerResult? pdfs;
+
+  String getNames(List<String?>? names) {
+    String ns = "";
+    for (name in names!) {
+      ns += "$name,";
+    }
+    return ns;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +56,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 "Create new patient profile",
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               Text(
                 "Enter patient details to create profile",
                 textAlign: TextAlign.center,
@@ -91,7 +101,7 @@ class _CreatePatientState extends State<CreatePatient> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextFormField(
                 onChanged: (value) {
                   setState(() {
@@ -234,24 +244,31 @@ class _CreatePatientState extends State<CreatePatient> {
                 ],
               ),
               SizedBox(height: 12),
-              TextFormField(
-                enabled: true,
-                onChanged: (value) {},
-                decoration: InputDecoration(
-                  hintText: "Upload medical record",
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.upload),
-                  ),
-                ),
-              ),
-              SizedBox(height: 12),
-              TextFormField(
-                onChanged: (value) {},
-                decoration: InputDecoration(
-                  hintText: "Medical history description",
-                ),
-              )
+              // TextFormField(
+              //   enabled: true,
+              //   onChanged: (value) {},
+              //   decoration: InputDecoration(
+              //     hintText: "${getNames(pdfs?.names)}",
+              //     suffixIcon: IconButton(
+              //       onPressed: () async {
+              //         pdfs = await FilePicker.platform.pickFiles(
+              //           type: FileType.custom,
+              //           allowMultiple: true,
+              //           allowedExtensions: ['pdf'],
+              //         );
+              //         setState(() {});
+              //       },
+              //       icon: const Icon(Icons.upload),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 12),
+              // TextFormField(
+              //   onChanged: (value) {},
+              //   decoration: InputDecoration(
+              //     hintText: "Medical history description",
+              //   ),
+              // )
             ],
           ),
         ),
