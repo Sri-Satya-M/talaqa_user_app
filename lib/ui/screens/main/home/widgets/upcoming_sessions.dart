@@ -8,6 +8,7 @@ import '../../../../../resources/colors.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
+import '../../sessions/session_details_screen.dart';
 import '../../sessions/widgets/session_card.dart';
 
 class UpcomingSessions extends StatefulWidget {
@@ -65,7 +66,13 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                 itemCount: sessions.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return SessionCard(session: sessions[index]);
+                  return SessionCard(
+                    session: sessions[index],
+                    onTap: () => SessionDetailsScreen.open(
+                      context,
+                      id: sessions[index].id.toString(),
+                    ),
+                  );
                 },
               ),
             ),

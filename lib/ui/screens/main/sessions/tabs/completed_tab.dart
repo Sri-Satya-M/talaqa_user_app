@@ -1,3 +1,4 @@
+import 'package:alsan_app/ui/screens/main/sessions/tabs/screens/completed_session_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _CompletedTabState extends State<CompletedTab> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["COMPLETED"]
+        "status": ['COMPLETED', 'REPORT_SUBMITTED']
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -37,7 +38,13 @@ class _CompletedTabState extends State<CompletedTab> {
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
           itemBuilder: (context, index) {
-            return SessionCard(session: sessions[index]);
+            return SessionCard(
+              session: sessions[index],
+              onTap: () => CompletedSessionScreen.open(
+                context,
+                id: sessions[index].id!,
+              ),
+            );
           },
         );
       },

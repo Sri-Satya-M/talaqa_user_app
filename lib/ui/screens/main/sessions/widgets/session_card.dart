@@ -1,6 +1,5 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
-import 'package:alsan_app/ui/screens/main/sessions/session_details_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
@@ -11,11 +10,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../../model/session.dart';
 
-class SessionCard extends StatelessWidget {
+class SessionCard extends StatefulWidget {
   final Session session;
+  final VoidCallback onTap;
 
-  const SessionCard({super.key, required this.session});
+  const SessionCard({
+    super.key,
+    required this.onTap,
+    required this.session,
+  });
 
+  @override
+  State<SessionCard> createState() => _SessionCardState();
+}
+
+class _SessionCardState extends State<SessionCard> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -23,10 +32,7 @@ class SessionCard extends StatelessWidget {
     return CustomCard(
       width: size.width * 0.85,
       child: InkWell(
-        onTap: () => SessionDetailsScreen.open(
-          context,
-          id: session.id.toString(),
-        ),
+        onTap: widget.onTap,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -37,12 +43,12 @@ class SessionCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${session.sessionId}",
+                    "${widget.session.sessionId}",
                     style: textTheme.headline4,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: getColor(session.status),
+                      color: getColor(widget.session.status),
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -50,7 +56,7 @@ class SessionCard extends StatelessWidget {
                       horizontal: 12,
                     ),
                     child: Text(
-                      '${session.status}',
+                      '${widget.session.status}',
                       style: textTheme.bodyText1?.copyWith(color: Colors.white),
                     ),
                   )
@@ -60,15 +66,15 @@ class SessionCard extends StatelessWidget {
               Row(
                 children: [
                   Avatar(
-                    url: session.clinician?.imageUrl,
-                    name: session.clinician?.user?.fullName,
+                    url: widget.session.clinician?.imageUrl,
+                    name: widget.session.clinician?.user?.fullName,
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
                   const SizedBox(width: 8),
                   DetailsTile(
-                    title: Text("${session.clinician?.user?.fullName}"),
+                    title: Text("${widget.session.clinician?.user?.fullName}"),
                     value: Text(
-                      "${session.clinician?.designation}",
+                      "${widget.session.clinician?.designation}",
                       style: textTheme.bodyText1,
                     ),
                   ),
@@ -82,7 +88,7 @@ class SessionCard extends StatelessWidget {
                   DetailsTile(
                     title: Text("Experience", style: textTheme.caption),
                     value: Text(
-                      "${session.clinician?.experience} years exp",
+                      "${widget.session.clinician?.experience} years exp",
                       style: textTheme.bodyText1,
                     ),
                   ),
@@ -90,24 +96,24 @@ class SessionCard extends StatelessWidget {
                     title:
                         Text("Mode of consultation", style: textTheme.caption),
                     value: Text(
-                      "${session.consultationMode}",
+                      "${widget.session.consultationMode}",
                       style: textTheme.bodyText1,
                     ),
                   ),
                   ReverseDetailsTile(
                     title: Text("Patient", style: textTheme.caption),
-                    value: Text("${session.patientProfile?.fullName}",
+                    value: Text("${widget.session.patientProfile?.fullName}",
                         style: textTheme.bodyText1),
                   ),
                   ReverseDetailsTile(
                     title: const Text('type'),
                     value: Text(
-                      session.type.toString(),
+                      widget.session.type.toString(),
                       style: textTheme.bodyText1,
                     ),
                   ),
-                  if (session.consultationMode == "HOME" &&
-                      session.status == 'PAID') ...[
+                  if (widget.session.consultationMode == "HOME" &&
+                      widget.session.status == 'PAID') ...[
                     Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFFF2F2F2),
@@ -120,7 +126,7 @@ class SessionCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              getOtp(session),
+                              getOtp(widget.session),
                               style: textTheme.caption?.copyWith(
                                 color: Colors.black,
                               ),
@@ -134,8 +140,8 @@ class SessionCard extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TimeslotDetailsWidget(
-                dateTime: session.date!,
-                timeslots: session.clinicianTimeSlots!,
+                dateTime: widget.session.date!,
+                timeslots: widget.session.clinicianTimeSlots!,
               ),
             ],
           ),

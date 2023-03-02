@@ -37,7 +37,7 @@ class _CancelledTabState extends State<CancelledTab> {
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
           itemBuilder: (context, index) {
-            return SessionCard(session: sessions[index]);
+            return SessionCard(session: sessions[index],onTap: (){},);
           },
         );
       },

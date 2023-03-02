@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
+import '../session_details_screen.dart';
 import '../widgets/session_card.dart';
 
 class UpcomingTab extends StatefulWidget {
@@ -21,7 +22,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["PENDING", "APPROVED","PAID",'STARTED']
+        "status": ["PENDING", "APPROVED", "PAID", 'STARTED']
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -36,7 +37,13 @@ class _UpcomingTabState extends State<UpcomingTab> {
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
           itemBuilder: (context, index) {
-            return SessionCard(session: sessions[index]);
+            return SessionCard(
+              session: sessions[index],
+              onTap: () => SessionDetailsScreen.open(
+                context,
+                id: sessions[index].id.toString(),
+              ),
+            );
           },
         );
       },
