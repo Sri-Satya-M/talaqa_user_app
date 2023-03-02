@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../model/address.dart';
+import '../model/duration_time.dart';
+
 class Helper {
   static checkKnowledgeCenter({required List<String> urls}) async {
     List<File?> exists = [];
@@ -61,11 +64,33 @@ class Helper {
     return collection.map((json) => obj.call(json)).toList();
   }
 
-  String formatDurationInHhMmSs(Duration duration) {
+  static String getDuration(List<DurationTime>? duration) {
+    if (duration == null || duration.isEmpty) return 'NA';
+    int minutes =
+        duration.map((e) => e.duration!).toList().reduce((a, b) => a + b);
+    var time = Helper.formatDurationInHhMmSs(
+      duration: Duration(minutes: minutes),
+    );
+    return '$time';
+  }
+
+  static String formatDurationInHhMmSs({required Duration duration}) {
     final HH = (duration.inHours).toString().padLeft(2, '0');
     final mm = (duration.inMinutes % 60).toString().padLeft(2, '0');
     final ss = (duration.inSeconds % 60).toString().padLeft(2, '0');
 
     return '$HH:$mm:$ss';
+  }
+
+  static String formatAddress({Address? address}) {
+    if (address == null) return '';
+    String addressLine2 = address.addressLine2 ?? '';
+    String landmark = address.landmark ?? '';
+    String city = address.city ?? '';
+    String country = address.country ?? '';
+    String pincode = address.pincode ?? '';
+
+    List<String> result = [addressLine2, landmark, city, country, pincode];
+    return result.join(',');
   }
 }
