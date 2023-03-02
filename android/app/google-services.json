@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "1022577936384",
+    "firebase_url": "https://talaqah-clinic-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "talaqah-clinic",
+    "storage_bucket": "talaqah-clinic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022577936384:android:9be801d74bd2a9178330e5",
+        "android_client_info": {
+          "package_name": "com.talaqah.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022577936384-tukcdf7hl5op8ohjk2n6gudbpes5k2b0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMwIA6Ru_rrs-vXkAOreb0zwR3zPbACNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022577936384-tukcdf7hl5op8ohjk2n6gudbpes5k2b0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1022577936384-9t0lbrrpjnolbenncaa243jt0ls6k2vs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.talaqah.clinician.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022577936384:android:58f52b641f18e7618330e5",
+        "android_client_info": {
+          "package_name": "com.talaqah.clinician.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022577936384-tukcdf7hl5op8ohjk2n6gudbpes5k2b0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMwIA6Ru_rrs-vXkAOreb0zwR3zPbACNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022577936384-tukcdf7hl5op8ohjk2n6gudbpes5k2b0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1022577936384-9t0lbrrpjnolbenncaa243jt0ls6k2vs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.talaqah.clinician.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
