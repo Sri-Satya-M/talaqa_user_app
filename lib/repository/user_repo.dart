@@ -79,4 +79,8 @@ class UserRepo {
     var response = await apiClient.post(Api.upload, body);
     return response;
   }
+
+  Future updateFCMToken({body}) {
+    return apiClient.post(Api.tokens, body);
+  }
 }

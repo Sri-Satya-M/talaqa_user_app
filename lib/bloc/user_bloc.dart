@@ -2,7 +2,9 @@ import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../data/local/shared_prefs.dart';
 import '../model/resources.dart';
@@ -89,5 +91,18 @@ class UserBloc with ChangeNotifier {
     var response = await _userRepo.postAddress(body: body);
     notifyListeners();
     return response;
+  }
+
+  void updateFCMToken() async {
+    await Permission.notification.request();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission();
+    var fcmToken = await messaging.getToken();
+    print('FCM token: $fcmToken');
+    var body = {
+      'token': fcmToken,
+      'type': profile!.user!.userType!
+    };
+    await _userRepo.updateFCMToken(body: body);
   }
 }
