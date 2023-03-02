@@ -7,8 +7,11 @@ import 'package:alsan_app/ui/screens/main/home/home_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/menu_screen.dart';
 import 'package:alsan_app/ui/screens/main/resources/resources_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_screen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../utils/custom_notifications.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -38,9 +41,22 @@ class _MainScreenState extends State<MainScreen> {
     return 0;
   }
 
+  void _handleMessage(RemoteMessage? message,
+      {var localNotificationMessage}) async {}
+
   @override
   void initState() {
     super.initState();
+    context.read<UserBloc>().updateFCMToken();
+    FirebaseMessaging.onBackgroundMessage(
+      (RemoteMessage message) async => _handleMessage.call(message),
+    );
+    CustomNotification customNotification = new CustomNotification();
+    customNotification.initialize();
+    customNotification.setupNotifications(
+      context: context,
+      handleMessage: _handleMessage,
+    );
   }
 
   @override
