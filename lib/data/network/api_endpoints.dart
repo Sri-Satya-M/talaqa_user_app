@@ -23,4 +23,5 @@ class Api {
   static const meeting = '$sessions/meeting';
   static const payment = '$sessions/payment';
   static const upload = '/common/upload';
+  static const reports = '/reports';
 }

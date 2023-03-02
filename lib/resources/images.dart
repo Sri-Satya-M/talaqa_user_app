@@ -22,6 +22,7 @@ class Images {
   static const videoOn = 'assets/icons/video_on.png';
   static const videoOff = 'assets/icons/video_off.png';
   static const clockPlus = 'assets/icons/clock_plus.png';
+  static const pdf = 'assets/icons/pdf.png';
 
   ///images
   static const logo = 'assets/images/logo.png';

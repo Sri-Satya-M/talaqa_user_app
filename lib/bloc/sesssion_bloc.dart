@@ -7,6 +7,7 @@ import '../model/clinicians.dart';
 import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
+import '../model/reports.dart';
 import '../model/session.dart';
 import '../model/time_of_day.dart';
 import '../repository/session_repo.dart';
@@ -107,8 +108,11 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.postSessionFeedback(id:id,body:body);
   }
 
+  Future<List<Report>> getSessionReports({required int id}) {
+    return sessionRepo.getSessionReports(id:id);
+  }
+
   ///Handling chat in bloc
-  ///
 
   initializeStream(){
     messages.clear();

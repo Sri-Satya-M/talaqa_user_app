@@ -4,6 +4,7 @@ import 'package:alsan_app/model/time_of_day.dart';
 import '../data/network/api_endpoints.dart';
 import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
+import '../model/reports.dart';
 import '../model/session.dart';
 
 class SessionRepo {
@@ -62,5 +63,11 @@ class SessionRepo {
 
   Future postSessionFeedback({required int id, body}) {
     return apiClient.post('${Api.sessions}/feedback/$id', body);
+  }
+
+  Future<List<Report>> getSessionReports({required int id}) async {
+    var res = await apiClient.get('${Api.reports}/$id');
+    var list = res['data'] as List;
+    return list.map((e) => Report.fromJson(e)).toList();
   }
 }
