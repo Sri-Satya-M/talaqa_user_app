@@ -16,7 +16,7 @@
 
 
    <application
-        android:label="talaqah_app"
+        android:label="Talaqah"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
