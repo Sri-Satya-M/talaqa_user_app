@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/custom_notifications.dart';
+import 'sessions/session_details_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -42,7 +43,19 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _handleMessage(RemoteMessage? message,
-      {var localNotificationMessage}) async {}
+      {var localNotificationMessage}) async {
+    var data = message?.data;
+    var details = data?['data'];
+    MainScreen.open(context);
+    switch (data?['type']) {
+      case 'session':
+        SessionDetailsScreen.open(context, id: data!['typeId']);
+        break;
+
+      default:
+        return;
+    }
+  }
 
   @override
   void initState() {
