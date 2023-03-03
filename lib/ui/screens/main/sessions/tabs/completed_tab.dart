@@ -32,7 +32,7 @@ class _CompletedTabState extends State<CompletedTab> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
-        if (sessions.isEmpty) return const EmptyWidget();
+        if (sessions.isEmpty) return const EmptyWidget(message: 'No Completed Sessions');
 
         return ListView.builder(
           padding: const EdgeInsets.all(20),

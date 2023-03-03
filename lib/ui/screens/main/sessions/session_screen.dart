@@ -1,5 +1,5 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/ui/screens/main/sessions/tabs/upcoming_screen.dart';
+import 'package:alsan_app/ui/screens/main/sessions/tabs/upcoming_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

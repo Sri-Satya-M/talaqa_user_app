@@ -31,7 +31,7 @@ class _CancelledTabState extends State<CancelledTab> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
-        if (sessions.isEmpty) return const EmptyWidget();
+        if (sessions.isEmpty) return const EmptyWidget(message: 'No Canceled Sessions');
 
         return ListView.builder(
           padding: const EdgeInsets.all(20),

@@ -32,7 +32,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
-        if (sessions.isEmpty) return const EmptyWidget();
+        if (sessions.isEmpty) return const EmptyWidget(message: 'No Upcoming Sessions');
         return ListView.builder(
           padding: const EdgeInsets.all(20),
           itemCount: sessions.length,
