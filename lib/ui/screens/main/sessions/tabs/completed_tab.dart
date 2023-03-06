@@ -42,7 +42,7 @@ class _CompletedTabState extends State<CompletedTab> {
               session: sessions[index],
               onTap: () => CompletedSessionScreen.open(
                 context,
-                id: sessions[index].id!,
+                id: sessions[index].id!.toString(),
               ),
             );
           },

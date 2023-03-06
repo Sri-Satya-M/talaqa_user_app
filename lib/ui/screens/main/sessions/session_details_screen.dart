@@ -29,9 +29,7 @@ class SessionDetailsScreen extends StatefulWidget {
 
   static Future open(BuildContext context, {required String id}) {
     return Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => SessionDetailsScreen(id: id),
-      ),
+      MaterialPageRoute(builder: (context) => SessionDetailsScreen(id: id)),
     );
   }
 

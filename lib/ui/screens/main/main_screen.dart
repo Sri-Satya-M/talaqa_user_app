@@ -7,6 +7,7 @@ import 'package:alsan_app/ui/screens/main/home/home_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/menu_screen.dart';
 import 'package:alsan_app/ui/screens/main/resources/resources_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_screen.dart';
+import 'package:alsan_app/ui/screens/main/sessions/tabs/screens/completed_session_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,11 +48,17 @@ class _MainScreenState extends State<MainScreen> {
     var data = message?.data;
     var details = data?['data'];
     MainScreen.open(context);
+    var mainBloc = Provider.of<MainBloc>(context, listen: false);
+    print(data);
     switch (data?['type']) {
       case 'session':
-        SessionDetailsScreen.open(context, id: data!['typeId']);
+        (['COMPLETED', 'REPORT_SUBMITTED'].contains(data!['status']))
+            ? CompletedSessionScreen.open(context, id: data['typeId'])
+            : SessionDetailsScreen.open(context, id: data['typeId']);
         break;
-
+      case 'resource':
+        mainBloc.changeIndex(3);
+        break;
       default:
         return;
     }

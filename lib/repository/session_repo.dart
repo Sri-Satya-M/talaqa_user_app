@@ -28,7 +28,7 @@ class SessionRepo {
 
   Future<List<Session>> getSessions({query}) async {
     var response = await apiClient.get(
-      Api.sessions + Api.patientSessions,
+      Api.sessions,
       query: query,
     );
     var list = response as List;

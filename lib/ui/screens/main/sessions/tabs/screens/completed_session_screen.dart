@@ -15,11 +15,11 @@ import '../../../home/booking/widgets/patient_details_widget.dart';
 import '../../reports/reports_screen.dart';
 
 class CompletedSessionScreen extends StatefulWidget {
-  final int id;
+  final String id;
 
   const CompletedSessionScreen({super.key, required this.id});
 
-  static Future open(BuildContext context, {required int id}) {
+  static Future open(BuildContext context, {required String id}) {
     return Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => CompletedSessionScreen(id: id)),
     );
