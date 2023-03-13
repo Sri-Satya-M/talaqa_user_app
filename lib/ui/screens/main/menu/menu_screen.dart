@@ -24,6 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
       'title': 'Profile',
       'screen': ProfileScreen()
     },
+    {'image': Images.address, 'title': 'My Address', 'screen': ProfileScreen()},
     {
       'image': Images.sessionsIcon,
       'title': 'My Sessions',
@@ -44,7 +45,11 @@ class _MenuScreenState extends State<MenuScreen> {
       'title': 'Refer a friend',
       'screen': ReferScreen(),
     },
-    {'image': Images.faqIcon, 'title': 'FAQ', 'screen': ProfileScreen()},
+    {
+      'image': Images.faqIcon,
+      'title': 'FAQ',
+      'screen': ProfileScreen(),
+    },
   ];
 
   @override
@@ -89,16 +94,18 @@ class _MenuScreenState extends State<MenuScreen> {
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(3)),
                     child: Text(
-                        Helper.textCapitalization(
-                          text: userBloc.profile?.gender ?? 'NA',
-                        ),
-                        style: textTheme.subtitle2),
+                      Helper.textCapitalization(
+                        text: userBloc.profile?.gender ?? 'NA',
+                      ),
+                      style: textTheme.subtitle2,
+                    ),
                   ),
                 ],
               )
             ],
           ),
         ),
+        const SizedBox(height: 16),
         ListView.separated(
           shrinkWrap: true,
           itemCount: 6,
@@ -119,12 +126,11 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           separatorBuilder: (context, index) => const Divider(),
         ),
-        const Divider(),
-        const SizedBox(height: 20),
+        const SizedBox(height: 32),
         Text("Privacy Policy", style: textTheme.subtitle1),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         Text("Terms of Use", style: textTheme.subtitle1),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         Text("Cancellation & Refund Policy", style: textTheme.subtitle1)
       ],
     );

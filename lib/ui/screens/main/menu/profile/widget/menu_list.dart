@@ -6,11 +6,12 @@ class MenuList extends StatefulWidget {
   final String title;
   final VoidCallback onTap;
 
-  const MenuList(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.onTap});
+  const MenuList({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   _MenuListState createState() => _MenuListState();
@@ -24,23 +25,21 @@ class _MenuListState extends State<MenuList> {
       children: [
         Row(
           children: [
-            Image.asset(
-              widget.icon,
-              height: 30,
-              width: 30,
-            ),
+            Image.asset(widget.icon, height: 30, width: 30),
             const SizedBox(width: 14),
             Text(widget.title),
           ],
         ),
         Container(
+          height: 30,
+          width: 30,
           decoration: BoxDecoration(
             color: MyColors.divider,
             borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
             onPressed: widget.onTap,
-            icon: const Icon(Icons.arrow_forward_ios),
+            icon: const Icon(Icons.arrow_forward_ios, size: 14),
           ),
         ),
       ],

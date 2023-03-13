@@ -1,5 +1,6 @@
 class Images {
   ///icons
+  static const address = 'assets/icons/address.png';
   static const calender = 'assets/icons/calendar.png';
   static const editIcon = 'assets/icons/edit.png';
   static const profileIcon = 'assets/icons/profile.png';
