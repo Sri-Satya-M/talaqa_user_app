@@ -54,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   (route) => false,
                 );
               },
-              child: const Text("Sign Up With Email Number"),
+              child: const Text("Sign Up With Email Address"),
             ),
             const SizedBox(height: 30),
             Row(
