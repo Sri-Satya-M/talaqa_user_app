@@ -7,6 +7,7 @@ class Profile {
     this.image,
     this.age,
     this.gender,
+    this.dob,
     this.city,
     this.country,
     this.pincode,
@@ -22,6 +23,7 @@ class Profile {
   String? image;
   int? age;
   String? gender;
+  String? dob;
   String? city;
   String? country;
   int? pincode;
@@ -37,6 +39,7 @@ class Profile {
     image: json["image"],
     age: json["age"],
     gender: json["gender"],
+    dob: json["dob"],
     city: json["city"],
     country: json["country"],
     userId: json["userId"],
@@ -53,6 +56,7 @@ class Profile {
     "image": image,
     "age": age,
     "gender": gender,
+    "dob": dob,
     "city": city,
     "country": country,
     "userId": userId,

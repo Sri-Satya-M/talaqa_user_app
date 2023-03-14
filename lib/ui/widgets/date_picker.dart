@@ -35,7 +35,7 @@ class DatePicker extends StatelessWidget {
         date = await showDatePicker(
           context: context,
           initialDate: date ?? DateTime.now(),
-          firstDate: DateTime(2000),
+          firstDate: startDate ?? DateTime(1947),
           lastDate: endDate ?? DateTime.now(),
         );
         dateCtrl.text = DateFormat('yyyy-MM-dd').format(date!);

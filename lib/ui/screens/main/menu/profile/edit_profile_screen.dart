@@ -1,5 +1,6 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
+import 'package:alsan_app/ui/widgets/date_picker.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,10 @@ class _EditProfileState extends State<EditProfile> {
   String? name;
   String? gender;
   String? city;
+  String? dob;
   int? age;
+  var dateCtrl = TextEditingController();
+
 
   final formKey = GlobalKey<FormState>();
 
@@ -27,6 +31,7 @@ class _EditProfileState extends State<EditProfile> {
     gender = profile.gender!;
     age = profile.age;
     city = profile.city!;
+    dob = profile.dob!;
     super.initState();
   }
 
@@ -72,12 +77,18 @@ class _EditProfileState extends State<EditProfile> {
                   }
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
+              DatePicker(
+                DateTime.parse(dob!),
+                dateCtrl: dateCtrl,
+                onDateChange: () {},
+              ),
+              const SizedBox(height: 12),
               TextFormField(
                 enabled: false,
                 initialValue: userBloc.profile?.user?.mobileNumber,
                 onChanged: (value) {},
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Number",
                   counter: SizedBox(),
                 ),
@@ -93,7 +104,7 @@ class _EditProfileState extends State<EditProfile> {
                   }
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               DropdownButtonFormField(
                 value: gender,
                 onChanged: (value) {
@@ -211,4 +222,6 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
+
 }

@@ -62,7 +62,7 @@ class _AddressDetailsWidgetState extends State<AddressDetailsWidget> {
                       Address().formatAddress(widget.address),
                     ),
                   ),
-                  const Text('7702165416'),
+                  Text('${widget.address.mobileNumber}'),
                 ],
               ),
             ),

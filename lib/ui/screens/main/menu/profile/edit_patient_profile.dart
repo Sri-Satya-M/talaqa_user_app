@@ -8,8 +8,11 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../utils/helper.dart';
+import '../../../../widgets/date_picker.dart';
 import '../../../../widgets/image_picker.dart';
 
 class EditPatientProfile extends StatefulWidget {
@@ -35,7 +38,9 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   final TextEditingController city = TextEditingController();
   final TextEditingController country = TextEditingController();
   final TextEditingController age = TextEditingController();
+  final TextEditingController dateCtrl = TextEditingController();
   File? profileImage;
+
   @override
   void initState() {
     name.text = widget.profile.fullName ?? '';
@@ -43,6 +48,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
     city.text = widget.profile.city ?? '';
     country.text = widget.profile.country ?? '';
     age.text = widget.profile.age?.toString() ?? '';
+    dateCtrl.text = widget.profile.dob?.toString() ?? '';
     super.initState();
   }
 
@@ -73,17 +79,20 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
                             profileImage!,
                             width: 90,
                             height: 90,
-                          )),
+                          ),
+                        ),
                   Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                          onTap: () async {
-                            profileImage = await ImagePickerContainer.getImage(
-                                context, ImageSource.gallery);
-                            setState(() {});
-                          },
-                          child: const Icon(Icons.edit)))
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () async {
+                        profileImage = await ImagePickerContainer.getImage(
+                            context, ImageSource.gallery);
+                        setState(() {});
+                      },
+                      child: const Icon(Icons.edit),
+                    ),
+                  )
                 ],
               ),
               const SizedBox(height: 12),
@@ -98,6 +107,18 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
                     return 'Enter the name';
                   }
                   return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              DatePicker(
+                DateTime.now(),
+                dateCtrl: dateCtrl,
+                startDate: DateTime(1923),
+                hintText: 'Date Of Birth',
+                labelText: '',
+                onDateChange: () {
+                  age.text = Helper.calculateAge(DateTime.parse(dateCtrl.text))
+                      .toString();
                 },
               ),
               const SizedBox(height: 12),
@@ -224,6 +245,8 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               "city": city.text,
               "country": country.text,
               "gender": gender.text,
+              "dob": DateFormat('yyyy-MM-dd')
+                  .format(DateTime.parse(dateCtrl.text)),
               if (profileImage != null) "image": imageResponse['key']
             };
             var response = await userBloc.updatePatients(
