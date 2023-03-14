@@ -1,5 +1,6 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
@@ -36,72 +37,78 @@ class _DoctorCardState extends State<DoctorCard> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageFromNet(
-                  imageUrl: widget.clinician.imageUrl,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  height: 100,
-                  width: 100,
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    DetailsTile(
-                      title: Text(
-                        widget.clinician.user?.fullName ?? ' NA',
-                        style: textTheme.headline2,
-                      ),
-                      value: Text(
-                        widget.clinician.designation ?? 'NA',
-                        style: textTheme.caption
-                            ?.copyWith(color: MyColors.cerulean),
-                      ),
+            GestureDetector(
+              onTap: () => ClinicianDetailsScreen.open(
+                context,
+                clinician: widget.clinician,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageFromNet(
+                    imageUrl: widget.clinician.imageUrl,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          decoration: const BoxDecoration(
-                            color: MyColors.paleBlue,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(25),
+                    height: 100,
+                    width: 100,
+                  ),
+                  const SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      DetailsTile(
+                        title: Text(
+                          widget.clinician.user?.fullName ?? ' NA',
+                          style: textTheme.headline2,
+                        ),
+                        value: Text(
+                          widget.clinician.designation ?? 'NA',
+                          style: textTheme.caption
+                              ?.copyWith(color: MyColors.cerulean),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            decoration: const BoxDecoration(
+                              color: MyColors.paleBlue,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
+                              ),
+                            ),
+                            child: Text(
+                              '${widget.clinician.experience} years Exp.',
+                              style: textTheme.subtitle2,
                             ),
                           ),
-                          child: Text(
-                            '${widget.clinician.experience} years Exp.',
-                            style: textTheme.subtitle2,
+                          const SizedBox(width: 18),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Image.asset(
+                            Images.voice,
+                            height: 16,
+                            width: 16,
                           ),
-                        ),
-                        const SizedBox(width: 18),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Image.asset(
-                          Images.voice,
-                          height: 16,
-                          width: 16,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          widget.clinician.languagesKnown ?? 'NA',
-                          style: textTheme.bodyText1,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-              ],
+                          const SizedBox(width: 8),
+                          Text(
+                            widget.clinician.languagesKnown ?? 'NA',
+                            style: textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
