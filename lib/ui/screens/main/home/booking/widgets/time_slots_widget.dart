@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,13 +69,20 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                     for (var timeSlot in timeDay) ...[
                       ChoiceChip(
                         labelStyle: textTheme.caption?.copyWith(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 10,
                         ),
-                        shape: StadiumBorder(side: BorderSide()),
-                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        shape: StadiumBorder(
+                          side: BorderSide(
+                            color: timeSlotIds.contains(timeSlot.id)
+                                ? MyColors.primaryColor
+                                : MyColors.divider,
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
                         label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         selected: timeSlotIds.contains(timeSlot.id),
+                        selectedColor: Colors.transparent,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         onSelected: (value) {
                           if (timeSlotIds.contains(timeSlot.id)) {

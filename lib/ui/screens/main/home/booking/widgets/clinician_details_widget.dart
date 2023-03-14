@@ -55,8 +55,9 @@ class ClinicianDetailsWidget extends StatelessWidget {
                               horizontal: 10,
                             ),
                             decoration: BoxDecoration(
-                                color: MyColors.paleBlue,
-                                borderRadius: BorderRadius.circular(10)),
+                              color: MyColors.paleBlue,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             child: Text(
                               '${clinician.experience} years Exp.',
                               style: textTheme.subtitle2,

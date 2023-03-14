@@ -183,31 +183,31 @@ class _SlotBookingState extends State<SlotBooking> {
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField(
-            hint: Text("Select a Type"),
-            items: [
+            hint: const Text("Select a Type"),
+            items: const [
               DropdownMenuItem<String>(
-                child: Text("Speech"),
                 value: "Speech",
+                child: Text("Speech"),
               ),
               DropdownMenuItem<String>(
-                child: Text("Communication"),
                 value: "Communication",
+                child: Text("Communication"),
               ),
               DropdownMenuItem<String>(
-                child: Text("Voice"),
                 value: "Voice",
+                child: Text("Voice"),
               ),
               DropdownMenuItem<String>(
-                child: Text("Shuttering"),
                 value: "Shuttering",
+                child: Text("Shuttering"),
               ),
               DropdownMenuItem<String>(
-                child: Text("Language Development"),
                 value: "Language Development",
+                child: Text("Language Development"),
               ),
               DropdownMenuItem<String>(
-                child: Text("Articulation"),
                 value: "Articulation",
+                child: Text("Articulation"),
               ),
             ],
             onChanged: (value) {

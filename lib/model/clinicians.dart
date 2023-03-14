@@ -8,6 +8,7 @@ class Clinician {
     this.alternateMobileNumber,
     this.dob,
     this.gender,
+    this.bio,
     this.location,
     this.experience,
     this.userId,
@@ -24,6 +25,7 @@ class Clinician {
   String? alternateMobileNumber;
   DateTime? dob;
   String? gender;
+  String? bio;
   String? location;
   int? experience;
   int? userId;
@@ -40,6 +42,7 @@ class Clinician {
     alternateMobileNumber: json["alternateMobileNumber"],
     dob: DateTime.parse(json["dob"]),
     gender: json["gender"],
+    bio: json["bio"],
     location: json["location"],
     experience: json["experience"],
     userId: json["userId"],
@@ -57,6 +60,7 @@ class Clinician {
     "alternateMobileNumber": alternateMobileNumber,
     "dob": dob?.toIso8601String(),
     "gender": gender,
+    "bio": bio,
     "location": location,
     "experience": experience,
     "userId": userId,
