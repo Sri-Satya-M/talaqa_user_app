@@ -1,5 +1,6 @@
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
+import 'package:alsan_app/model/feedback.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -99,10 +100,11 @@ class UserBloc with ChangeNotifier {
     await messaging.requestPermission();
     var fcmToken = await messaging.getToken();
     print('FCM token: $fcmToken');
-    var body = {
-      'token': fcmToken,
-      'type': profile!.user!.userType!
-    };
+    var body = {'token': fcmToken, 'type': profile!.user!.userType!};
     await _userRepo.updateFCMToken(body: body);
+  }
+
+  Future<List<Feedback>> getFeedback({required String id}) {
+    return _userRepo.getFeedback(id: id);
   }
 }

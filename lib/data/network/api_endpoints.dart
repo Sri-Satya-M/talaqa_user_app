@@ -24,4 +24,5 @@ class Api {
   static const upload = '/common/upload';
   static const reports = '/reports';
   static const tokens = '/tokens';
+  static const feedback = '/feedback';
 }

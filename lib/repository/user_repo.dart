@@ -2,6 +2,7 @@ import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/data/network/api_endpoints.dart';
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
+import 'package:alsan_app/model/feedback.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
 import 'package:dio/dio.dart';
@@ -82,5 +83,11 @@ class UserRepo {
 
   Future updateFCMToken({body}) {
     return apiClient.post(Api.tokens, body);
+  }
+
+  Future<List<Feedback>> getFeedback({required String id}) async {
+    var response = await apiClient.get('${Api.clinicians}/$id${Api.feedback}');
+    var list = response as List;
+    return list.map((f) => Feedback.fromJson(f)).toList();
   }
 }
