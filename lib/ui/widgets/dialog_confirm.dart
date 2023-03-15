@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class ConfirmDialog {
   static Future<bool?> show(
-    BuildContext context,
-    String message, {
+    BuildContext context, {
+    required String message,
     String? title,
   }) {
     return showDialog<bool>(
@@ -11,7 +11,7 @@ class ConfirmDialog {
       builder: (context) {
         var textTheme = Theme.of(context).textTheme;
         return AlertDialog(
-          titlePadding: EdgeInsets.all(16),
+          titlePadding: const EdgeInsets.all(16),
           title: title != null
               ? Text(
                   title,
@@ -28,15 +28,11 @@ class ConfirmDialog {
           backgroundColor: Colors.white,
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.pop(context,false),
               child: const Text('NO'),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
+              onPressed: () => Navigator.pop(context, true),
               child: const Text('YES'),
             ),
           ],
