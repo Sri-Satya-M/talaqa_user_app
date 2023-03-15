@@ -22,9 +22,7 @@ class _PatientProfileState extends State<PatientProfile> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Patient Profiles"),
-      ),
+      appBar: AppBar(title: const Text("Patient Profiles")),
       body: FutureBuilder<List<Profile>>(
         future: userBloc.getPatients(),
         builder: (context, snapshot) {
