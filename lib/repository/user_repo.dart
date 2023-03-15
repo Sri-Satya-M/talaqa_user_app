@@ -64,13 +64,13 @@ class UserRepo {
   }
 
   Future<List<Address>> getAddresses() async {
-    var response = await apiClient.get(Api.patient + Api.addresses);
+    var response = await apiClient.get(Api.patients + Api.addresses);
     var list = response as List;
     return list.map((e) => Address.fromMap(e)).toList();
   }
 
   Future<Address> postAddress({body}) async {
-    var response = await apiClient.post(Api.patient + Api.addresses, body);
+    var response = await apiClient.post(Api.patients + Api.addresses, body);
     return Address.fromMap(response);
   }
 
@@ -89,5 +89,9 @@ class UserRepo {
     var response = await apiClient.get('${Api.clinicians}/$id${Api.feedback}');
     var list = response as List;
     return list.map((f) => Feedback.fromJson(f)).toList();
+  }
+
+  Future removeAddresses({required String id}) async{
+    return await apiClient.delete('${Api.patients}${Api.addresses}/$id');
   }
 }

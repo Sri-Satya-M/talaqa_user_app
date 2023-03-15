@@ -4,9 +4,9 @@ class Api {
   static const verifyOtp = "$users/otp-verify";
   static const signUp = "$users/patient-signup";
   static const signInEmail = "$users/patient-signin-with-email";
-  static const patient = '/patients';
-  static const profile = '$patient/profile';
-  static const patientProfiles = '$patient/patient-profiles';
+  static const patients = '/patients';
+  static const profile = '$patients/profile';
+  static const patientProfiles = '$patients/patient-profiles';
   static const clinicians = '/clinicians';
   static const clinician = '/clinician';
   static const modeOfConsultation = '/mode-of-consultation';

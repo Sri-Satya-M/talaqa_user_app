@@ -107,4 +107,10 @@ class UserBloc with ChangeNotifier {
   Future<List<Feedback>> getFeedback({required String id}) {
     return _userRepo.getFeedback(id: id);
   }
+
+  Future removeAddresses({required String id}) async {
+    var response = await _userRepo.removeAddresses(id: id);
+    notifyListeners();
+    return response;
+  }
 }
