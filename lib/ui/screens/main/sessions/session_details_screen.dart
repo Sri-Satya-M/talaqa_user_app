@@ -12,8 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bloc/sesssion_bloc.dart';
+import '../../../../bloc/user_bloc.dart';
+import '../../../widgets/dialog_confirm.dart';
 import '../../../widgets/dynamic_grid_view.dart';
 import '../../../widgets/empty_widget.dart';
+import '../../../widgets/error_snackbar.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/reverse_details_tile.dart';
@@ -148,7 +151,32 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ),
                 (session.consultationMode == "HOME")
-                    ? AddressCard(address: session.patientAddress!)
+                    ? AddressCard(
+                        address: session.patientAddress!,
+                        onTap: () async {
+                          bool? confirm = await ConfirmDialog.show(
+                            context,
+                            message: 'Confirm to delete address?',
+                          );
+
+                          if (confirm == true) {
+                            var userBloc = Provider.of<UserBloc>(
+                              context,
+                              listen: false,
+                            );
+
+                            var response = await userBloc.removeAddresses(
+                              id: session.patientAddress!.id.toString(),
+                            ) as Map<String, dynamic>;
+
+                            if (response.containsKey('status') &&
+                                response['status'] == 'success') {
+                              ErrorSnackBar.show(context, response['message']);
+                              setState(() {});
+                            }
+                          }
+                        },
+                      )
                     : const SizedBox(),
                 DetailsBox(
                   title: 'Consultation Bill Details',

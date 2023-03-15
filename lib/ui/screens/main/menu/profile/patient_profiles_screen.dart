@@ -97,9 +97,7 @@ class _PatientProfileState extends State<PatientProfile> {
                       ),
                     ],
                   ),
-                  const Spacer(
-                    flex: 1,
-                  ),
+                  const Spacer(flex: 1),
                   PopupMenuButton<int>(
                     onSelected: (int value) async {
                       switch (value) {
@@ -115,7 +113,7 @@ class _PatientProfileState extends State<PatientProfile> {
                         case 2:
                           bool? isConfirm = await ConfirmDialog.show(
                             context,
-                            'Confirm to remove the profile',
+                            message: 'Confirm to remove the profile',
                             title: 'Delete Profile',
                           );
                           if (isConfirm ?? false) {

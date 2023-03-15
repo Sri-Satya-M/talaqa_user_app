@@ -1,6 +1,7 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/main/menu/my_address/my_adddress_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
 import 'package:alsan_app/ui/screens/main/menu/refer/refer_screen.dart';
@@ -24,7 +25,11 @@ class _MenuScreenState extends State<MenuScreen> {
       'title': 'Profile',
       'screen': ProfileScreen()
     },
-    {'image': Images.address, 'title': 'My Address', 'screen': ProfileScreen()},
+    {
+      'image': Images.address,
+      'title': 'My Address',
+      'screen': MyAddressScreen(),
+    },
     {
       'image': Images.sessionsIcon,
       'title': 'My Sessions',

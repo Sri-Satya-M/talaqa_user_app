@@ -5,11 +5,17 @@ import '../../../../../resources/colors.dart';
 import '../../../../../resources/images.dart';
 import '../../../../widgets/details_tile.dart';
 
-class AddressCard extends StatelessWidget {
+class AddressCard extends StatefulWidget {
   final Address address;
+  final VoidCallback onTap;
 
-  const AddressCard({super.key, required this.address});
+  const AddressCard({super.key, required this.address, required this.onTap});
 
+  @override
+  State<AddressCard> createState() => _AddressCardState();
+}
+
+class _AddressCardState extends State<AddressCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,9 +44,18 @@ class AddressCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DetailsTile(
-                    title: Text('${address.addressLine1}'),
+                    title: Row(
+                      children: [
+                        Expanded(child: Text('${widget.address.addressLine1}')),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: const Icon(Icons.delete, size: 20),
+                        ),
+                        const SizedBox(width: 16),
+                      ],
+                    ),
                     value: Text(
-                      Address().formatAddress(address),
+                      Address().formatAddress(widget.address),
                     ),
                   ),
                   const Text('7702165416'),
