@@ -27,7 +27,7 @@ class Report {
     status: json["status"]==null? null: json["status"],
     type: json["type"]==null? null: json["type"],
     url: json["url"]==null? null: json["url"],
-    data: Data.fromJson(json["data"])==null? null: Data.fromJson(json["data"]),
+    data: json["data"]==null? null: Data.fromJson(json["data"]),
     createdAt: DateTime.parse(json["createdAt"])==null? null: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"])==null? null: DateTime.parse(json["updatedAt"]),
     fileUrl: json["fileUrl"]==null? null: json["fileUrl"],

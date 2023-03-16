@@ -13,9 +13,16 @@ class ConfirmDialog {
         return AlertDialog(
           titlePadding: const EdgeInsets.all(16),
           title: title != null
-              ? Text(
-                  title,
-                  style: textTheme.headline6!.copyWith(color: Colors.black),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      title,
+                      style: textTheme.headline4!.copyWith(color: Colors.black),
+                    ),
+                    const SizedBox(height: 8),
+                    const Divider(),
+                  ],
                 )
               : null,
           content: Text(
@@ -28,7 +35,7 @@ class ConfirmDialog {
           backgroundColor: Colors.white,
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context,false),
+              onPressed: () => Navigator.pop(context, false),
               child: const Text('NO'),
             ),
             TextButton(
