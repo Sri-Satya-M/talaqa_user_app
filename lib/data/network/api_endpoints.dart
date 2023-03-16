@@ -25,4 +25,5 @@ class Api {
   static const reports = '/reports';
   static const tokens = '/tokens';
   static const feedback = '/feedback';
+  static const medicalRecords = '/medical-records';
 }

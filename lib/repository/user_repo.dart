@@ -3,6 +3,7 @@ import 'package:alsan_app/data/network/api_endpoints.dart';
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/feedback.dart';
+import 'package:alsan_app/model/medical_records.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
 import 'package:dio/dio.dart';
@@ -33,8 +34,35 @@ class UserRepo {
     return await apiClient.patch(Api.profile, body);
   }
 
-  Future createPatient({body}) async {
-    return await apiClient.post(Api.patientProfiles, body);
+  Future<Profile> createPatient({body}) async {
+    var response = await apiClient.post(Api.patientProfiles, body);
+    return Profile.fromJson(response);
+  }
+
+  Future uploadFile({required String path}) async {
+    var body = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
+    var response = await apiClient.post(Api.upload, body);
+    return response;
+  }
+
+  Future uploadMedicalRecords({required body}) async {
+    var response = await apiClient.post('${Api.medicalRecords}/upload', body);
+    return response;
+  }
+
+  Future saveMedicalRecords({required body}) async {
+    var response = await apiClient.post('${Api.medicalRecords}/save', body);
+    return response;
+  }
+
+  Future<List<MedicalRecord>> getMedicalRecords({required query}) async {
+    var response = await apiClient.get(Api.medicalRecords, query: query);
+    var list = response['data'] as List;
+    return list.map((e) => MedicalRecord.fromJson(e)).toList();
+  }
+
+  Future removeMedicalRecord({required String id}) async {
+    return apiClient.delete('${Api.medicalRecords}/$id');
   }
 
   Future<List<Profile>> getPatients() async {
@@ -42,6 +70,7 @@ class UserRepo {
     var list = response as List;
     return list.map((e) => Profile.fromJson(e)).toList();
   }
+
 
   Future updatePatients({id, body}) async {
     return await apiClient.patch('${Api.patientProfiles}/$id', body);
@@ -74,13 +103,6 @@ class UserRepo {
     return Address.fromMap(response);
   }
 
-  Future uploadFile({required String path}) async {
-    print(path);
-    var body = FormData.fromMap({'file': await MultipartFile.fromFile(path)});
-    var response = await apiClient.post(Api.upload, body);
-    return response;
-  }
-
   Future updateFCMToken({body}) {
     return apiClient.post(Api.tokens, body);
   }
@@ -91,7 +113,7 @@ class UserRepo {
     return list.map((f) => Feedback.fromJson(f)).toList();
   }
 
-  Future removeAddresses({required String id}) async{
+  Future removeAddresses({required String id}) async {
     return await apiClient.delete('${Api.patients}${Api.addresses}/$id');
   }
 }

@@ -1,8 +1,10 @@
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/feedback.dart';
+import 'package:alsan_app/model/medical_records.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -53,8 +55,43 @@ class UserBloc with ChangeNotifier {
     }
   }
 
-  Future createPatient({body}) {
+  Future<Profile> createPatient({body}) {
     return _userRepo.createPatient(body: body);
+  }
+
+  Future uploadFile(String path) {
+    return _userRepo.uploadFile(path: path);
+  }
+
+  Future uploadMedicalRecords({required body}) {
+    return _userRepo.uploadMedicalRecords(body: body);
+  }
+
+  Future saveMedicalRecords({required body}) {
+    return _userRepo.saveMedicalRecords(body: body);
+  }
+
+  Future<List<MedicalRecord>> getMedicalRecords({required query}) {
+    return _userRepo.getMedicalRecords(query: query);
+  }
+
+  Future removeMedicalRecord({required String id}) async {
+    return _userRepo.removeMedicalRecord(id: id);
+  }
+
+  Future<List<dynamic>> uploadFiles({required List<String> paths, body}) async {
+    var data = [];
+
+    for (String path in paths) {
+      try {
+        data.add(
+          FormData.fromMap(
+            {...body, 'file': await MultipartFile.fromFile(path)},
+          ),
+        );
+      } catch (e) {}
+    }
+    return data;
   }
 
   Future<List<Profile>> getPatients() {
@@ -84,9 +121,7 @@ class UserBloc with ChangeNotifier {
     return _userRepo.getAddresses();
   }
 
-  Future uploadFile(String path) {
-    return _userRepo.uploadFile(path: path);
-  }
+
 
   Future<Address> postAddress({body}) async {
     var response = await _userRepo.postAddress(body: body);
