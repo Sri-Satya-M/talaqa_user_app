@@ -246,7 +246,7 @@ class _CreatePatientState extends State<CreatePatient> {
               ),
               const SizedBox(height: 12),
               TextFormField(
-                enabled: true,
+                enabled: uploadKeys.isEmpty,
                 onTap: () async {
                   List<File>? files = await Helper.pickFiles();
 
@@ -275,11 +275,20 @@ class _CreatePatientState extends State<CreatePatient> {
                         'Files Uploaded Successfully',
                       );
                     }
+                    setState(() {});
                   }
                 },
-                decoration: const InputDecoration(
-                  hintText: "Upload Medical Record",
-                  suffixIcon: Icon(Icons.file_upload_outlined),
+                decoration: InputDecoration(
+                  prefixIcon: uploadKeys.isEmpty
+                      ? null
+                      : const Padding(
+                          padding: EdgeInsets.only(bottom: 4),
+                          child: Icon(Icons.picture_as_pdf),
+                        ),
+                  hintText: uploadKeys.isEmpty
+                      ? "Upload Medical Record"
+                      : "Medical Records.pdf",
+                  suffixIcon: const Icon(Icons.file_upload_outlined),
                 ),
               ),
               const SizedBox(height: 12),
