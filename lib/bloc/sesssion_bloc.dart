@@ -26,12 +26,11 @@ class SessionBloc with ChangeNotifier {
   int? selectedAddressId;
   Map<int, TimeSlot> timeslots = {};
 
-
   ///chat
   List<Message> messages = [];
   late StreamController<List<Message>> messageController;
-  Stream<List<Message>> get messageListStream => messageController.stream;
 
+  Stream<List<Message>> get messageListStream => messageController.stream;
 
   Future<List<ModeOfConsultation>> getModeOfConsultation() {
     return sessionRepo.getModeOfConsultation();
@@ -104,17 +103,17 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.generateToken(channel, userId);
   }
 
-  Future postSessionFeedback({required int id,body}){
-    return sessionRepo.postSessionFeedback(id:id,body:body);
+  Future postSessionFeedback({required int id, body}) {
+    return sessionRepo.postSessionFeedback(id: id, body: body);
   }
 
   Future<List<Report>> getSessionReports({required int id}) {
-    return sessionRepo.getSessionReports(id:id);
+    return sessionRepo.getSessionReports(id: id);
   }
 
   ///Handling chat in bloc
 
-  initializeStream(){
+  initializeStream() {
     messages.clear();
     messageController = StreamController<List<Message>>.broadcast();
   }
