@@ -173,11 +173,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          const DynamicGridView(spacing: 0, count: 2, children: [
-            SessionOverviewCard(),
-            SessionOverviewCard(),
-            SessionOverviewCard(),
-          ]),
+          const DynamicGridView(
+            spacing: 0,
+            count: 2,
+            children: [
+              SessionOverviewCard(),
+              SessionOverviewCard(),
+              SessionOverviewCard(),
+            ],
+          ),
           const SizedBox(height: 24),
           Text(
             "Mode of Consultaion",

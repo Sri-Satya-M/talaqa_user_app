@@ -1,6 +1,7 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/create_patient_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/edit_patient_profile.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/patient_profile_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
 import 'package:alsan_app/ui/widgets/error_widget.dart';
@@ -47,98 +48,104 @@ class _PatientProfileState extends State<PatientProfile> {
                 border: Border.all(color: Colors.grey.shade300, width: 1.5),
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
-              child: Row(
-                children: [
-                  Avatar(
-                    url: profiles[index].image,
-                    name: profiles[index].fullName,
-                    borderRadius: BorderRadius.circular(10),
-                    size: 72,
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(profiles[index].fullName ?? 'NA'),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            profiles[index].age?.toString() ?? 'NA',
-                            style: textTheme.caption,
-                          ),
-                          const SizedBox(width: 12),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                              vertical: 2,
+              child: InkWell(
+                onTap: () => PatientDetailsScreen.open(
+                  context,
+                  patient: profiles[index],
+                ),
+                child: Row(
+                  children: [
+                    Avatar(
+                      url: profiles[index].image,
+                      name: profiles[index].fullName,
+                      borderRadius: BorderRadius.circular(10),
+                      size: 72,
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(profiles[index].fullName ?? 'NA'),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Text(
+                              profiles[index].age?.toString() ?? 'NA',
+                              style: textTheme.caption,
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(3),
+                            const SizedBox(width: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              child: Text(profiles[index].gender ?? 'NA',
+                                  style: textTheme.subtitle2),
                             ),
-                            child: Text(profiles[index].gender ?? 'NA',
-                                style: textTheme.subtitle2),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Text(
-                            '${profiles[index].city ?? 'NA'}, ',
-                            style: textTheme.subtitle2,
-                          ),
-                          Text(
-                            profiles[index].country ?? 'NA',
-                            style: textTheme.subtitle2,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Spacer(flex: 1),
-                  PopupMenuButton<int>(
-                    onSelected: (int value) async {
-                      switch (value) {
-                        case 1:
-                          var response = await EditPatientProfile.open(
-                            context,
-                            profile: profiles[index],
-                          );
-                          if (response) {
-                            setState(() {});
-                          }
-                          break;
-                        case 2:
-                          bool? isConfirm = await ConfirmDialog.show(
-                            context,
-                            message: 'Confirm to remove the profile',
-                            title: 'Delete Profile',
-                          );
-                          if (isConfirm ?? false) {
-                            var result = await userBloc.deletePatients(
-                              profiles[index].id,
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            Text(
+                              '${profiles[index].city ?? 'NA'}, ',
+                              style: textTheme.subtitle2,
+                            ),
+                            Text(
+                              profiles[index].country ?? 'NA',
+                              style: textTheme.subtitle2,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Spacer(flex: 1),
+                    PopupMenuButton<int>(
+                      onSelected: (int value) async {
+                        switch (value) {
+                          case 1:
+                            var response = await EditPatientProfile.open(
+                              context,
+                              profile: profiles[index],
                             );
-                            result ? profiles.removeAt(index) : null;
-                            setState(() {});
-                          }
-                          break;
-                      }
-                    },
-                    icon: const Icon(Icons.more_vert, color: Colors.black),
-                    itemBuilder: (context) => [
-                      const PopupMenuItem<int>(
-                        value: 1,
-                        child: Text('Edit'),
-                      ),
-                      const PopupMenuItem<int>(
-                        value: 2,
-                        child: Text('Remove'),
-                      ),
-                    ],
-                  ),
-                ],
+                            if (response) {
+                              setState(() {});
+                            }
+                            break;
+                          case 2:
+                            bool? isConfirm = await ConfirmDialog.show(
+                              context,
+                              message: 'Confirm to remove the profile',
+                              title: 'Delete Profile',
+                            );
+                            if (isConfirm ?? false) {
+                              var result = await userBloc.deletePatients(
+                                profiles[index].id,
+                              );
+                              result ? profiles.removeAt(index) : null;
+                              setState(() {});
+                            }
+                            break;
+                        }
+                      },
+                      icon: const Icon(Icons.more_vert, color: Colors.black),
+                      itemBuilder: (context) => [
+                        const PopupMenuItem<int>(
+                          value: 1,
+                          child: Text('Edit'),
+                        ),
+                        const PopupMenuItem<int>(
+                          value: 2,
+                          child: Text('Remove'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

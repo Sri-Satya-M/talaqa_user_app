@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../utils/helper.dart';
 import '../../../../widgets/image_picker.dart';
 
 class CreatePatient extends StatefulWidget {
@@ -25,6 +26,8 @@ class _CreatePatientState extends State<CreatePatient> {
   String? country;
   String? gender;
   File? profileImage;
+  List<String> uploadKeys = [];
+
   final formKey = GlobalKey<FormState>();
   FilePickerResult? pdfs;
 
@@ -41,9 +44,7 @@ class _CreatePatientState extends State<CreatePatient> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Patient Profile"),
-      ),
+      appBar: AppBar(title: Text("Patient Profile")),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -243,32 +244,45 @@ class _CreatePatientState extends State<CreatePatient> {
                   )
                 ],
               ),
-              SizedBox(height: 12),
-              // TextFormField(
-              //   enabled: true,
-              //   onChanged: (value) {},
-              //   decoration: InputDecoration(
-              //     hintText: "${getNames(pdfs?.names)}",
-              //     suffixIcon: IconButton(
-              //       onPressed: () async {
-              //         pdfs = await FilePicker.platform.pickFiles(
-              //           type: FileType.custom,
-              //           allowMultiple: true,
-              //           allowedExtensions: ['pdf'],
-              //         );
-              //         setState(() {});
-              //       },
-              //       icon: const Icon(Icons.upload),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: 12),
-              // TextFormField(
-              //   onChanged: (value) {},
-              //   decoration: InputDecoration(
-              //     hintText: "Medical history description",
-              //   ),
-              // )
+              const SizedBox(height: 12),
+              TextFormField(
+                enabled: true,
+                onTap: () async {
+                  List<File>? files = await Helper.pickFiles();
+
+                  if (files == null) return;
+
+                  var filesFormData = await userBloc.uploadFiles(
+                    paths: files.map((f) => f.path).toList(),
+                    body: {},
+                  );
+
+                  int count = 0;
+
+                  for (var fileFormData in filesFormData) {
+                    var response = await userBloc.uploadMedicalRecords(
+                      body: fileFormData,
+                    ) as Map<String, dynamic>;
+
+                    if (response.containsKey('key')) {
+                      uploadKeys.add(response['key']);
+                      count++;
+                    }
+
+                    if (count == filesFormData.length) {
+                      ErrorSnackBar.show(
+                        context,
+                        'Files Uploaded Successfully',
+                      );
+                    }
+                  }
+                },
+                decoration: const InputDecoration(
+                  hintText: "Upload Medical Record",
+                  suffixIcon: Icon(Icons.file_upload_outlined),
+                ),
+              ),
+              const SizedBox(height: 12),
             ],
           ),
         ),
@@ -298,13 +312,19 @@ class _CreatePatientState extends State<CreatePatient> {
               if (profileImage != null) "image": imageResponse['key']
             };
 
-            var response = await userBloc.createPatient(body: body)
-                as Map<String, dynamic>;
+            var response = await userBloc.createPatient(body: body);
 
-            if (!response.containsKey('status')) {
+            if (response.id == null) {
               return ErrorSnackBar.show(context, "Invalid Error");
             }
-            Navigator.of(context).pop(true);
+
+            var result = await userBloc.saveMedicalRecords(
+              body: {'patientProfileId': response.id, 'fileKeys': uploadKeys},
+            ) as Map<String, dynamic>;
+
+            if (result.containsKey('status') && result['status'] == 'success') {
+              Navigator.of(context).pop(true);
+            }
           },
           color: MyColors.primaryColor,
           child: const Text("Create Profile"),
