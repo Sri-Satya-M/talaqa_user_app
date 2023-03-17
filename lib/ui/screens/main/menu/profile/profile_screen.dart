@@ -1,17 +1,16 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/widget/patient_profile_dashboard.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
-import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../resources/images.dart';
 import '../../../../widgets/confirm_logout.dart';
-import 'widget/session_overview_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -54,8 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(width: 12),
                           DetailsTile(
-                            title:
-                                Text(userBloc.profile?.user?.fullName ?? 'NA'),
+                            title: Text(
+                              userBloc.profile?.user?.fullName ?? 'NA',
+                            ),
                             value: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 4,
@@ -78,10 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          Image.asset(
-                            Images.phone,
-                            width: 16,
-                          ),
+                          Image.asset(Images.phone, width: 16),
                           const SizedBox(width: 12),
                           Text(userBloc.profile?.user?.mobileNumber ?? 'NA')
                         ],
@@ -89,10 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          Image.asset(
-                            Images.email,
-                            width: 16,
-                          ),
+                          Image.asset(Images.email, width: 16),
                           const SizedBox(width: 12),
                           Text(userBloc.profile?.user?.email ?? 'NA')
                         ],
@@ -100,26 +94,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                // Positioned(
-                //   top: 12,
-                //   right: 12,
-                //   child: GestureDetector(
-                //     onTap: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => EditProfile(),
-                //         ),
-                //       );
-                //     },
-                //     child: Text(
-                //       "Edit",
-                //       style: textTheme.subtitle1?.copyWith(
-                //         color: MyColors.cerulean,
-                //       ),
-                //     ),
-                //   ),
-                // )
               ],
             ),
           ),
@@ -164,54 +138,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          Text("Session Analystics", style: textTheme.headline2),
-          const SizedBox(height: 14),
-          Text(
-            "Session Details",
-            style: textTheme.subtitle2?.copyWith(
-              color: Colors.black.withOpacity(1),
-            ),
+          PatientProfileDashboard(
+            patientProfileId: userBloc.profile!.patientId.toString(),
           ),
-          const SizedBox(height: 10),
-          const DynamicGridView(
-            spacing: 0,
-            count: 2,
-            children: [
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Text(
-            "Mode of Consultaion",
-            style: textTheme.subtitle2?.copyWith(
-              color: Colors.black.withOpacity(1),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const DynamicGridView(spacing: 0, count: 2, children: [
-            SessionOverviewCard(),
-            SessionOverviewCard(),
-          ]),
-          const SizedBox(height: 24),
-          Text(
-            "Session Information",
-            style: textTheme.subtitle2?.copyWith(
-              color: Colors.black.withOpacity(1),
-            ),
-          ),
-          const SizedBox(height: 10),
-          const DynamicGridView(spacing: 0, count: 2, children: [
-            SessionOverviewCard(),
-            SessionOverviewCard(),
-            SessionOverviewCard(),
-          ]),
           const SizedBox(height: 16),
           OutlinedButton(
             onPressed: () async {
               bool? isConfirm = await ConfirmLogout.open(context);
-              print(isConfirm);
               if (isConfirm ?? false) {
                 userBloc.logout();
                 Navigator.of(context).pushAndRemoveUntil(

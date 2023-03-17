@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:alsan_app/model/medical_records.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
-import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 import '../../../../widgets/pdf_viewer_screen.dart';
 import '../../home/booking/widgets/patient_details_widget.dart';
-import 'widget/session_overview_card.dart';
+import 'widget/patient_profile_dashboard.dart';
 
 class PatientDetailsScreen extends StatefulWidget {
   final Profile patient;
@@ -114,51 +113,8 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text('Session Analytics'),
-          const SizedBox(height: 16),
-          Text(
-            'Session Details',
-            style: textTheme.caption,
-          ),
-          const SizedBox(height: 8),
-          const DynamicGridView(
-            spacing: 0,
-            count: 2,
-            children: [
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Mode of Consultation',
-            style: textTheme.caption,
-          ),
-          const SizedBox(height: 8),
-          const DynamicGridView(
-            spacing: 0,
-            count: 2,
-            children: [
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Session Information',
-            style: textTheme.caption,
-          ),
-          const SizedBox(height: 8),
-          const DynamicGridView(
-            spacing: 0,
-            count: 2,
-            children: [
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-              SessionOverviewCard(),
-            ],
+          PatientProfileDashboard(
+            patientProfileId: widget.patient.id.toString(),
           ),
           const SizedBox(height: 16),
           Text(
