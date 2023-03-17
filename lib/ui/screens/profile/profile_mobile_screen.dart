@@ -130,16 +130,6 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   )
                 ],
               ),
-              // const SizedBox(height: 8),
-              TextFormField(
-                enabled: false,
-                decoration: const InputDecoration(hintText: "Age"),
-                keyboardType: TextInputType.number,
-                controller: TextEditingController(
-                  text:
-                      age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
-                ),
-              ),
               DatePicker(
                 DateTime.now(),
                 dateCtrl: dateCtrl,
@@ -150,6 +140,16 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   age = Helper.calculateAge(DateTime.parse(dateCtrl.text)).toString();
                 },
               ),
+              TextFormField(
+                enabled: false,
+                decoration: const InputDecoration(hintText: "Age"),
+                keyboardType: TextInputType.number,
+                controller: TextEditingController(
+                  text:
+                      age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
+                ),
+              ),
+
               const SizedBox(height: 8),
               DropdownButtonFormField(
                 onChanged: (value) {
@@ -215,10 +215,10 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             var body = {
               'fullName': name,
               'type': 'MOBILE',
+              "age": int.parse(age),
               'mobileNumber': userBloc.username,
               "dob": DateFormat('yyyy-MM-dd')
                   .format(DateTime.parse(dateCtrl.text)),
-              "age": int.parse(age),
               "city": city,
               "country": country,
               "gender": gender,

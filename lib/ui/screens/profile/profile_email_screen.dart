@@ -6,7 +6,11 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../../utils/helper.dart';
+import '../../widgets/date_picker.dart';
 
 class ProfileEmailScreen extends StatefulWidget {
   const ProfileEmailScreen({super.key});
@@ -33,6 +37,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   var country = '';
   var password = '';
   var confirmPassword = '';
+  var dateCtrl = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -126,24 +131,26 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 ],
               ),
               const SizedBox(height: 8),
+              DatePicker(
+                DateTime.now(),
+                dateCtrl: dateCtrl,
+                startDate: DateTime(1923),
+                hintText: 'Date Of Birth',
+                labelText: '',
+                onDateChange: () {
+                  age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
+                      .toString();
+                  setState(() {});
+                },
+              ),
               TextFormField(
-                onChanged: (value) {
-                  setState(() {
-                    age = value;
-                  });
-                },
-                decoration: const InputDecoration(hintText: "Age*"),
+                enabled: false,
+                decoration: const InputDecoration(hintText: "Age"),
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Enter the age";
-                  } else {
-                    return null;
-                  }
-                },
+                controller: TextEditingController(
+                  text:
+                      age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
+                ),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField(
@@ -271,11 +278,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               "fullName": name,
               "type": "EMAIL",
               "age": int.parse(age),
+              "email": userBloc.username,
+              "password": confirmPassword,
+              "dob": DateFormat('yyyy-MM-dd')
+                  .format(DateTime.parse(dateCtrl.text)),
               "city": city,
               "country": country,
               "gender": gender,
-              "email": userBloc.username,
-              "password": confirmPassword,
             };
 
             var response = await userBloc.patientSignUp(body: body)
