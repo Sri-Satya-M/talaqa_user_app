@@ -1,7 +1,6 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
-import 'package:alsan_app/ui/screens/main/menu/profile/widget/patient_profile_dashboard.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
@@ -138,24 +137,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          PatientProfileDashboard(
-            patientProfileId: userBloc.profile!.patientId.toString(),
-          ),
-          const SizedBox(height: 16),
-          OutlinedButton(
-            onPressed: () async {
-              bool? isConfirm = await ConfirmLogout.open(context);
-              if (isConfirm ?? false) {
-                userBloc.logout();
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const SplashScreen()),
-                  (route) => false,
-                );
-              }
-            },
-            child: const Text('Logout'),
-          ),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20),
+        child: OutlinedButton(
+          onPressed: () async {
+            bool? isConfirm = await ConfirmLogout.open(context);
+            if (isConfirm ?? false) {
+              userBloc.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const SplashScreen()),
+                (route) => false,
+              );
+            }
+          },
+          child: const Text('Logout'),
+        ),
       ),
     );
   }
