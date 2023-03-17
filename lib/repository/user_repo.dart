@@ -8,6 +8,8 @@ import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
 import 'package:dio/dio.dart';
 
+import '../model/dashboard.dart';
+
 class UserRepo {
   Future sendOTP({body}) async {
     return await apiClient.post(Api.otp, body);
@@ -115,5 +117,12 @@ class UserRepo {
 
   Future removeAddresses({required String id}) async {
     return await apiClient.delete('${Api.patients}${Api.addresses}/$id');
+  }
+
+  Future<Dashboard> getDashboard({required String id}) async {
+    var response = await apiClient.get(
+      '${Api.dashboard}/${Api.patientProfile}/$id',
+    );
+    return Dashboard.fromJson(response);
   }
 }

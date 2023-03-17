@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../data/local/shared_prefs.dart';
+import '../model/dashboard.dart';
 import '../model/resources.dart';
 
 class UserBloc with ChangeNotifier {
@@ -147,5 +148,9 @@ class UserBloc with ChangeNotifier {
     var response = await _userRepo.removeAddresses(id: id);
     notifyListeners();
     return response;
+  }
+
+  Future<Dashboard> getDashboard({required String id}) {
+    return _userRepo.getDashboard(id: id);
   }
 }

@@ -26,4 +26,6 @@ class Api {
   static const tokens = '/tokens';
   static const feedback = '/feedback';
   static const medicalRecords = '/medical-records';
+  static const dashboard = '/dashboard';
+  static const patientProfile = '/patientProfile';
 }
