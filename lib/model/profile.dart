@@ -13,6 +13,7 @@ class Profile {
     this.pincode,
     this.userId,
     this.patientId,
+    this.patientProfile,
     this.createdAt,
     this.updatedAt,
     this.user,
@@ -29,6 +30,7 @@ class Profile {
   int? pincode;
   int? userId;
   int? patientId;
+  Profile? patientProfile;
   DateTime? createdAt;
   DateTime? updatedAt;
   User? user;
@@ -45,6 +47,7 @@ class Profile {
     userId: json["userId"],
     pincode: json["pincode"],
     patientId: json["patientId"],
+    patientProfile: json["PatientProfile"].map((x) => Profile.fromJson(x)),
     createdAt: json["createdAt"]==null ? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"]==null ? null: DateTime.parse(json["updatedAt"]),
     user: json["user"] == null ? null: User?.fromJson(json["user"]),
@@ -61,6 +64,7 @@ class Profile {
     "country": country,
     "userId": userId,
     "patientId": patientId,
+    "PatientProfile": patientProfile,
     "pincode": pincode,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
