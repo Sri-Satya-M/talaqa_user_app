@@ -47,7 +47,7 @@ class Profile {
     userId: json["userId"],
     pincode: json["pincode"],
     patientId: json["patientId"],
-    patientProfile: json["PatientProfile"].map((x) => Profile.fromJson(x)),
+    patientProfile: json["PatientProfile"] == null ? null :Profile.fromJson(json["PatientProfile"]),
     createdAt: json["createdAt"]==null ? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"]==null ? null: DateTime.parse(json["updatedAt"]),
     user: json["user"] == null ? null: User?.fromJson(json["user"]),

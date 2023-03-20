@@ -58,7 +58,7 @@ class DatePicker extends StatelessWidget {
         ),
         suffixIconConstraints: const BoxConstraints(
           maxWidth: 40,
-          maxHeight: 40,
+          maxHeight: 20,
           minHeight: 20,
           minWidth: 20,
         ),

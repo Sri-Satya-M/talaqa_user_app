@@ -6,6 +6,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +38,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   var gender = '';
   var age = '';
   var city = '';
+  var state = '';
   var country = '';
   var password = '';
   var confirmPassword = '';
@@ -157,51 +159,33 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                       age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
                 ),
               ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField(
-                onChanged: (value) {
+              const SizedBox(height: 16),
+              CSCPicker(
+                layout: Layout.vertical,
+                defaultCountry: CscCountry.United_Arab_Emirates,
+                disableCountry: true,
+                showStates: true,
+                showCities: true,
+                dropdownDecoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: MyColors.divider),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                onCountryChanged: (value) {
+                  setState(() {
+                    country = value;
+                  });
+                },
+                onStateChanged: (value) {
+                  setState(() {
+                    // stateValue = value;
+                  });
+                },
+                onCityChanged: (value) {
                   setState(() {
                     city = value.toString();
                   });
                 },
-                decoration: const InputDecoration(hintText: "City"),
-                items: const [
-                  DropdownMenuItem(
-                    value: "Agra",
-                    child: Text("Agra"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Hyderabad",
-                    child: Text("Hyderabad"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Delhi",
-                    child: Text("Delhi"),
-                  )
-                ],
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField(
-                onChanged: (value) {
-                  setState(() {
-                    country = value.toString();
-                  });
-                },
-                decoration: const InputDecoration(hintText: "Country"),
-                items: const [
-                  DropdownMenuItem(
-                    value: "India",
-                    child: Text("India"),
-                  ),
-                  DropdownMenuItem(
-                    value: "USA",
-                    child: Text("USA"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Dubai",
-                    child: Text("Dubai"),
-                  )
-                ],
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -351,7 +335,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
 
             await userBloc.getProfile();
 
-            var result = await userBloc.saveMedicalRecords(
+            await userBloc.saveMedicalRecords(
               body: {
                 'patientProfileId': userBloc.profile!.patientProfile!.id!,
                 'fileKeys': uploadKeys
