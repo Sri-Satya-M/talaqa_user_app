@@ -1,5 +1,12 @@
-import 'package:alsan_app/ui/widgets/progress_button.dart';
+import 'package:alsan_app/model/session.dart';
+import 'package:alsan_app/ui/screens/main/menu/reports/widgets/report_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../bloc/sesssion_bloc.dart';
+import '../../../../widgets/empty_widget.dart';
+import '../../../../widgets/error_widget.dart';
+import '../../../../widgets/loading_widget.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -9,72 +16,32 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Reports'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          height: 270,
-          width: double.maxFinite,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "ALSOO34",
-                style: textTheme.headline4,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Patient", style: textTheme.caption),
-                      const SizedBox(height: 4),
-                      Text(
-                        "ALex Oliver",
-                        style: textTheme.headline3
-                            ?.copyWith(fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 112),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Clinican", style: textTheme.caption),
-                      const SizedBox(height: 4),
-                      Text(
-                        "Dr. Taslim",
-                        style: textTheme.headline3
-                            ?.copyWith(fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
-              const SizedBox(height: 16),
-              // TimeSlot(),
-              const SizedBox(height: 30),
-              ProgressButton(
-                onPressed: () {},
-                child: const Text("Download Report"),
-              )
-            ],
-          ),
-        ),
-      ),
+      appBar: AppBar(title: const Text('My Reports')),
+      body: FutureBuilder<List<Session>>(
+          future: sessionBloc.getSessions(query: {
+            "status": ["REPORT_SUBMITTED"]
+          }),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return CustomErrorWidget(error: snapshot.error);
+            }
+
+            if (!snapshot.hasData) return const LoadingWidget();
+
+            var sessions = snapshot.data ?? [];
+
+            if (sessions.isEmpty) return const EmptyWidget();
+
+            return ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: sessions.length,
+              itemBuilder: (context, index) {
+                return ReportWidget(session: sessions[index]);
+              },
+            );
+          }),
     );
   }
 }
