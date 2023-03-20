@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/date_picker.dart';
@@ -5,6 +7,7 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:alsan_app/utils/helper.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +41,9 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
   var city = 'Hyderabad';
   var country = 'India';
   var dateCtrl = TextEditingController();
+  List<String> uploadKeys = [];
+  FilePickerResult? pdfs;
+
 
   @override
   final formKey = GlobalKey<FormState>();
@@ -149,7 +155,6 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                       age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
                 ),
               ),
-
               const SizedBox(height: 8),
               DropdownButtonFormField(
                 onChanged: (value) {
@@ -196,6 +201,53 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   )
                 ],
               ),
+              const SizedBox(height: 8),
+              TextFormField(
+                enabled: uploadKeys.isEmpty,
+                onTap: () async {
+                  List<File>? files = await Helper.pickFiles();
+
+                  if (files == null) return;
+
+                  var filesFormData = await userBloc.uploadFiles(
+                    paths: files.map((f) => f.path).toList(),
+                    body: {},
+                  );
+
+                  int count = 0;
+
+                  for (var fileFormData in filesFormData) {
+                    var response = await userBloc.uploadMedicalRecords(
+                      body: fileFormData,
+                    ) as Map<String, dynamic>;
+
+                    if (response.containsKey('key')) {
+                      uploadKeys.add(response['key']);
+                      count++;
+                    }
+
+                    if (count == filesFormData.length) {
+                      ErrorSnackBar.show(
+                        context,
+                        'Files Uploaded Successfully',
+                      );
+                    }
+                    setState(() {});
+                  }
+                },
+                decoration: InputDecoration(
+                  prefixIcon: uploadKeys.isEmpty
+                      ? null
+                      : const Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: Icon(Icons.picture_as_pdf),
+                  ),
+                  hintText: uploadKeys.isEmpty
+                      ? "Upload Medical Record"
+                      : "Medical Records.pdf",
+                  suffixIcon: const Icon(Icons.file_upload_outlined),
+                ),
+              ),
             ],
           ),
         ),
@@ -235,6 +287,13 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             await Prefs.setToken(token);
 
             await userBloc.getProfile();
+
+            var result = await userBloc.saveMedicalRecords(
+              body: {
+                'patientProfileId': userBloc.profile!.patientProfile!.id!,
+                'fileKeys': uploadKeys
+              },
+            );
 
             SuccessScreen.open(
               context,

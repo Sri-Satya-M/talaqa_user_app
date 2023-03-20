@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/data/local/shared_prefs.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +41,8 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   var password = '';
   var confirmPassword = '';
   var dateCtrl = TextEditingController();
+  List<String> uploadKeys = [];
+  FilePickerResult? pdfs;
 
   final formKey = GlobalKey<FormState>();
 
@@ -200,6 +205,53 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                enabled: uploadKeys.isEmpty,
+                onTap: () async {
+                  List<File>? files = await Helper.pickFiles();
+
+                  if (files == null) return;
+
+                  var filesFormData = await userBloc.uploadFiles(
+                    paths: files.map((f) => f.path).toList(),
+                    body: {},
+                  );
+
+                  int count = 0;
+
+                  for (var fileFormData in filesFormData) {
+                    var response = await userBloc.uploadMedicalRecords(
+                      body: fileFormData,
+                    ) as Map<String, dynamic>;
+
+                    if (response.containsKey('key')) {
+                      uploadKeys.add(response['key']);
+                      count++;
+                    }
+
+                    if (count == filesFormData.length) {
+                      ErrorSnackBar.show(
+                        context,
+                        'Files Uploaded Successfully',
+                      );
+                    }
+                    setState(() {});
+                  }
+                },
+                decoration: InputDecoration(
+                  prefixIcon: uploadKeys.isEmpty
+                      ? null
+                      : const Padding(
+                          padding: EdgeInsets.only(bottom: 4),
+                          child: Icon(Icons.picture_as_pdf),
+                        ),
+                  hintText: uploadKeys.isEmpty
+                      ? "Upload Medical Record"
+                      : "Medical Records.pdf",
+                  suffixIcon: const Icon(Icons.file_upload_outlined),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
                 onChanged: (value) {
                   setState(() {
                     password = value.toString();
@@ -298,6 +350,14 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             await Prefs.setToken(token);
 
             await userBloc.getProfile();
+
+            var result = await userBloc.saveMedicalRecords(
+              body: {
+                'patientProfileId': userBloc.profile!.patientProfile!.id!,
+                'fileKeys': uploadKeys
+              },
+            ) as Map<String, dynamic>;
+
             SuccessScreen.open(
               context,
               type: 'MAIN',
