@@ -24,6 +24,7 @@ dependencies:
   firebase_dynamic_links: ^5.0.11
   firebase_messaging: ^14.2.1
   flutter_date_pickers: ^0.4.0
+  flutter_downloader: ^1.10.2
   flutter_dotenv: ^5.0.2
   flutter_local_notifications: ^9.9.1
   flutter_paytabs_bridge: ^2.3.2
