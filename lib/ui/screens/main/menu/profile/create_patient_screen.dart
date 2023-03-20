@@ -26,6 +26,7 @@ class _CreatePatientState extends State<CreatePatient> {
   String? country;
   String? gender;
   File? profileImage;
+  String relation = '';
   List<String> uploadKeys = [];
 
   final formKey = GlobalKey<FormState>();
@@ -140,7 +141,6 @@ class _CreatePatientState extends State<CreatePatient> {
               //     }
               //   },
               // ),
-              const SizedBox(height: 12),
               DropdownButtonFormField(
                 onChanged: (value) {
                   setState(() {
@@ -186,6 +186,27 @@ class _CreatePatientState extends State<CreatePatient> {
                   } else {
                     return null;
                   }
+                },
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    relation = value;
+                  });
+                },
+                decoration: const InputDecoration(
+                  hintText: "Relation*",
+                ),
+                keyboardType: TextInputType.name,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
                 },
               ),
               const SizedBox(height: 12),
@@ -318,6 +339,7 @@ class _CreatePatientState extends State<CreatePatient> {
               "city": city,
               "country": country,
               "gender": gender,
+              "relation": relation,
               if (profileImage != null) "image": imageResponse['key']
             };
 
