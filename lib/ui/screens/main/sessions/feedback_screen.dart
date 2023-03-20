@@ -157,6 +157,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           ),
           const SizedBox(height: 16),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () {
@@ -169,12 +170,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 child: Text(
                   'Skip',
                   style: textTheme.caption?.copyWith(
+                    fontSize: 16,
                     color: MyColors.primaryColor,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 18),
           ProgressButton(
             onPressed: () async {
               var sessionBloc = Provider.of<SessionBloc>(
@@ -190,6 +194,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
               body['rating'] = rating!.toInt();
               body['clinicianId'] = widget.session.clinicianId;
+              body['patientId'] = widget.session.patientId;
 
               if (reviewController.text != null &&
                   reviewController.text.isEmpty) {
