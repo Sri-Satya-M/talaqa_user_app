@@ -9,6 +9,7 @@ class Clinician {
     this.dob,
     this.gender,
     this.bio,
+    this.license,
     this.location,
     this.experience,
     this.userId,
@@ -26,6 +27,7 @@ class Clinician {
   DateTime? dob;
   String? gender;
   String? bio;
+  String? license;
   String? location;
   int? experience;
   int? userId;
@@ -43,6 +45,7 @@ class Clinician {
     dob: DateTime.parse(json["dob"]),
     gender: json["gender"],
     bio: json["bio"],
+    license: json["license"],
     location: json["location"],
     experience: json["experience"],
     userId: json["userId"],
@@ -61,6 +64,7 @@ class Clinician {
     "dob": dob?.toIso8601String(),
     "gender": gender,
     "bio": bio,
+    "license": license,
     "location": location,
     "experience": experience,
     "userId": userId,
