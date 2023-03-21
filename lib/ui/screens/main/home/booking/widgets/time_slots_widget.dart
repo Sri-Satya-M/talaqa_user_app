@@ -69,20 +69,22 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                     for (var timeSlot in timeDay) ...[
                       ChoiceChip(
                         labelStyle: textTheme.caption?.copyWith(
-                          color: Colors.black,
+                          color: timeSlotIds.contains(timeSlot.id)
+                              ? Colors.white
+                              : Colors.black,
                           fontSize: 10,
                         ),
                         shape: StadiumBorder(
                           side: BorderSide(
                             color: timeSlotIds.contains(timeSlot.id)
-                                ? MyColors.primaryColor
+                                ? Colors.transparent
                                 : MyColors.divider,
                           ),
                         ),
                         backgroundColor: Colors.white,
                         label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         selected: timeSlotIds.contains(timeSlot.id),
-                        selectedColor: Colors.transparent,
+                        selectedColor: MyColors.primaryColor,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         onSelected: (value) {
                           if (timeSlotIds.contains(timeSlot.id)) {
@@ -92,8 +94,8 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                             timeSlotIds.add(timeSlot.id!);
                             sessionBloc.timeslots[timeSlot.id!] = timeSlot;
                           }
-                          sessionBloc.selectedTimeSlotIds = timeSlotIds;
 
+                          sessionBloc.selectedTimeSlotIds = timeSlotIds;
                           setState(() {});
                         },
                       ),
