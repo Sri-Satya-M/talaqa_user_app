@@ -188,13 +188,13 @@ class _BookingScreenState extends State<BookingScreen> {
               width: (size.width / steps) - 20,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                border: Border.all(color: MyColors.cerulean),
+                border: Border.all(color: MyColors.primaryColor),
                 shape: BoxShape.circle,
               ),
               child: Text(
                 '$value',
                 style: textTheme.button?.copyWith(
-                  color: MyColors.cerulean,
+                  color: MyColors.primaryColor,
                 ),
               ),
             ),
@@ -203,7 +203,7 @@ class _BookingScreenState extends State<BookingScreen> {
         width: (size.width / steps) - 20,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: (pageIndex >= value) ? MyColors.cerulean : Colors.grey[300],
+          color: (pageIndex >= value) ? MyColors.primaryColor : Colors.grey[300],
         ),
       ),
     );

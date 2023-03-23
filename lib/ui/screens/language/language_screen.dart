@@ -1,3 +1,23 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -45,7 +65,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               height: 120,
               width: 390,
               decoration: const BoxDecoration(
-                color: MyColors.paleBlue,
+                color: MyColors.paleGreen,
                 borderRadius: BorderRadius.all(
                   Radius.circular(12),
                 ),
@@ -104,7 +124,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               height: 120,
               width: 390,
               decoration: const BoxDecoration(
-                color: MyColors.paleOrange,
+                color: MyColors.paleViolet,
                 borderRadius: BorderRadius.all(
                   Radius.circular(12),
                 ),

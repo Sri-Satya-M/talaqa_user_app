@@ -1,76 +1,112 @@
-import 'package:alsan_app/resources/colors.dart';
-import 'package:alsan_app/resources/images.dart';
-import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/routes.dart';
+import '../../../resources/colors.dart';
+import '../../../resources/images.dart';
+import '../../widgets/progress_button.dart';
+import 'widgets/onboarding_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
-  const OnBoardingScreen({super.key});
+  const OnBoardingScreen({Key? key}) : super(key: key);
+
+  static Future open(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const OnBoardingScreen(),
+      ),
+    );
+  }
 
   @override
-  _OnBoardingScreenState createState() => _OnBoardingScreenState();
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  final pageController = PageController();
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Stack(
         children: [
-          Expanded(
-            flex: 5,
-            child: Container(
-              height: 550,
-              padding: const EdgeInsets.fromLTRB(70, 87, 70, 47),
-              decoration: const BoxDecoration(
-                color: MyColors.lightOrange,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(120),
-                ),
+          PageView(
+            controller: pageController,
+            onPageChanged: (value) {
+              currentIndex = value;
+              setState(() {});
+            },
+            children: const [
+              OnBoardingWidget(
+                image: Images.onBoardingImage1,
+                title: 'Book Speech Therapy Sessions Online',
+                description:
+                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
               ),
-              child: Image.asset(
-                Images.onBoardingImage,
-                fit: BoxFit.contain,
+              OnBoardingWidget(
+                image: Images.onBoardingImage2,
+                title: 'Book Speech Therapy Sessions Online',
+                description:
+                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
               ),
-            ),
+              OnBoardingWidget(
+                image: Images.onBoardingImage3,
+                title: 'Book Speech Therapy Sessions Online',
+                description:
+                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
+              ),
+            ],
           ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Book Speech Therapy \n Sessions Online",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Users can search and book online/offline sessions with speech therapy consultants right from their fingertips",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+          Positioned(
+            left: 35,
+            right: 35,
+            bottom: 25,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    for (int i = 0; i < 3; i++) ...[
+                      CircleAvatar(
+                        radius: 4,
+                        backgroundColor: (currentIndex == i)
+                            ? MyColors.secondaryColor
+                            : MyColors.secondaryColor.withOpacity(0.3),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ],
+                ),
+                const Spacer(),
+                (currentIndex < 2)
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(50, 50),
+                          maximumSize: const Size(50, 50),
+                          alignment: Alignment.center,
+                        ),
+                        onPressed: () {
+                          pageController.animateToPage(
+                            currentIndex + 1,
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.fastOutSlowIn,
+                          );
+                        },
+                        child: const Icon(Icons.arrow_forward_ios_outlined),
+                      )
+                    : ProgressButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            Routes.mobile,
+                            (_) => false,
+                          );
+                        },
+                        child: const Text('Get Started'),
+                      ),
+              ],
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: ProgressButton(
-          onPressed: () {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              Routes.signUp,
-              (route) => false,
-            );
-          },
-          child: const Text("Get Started"),
-        ),
       ),
     );
   }

@@ -28,6 +28,9 @@ class Images {
   ///images
   static const logo = 'assets/images/logo.png';
   static const onBoardingImage = 'assets/images/onboarding.png';
+  static const onBoardingImage1 = 'assets/images/onboarding_1.png';
+  static const onBoardingImage2 = 'assets/images/onboarding_2.png';
+  static const onBoardingImage3 = 'assets/images/onboarding_3.png';
   static const animatedLogo = 'assets/images/animated_logo.gif';
   static const success = 'assets/images/success.json';
   static const errorMark = 'assets/images/error_mark.json';

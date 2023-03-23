@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MyColors {
-  static const primaryColor = Color(0xFF1A5C6E);
+  static const primaryColor = Color(0xFFD58E4E);
   static const secondaryColor = Color(0xFF24272C);
   static const accentColor1 = Color(0xFF0d47a1);
   static const accentColor2 = Color(0xFF0c4091);
@@ -14,12 +14,13 @@ class MyColors {
   static const border = Color(0xFF111129);
   static const red = Color(0xFFFF3333);
   static const green = Color(0xFF397D54);
+  static const paleGreen = Color(0xFFF0F6F1);
   static const paleBlue = Color(0xFFE5F9FF);
   static const lightBlue = Color(0xFFCFF9FF);
   static const cerulean = Color(0xFF1268AE);
   static const navyBlue = Color(0xFF04457A);
   static const lightGreen = Color(0xFF1B9B20);
-  static const paleViolet = Color(0xFFE6EAFF);
+  static const paleViolet = Color(0xFFF0F6F7);
 
   // static const paleGreen = Color(0xFFECFFEE);
   static const paleOrange = Color(0xFFFFF9EB);
