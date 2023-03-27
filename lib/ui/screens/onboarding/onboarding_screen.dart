@@ -27,11 +27,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Stack(
         children: [
           PageView(
             controller: pageController,
+            physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (value) {
               currentIndex = value;
               setState(() {});
@@ -81,8 +83,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 (currentIndex < 2)
                     ? ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(50, 50),
-                          maximumSize: const Size(50, 50),
+                          minimumSize: const Size(55, 55),
+                          maximumSize: const Size(55, 55),
                           alignment: Alignment.center,
                         ),
                         onPressed: () {
@@ -106,6 +108,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ],
             ),
           ),
+          if (currentIndex < 2)
+            Positioned(
+              top: 40,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    Routes.mobile,
+                    (_) => false,
+                  );
+                },
+                child: Text(
+                  'Skip',
+                  style: textTheme.bodyText2?.copyWith(
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
