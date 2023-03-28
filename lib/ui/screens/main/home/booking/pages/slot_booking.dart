@@ -2,6 +2,7 @@ import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/consultation_dialog.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/time_slots_widget.dart';
+import 'package:alsan_app/utils/helper.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,10 @@ import 'package:provider/provider.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../widgets/details_tile.dart';
+import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/image_from_net.dart';
+import '../../../../../widgets/loading_widget.dart';
 
 class SlotBooking extends StatefulWidget {
   final Function onTap;
@@ -182,37 +186,36 @@ class _SlotBookingState extends State<SlotBooking> {
             ),
           ),
           const SizedBox(height: 16),
-          DropdownButtonFormField(
-            hint: const Text("Select a Type"),
-            items: const [
-              DropdownMenuItem<String>(
-                value: "Speech",
-                child: Text("Speech"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Communication",
-                child: Text("Communication"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Voice",
-                child: Text("Voice"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Shuttering",
-                child: Text("Shuttering"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Language Development",
-                child: Text("Language Development"),
-              ),
-              DropdownMenuItem<String>(
-                value: "Articulation",
-                child: Text("Articulation"),
-              ),
-            ],
-            onChanged: (value) {
-              sessionBloc.type = value;
-              setState(() {});
+          FutureBuilder<List<String>>(
+            future: sessionBloc.getPatientSymptoms(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return CustomErrorWidget(error: snapshot.error);
+              }
+
+              if (!snapshot.hasData) return const LoadingWidget();
+
+              var symptoms = snapshot.data ?? [];
+
+              if (symptoms.isEmpty) return const EmptyWidget();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: DropdownButtonFormField(
+                  hint: const Text("Select a Type"),
+                  items: [
+                    for (String symptom in symptoms)
+                      DropdownMenuItem<String>(
+                        value: symptom,
+                        child: Text(Helper.textCapitalization(text: symptom)),
+                      ),
+                  ],
+                  onChanged: (value) {
+                    sessionBloc.type = value;
+                    setState(() {});
+                  },
+                ),
+              );
             },
           ),
           const SizedBox(height: 16),

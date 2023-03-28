@@ -70,4 +70,9 @@ class SessionRepo {
     var list = res['data'] as List;
     return list.map((e) => Report.fromJson(e)).toList();
   }
+
+  Future<List<String>> getPatientSymptoms() async {
+    var res = await apiClient.get(Api.patients + Api.symptoms) as List;
+    return res.map((e) => e as String).toList();
+  }
 }

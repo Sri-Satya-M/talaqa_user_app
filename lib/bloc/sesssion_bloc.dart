@@ -111,6 +111,10 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getSessionReports(id: id);
   }
 
+  Future<List<String>> getPatientSymptoms() {
+    return sessionRepo.getPatientSymptoms();
+  }
+
   ///Handling chat in bloc
 
   initializeStream() {
