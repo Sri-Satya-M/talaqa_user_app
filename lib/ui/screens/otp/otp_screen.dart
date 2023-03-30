@@ -41,18 +41,14 @@ class _OtpScreenState extends State<OtpScreen> {
     var isEmail = userBloc.username.contains('@');
     var text = isEmail ? "email id" : "mobile number";
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 150),
-            Image.asset(
-              Images.logo,
-              height: 60,
-              width: 200,
-            ),
-            const SizedBox(height: 50),
+            const Expanded(flex: 1, child: SizedBox()),
+            Image.asset(Images.logo, height: 140),
+            const SizedBox(height: 32),
             const Text(
               "OTP Verification",
               textAlign: TextAlign.center,
@@ -79,11 +75,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       MaterialPageRoute(builder: (context) => MobileScreen()),
                     );
                   },
-                  child: Image.asset(
-                    Images.editIcon,
-                    height: 16,
-                    width: 16,
-                  ),
+                  child: Image.asset(Images.editIcon, height: 16, width: 16),
                 ),
               ],
             ),
@@ -145,6 +137,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ],
             ),
+            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

@@ -23,14 +23,14 @@ class _EmailScreenState extends State<EmailScreen> {
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 120),
-            Image.asset(Images.logo, height: 60, width: 200),
-            const SizedBox(height: 92),
+            const Expanded(flex: 1, child: SizedBox()),
+            Image.asset(Images.logo, height: 140),
+            const SizedBox(height: 32),
             const Text(
               "Sign up with Email Address",
               textAlign: TextAlign.center,
@@ -47,7 +47,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 hintText: "Enter your email ID",
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () async {
                 if (!emailId.contains("@") || !emailId.contains(".")) {
@@ -67,7 +67,7 @@ class _EmailScreenState extends State<EmailScreen> {
               },
               child: const Text("Get OTP"),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -86,7 +86,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -96,7 +96,7 @@ class _EmailScreenState extends State<EmailScreen> {
               },
               child: const Text("Sign Up With Mobile Number"),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -115,6 +115,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 ),
               ],
             ),
+            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

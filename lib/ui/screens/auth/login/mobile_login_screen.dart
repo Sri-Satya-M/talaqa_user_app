@@ -11,6 +11,8 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 
 class MobileLogin extends StatefulWidget {
+  const MobileLogin({super.key});
+
   @override
   _MobileLoginState createState() => _MobileLoginState();
 }
@@ -20,22 +22,29 @@ class _MobileLoginState extends State<MobileLogin> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 60),
-            Image.asset(Images.logo, height: 60, width: 200),
-            const SizedBox(height: 72),
+            const Expanded(flex: 1, child: SizedBox()),
+            Image.asset(Images.logo, height: 140),
+            const SizedBox(height: 32),
             const Text(
-              "Login with Mobile Number",
+              "Welcome Back !",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            Text(
+              'Login to your account with mobile number',
+              style: textTheme.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
             Stack(
               children: [
                 InternationalPhoneNumberInput(
@@ -71,7 +80,7 @@ class _MobileLoginState extends State<MobileLogin> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () async {
                 if (mobileNumber.length < 10) {
@@ -81,8 +90,8 @@ class _MobileLoginState extends State<MobileLogin> {
 
                 var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
 
-                var response = await userBloc.sendOTP(body: body)
-                    as Map<String, dynamic>;
+                var response =
+                    await userBloc.sendOTP(body: body) as Map<String, dynamic>;
 
                 if (!response.containsKey('token')) {
                   return ErrorSnackBar.show(context, "Invalid Error");
@@ -93,7 +102,7 @@ class _MobileLoginState extends State<MobileLogin> {
               },
               child: const Text("Get OTP"),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -112,7 +121,7 @@ class _MobileLoginState extends State<MobileLogin> {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
                 Navigator.push(
@@ -122,7 +131,7 @@ class _MobileLoginState extends State<MobileLogin> {
               },
               child: const Text("Login With Email Address"),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -141,6 +150,7 @@ class _MobileLoginState extends State<MobileLogin> {
                 ),
               ],
             ),
+            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

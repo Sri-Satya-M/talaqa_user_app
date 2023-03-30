@@ -22,22 +22,29 @@ class _EmailLoginState extends State<EmailLogin> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 48),
-            Image.asset(Images.logo, height: 60, width: 200),
-            const SizedBox(height: 48),
+            const Expanded(flex: 1, child: SizedBox()),
+            Image.asset(Images.logo, height: 140),
+            const SizedBox(height: 32),
             const Text(
-              "Login with Email Address",
+              "Welcome Back !",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 16),
+            Text(
+              'Login to your account with email address',
+              style: textTheme.caption,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
             TextFormField(
               onChanged: (value) {
                 email = value.toString();
@@ -66,7 +73,7 @@ class _EmailLoginState extends State<EmailLogin> {
                         visibility ? Icons.visibility_off : Icons.visibility)),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () async {
                 if (!email.contains("@") || !email.contains(".")) {
@@ -94,7 +101,7 @@ class _EmailLoginState extends State<EmailLogin> {
               },
               child: const Text("Login"),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -113,7 +120,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
                 Navigator.push(
@@ -123,7 +130,7 @@ class _EmailLoginState extends State<EmailLogin> {
               },
               child: const Text("Login With Mobile Number"),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -142,6 +149,7 @@ class _EmailLoginState extends State<EmailLogin> {
                 ),
               ],
             ),
+            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

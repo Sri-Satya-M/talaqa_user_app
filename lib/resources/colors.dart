@@ -22,6 +22,7 @@ class MyColors {
   static const lightGreen = Color(0xFF1B9B20);
   static const darkGreenAccent = Color(0xFF3E716A);
   static const paleViolet = Color(0xFFF0F6F7);
+  static const palePink = Color(0xFFF9F0F1);
 
   // static const paleGreen = Color(0xFFECFFEE);
   static const paleOrange = Color(0xFFFFF9EB);

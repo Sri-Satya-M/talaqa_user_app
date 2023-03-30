@@ -16,24 +16,22 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 142),
-            Image.asset(Images.logo, height: 70, width: 200),
-            const SizedBox(height: 64),
+            const Expanded(flex: 1, child: SizedBox()),
+            Image.asset(Images.logo, height: 140),
+            const SizedBox(height: 32),
             const Text(
               "Welcome!",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
             ),
-            const Text(
-              "create an account",
-              textAlign: TextAlign.center,
-            ),
+            const Text("create an account", textAlign: TextAlign.center),
             const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
@@ -46,7 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: const Text("Sign Up With Mobile Number"),
             ),
             const SizedBox(height: 16),
-            ProgressButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.palePink,
+              ),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
@@ -54,7 +55,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   (route) => false,
                 );
               },
-              child: const Text("Sign Up With Email Address"),
+              child: Text(
+                "Sign Up With Email Address",
+                style: textTheme.button?.copyWith(color: Colors.black),
+              ),
             ),
             const SizedBox(height: 30),
             Row(
@@ -75,6 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 )
               ],
             ),
+            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

@@ -101,7 +101,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     : ProgressButton(
                         onPressed: () {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                            Routes.mobile,
+                            Routes.signUp,
                             (_) => false,
                           );
                         },
