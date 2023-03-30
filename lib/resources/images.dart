@@ -24,6 +24,10 @@ class Images {
   static const videoOff = 'assets/icons/video_off.png';
   static const clockPlus = 'assets/icons/clock_plus.png';
   static const pdf = 'assets/icons/pdf.png';
+  static const step1 = 'assets/icons/step1.png';
+  static const step2 = 'assets/icons/step2.png';
+  static const step3 = 'assets/icons/step3.png';
+  static const step4 = 'assets/icons/step4.png';
 
   ///images
   static const logo = 'assets/images/logo.png';

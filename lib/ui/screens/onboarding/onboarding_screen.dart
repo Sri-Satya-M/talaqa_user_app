@@ -1,3 +1,4 @@
+import 'package:alsan_app/ui/screens/onboarding/widgets/how_to_use.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/routes.dart';
@@ -38,25 +39,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               currentIndex = value;
               setState(() {});
             },
-            children: const [
-              OnBoardingWidget(
+            children: [
+              const OnBoardingWidget(
                 image: Images.onBoardingImage1,
                 title: 'Book Speech Therapy Sessions Online',
                 description:
                     'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
               ),
-              OnBoardingWidget(
+              const OnBoardingWidget(
                 image: Images.onBoardingImage2,
                 title: 'Book Speech Therapy Sessions Online',
                 description:
                     'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
               ),
-              OnBoardingWidget(
+              const OnBoardingWidget(
                 image: Images.onBoardingImage3,
                 title: 'Book Speech Therapy Sessions Online',
                 description:
                     'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
               ),
+              HowToUse()
             ],
           ),
           Positioned(
@@ -68,7 +70,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               children: [
                 Row(
                   children: [
-                    for (int i = 0; i < 3; i++) ...[
+                    for (int i = 0; i < 4; i++) ...[
                       CircleAvatar(
                         radius: 4,
                         backgroundColor: (currentIndex == i)
@@ -80,7 +82,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ],
                 ),
                 const Spacer(),
-                (currentIndex < 2)
+                (currentIndex < 3)
                     ? ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(55, 55),
@@ -108,7 +110,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ],
             ),
           ),
-          if (currentIndex < 2)
+          if (currentIndex < 3)
             Positioned(
               top: 40,
               right: 20,

@@ -20,6 +20,7 @@ class MyColors {
   static const cerulean = Color(0xFF1268AE);
   static const navyBlue = Color(0xFF04457A);
   static const lightGreen = Color(0xFF1B9B20);
+  static const darkGreenAccent = Color(0xFF3E716A);
   static const paleViolet = Color(0xFFF0F6F7);
 
   // static const paleGreen = Color(0xFFECFFEE);
