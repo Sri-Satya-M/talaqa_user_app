@@ -227,9 +227,10 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ],
                 if (session.status == "STARTED" &&
-                    session.consultationMode != 'HOME' &&
-                    Helper.formatDate(date: date) ==
-                        Helper.formatDate(date: session.date)) ...[
+                        session.consultationMode != 'HOME' &&
+                        Helper.formatDate(date: date) ==
+                            Helper.formatDate(date: session.date) ||
+                    true) ...[
                   ProgressButton(
                     onPressed: () async {
                       var token = await sessionBloc.generateToken(

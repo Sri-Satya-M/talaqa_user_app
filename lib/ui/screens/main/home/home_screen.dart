@@ -30,20 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 160,
           child: ListView(
             scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.zero,
             children: [
               GestureDetector(
                 onTap: () {
                   BookingScreen.open(context, clinician: Clinician());
                 },
-                child: CustomCard(
-                  margin: EdgeInsets.zero,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 6),
-                    child: Image.asset(
-                      Images.topBanner1,
-                      fit: BoxFit.fitWidth,
-                      width: size.width * 0.9,
-                    ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.asset(
+                    Images.topBanner1,
+                    fit: BoxFit.fitWidth,
+                    width: size.width * 0.9,
                   ),
                 ),
               ),
@@ -74,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         SizedBox(
-          height: 230,
+          height: 200,
           child: ClinicianList(
             scrollDirection: Axis.horizontal,
             onTap: (clinician) {
