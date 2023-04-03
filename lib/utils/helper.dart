@@ -30,7 +30,8 @@ class Helper {
     return saveTo;
   }
 
-  static textCapitalization({required String text}) {
+  static textCapitalization({required String? text}) {
+    if (text == null) return 'NA';
     var a = text
         .split(' ')
         .map((e) =>
