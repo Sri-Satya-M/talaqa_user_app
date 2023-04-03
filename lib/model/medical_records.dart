@@ -2,6 +2,7 @@ class MedicalRecord {
   MedicalRecord({
     this.id,
     this.patientId,
+    this.patientProfileId,
     this.key,
     this.createdAt,
     this.updatedAt,
@@ -10,6 +11,7 @@ class MedicalRecord {
 
   int? id;
   int? patientId;
+  int? patientProfileId;
   String? key;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -18,6 +20,7 @@ class MedicalRecord {
   factory MedicalRecord.fromJson(Map<String, dynamic> json) => MedicalRecord(
     id: json["id"],
     patientId: json["patientId"],
+    patientProfileId: json["patientProfileId"],
     key: json["key"],
     createdAt: json["createdAt"]==null? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"]==null? null : DateTime.parse(json["updatedAt"]),
@@ -27,6 +30,7 @@ class MedicalRecord {
   Map<String, dynamic> toJson() => {
     "id": id,
     "patientId": patientId,
+    "patientProfileId": patientProfileId,
     "key": key,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),

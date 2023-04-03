@@ -1,15 +1,23 @@
+import 'dart:io';
+
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
 import 'package:alsan_app/ui/widgets/error_widget.dart';
+import 'package:alsan_app/ui/widgets/pdf_viewer_screen.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../model/profile.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/images.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/avatar.dart';
 import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_snackbar.dart';
 import '../../../../../widgets/loading_widget.dart';
+import '../../../../../widgets/progress_button.dart';
 import '../../../menu/profile/create_patient_screen.dart';
 
 class SelectPatientProfile extends StatefulWidget {
@@ -23,11 +31,14 @@ class SelectPatientProfile extends StatefulWidget {
 
 class _SelectPatientProfileState extends State<SelectPatientProfile> {
   int selectedIndex = -1;
+  List<String> uploadKeys = [];
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -71,74 +82,199 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                       ),
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                     ),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Avatar(
-                          url: profiles[index].image,
-                          name: profiles[index].fullName,
-                          borderRadius: BorderRadius.circular(10),
-                          size: 72,
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Text(profiles[index].fullName ?? 'NA'),
-                            const SizedBox(height: 4),
-                            Row(
+                            Avatar(
+                              url: profiles[index].image,
+                              name: profiles[index].fullName,
+                              borderRadius: BorderRadius.circular(10),
+                              size: 72,
+                            ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${profiles[index].age?.toString()} years',
-                                  style: textTheme.caption,
+                                Text(profiles[index].fullName ?? 'NA'),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${profiles[index].age?.toString()} years',
+                                      style: textTheme.caption,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${profiles[index].city ?? 'NA'}, ',
+                                      style: textTheme.subtitle2,
+                                    ),
+                                    Text(
+                                      profiles[index].country ?? 'NA',
+                                      style: textTheme.subtitle2,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
-                            Row(
+                            const Spacer(),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  '${profiles[index].city ?? 'NA'}, ',
-                                  style: textTheme.subtitle2,
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                  child: Text(
+                                    Helper.textCapitalization(
+                                      text: profiles[index].gender,
+                                    ),
+                                    style: textTheme.subtitle2,
+                                  ),
                                 ),
-                                Text(
-                                  profiles[index].country ?? 'NA',
-                                  style: textTheme.subtitle2,
+                                Radio(
+                                  value: index,
+                                  groupValue: selectedIndex,
+                                  onChanged: (value) {
+                                    selectedIndex = index;
+                                    widget.onTap(profiles[index]);
+                                    setState(() {});
+                                  },
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        const Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                                vertical: 2,
+                        const SizedBox(height: 16),
+                        if (index == selectedIndex) ...[
+                          for (var record
+                              in profiles[index]?.medicalRecords ?? []) ...[
+                            GestureDetector(
+                              onTap: () => PdfViewerScreen.open(
+                                context,
+                                url: record.fileUrl!,
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child: Text(
-                                Helper.textCapitalization(
-                                  text: profiles[index].gender,
+                              child: Container(
+                                height: 40,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
                                 ),
-                                style: textTheme.subtitle2,
+                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: MyColors.divider,
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: MyColors.divider),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Image.asset(Images.pdf, width: 24),
+                                    const SizedBox(width: 16),
+                                    Text('Medical Record'),
+                                    const Spacer(),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        var res = await ConfirmDialog.show(
+                                          context,
+                                          message:
+                                              'Are you sure you want to delete?',
+                                        );
+                                        if (res == true) {
+                                          await ProgressUtils.handleProgress(
+                                              context, task: () async {
+                                            await userBloc.removeMedicalRecord(
+                                              id: record.id.toString(),
+                                            );
+                                            setState(() {});
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.delete,
+                                        size: 18,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Radio(
-                              value: index,
-                              groupValue: selectedIndex,
-                              onChanged: (value) {
-                                selectedIndex = index;
-                                widget.onTap(profiles[index]);
-                                setState(() {});
-                              },
                             ),
                           ],
-                        ),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              maximumSize: const Size(double.maxFinite, 40),
+                              minimumSize: const Size(double.maxFinite, 40),
+                              side: const BorderSide(color: MyColors.divider),
+                            ),
+                            onPressed: () async {
+                              await ProgressUtils.handleProgress(
+                                context,
+                                task: () async {
+                                  List<File>? files = await Helper.pickFiles();
+                                  uploadKeys = [];
+
+                                  if (files == null) return;
+
+                                  var filesFormData =
+                                      await userBloc.uploadFiles(
+                                    paths: files.map((f) => f.path).toList(),
+                                    body: {},
+                                  );
+
+                                  int count = 0;
+
+                                  for (var fileFormData in filesFormData) {
+                                    var response =
+                                        await userBloc.uploadMedicalRecords(
+                                      body: fileFormData,
+                                    ) as Map<String, dynamic>;
+
+                                    if (response.containsKey('key')) {
+                                      uploadKeys.add(response['key']);
+                                      count++;
+                                    }
+                                  }
+
+                                  if (count == filesFormData.length) {
+                                    var result =
+                                        await userBloc.saveMedicalRecords(
+                                      body: {
+                                        'patientProfileId': profiles[index].id!,
+                                        'fileKeys': uploadKeys
+                                      },
+                                    ) as Map<String, dynamic>;
+                                    ErrorSnackBar.show(
+                                      context,
+                                      'Files Uploaded Successfully',
+                                    );
+
+                                    setState(() {});
+                                  }
+                                },
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(Images.upload, width: 18),
+                                const SizedBox(width: 16),
+                                Text(
+                                  'Upload Medical Record',
+                                  style: textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

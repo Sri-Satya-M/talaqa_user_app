@@ -1,4 +1,5 @@
 import 'package:alsan_app/model/profile.dart';
+import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../resources/colors.dart';
@@ -40,70 +41,74 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
-        child: Row(
+        child: Column(
           children: [
-            Avatar(
-              url: widget.profile.image,
-              name: widget.profile.fullName,
-              borderRadius: BorderRadius.circular(10),
-              size: 72,
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Text(widget.profile.fullName ?? 'NA'),
-                const SizedBox(height: 4),
-                Row(
+                Avatar(
+                  url: widget.profile.image,
+                  name: widget.profile.fullName,
+                  borderRadius: BorderRadius.circular(10),
+                  size: 72,
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${widget.profile.age?.toString()} years',
-                      style: textTheme.caption,
+                    Text(widget.profile.fullName ?? 'NA'),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Text(
+                          '${widget.profile.age?.toString()} years',
+                          style: textTheme.caption,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Text(
+                          '${widget.profile.city ?? 'NA'}, ',
+                          style: textTheme.subtitle2,
+                        ),
+                        Text(
+                          widget.profile.country ?? 'NA',
+                          style: textTheme.subtitle2,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
-                Row(
+                const Spacer(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '${widget.profile.city ?? 'NA'}, ',
-                      style: textTheme.subtitle2,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Text(
+                        Helper.textCapitalization(
+                          text: widget.profile.gender,
+                        ),
+                        style: textTheme.subtitle2,
+                      ),
                     ),
-                    Text(
-                      widget.profile.country ?? 'NA',
-                      style: textTheme.subtitle2,
+                    Radio(
+                      value: widget.profile.id,
+                      groupValue: widget.isSelected,
+                      onChanged: (value) {
+                        widget.onTap.call();
+                        setState(() {});
+                      },
                     ),
                   ],
-                ),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  child: Text(
-                    Helper.textCapitalization(
-                      text: widget.profile.gender,
-                    ),
-                    style: textTheme.subtitle2,
-                  ),
-                ),
-                Radio(
-                  value: widget.profile.id,
-                  groupValue: widget.isSelected,
-                  onChanged: (value) {
-                    widget.onTap.call();
-                    setState(() {});
-                  },
                 ),
               ],
             ),

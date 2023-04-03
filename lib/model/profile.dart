@@ -1,3 +1,5 @@
+import 'package:alsan_app/model/medical_records.dart';
+
 import 'user.dart';
 
 class Profile {
@@ -17,6 +19,7 @@ class Profile {
     this.createdAt,
     this.updatedAt,
     this.user,
+    this.medicalRecords,
   });
 
   int? id;
@@ -34,6 +37,7 @@ class Profile {
   DateTime? createdAt;
   DateTime? updatedAt;
   User? user;
+  List<MedicalRecord>? medicalRecords;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
     id: json["id"],
@@ -47,6 +51,7 @@ class Profile {
     userId: json["userId"],
     pincode: json["pincode"],
     patientId: json["patientId"],
+    medicalRecords: json["medicalRecords"] == null ? null : List<MedicalRecord>.from(json["medicalRecords"].map((m) => MedicalRecord.fromJson(m))),
     patientProfile: json["PatientProfile"] == null ? null :Profile.fromJson(json["PatientProfile"]),
     createdAt: json["createdAt"]==null ? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"]==null ? null: DateTime.parse(json["updatedAt"]),
@@ -69,6 +74,7 @@ class Profile {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "user": user?.toJson(),
+    "medicalRecords": medicalRecords?.map((m) => m.toJson()),
   };
 }
 

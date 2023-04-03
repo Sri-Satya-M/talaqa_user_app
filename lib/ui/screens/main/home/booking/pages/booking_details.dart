@@ -223,25 +223,26 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+          if (sessionBloc.selectedPatient?.medicalRecords != null &&
+              sessionBloc.selectedPatient!.medicalRecords!.isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
                 color: MyColors.divider,
                 borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: MyColors.divider)),
-            child: Row(
-              children: [
-                Image.asset(
-                  Images.pdf,
-                  width: 24,
-                ),
-                const SizedBox(width: 16),
-                const Text('Medical Records'),
-                const Spacer(),
-                Image.asset(Images.download, height: 20),
-              ],
+                border: Border.all(color: MyColors.divider),
+              ),
+              child: Row(
+                children: [
+                  Image.asset(Images.pdf, width: 24),
+                  const SizedBox(width: 16),
+                  Text(
+                    '(${sessionBloc.selectedPatient!.medicalRecords!.length}) Medical Records',
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: 16),
           // ProgressButton(
           //   onPressed: () async {
