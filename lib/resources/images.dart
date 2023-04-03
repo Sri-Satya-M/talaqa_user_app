@@ -28,6 +28,7 @@ class Images {
   static const step2 = 'assets/icons/step2.png';
   static const step3 = 'assets/icons/step3.png';
   static const step4 = 'assets/icons/step4.png';
+  static const download = 'assets/icons/download.png';
 
   ///images
   static const logo = 'assets/images/logo.png';
