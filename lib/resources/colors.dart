@@ -17,12 +17,18 @@ class MyColors {
   static const paleGreen = Color(0xFFF0F6F1);
   static const paleBlue = Color(0xFFE5F9FF);
   static const lightBlue = Color(0xFFCFF9FF);
+  static const paleLightBlue = Color(0xFFEDFDFF);
   static const cerulean = Color(0xFF1268AE);
   static const navyBlue = Color(0xFF04457A);
+  static const deepBlue = Color(0xFF00495D);
   static const lightGreen = Color(0xFF1B9B20);
   static const darkGreenAccent = Color(0xFF3E716A);
   static const paleViolet = Color(0xFFF0F6F7);
   static const palePink = Color(0xFFF9F0F1);
+  static const cement = Color(0xFFF8F8F8);
+  static const cementShade1 = Color(0xFFF0F0F0);
+  static const cementShade2 = Color(0xFFF5F5F5);
+  static const paleLightGreen = Color(0xFFF2F7F0);
 
   // static const paleGreen = Color(0xFFECFFEE);
   static const paleOrange = Color(0xFFFFF9EB);
@@ -41,4 +47,3 @@ class MyColors {
   static const Color completed = Color(0xFF7F7F7F);
   static const Color reportSubmitted = Color(0xFF195BF6);
 }
-
