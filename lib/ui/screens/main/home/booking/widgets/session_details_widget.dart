@@ -55,7 +55,7 @@ class SessionDetailsWidget extends StatelessWidget {
                 ReverseDetailsTile(
                   title: const Text('type'),
                   value: Text(
-                    sessionBloc.type.toString(),
+                    sessionBloc.symptom.toString(),
                     style: textTheme.bodyText1,
                   ),
                 ),

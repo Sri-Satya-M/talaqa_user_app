@@ -6,13 +6,18 @@ import 'package:alsan_app/ui/screens/main/home/booking/pages/select_clinician.da
 import 'package:alsan_app/ui/screens/main/home/booking/pages/select_profiles.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/pages/slot_booking.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/symptom_mode_of_consultation.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
+import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/clinicians.dart';
 import '../../../../../model/profile.dart';
+import '../../../../../utils/helper.dart';
+import '../../../../widgets/success_screen.dart';
 
 class BookingScreen extends StatefulWidget {
   final Clinician clinician;
@@ -33,26 +38,27 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   int pageIndex = 1;
-  int steps = 4;
+  int steps = 5;
   List<String> titles = [
-    'Clinician',
+    'Symptom and mode of consultation',
     'Select Profile',
+    'Clinician',
     'Slot Booking',
-    'Booking Details'
+    'Review'
   ];
 
   late PageController controller;
 
   addExtraStep() {
-    if (titles.length == 5) return;
+    if (titles.length == 6) return;
     setState(() {
       steps += 1;
-      titles.insert(3, 'Select Address');
+      titles.insert(4, 'Select Address');
     });
   }
 
   removeExtraStep() {
-    if (titles.length <= 4) return;
+    if (titles.length <= 5) return;
     setState(() {
       steps -= 1;
       titles.removeAt(3);
@@ -80,14 +86,14 @@ class _BookingScreenState extends State<BookingScreen> {
       backgroundColor: MyColors.bookingBgColor,
       appBar: AppBar(
         title: const Text('Book Session'),
-        actions: [
-          (pageIndex == steps || pageIndex <= 2)
-              ? const SizedBox()
-              : TextButton(
-                  onPressed: validateStep,
-                  child: const Text('Next'),
-                ),
-        ],
+        // actions: [
+        //   (pageIndex == steps || pageIndex <= 2)
+        //       ? const SizedBox()
+        //       : TextButton(
+        //           onPressed: validateStep,
+        //           child: const Text('Next'),
+        //         ),
+        // ],
       ),
       body: Column(
         children: [
@@ -96,7 +102,7 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
@@ -104,15 +110,26 @@ class _BookingScreenState extends State<BookingScreen> {
                 });
               },
               children: [
-                SelectClinician(
-                  onTap: (clinician) {
-                    sessionBloc.selectedClinician = clinician;
-                    animateToNextPage();
+                SymptomModeOfConsultation(
+                  onTap: (ModeOfConsultation mode) {
+                    if (mode != null) {
+                      if (mode.type == 'HOME') {
+                        addExtraStep();
+                      } else {
+                        removeExtraStep();
+                      }
+                      setState(() {});
+                    }
                   },
                 ),
                 SelectPatientProfile(
                   onTap: (Profile profile) {
                     sessionBloc.selectedPatient = profile;
+                  },
+                ),
+                SelectClinician(
+                  onTap: (clinician) {
+                    sessionBloc.selectedClinician = clinician;
                     animateToNextPage();
                   },
                 ),
@@ -136,6 +153,33 @@ class _BookingScreenState extends State<BookingScreen> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: 75,
+        color: MyColors.cement,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (sessionBloc.selectedModeOfConsultation != null &&
+                sessionBloc.timeslots.length > 0)
+              ReverseDetailsTile(
+                title: const Text('Total Charges'),
+                value: Text(
+                    ' د.إ  ${sessionBloc.selectedModeOfConsultation!.price! * sessionBloc.timeslots.length}'),
+              ),
+            const Spacer(),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(150, 50),
+                maximumSize: const Size(150, 50),
+              ),
+              onPressed: (pageIndex == titles.length) ? bookNow : validateStep,
+              child: Text((pageIndex == titles.length) ? 'Book Now' : 'Next'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -203,7 +247,8 @@ class _BookingScreenState extends State<BookingScreen> {
         width: (size.width / steps) - 20,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: (pageIndex >= value) ? MyColors.primaryColor : Colors.grey[300],
+          color:
+              (pageIndex >= value) ? MyColors.primaryColor : Colors.grey[300],
         ),
       ),
     );
@@ -225,11 +270,13 @@ class _BookingScreenState extends State<BookingScreen> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     switch (pageIndex) {
       case 1:
-        if (sessionBloc.selectedClinician?.id == null) {
+        if (sessionBloc.symptom == null ||
+            sessionBloc.selectedModeOfConsultation == null) {
           flag = true;
-          msg = 'Please select a clinician';
+          msg = 'Please select a Symptom & Mode of Consultation';
         }
         break;
+
       case 2:
         if (sessionBloc.selectedPatient?.id == null) {
           flag = true;
@@ -237,16 +284,20 @@ class _BookingScreenState extends State<BookingScreen> {
         }
         break;
       case 3:
-        if (sessionBloc.selectedDate == null ||
-            sessionBloc.selectedModeOfConsultation == null ||
-            sessionBloc.selectedTimeSlotIds == null ||
-            sessionBloc.selectedTimeSlotIds!.isEmpty ||
-            sessionBloc.type == null) {
+        if (sessionBloc.selectedClinician?.id == null) {
           flag = true;
-          msg = 'Please select date, slot, type and mode of consultation';
+          msg = 'Please select a clinician';
         }
         break;
       case 4:
+        if (sessionBloc.selectedDate == null ||
+            sessionBloc.selectedTimeSlotIds == null ||
+            sessionBloc.selectedTimeSlotIds!.isEmpty) {
+          flag = true;
+          msg = 'Please select Date & Time slot';
+        }
+        break;
+      case 5:
         if (sessionBloc.selectedAddressId == null) {
           flag = true;
           msg = 'Please select an address';
@@ -262,6 +313,45 @@ class _BookingScreenState extends State<BookingScreen> {
 
     if (pageIndex < steps) {
       animateToNextPage();
+    }
+  }
+
+  bookNow() async {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var noOfSlots = sessionBloc.selectedTimeSlotIds!.length;
+    var totalAmount = sessionBloc.selectedModeOfConsultation!.price! *
+        sessionBloc.selectedTimeSlotIds!.length;
+    var description =
+        sessionBloc.description == null || sessionBloc.description!.isEmpty
+            ? 'NA'
+            : sessionBloc.description;
+
+    var body = {
+      'timeSlotIds': sessionBloc.selectedTimeSlotIds,
+      'date': Helper.formatDate(date: sessionBloc.selectedDate),
+      'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
+      'description': description,
+      'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
+      'consultationFee': totalAmount,
+      'patientId': userBloc.profile!.id,
+      'patientProfileId': sessionBloc.selectedPatient!.id,
+      'clinicianId': sessionBloc.selectedClinician!.id,
+      'totalAmount': totalAmount,
+      'patientAddressId': sessionBloc.selectedAddressId,
+      'type': sessionBloc.symptom
+    };
+
+    print(body);
+
+    var response =
+        await sessionBloc.createSessions(body: body) as Map<String, dynamic>;
+    if (response.containsKey('status') && response['status'] != null) {
+      SuccessScreen.open(
+        context,
+        type: '',
+        message: response['message'],
+      );
     }
   }
 }

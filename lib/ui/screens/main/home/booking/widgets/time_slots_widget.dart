@@ -67,22 +67,18 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                   spacing: 4,
                   children: [
                     for (var timeSlot in timeDay) ...[
-                      ChoiceChip(
+                      FilterChip(
+                        label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         labelStyle: textTheme.caption?.copyWith(
+                          fontSize: 10,
                           color: timeSlotIds.contains(timeSlot.id)
                               ? Colors.white
                               : Colors.black,
-                          fontSize: 10,
                         ),
-                        shape: StadiumBorder(
-                          side: BorderSide(
-                            color: timeSlotIds.contains(timeSlot.id)
-                                ? Colors.transparent
-                                : MyColors.divider,
-                          ),
+                        shape: const StadiumBorder(
+                          side: BorderSide(color: MyColors.primaryColor),
                         ),
                         backgroundColor: Colors.white,
-                        label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         selected: timeSlotIds.contains(timeSlot.id),
                         selectedColor: MyColors.primaryColor,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

@@ -1,11 +1,13 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
-import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/error_widget.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../model/profile.dart';
+import '../../../../../../resources/colors.dart';
+import '../../../../../../utils/helper.dart';
+import '../../../../../widgets/avatar.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
 import '../../../menu/profile/create_patient_screen.dart';
@@ -29,9 +31,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(28),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<List<Profile>>(
         future: userBloc.getPatients(),
@@ -62,8 +62,13 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Colors.grey.shade300, width: 1.5),
+                      color: MyColors.paleLightBlue,
+                      border: Border.all(
+                        color: selectedIndex == index
+                            ? MyColors.primaryColor
+                            : Colors.transparent,
+                        width: 1.5,
+                      ),
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                     ),
                     child: Row(
@@ -83,21 +88,8 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                             Row(
                               children: [
                                 Text(
-                                  profiles[index].age?.toString() ?? 'NA',
+                                  '${profiles[index].age?.toString()} years',
                                   style: textTheme.caption,
-                                ),
-                                const SizedBox(width: 12),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  child: Text(profiles[index].gender ?? 'NA',
-                                      style: textTheme.subtitle2),
                                 ),
                               ],
                             ),
@@ -117,14 +109,35 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                           ],
                         ),
                         const Spacer(),
-                        Radio(
-                          value: index,
-                          groupValue: selectedIndex,
-                          onChanged: (value) {
-                            selectedIndex = index;
-                            widget.onTap(profiles[index]);
-                            setState(() {});
-                          },
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              child: Text(
+                                Helper.textCapitalization(
+                                  text: profiles[index].gender,
+                                ),
+                                style: textTheme.subtitle2,
+                              ),
+                            ),
+                            Radio(
+                              value: index,
+                              groupValue: selectedIndex,
+                              onChanged: (value) {
+                                selectedIndex = index;
+                                widget.onTap(profiles[index]);
+                                setState(() {});
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -145,6 +158,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                       context,
                       MaterialPageRoute(builder: (context) => CreatePatient()),
                     );
+
                     if (response) {
                       setState(() {});
                     }

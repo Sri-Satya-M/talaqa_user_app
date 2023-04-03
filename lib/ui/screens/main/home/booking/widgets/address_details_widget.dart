@@ -1,6 +1,7 @@
 import 'package:alsan_app/model/address.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../widgets/details_tile.dart';
 
@@ -38,18 +39,19 @@ class _AddressDetailsWidgetState extends State<AddressDetailsWidget> {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(
+            color: (widget.address.id == widget.isSelected)
+                ? MyColors.primaryColor
+                : Colors.transparent,
+          ),
+          color: MyColors.paleLightBlue,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Image.asset(
-                Images.marker,
-                width: 20,
-                height: 20,
-              ),
+              child: Image.asset(Images.marker, width: 20, height: 20),
             ),
             Expanded(
               flex: 7,
