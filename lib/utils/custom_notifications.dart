@@ -63,12 +63,13 @@ class CustomNotification {
           // print(message.notification?.body);
           const AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
-            'Talaqah',
+            'Talaqa',
             'General',
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker',
             visibility: NotificationVisibility.public,
+            styleInformation: BigTextStyleInformation(''),
           );
           IOSNotificationDetails iOSChannelSpecifics =
           const IOSNotificationDetails(
