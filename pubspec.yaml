@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   csc_picker: ^0.2.7
   dio: ^4.0.6
+  dotted_line: ^3.1.0
   dotted_decoration: ^2.0.0
   file_picker: ^5.2.5
   firebase_analytics: ^10.1.1
