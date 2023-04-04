@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/create_patient_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/edit_patient_profile.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profile_screen.dart';
@@ -44,14 +45,14 @@ class _PatientProfileState extends State<PatientProfile> {
             itemBuilder: (context, index) => Container(
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300, width: 1.5),
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              decoration: const BoxDecoration(
+                color: MyColors.paleLightBlue,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: InkWell(
                 onTap: () => PatientDetailsScreen.open(
                   context,
-                  patient: profiles[index],
+                  id: profiles[index].id.toString(),
                 ),
                 child: Row(
                   children: [
