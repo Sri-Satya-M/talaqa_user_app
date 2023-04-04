@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../model/address.dart';
@@ -126,4 +127,23 @@ class Helper {
     }
     return null;
   }
+
+  static Future<void> openMap({
+    required double latitude,
+    required double longitude,
+    required String name,
+    required String address,
+  }) async {
+    if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+      await MapLauncher.showMarker(
+        mapType: MapType.google,
+        coords: Coords(latitude, longitude),
+        title: name,
+        description: address,
+        zoom: 14,
+      );
+    }
+  }
+
+
 }

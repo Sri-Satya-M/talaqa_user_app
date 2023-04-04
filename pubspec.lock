@@ -85,13 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  carousel_indicator:
-    dependency: "direct main"
-    description:
-      name: carousel_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -623,6 +616,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  map_launcher:
+    dependency: "direct main"
+    description:
+      name: map_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.5.0+1"
   matcher:
     dependency: transitive
     description:
@@ -873,13 +873,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  smooth_page_indicator:
-    dependency: "direct main"
-    description:
-      name: smooth_page_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   source_span:
     dependency: transitive
     description:
