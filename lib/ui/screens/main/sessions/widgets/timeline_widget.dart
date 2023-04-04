@@ -59,7 +59,6 @@ class _TimelineWidgetState extends State<TimelineWidget> {
               size: 20.0,
             ),
       ),
-
       builder: TimelineTileBuilder(
         itemCount: eventsList.length,
         indicatorBuilder: (_, index) => SizedBox(
@@ -83,7 +82,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
         ),
         itemExtentBuilder: (_, index) => 80,
         nodeItemOverlapBuilder: (_, index) =>
-        (index != 0 || index != 5) ? true : null,
+            (index != 0 || index != 5) ? true : null,
         contentsBuilder: (_, index) {
           return DetailsTile(
             padding: const EdgeInsets.only(left: 16, top: 16),
