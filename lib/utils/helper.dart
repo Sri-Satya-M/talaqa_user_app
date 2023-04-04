@@ -74,7 +74,7 @@ class Helper {
     Duration aggDuration = Duration(minutes: minutes);
     final HH = (aggDuration.inHours).toString().padLeft(2, '0');
     final mm = (aggDuration.inMinutes % 60).toString().padLeft(2, '0');
-    return '$HH:$mm';
+    return '$HH:$mm Hrs';
   }
 
   static String formatDurationInHhMmSs({required Duration duration}) {

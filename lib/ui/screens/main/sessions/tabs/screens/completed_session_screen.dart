@@ -95,7 +95,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               ReviewTimeSlotWidget(
                 dateTime: session.date!,
                 timeslots: session.clinicianTimeSlots!,
-                duration: Helper.getDuration([DurationTime(duration: 120)]),
+                duration: Helper.getDuration(session.duration),
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
