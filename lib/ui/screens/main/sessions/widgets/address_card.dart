@@ -8,8 +8,18 @@ import '../../../../widgets/details_tile.dart';
 class AddressCard extends StatefulWidget {
   final Address address;
   final VoidCallback onTap;
+  final bool enableDelete;
+  final IconData suffixIcon;
+  final Color suffixIconColor;
 
-  const AddressCard({super.key, required this.address, required this.onTap});
+  const AddressCard({
+    super.key,
+    required this.address,
+    required this.onTap,
+    this.enableDelete = false,
+    required this.suffixIcon,
+    required this.suffixIconColor,
+  });
 
   @override
   State<AddressCard> createState() => _AddressCardState();
@@ -24,19 +34,15 @@ class _AddressCardState extends State<AddressCard> {
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
+          color: MyColors.paleLightBlue,
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: MyColors.divider),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Image.asset(
-                Images.marker,
-                width: 20,
-                height: 20,
-              ),
+              child: Image.asset(Images.marker, width: 35, height: 35),
             ),
             Expanded(
               flex: 7,
@@ -49,14 +55,16 @@ class _AddressCardState extends State<AddressCard> {
                         Expanded(child: Text('${widget.address.addressLine1}')),
                         GestureDetector(
                           onTap: widget.onTap,
-                          child: const Icon(Icons.delete, size: 20),
+                          child: Icon(
+                            widget.suffixIcon,
+                            size: 20,
+                            color: widget.suffixIconColor,
+                          ),
                         ),
                         const SizedBox(width: 16),
                       ],
                     ),
-                    value: Text(
-                      Address().formatAddress(widget.address),
-                    ),
+                    value: Text(Address().formatAddress(widget.address)),
                   ),
                   const Text('7702165416'),
                 ],

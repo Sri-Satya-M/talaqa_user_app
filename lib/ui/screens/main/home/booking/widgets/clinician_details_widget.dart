@@ -32,7 +32,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
             children: [
               DetailsTile(
                 title: Text(
-                  clinician.user?.fullName ?? ' NA',
+                  clinician.user?.fullName ?? 'NA',
                   style: textTheme.bodyText2,
                 ),
                 value: Column(
@@ -68,7 +68,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
                       children: [
                         Image.asset(Images.voice, width: 12),
                         const SizedBox(width: 8),
-                        Text(clinician?.languagesKnown ?? 'NA')
+                        Text(clinician.languagesKnown ?? 'NA')
                       ],
                     )
                   ],

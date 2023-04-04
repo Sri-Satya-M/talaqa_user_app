@@ -16,14 +16,13 @@ class ReviewTimeSlotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     return SizedBox(
-      height: 100 + (sessionBloc.timeslots.length * 18),
+      height: 100 + (timeslots.length * 18),
       child: Row(
         children: [
           getCalendar(context),
           const SizedBox(width: 16),
-          getDuration(context: context, time: sessionBloc.timeslots.length),
+          getDuration(context: context, time: timeslots.length),
         ],
       ),
     );
@@ -97,7 +96,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 35,
+              height: 30,
               child: Icon(Icons.timer_outlined, color: MyColors.deepBlue),
             ),
             const SizedBox(height: 8),
@@ -120,13 +119,5 @@ class ReviewTimeSlotWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<TimeSlot> showTimeslots(dynamic collection) {
-    return Helper.sortByKey(
-      collection: collection.map((c) => c.toMap()).toList(),
-      key: 'startAt',
-      obj: (json) => TimeSlot.fromMap(json),
-    ).map((e) => e as TimeSlot).toList();
   }
 }

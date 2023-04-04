@@ -96,6 +96,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                         }
                       }
                     },
+                    suffixIcon: Icons.delete,
+                    suffixIconColor: Colors.redAccent,
                   );
                 },
               );
