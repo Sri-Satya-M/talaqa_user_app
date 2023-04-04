@@ -5,7 +5,7 @@ import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/upcoming_sessions.dart';
-import 'package:alsan_app/ui/widgets/custom_card.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var banners = [Images.topBanner1];
+  int bannerIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: false);
@@ -26,27 +29,39 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        SizedBox(
-          height: 160,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.zero,
-            children: [
+        CarouselSlider(
+          items: [
+            for (int i = 0; i < banners.length; i++)
               GestureDetector(
-                onTap: () {
-                  BookingScreen.open(context, clinician: Clinician());
-                },
+                onTap: () => bookNow.call(index: i),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.asset(
-                    Images.topBanner1,
+                    banners[i],
                     fit: BoxFit.fitWidth,
                     width: size.width * 0.9,
                   ),
                 ),
               ),
-            ],
-          ),
+          ],
+          options: CarouselOptions(
+              height: 160,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.99,
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              reverse: false,
+              autoPlay: false,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              enlargeFactor: 0.3,
+              onPageChanged: (index, _) {
+                setState(() {
+                  bannerIndex = index;
+                });
+              }),
         ),
         const SizedBox(height: 8),
         const UpcomingSessions(),
@@ -101,5 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  bookNow({required int index}) {
+    switch (index) {
+      case 0:
+        BookingScreen.open(context, clinician: Clinician());
+        break;
+      default:
+        return;
+    }
   }
 }

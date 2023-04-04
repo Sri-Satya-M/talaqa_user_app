@@ -14,6 +14,7 @@ dependencies:
   agora_rtc_engine: ^6.1.0
   agora_uikit: ^1.1.2
   cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
   csc_picker: ^0.2.7
   dio: ^4.0.6
