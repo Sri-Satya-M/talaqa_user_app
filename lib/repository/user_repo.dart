@@ -27,6 +27,11 @@ class UserRepo {
     return await apiClient.post(Api.signInEmail, body);
   }
 
+  Future<Profile> getPatientProfile({required String id}) async {
+    var response = await apiClient.get('${Api.patientProfiles}/$id');
+    return Profile.fromJson(response);
+  }
+
   Future<Profile> getProfile() async {
     var response = await apiClient.get(Api.profile);
     return Profile.fromJson(response);
@@ -72,7 +77,6 @@ class UserRepo {
     var list = response as List;
     return list.map((e) => Profile.fromJson(e)).toList();
   }
-
 
   Future updatePatients({id, body}) async {
     return await apiClient.patch('${Api.patientProfiles}/$id', body);
