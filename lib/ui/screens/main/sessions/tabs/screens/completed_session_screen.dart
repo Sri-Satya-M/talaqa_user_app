@@ -6,13 +6,15 @@ import '../../../../../../model/session.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/details_tile.dart';
-import '../../../../../widgets/dynamic_grid_view.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
 import '../../../../../widgets/reverse_details_tile.dart';
+import '../../../home/booking/widgets/bill_details_widget.dart';
+import '../../../home/booking/widgets/clinician_details_widget.dart';
 import '../../../home/booking/widgets/patient_details_widget.dart';
 import '../../reports/reports_screen.dart';
+import '../../widgets/address_card.dart';
 
 class CompletedSessionScreen extends StatefulWidget {
   final String id;
@@ -50,128 +52,114 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: MyColors.divider.withOpacity(0.1)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text("Session Details"),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF5BFF9F),
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    Divider(color: MyColors.divider.withOpacity(0.1)),
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            "${session.sessionId}",
-                            style: textTheme.headline4,
-                          ),
-                          const SizedBox(height: 12),
-                          DynamicGridView(
-                            spacing: 6,
-                            count: 2,
-                            children: [
-                              ReverseDetailsTile(
-                                title: Text(
-                                  "Speciality",
-                                  style: textTheme.caption,
-                                ),
-                                value: Text(
-                                  "${session.clinician!.designation}",
-                                  style: textTheme.bodyText1,
-                                ),
-                              ),
-                              ReverseDetailsTile(
-                                title: Text(
-                                  "${session.consultationMode}",
-                                  style: textTheme.caption,
-                                ),
-                                value: Text("${session.consultationMode}",
-                                    style: textTheme.bodyText1),
-                              ),
-                              ReverseDetailsTile(
-                                title: Text(
-                                  "Report Status",
-                                  style: textTheme.caption,
-                                ),
-                                value: Text(
-                                  session.status == 'REPORT_SUBMITTED'
-                                      ? "Not Submitted"
-                                      : "Submitted",
-                                  style: textTheme.bodyText1,
-                                ),
-                              ),
-                              ReverseDetailsTile(
-                                title: Text(
-                                  "Duration",
-                                  style: textTheme.caption,
-                                ),
-                                value: Text(
-                                  "${Helper.getDuration(session.duration!)} Hrs",
-                                  style: textTheme.bodyText1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          //const TimeSlots(),
-                          const SizedBox(width: 8),
-                          const SizedBox(height: 12),
-                          Text(
-                            "Description",
-                            style: textTheme.caption,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "${session.description}",
-                            style: textTheme.bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 18),
-              PatientDetailsWidget(patient: session.patientProfile!),
-              if (session.status == 'REPORT_SUBMITTED') ...[
-                const SizedBox(height: 18),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      color: MyColors.divider.withOpacity(0.1),
-                    ),
+                    child: Text('${session.sessionId}'),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          ReportsScreen.open(context, id: session.id!);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Row(
-                            children: const [
-                              Text("Reports"),
-                              Spacer(),
-                              Icon(Icons.arrow_forward, size: 16)
-                            ],
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Speech Therapy', style: textTheme.headline4),
+                  if (session.consultationMode == 'HOME') ...[
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.home,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'At Home',
+                          style: textTheme.bodyText1?.copyWith(
+                            color: Colors.blue,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    )
+                  ],
+                ],
+              ),
+              const SizedBox(height: 16),
+              ReverseDetailsTile(
+                title: const Text('Clinician Details'),
+                value: Container(
+                  decoration: BoxDecoration(
+                    color: MyColors.paleLightGreen,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: ClinicianDetailsWidget(
+                    clinician: session.clinician!,
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+              ReverseDetailsTile(
+                title: const Text('Patient Details'),
+                value: Container(
+                  margin: const EdgeInsets.symmetric(vertical: 2),
+                  decoration: const BoxDecoration(
+                    color: MyColors.paleLightBlue,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                  ),
+                  child: PatientDetailsWidget(
+                    patient: session.patientProfile!,
+                  ),
+                ),
+              ),
+              if (session.consultationMode == "HOME") ...[
+                const SizedBox(height: 16),
+                AddressCard(
+                  address: session.patientAddress!,
+                  onTap: () async {
+                    await Helper.openMap(
+                      latitude: double.parse(
+                        session.patientAddress!.latitude!,
+                      ),
+                      longitude: double.parse(
+                        session.patientAddress!.latitude!,
+                      ),
+                      name: session.patientProfile!.fullName!,
+                      address: Helper.formatAddress(
+                        address: session.patientAddress,
+                      ),
+                    );
+                  },
+                  suffixIcon: Icons.directions,
+                  suffixIconColor: MyColors.primaryColor,
+                ),
               ],
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
+              ReverseDetailsTile(
+                title: const Text('Symptoms'),
+                value: Text('${session.type}', style: textTheme.headline2),
+              ),
+              const SizedBox(height: 16),
+              ReverseDetailsTile(
+                title: const Text('Description'),
+                value: Text(
+                  '${session.description}',
+                  style: textTheme.headline2,
+                ),
+              ),
+              const SizedBox(height: 16),
+              BillDetailsWidget(
+                noOfTimeslots: session.clinicianTimeSlots!.length,
+                totalAmount: (session.consultationFee)!.toDouble(),
+                consultationMode: Helper.textCapitalization(
+                  text: session.consultationMode,
+                ),
+              ),
+              const SizedBox(height: 16),
               if (session.consultationMode == "HOME") ...[
                 Container(
                   decoration: BoxDecoration(
@@ -220,6 +208,37 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                           ],
                         ),
                       )
+                    ],
+                  ),
+                ),
+              ],
+              if (session.status == 'REPORT_SUBMITTED') ...[
+                const SizedBox(height: 18),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: MyColors.divider.withOpacity(0.1),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          ReportsScreen.open(context, id: session.id!);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: const [
+                              Text("Reports"),
+                              Spacer(),
+                              Icon(Icons.arrow_forward, size: 16)
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
