@@ -30,8 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: MyColors.profileCardColor,
-              border: Border.all(color: Colors.grey.shade300),
+              color: MyColors.paleLightBlue,
+              border: Border.all(color: Colors.grey.shade200),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             width: double.maxFinite,
