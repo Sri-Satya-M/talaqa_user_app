@@ -13,6 +13,7 @@ import '../../../../../widgets/reverse_details_tile.dart';
 import '../../../home/booking/widgets/bill_details_widget.dart';
 import '../../../home/booking/widgets/clinician_details_widget.dart';
 import '../../../home/booking/widgets/patient_details_widget.dart';
+import '../../../home/booking/widgets/review_time_slot_widget.dart';
 import '../../reports/reports_screen.dart';
 import '../../widgets/address_card.dart';
 
@@ -88,6 +89,11 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                     )
                   ],
                 ],
+              ),
+              const SizedBox(height: 8),
+              ReviewTimeSlotWidget(
+                dateTime: session.date!,
+                timeslots: session.clinicianTimeSlots!,
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
