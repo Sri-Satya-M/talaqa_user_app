@@ -71,10 +71,10 @@ class Helper {
     if (duration == null || duration.isEmpty) return 'NA';
     int minutes =
         duration.map((e) => e.duration!).toList().reduce((a, b) => a + b);
-    var time = Helper.formatDurationInHhMmSs(
-      duration: Duration(minutes: minutes),
-    );
-    return '$time';
+    Duration aggDuration = Duration(minutes: minutes);
+    final HH = (aggDuration.inHours).toString().padLeft(2, '0');
+    final mm = (aggDuration.inMinutes % 60).toString().padLeft(2, '0');
+    return '$HH:$mm';
   }
 
   static String formatDurationInHhMmSs({required Duration duration}) {
@@ -144,6 +144,4 @@ class Helper {
       );
     }
   }
-
-
 }

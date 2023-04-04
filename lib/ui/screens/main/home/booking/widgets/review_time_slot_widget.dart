@@ -1,7 +1,5 @@
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
@@ -10,9 +8,14 @@ import '../../../../../../utils/helper.dart';
 class ReviewTimeSlotWidget extends StatelessWidget {
   final DateTime dateTime;
   final List<TimeSlot> timeslots;
+  final String? duration;
 
-  const ReviewTimeSlotWidget(
-      {super.key, required this.dateTime, required this.timeslots});
+  const ReviewTimeSlotWidget({
+    super.key,
+    required this.dateTime,
+    required this.timeslots,
+    this.duration,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +111,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                   ReverseDetailsTile(
                     title: const Text('Duration'),
                     value: Text(
-                      '${time} ${time > 1 ? 'hrs' : 'hr'}',
+                      formatTime(),
                       style: textTheme.bodyText1,
                     ),
                   ),
@@ -119,5 +122,11 @@ class ReviewTimeSlotWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  formatTime() {
+    if (duration != null) return duration!+' Hrs';
+    var time = timeslots.length;
+    return '$time ${time > 1 ? 'hrs' : 'hr'}';
   }
 }

@@ -80,9 +80,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           const SizedBox(height: 16),
           ReviewTimeSlotWidget(
             dateTime: sessionBloc.selectedDate!,
-            timeslots: showTimeslots(
-              sessionBloc.timeslots.values,
-            ),
+            timeslots: showTimeslots(sessionBloc.timeslots.values),
           ),
           const SizedBox(height: 16),
           Container(

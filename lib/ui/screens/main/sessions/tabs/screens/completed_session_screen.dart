@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/model/duration_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -94,6 +95,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               ReviewTimeSlotWidget(
                 dateTime: session.date!,
                 timeslots: session.clinicianTimeSlots!,
+                duration: Helper.getDuration([DurationTime(duration: 120)]),
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
