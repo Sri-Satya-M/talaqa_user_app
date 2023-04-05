@@ -71,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
     FirebaseMessaging.onBackgroundMessage(
       (RemoteMessage message) async => _handleMessage.call(message),
     );
-    CustomNotification customNotification = new CustomNotification();
+    CustomNotification customNotification = CustomNotification();
     customNotification.initialize();
     customNotification.setupNotifications(
       context: context,
@@ -100,8 +100,9 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize:
-                Size.fromHeight(tabLength(mainBloc.index) > 0 ? 40 : 0),
+            preferredSize: Size.fromHeight(
+              tabLength(mainBloc.index) > 0 ? 40 : 0,
+            ),
             child: Builder(
               builder: (context) {
                 switch (mainBloc.index) {
