@@ -54,78 +54,81 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(title: const Text('At Home')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: MyColors.divider),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Speech Therapy',
-                        style: textTheme.bodyText2?.copyWith(fontSize: 12),
-                      ),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF5BFF9F),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text('${session.sessionId}'),
-                      ),
-                    ],
-                  ),
-                  DetailsTile(
-                    title: Text(session.clinician!.user!.fullName!),
-                    value: Text(
-                      session.clinician?.designation ?? 'NA',
-                      style: textTheme.caption?.copyWith(
-                        color: MyColors.cerulean,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  if (isRunning) ...[
+      body: RefreshIndicator(
+        onRefresh: () async => setState(() {}),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: MyColors.divider),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
                     Row(
                       children: [
                         Text(
-                          'Your Session Has been Started',
-                          style: textTheme.caption?.copyWith(fontSize: 14),
+                          'Speech Therapy',
+                          style: textTheme.bodyText2?.copyWith(fontSize: 12),
                         ),
-                        const SizedBox(width: 16),
-                        Text(
-                          '${(duration.inHours % 60).toString().padLeft(2, '0')}:'
-                          '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:'
-                          '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                          style: textTheme.bodyText1?.copyWith(
-                            color: Colors.black,
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF5BFF9F),
+                            borderRadius: BorderRadius.circular(5),
                           ),
+                          child: Text('${session.sessionId}'),
                         ),
                       ],
                     ),
+                    DetailsTile(
+                      title: Text(session.clinician!.user!.fullName!),
+                      value: Text(
+                        session.clinician?.designation ?? 'NA',
+                        style: textTheme.caption?.copyWith(
+                          color: MyColors.cerulean,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    if (isRunning) ...[
+                      Row(
+                        children: [
+                          Text(
+                            'Your Session Has been Started',
+                            style: textTheme.caption?.copyWith(fontSize: 14),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            '${(duration.inHours % 60).toString().padLeft(2, '0')}:'
+                            '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:'
+                            '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                            style: textTheme.bodyText1?.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    LinearProgressIndicator(
+                      value: calculateTimeCompleted(),
+                      backgroundColor: MyColors.divider,
+                      color: MyColors.primaryColor,
+                    ),
                   ],
-                  const SizedBox(height: 16),
-                  LinearProgressIndicator(
-                    value: calculateTimeCompleted(),
-                    backgroundColor: MyColors.divider,
-                    color: MyColors.primaryColor,
-                  ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            otpBloc(),
-          ],
+              const SizedBox(height: 16),
+              otpBloc(),
+            ],
+          ),
         ),
       ),
     );
