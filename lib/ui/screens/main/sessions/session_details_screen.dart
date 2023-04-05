@@ -4,6 +4,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
 import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
+import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/helper.dart';
@@ -234,10 +235,9 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ],
                 if (session!.status == "STARTED" &&
-                        session!.consultationMode != 'HOME' &&
-                        Helper.formatDate(date: date) ==
-                            Helper.formatDate(date: session!.date) ||
-                    true) ...[
+                    session!.consultationMode != 'HOME' &&
+                    Helper.formatDate(date: date) ==
+                        Helper.formatDate(date: session!.date)) ...[
                   ProgressButton(
                     onPressed: () async {
                       var token = await sessionBloc.generateToken(
@@ -253,6 +253,18 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       });
                     },
                     child: const Text("Join Session"),
+                  ),
+                ],
+                if (session!.status == "STARTED" &&
+                        session!.consultationMode == 'HOME' &&
+                        Helper.formatDate(date: date) ==
+                            Helper.formatDate(date: session!.date) ||
+                    true) ...[
+                  ProgressButton(
+                    onPressed: () {
+                      SessionAtHomeScreen.open(context, session: session!);
+                    },
+                    child: const Text('Start Session At Home'),
                   ),
                 ],
                 const SizedBox(height: 16),
