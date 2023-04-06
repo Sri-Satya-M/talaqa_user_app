@@ -2,6 +2,7 @@ class Images {
   ///icons
   static const address = 'assets/icons/address.png';
   static const calender = 'assets/icons/calendar.png';
+  static const calenderTime = 'assets/icons/calendar_time.png';
   static const editIcon = 'assets/icons/edit.png';
   static const profileIcon = 'assets/icons/profile.png';
   static const sessionsIcon = 'assets/icons/sessions.png';
@@ -30,6 +31,7 @@ class Images {
   static const step4 = 'assets/icons/step4.png';
   static const download = 'assets/icons/download.png';
   static const upload = 'assets/icons/upload.png';
+  static const timer = 'assets/icons/timer.png';
 
   ///images
   static const logo = 'assets/images/logo.png';
