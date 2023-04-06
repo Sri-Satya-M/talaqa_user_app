@@ -96,7 +96,7 @@ class Session {
               json["sessionStatuses"]?.map((x) => SessionStatus.fromJson(x)) ??
                   []),
       clinicianTimeSlots: List<TimeSlot>.from(
-          json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromMap(x)) ?? []),
+          json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromJson(x)) ?? []),
       type: json["type"]);
 
   Map<String, dynamic> toMap() => {
@@ -124,8 +124,8 @@ class Session {
         "patientProfile": patientProfile?.toJson(),
         "patientAddress": patientAddress?.toMap(),
         "clinician": clinician?.toMap(),
-        "clinicianTimeSlots":
-            List<dynamic>.from(clinicianTimeSlots?.map((x) => x.toMap()) ?? []),
+        "clinicianTimeSlots": List<dynamic>.from(
+            clinicianTimeSlots?.map((x) => x.toJson()) ?? []),
         "sessionStatuses":
             List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
         "type": type

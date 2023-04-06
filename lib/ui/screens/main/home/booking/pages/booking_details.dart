@@ -158,9 +158,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
 
   List<TimeSlot> showTimeslots(dynamic collection) {
     return Helper.sortByKey(
-      collection: collection.map((c) => c.toMap()).toList(),
+      collection: collection.map((c) => c.toJson()).toList(),
       key: 'startAt',
-      obj: (json) => TimeSlot.fromMap(json),
+      obj: (json) => TimeSlot.fromJson(json),
     ).map((e) => e as TimeSlot).toList();
   }
 }

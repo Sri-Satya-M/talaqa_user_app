@@ -36,7 +36,7 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getModeOfConsultation();
   }
 
-  Future<TimeOfDay> getTimeSlots({required String id, query}) async {
+  Future<List<TimeOfDay>> getTimeSlots({required String id, query}) async {
     return sessionRepo.getTimeSlots(id: id, query: query);
   }
 

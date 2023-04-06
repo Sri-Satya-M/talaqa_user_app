@@ -86,7 +86,7 @@ class SessionDetailsWidget extends StatelessWidget {
     return Helper.sortByKey(
       collection: collection.map((c) => c.toMap()).toList(),
       key: 'startAt',
-      obj: (json) => TimeSlot.fromMap(json),
+      obj: (json) => TimeSlot.fromJson(json),
     ).map((e) => e as TimeSlot).toList();
   }
 }

@@ -14,12 +14,13 @@ class SessionRepo {
     return list.map((e) => ModeOfConsultation.fromMap(e)).toList();
   }
 
-  Future<TimeOfDay> getTimeSlots({required String id, query}) async {
+  Future<List<TimeOfDay>> getTimeSlots({required String id, query}) async {
     var response = await apiClient.get(
       '${Api.clinicianTimeSlot}${Api.clinician}/$id',
       query: query,
     );
-    return TimeOfDay.fromMap(response);
+    var list = response as List;
+    return list.map((e) => TimeOfDay.fromJson(e)).toList();
   }
 
   Future createSessions({body}) {

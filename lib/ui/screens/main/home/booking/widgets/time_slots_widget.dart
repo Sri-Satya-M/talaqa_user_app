@@ -23,7 +23,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
-    return FutureBuilder<t.TimeOfDay>(
+    return FutureBuilder<List<t.TimeOfDay>>(
       future: sessionBloc.getTimeSlots(
         id: sessionBloc.selectedClinician!.id.toString(),
         query: {
@@ -38,24 +38,17 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
         }
         if (!snapshot.hasData) return const LoadingWidget();
 
-        var timeOfDay = snapshot.data;
-        var list = [
-          timeOfDay?.morning,
-          timeOfDay?.afternoon,
-          timeOfDay?.evening,
-          timeOfDay?.night
-        ];
+        var timeOfDay = snapshot.data ?? [];
 
-        list = list.where((element) => element != null).toList();
-        if (list.isEmpty) return const EmptyWidget();
+        if (timeOfDay == null) return const EmptyWidget();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var timeDay in list) ...[
-              if (timeDay != null && timeDay.isNotEmpty) ...[
+            for (var timeDay in timeOfDay) ...[
+              if (timeDay.slots != null && timeDay.slots!.isNotEmpty) ...[
                 Text(
-                  timeDay.first.label!,
+                  timeDay.label!,
                   style: textTheme.caption?.copyWith(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 10,
@@ -66,7 +59,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                   runSpacing: 4,
                   spacing: 4,
                   children: [
-                    for (var timeSlot in timeDay) ...[
+                    for (var timeSlot in timeDay.slots!) ...[
                       FilterChip(
                         label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
                         labelStyle: textTheme.caption?.copyWith(
