@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/images.dart';
 import '../../../../../../utils/helper.dart';
 
 class ReviewTimeSlotWidget extends StatelessWidget {
@@ -51,9 +52,9 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.calendar_month_outlined,
-                    color: MyColors.deepBlue,
+                  SizedBox(
+                    height: 30,
+                    child: Image.asset(Images.calenderTime, width: 20),
                   ),
                   const SizedBox(width: 16),
                   Text(
@@ -98,9 +99,9 @@ class ReviewTimeSlotWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
+            SizedBox(
               height: 30,
-              child: Icon(Icons.timer_outlined, color: MyColors.deepBlue),
+              child: Image.asset(Images.timer, width: 18),
             ),
             const SizedBox(height: 8),
             Expanded(

@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../utils/helper.dart';
 
 class BillDetailsWidget extends StatelessWidget {
   final int noOfTimeslots;
@@ -35,7 +36,7 @@ class BillDetailsWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Consultation fee ($noOfTimeslots $consultationMode Slot${noOfTimeslots > 1 ? 's' : ''})',
+                  'Consultation fee ($noOfTimeslots ${Helper.textCapitalization(text: consultationMode)} Slot${noOfTimeslots > 1 ? 's' : ''})',
                 ),
               ),
               Text('$totalAmount Dihram'),

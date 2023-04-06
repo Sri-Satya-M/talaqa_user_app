@@ -157,8 +157,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
                 if (session!.consultationMode == "HOME") ...[
+                  const SizedBox(height: 16),
                   AddressCard(
                     address: session!.patientAddress!,
                     onTap: () async {
