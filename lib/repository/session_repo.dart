@@ -41,7 +41,7 @@ class SessionRepo {
     return Session.fromMap(response);
   }
 
-  Future updateSession({required int id, body}) {
+  Future updateSession({required String id, body}) {
     return apiClient.patch('${Api.updateSession}/$id', body);
   }
 

@@ -87,7 +87,7 @@ class SessionBloc with ChangeNotifier {
     return await sessionRepo.getSessionById(id);
   }
 
-  Future updateSession({required int id, body}) async {
+  Future updateSession({required String id, body}) async {
     return await sessionRepo.updateSession(id: id, body: body);
   }
 
