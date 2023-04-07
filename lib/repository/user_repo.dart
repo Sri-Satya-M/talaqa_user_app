@@ -9,6 +9,7 @@ import 'package:alsan_app/model/resources.dart';
 import 'package:dio/dio.dart';
 
 import '../model/dashboard.dart';
+import '../model/notification.dart';
 
 class UserRepo {
   Future sendOTP({body}) async {
@@ -128,5 +129,11 @@ class UserRepo {
       '${Api.dashboard}/${Api.patientProfile}/$id',
     );
     return Dashboard.fromJson(response);
+  }
+
+  Future<List<Notification>> getNotifications({required query}) async {
+    var response = await apiClient.get(Api.notifications, query: query);
+    var list = response as List;
+    return list.map((e) => Notification.fromJson(e)).toList();
   }
 }

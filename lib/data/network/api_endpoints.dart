@@ -29,4 +29,5 @@ class Api {
   static const dashboard = '/dashboard';
   static const patientProfile = '/patientProfile';
   static const symptoms = '/symptoms';
+  static const notifications = '/notifications';
 }

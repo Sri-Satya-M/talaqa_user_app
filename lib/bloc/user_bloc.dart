@@ -12,6 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../data/local/shared_prefs.dart';
 import '../model/dashboard.dart';
 import '../model/resources.dart';
+import '../model/notification.dart' as n;
 
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
@@ -154,5 +155,9 @@ class UserBloc with ChangeNotifier {
 
   Future<Dashboard> getDashboard({required String id}) {
     return _userRepo.getDashboard(id: id);
+  }
+
+  Future<List<n.Notification>> getNotifications({required query}) {
+    return _userRepo.getNotifications(query: query);
   }
 }
