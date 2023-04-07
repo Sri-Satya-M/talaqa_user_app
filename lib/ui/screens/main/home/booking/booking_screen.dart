@@ -72,9 +72,6 @@ class _BookingScreenState extends State<BookingScreen> {
     sessionBloc.selectedClinician = widget.clinician;
     sessionBloc.selectedDate = DateTime.now();
     sessionBloc.selectedPatient = Profile();
-    if (sessionBloc.selectedClinician?.id != null) {
-      pageIndex = 2;
-    }
     controller = PageController(initialPage: pageIndex - 1);
     super.initState();
   }
@@ -84,17 +81,7 @@ class _BookingScreenState extends State<BookingScreen> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return Scaffold(
       backgroundColor: MyColors.bookingBgColor,
-      appBar: AppBar(
-        title: const Text('Book Session'),
-        // actions: [
-        //   (pageIndex == steps || pageIndex <= 2)
-        //       ? const SizedBox()
-        //       : TextButton(
-        //           onPressed: validateStep,
-        //           child: const Text('Next'),
-        //         ),
-        // ],
-      ),
+      appBar: AppBar(title: const Text('Book Session')),
       body: Column(
         children: [
           const SizedBox(height: 16),

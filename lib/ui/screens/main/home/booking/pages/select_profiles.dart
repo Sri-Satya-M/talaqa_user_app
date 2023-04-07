@@ -158,7 +158,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                         const SizedBox(height: 16),
                         if (index == selectedIndex) ...[
                           for (var record
-                              in profiles[index]?.medicalRecords ?? []) ...[
+                              in profiles[index].medicalRecords ?? []) ...[
                             GestureDetector(
                               onTap: () => PdfViewerScreen.open(
                                 context,
@@ -179,7 +179,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                   children: [
                                     Image.asset(Images.pdf, width: 24),
                                     const SizedBox(width: 16),
-                                    Text('Medical Record'),
+                                    const Text('Medical Record'),
                                     const Spacer(),
                                     GestureDetector(
                                       onTap: () async {

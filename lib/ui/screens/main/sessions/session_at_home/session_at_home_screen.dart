@@ -10,13 +10,25 @@ import '../../../../../utils/helper.dart';
 
 class SessionAtHomeScreen extends StatefulWidget {
   final Session session;
+  final Duration duration;
 
-  const SessionAtHomeScreen({super.key, required this.session});
+  const SessionAtHomeScreen({
+    super.key,
+    required this.session,
+    required this.duration,
+  });
 
-  static Future open(BuildContext context, {required Session session}) {
+  static Future open(
+    BuildContext context, {
+    required Session session,
+    required Duration duration,
+  }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SessionAtHomeScreen(session: session),
+        builder: (context) => SessionAtHomeScreen(
+          session: session,
+          duration: duration,
+        ),
       ),
     );
   }
@@ -33,15 +45,14 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   late Duration currentTimeDiff;
   final Duration oneSecond = const Duration(seconds: 1);
   late Session session;
+  late int totalTime;
   double indicator = 0;
 
   @override
   void initState() {
     session = widget.session;
-    currentTimeDiff = DateTime.now().toUtc().difference(
-          widget.session.updatedAt!,
-        );
-    duration = const Duration(minutes: 60) - currentTimeDiff;
+    duration = widget.duration;
+    totalTime = widget.session.clinicianTimeSlots!.length * 60;
     super.initState();
     if (duration.inMinutes > 0) {
       isRunning = true;
@@ -135,17 +146,11 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   }
 
   calculateTimeCompleted() {
-    var totalTime = session.clinicianTimeSlots!.length * 60;
-
     if (extendTime) {
-      totalTime += 30;
+      totalTime += 30 * 60;
     }
 
-    var timeCompleted = DateTime.now().toUtc().difference(
-          widget.session.updatedAt!,
-        );
-
-    return (totalTime - timeCompleted.inMinutes) / totalTime;
+    return (totalTime - duration.inMinutes) / totalTime;
   }
 
   Widget otpBloc() {
@@ -224,8 +229,8 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
         duration = Duration.zero;
         _timer!.cancel();
       }
+
       setState(() {});
-      // if (mounted) setState(() {});
     });
   }
 

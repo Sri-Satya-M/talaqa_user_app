@@ -14,25 +14,33 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../resources/colors.dart';
 import '../../../../../resources/images.dart';
 import 'agora_chat_screen.dart';
 
 class AgoraMeetScreen extends StatefulWidget {
   final Session session;
+  final Duration duration;
   final String token;
 
-  const AgoraMeetScreen(
-      {super.key, required this.session, required this.token});
+  const AgoraMeetScreen({
+    super.key,
+    required this.session,
+    required this.duration,
+    required this.token,
+  });
 
   static Future open({
     required BuildContext context,
     required Session session,
+    required Duration duration,
     required String token,
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => AgoraMeetScreen(
           session: session,
+          duration: duration,
           token: token,
         ),
       ),
@@ -56,9 +64,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   AssetImage audioIcon = const AssetImage(Images.mic);
   AssetImage videoIcon = const AssetImage(Images.videoOn);
   Icon volumeIcon = const Icon(Icons.volume_down_outlined);
-  DateTime startTime = DateTime.now();
   int? streamId;
   List<Message> chat = [];
+
+  Timer? _timer;
+  bool isExtended = false;
+
+  late Duration duration;
+  late int totalTime;
+  final Duration oneSecond = const Duration(seconds: 1);
 
   initializeSDK() async {
     // Set up an instance of Agora engine
@@ -155,13 +169,17 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
   @override
   void initState() {
+    duration = widget.duration;
+    totalTime = widget.session.clinicianTimeSlots!.length * 60;
     super.initState();
     video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
+    _startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -307,6 +325,34 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                       ],
                     ),
                   ),
+                  Positioned(
+                    top: 20,
+                    left: 10,
+                    child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: MyColors.lightOrange,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(Images.timer, height: 18),
+                          const SizedBox(width: 8),
+                          Text(
+                            '${(duration.inHours % 60).toString().padLeft(2, '0')}:'
+                            '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:'
+                            '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                            style: textTheme.bodyText1?.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
       ),
@@ -349,10 +395,22 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     );
   }
 
+  void _startTimer() {
+    _timer = Timer.periodic(oneSecond, (timer) {
+      duration -= oneSecond;
+      if (duration.isNegative || duration == Duration.zero) {
+        duration = Duration.zero;
+        Navigator.pop(context, true);
+      }
+      setState(() {});
+    });
+  }
+
   @override
   void dispose() {
     // var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
     // sessionsBloc.dispose();
+    _timer?.cancel();
     agoraEngine.disableVideo();
     agoraEngine.disableAudio();
     agoraEngine.release();
