@@ -1,3 +1,5 @@
+import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/widgets/clinician_list.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +13,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -20,7 +22,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.tune),
+                  icon: const Icon(Icons.tune),
                 ),
                 hintText: 'Search by clinician name',
                 enabledBorder: InputBorder.none,
@@ -28,16 +30,18 @@ class _BrowseScreenState extends State<BrowseScreen> {
               ),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             "Top Rated Clinicians",
             style: textTheme.subtitle2,
           ),
-          SizedBox(height: 12),
-          ListView(
-            shrinkWrap: true,
-            children: [],
-          )
+          const SizedBox(height: 12),
+          ClinicianList(
+            scrollDirection: Axis.vertical,
+            onTap: (clinician) {
+              BookingScreen.open(context, clinician: clinician);
+            },
+          ),
         ],
       ),
     );
