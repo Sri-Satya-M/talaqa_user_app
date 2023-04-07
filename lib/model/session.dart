@@ -32,7 +32,10 @@ class Session {
       this.clinician,
       this.sessionStatuses,
       this.clinicianTimeSlots,
-      this.type});
+      this.type,
+      this.startAt,
+      this.endAt,
+      });
 
   int? id;
   String? sessionId;
@@ -60,6 +63,8 @@ class Session {
   List<SessionStatus>? sessionStatuses;
   List<TimeSlot>? clinicianTimeSlots;
   String? type;
+  String? startAt;
+  String? endAt;
 
   factory Session.fromMap(Map<String, dynamic> json) => Session(
       id: json["id"],
@@ -97,7 +102,10 @@ class Session {
                   []),
       clinicianTimeSlots: List<TimeSlot>.from(
           json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromJson(x)) ?? []),
-      type: json["type"]);
+      type: json["type"],
+      startAt: json["startAt"] == null ? null: json["startAt"],
+      endAt: json["endAt"] == null ? null: json["endAt"],
+  );
 
   Map<String, dynamic> toMap() => {
         "id": id,
@@ -128,7 +136,9 @@ class Session {
             clinicianTimeSlots?.map((x) => x.toJson()) ?? []),
         "sessionStatuses":
             List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
-        "type": type
+        "type": type,
+        "startAt": startAt,
+        "endAt": endAt,
       };
 }
 
