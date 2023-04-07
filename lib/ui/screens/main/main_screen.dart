@@ -4,6 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/theme.dart';
 import 'package:alsan_app/ui/screens/main/browse/browse_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/home_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/notification/notification_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/menu_screen.dart';
 import 'package:alsan_app/ui/screens/main/resources/resources_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_screen.dart';
@@ -92,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
           title: Text("Hi ${userBloc.profile?.user?.fullName ?? ''}"),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => NotificationScreen.open(context),
               icon: Icon(
                 Icons.notifications_active_outlined,
                 color: AppTheme.primaryColor,
