@@ -172,9 +172,9 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     duration = widget.duration;
     totalTime = widget.session.clinicianTimeSlots!.length * 60;
     super.initState();
+    _startTimer();
     video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
-    _startTimer();
   }
 
   @override
