@@ -76,4 +76,8 @@ class SessionRepo {
     var res = await apiClient.get(Api.patients + Api.symptoms) as List;
     return res.map((e) => e as String).toList();
   }
+
+  Future updateSessionClinician({required body})  {
+    return apiClient.patch(Api.sessionClinician,body);
+  }
 }
