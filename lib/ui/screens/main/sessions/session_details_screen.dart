@@ -5,6 +5,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_w
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
+import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -144,6 +145,66 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+                if (session?.sessionClinician?.isNewClinicianAccepted ==
+                    true) ...[
+                  ReverseDetailsTile(
+                    title: const Text('New Clinician Details'),
+                    value: Container(
+                      decoration: BoxDecoration(
+                        color: MyColors.paleLightGreen,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Column(
+                        children: [
+                          ClinicianDetailsWidget(
+                            clinician: session!.clinician!,
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                ProgressButton(
+                                  onPressed: () async {
+                                    changeClinician(
+                                      context: this.context,
+                                      msg:
+                                          'Confirm to accept the New Clinician',
+                                      type: 'Accept',
+                                    );
+                                  },
+                                  child: const Text('Accept'),
+                                ),
+                                const SizedBox(height: 16),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  onPressed: () async {
+                                    changeClinician(
+                                      context: this.context,
+                                      msg: 'Confirm to Cancel the session',
+                                      type: 'Reject',
+                                    );
+                                  },
+                                  child: Text(
+                                    'Reject',
+                                    style: textTheme.button?.copyWith(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
                   title: const Text('Patient Details'),
@@ -288,7 +349,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
       return const SizedBox();
     }
 
-    var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
@@ -344,11 +404,42 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration: duration
+          duration: duration,
         ).then((value) async {
           setState(() {});
         });
         break;
+    }
+  }
+
+  changeClinician({
+    required BuildContext context,
+    required String msg,
+    required String type,
+  }) async {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+
+    var flag = await ConfirmDialog.show(context, message: msg);
+
+    if (flag == true) {
+      bool? res;
+      switch (type) {
+        case 'Accept':
+          res = true;
+          break;
+        case 'Reject':
+          res = false;
+          break;
+      }
+      ProgressUtils.handleProgress(
+        context,
+        task: () async {
+          await sessionBloc.updateSessionClinician(
+            body: {"isPatientAccepted": res},
+          );
+          setState(() {});
+        },
+      );
     }
   }
 }
