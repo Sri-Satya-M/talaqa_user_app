@@ -7,7 +7,8 @@ import 'duration_time.dart';
 
 class Session {
   Session(
-      {this.id,
+      {
+      this.id,
       this.sessionId,
       this.clinicianTimeSlotIds,
       this.date,
@@ -32,6 +33,7 @@ class Session {
       this.clinician,
       this.sessionStatuses,
       this.clinicianTimeSlots,
+      this.sessionClinician,
       this.type,
       this.startAt,
       this.endAt,
@@ -62,6 +64,7 @@ class Session {
   Clinician? clinician;
   List<SessionStatus>? sessionStatuses;
   List<TimeSlot>? clinicianTimeSlots;
+  SessionClinician? sessionClinician;
   String? type;
   String? startAt;
   String? endAt;
@@ -102,6 +105,7 @@ class Session {
                   []),
       clinicianTimeSlots: List<TimeSlot>.from(
           json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromJson(x)) ?? []),
+      sessionClinician : json['sessionClinician']==null ? null: SessionClinician.fromJson(json['sessionClinician']),
       type: json["type"],
       startAt: json["startAt"] == null ? null: json["startAt"],
       endAt: json["endAt"] == null ? null: json["endAt"],
@@ -176,4 +180,48 @@ class SessionStatus {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
       };
+}
+
+class SessionClinician {
+  SessionClinician({
+    this.id,
+    this.sessionId,
+    this.clinicianId,
+    this.newClinicianId,
+    this.isNewClinicianAccepted,
+    this.isPatientAccepted,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int? id;
+  int? sessionId;
+  int? clinicianId;
+  int? newClinicianId;
+  bool? isNewClinicianAccepted;
+  bool? isPatientAccepted;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  factory SessionClinician.fromJson(Map<String, dynamic> json) => SessionClinician(
+    id: json["id"],
+    sessionId: json["sessionId"],
+    clinicianId: json["clinicianId"],
+    newClinicianId: json["newClinicianId"],
+    isNewClinicianAccepted: json["isNewClinicianAccepted"],
+    isPatientAccepted: json["isPatientAccepted"],
+    createdAt: json["createdAt"] == null ? json["createdAt"] : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? json["updatedAt"] : DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "sessionId": sessionId,
+    "clinicianId": clinicianId,
+    "newClinicianId": newClinicianId,
+    "isNewClinicianAccepted": isNewClinicianAccepted,
+    "isPatientAccepted": isPatientAccepted,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+  };
 }
