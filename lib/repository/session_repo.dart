@@ -77,7 +77,7 @@ class SessionRepo {
     return res.map((e) => e as String).toList();
   }
 
-  Future updateSessionClinician({required body})  {
-    return apiClient.patch(Api.sessionClinician,body);
+  Future updateSessionClinician({required String id, required body}) {
+    return apiClient.patch('${Api.sessionClinician}/$id', body);
   }
 }

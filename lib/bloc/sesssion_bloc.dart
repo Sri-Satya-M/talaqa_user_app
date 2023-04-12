@@ -115,8 +115,8 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getPatientSymptoms();
   }
 
-  Future updateSessionClinician({required body}) {
-    return sessionRepo.updateSessionClinician(body: body);
+  Future updateSessionClinician({required String id, required body}) {
+    return sessionRepo.updateSessionClinician(id: id, body: body);
   }
 
   ///Handling chat in bloc

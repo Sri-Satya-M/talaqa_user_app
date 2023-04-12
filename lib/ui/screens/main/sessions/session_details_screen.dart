@@ -145,9 +145,9 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
                 if (session?.sessionClinician?.isNewClinicianAccepted ==
                     true) ...[
+                  const SizedBox(height: 16),
                   ReverseDetailsTile(
                     title: const Text('New Clinician Details'),
                     value: Container(
@@ -173,6 +173,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       msg:
                                           'Confirm to accept the New Clinician',
                                       type: 'Accept',
+                                      id: session!.sessionClinician!.id!,
                                     );
                                   },
                                   child: const Text('Accept'),
@@ -187,6 +188,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       context: this.context,
                                       msg: 'Confirm to Cancel the session',
                                       type: 'Reject',
+                                      id: session!.sessionClinician!.id!,
                                     );
                                   },
                                   child: Text(
@@ -416,6 +418,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     required BuildContext context,
     required String msg,
     required String type,
+    required int id,
   }) async {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
 
@@ -435,6 +438,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         context,
         task: () async {
           await sessionBloc.updateSessionClinician(
+            id: id.toString(),
             body: {"isPatientAccepted": res},
           );
           setState(() {});
