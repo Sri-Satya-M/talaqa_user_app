@@ -36,6 +36,7 @@ class ProgressButton extends StatefulWidget {
   final Widget child;
   final Color? color;
   final double? elevation;
+  final ButtonStyle? style;
 
   const ProgressButton({
     Key? key,
@@ -44,6 +45,7 @@ class ProgressButton extends StatefulWidget {
     required this.child,
     this.progressWidget,
     this.elevation,
+    this.style,
   }) : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class ProgressButtonState extends State<ProgressButton> {
   Widget build(BuildContext context) {
     var progressBloc = Provider.of<ProgressBloc>(context, listen: false);
     return ElevatedButton(
+      style: widget.style,
       onPressed: widget.onPressed == null
           ? null
           : () async {

@@ -190,6 +190,8 @@ class SessionClinician {
     this.newClinicianId,
     this.isNewClinicianAccepted,
     this.isPatientAccepted,
+    this.clinician,
+    this.newClinician,
     this.createdAt,
     this.updatedAt,
   });
@@ -200,6 +202,8 @@ class SessionClinician {
   int? newClinicianId;
   bool? isNewClinicianAccepted;
   bool? isPatientAccepted;
+  Clinician? clinician;
+  Clinician? newClinician;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -210,6 +214,8 @@ class SessionClinician {
     newClinicianId: json["newClinicianId"],
     isNewClinicianAccepted: json["isNewClinicianAccepted"],
     isPatientAccepted: json["isPatientAccepted"],
+    clinician: json["clinician"]==null? null : Clinician.fromMap(json["clinician"]),
+    newClinician: json["newClinician"]==null? null : Clinician.fromMap(json["newClinician"]),
     createdAt: json["createdAt"] == null ? json["createdAt"] : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? json["updatedAt"] : DateTime.parse(json["updatedAt"]),
   );
