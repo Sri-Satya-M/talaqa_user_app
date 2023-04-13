@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
@@ -33,7 +34,6 @@ class _MenuScreenState extends State<MenuScreen> {
     {
       'image': Images.sessionsIcon,
       'title': 'My Sessions',
-      'screen': ProfileScreen()
     },
     {
       'image': Images.reportIcon,
@@ -61,6 +61,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
+    var mainBloc = Provider.of<MainBloc>(context, listen: false);
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
@@ -96,8 +97,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(3)),
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
                     child: Text(
                       Helper.textCapitalization(
                         text: userBloc.profile?.gender ?? 'NA',
@@ -120,6 +122,11 @@ class _MenuScreenState extends State<MenuScreen> {
               icon: userList[index]['image'],
               title: userList[index]['title'],
               onTap: () {
+                switch (index) {
+                  case 2:
+                    mainBloc.changeIndex(2);
+                    return;
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(

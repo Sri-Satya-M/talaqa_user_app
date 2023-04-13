@@ -147,8 +147,6 @@ class _MainScreenState extends State<MainScreen> {
           onTap: (value) {
             setState(() {
               mainBloc.changeIndex(value);
-              mainBloc.changeTab(0);
-              print(mainBloc.tab);
             });
           },
           selectedItemColor: MyColors.cerulean,
