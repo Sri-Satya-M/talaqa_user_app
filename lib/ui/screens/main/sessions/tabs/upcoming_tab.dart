@@ -22,7 +22,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["PENDING", "APPROVED", "PAID", 'STARTED']
+        "status": ["PENDING", "APPROVED", "PAID", 'STARTED',"NEW_CLINICIAN_ASSIGNED"]
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

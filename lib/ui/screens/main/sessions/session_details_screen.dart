@@ -6,6 +6,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
+import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -145,8 +146,11 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     ),
                   ),
                 ),
-                if (session?.sessionClinician?.isNewClinicianAccepted ==
-                    true) ...[
+                if (session?.sessionClinician?.isNewClinicianAccepted != null &&
+                    session!.sessionClinician!.isNewClinicianAccepted! &&
+                    (session?.sessionClinician?.isPatientAccepted == null ||
+                        session?.sessionClinician?.isPatientAccepted ==
+                            false)) ...[
                   const SizedBox(height: 16),
                   ReverseDetailsTile(
                     title: const Text('New Clinician Details'),
@@ -158,50 +162,68 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       child: Column(
                         children: [
                           ClinicianDetailsWidget(
-                            clinician: session!.clinician!,
+                            clinician: session!.sessionClinician!.newClinician!,
                           ),
                           const SizedBox(height: 16),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                ProgressButton(
-                                  onPressed: () async {
-                                    changeClinician(
-                                      context: this.context,
-                                      msg:
-                                          'Confirm to accept the New Clinician',
-                                      type: 'Accept',
-                                      id: session!.sessionClinician!.id!,
-                                    );
-                                  },
-                                  child: const Text('Accept'),
-                                ),
-                                const SizedBox(height: 16),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                  ),
-                                  onPressed: () async {
-                                    changeClinician(
-                                      context: this.context,
-                                      msg: 'Confirm to Cancel the session',
-                                      type: 'Reject',
-                                      id: session!.sessionClinician!.id!,
-                                    );
-                                  },
-                                  child: Text(
-                                    'Reject',
-                                    style: textTheme.button?.copyWith(
-                                      color: Colors.red,
+                          if (session?.sessionClinician
+                                      ?.isNewClinicianAccepted ==
+                                  true &&
+                              (session?.sessionClinician?.isPatientAccepted ==
+                                      null ||
+                                  session?.sessionClinician
+                                          ?.isPatientAccepted ==
+                                      false)) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ProgressButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(30, 45),
+                                        maximumSize: const Size(30, 45),
+                                      ),
+                                      onPressed: () async {
+                                        changeClinician(
+                                          context: this.context,
+                                          msg:
+                                              'Confirm to accept the New Clinician',
+                                          type: 'Accept',
+                                          id: session!.sessionClinician!.id!,
+                                        );
+                                      },
+                                      child: const Text('Accept'),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          minimumSize: const Size(30, 45),
+                                          maximumSize: const Size(30, 45)),
+                                      onPressed: () async {
+                                        changeClinician(
+                                          context: this.context,
+                                          msg: 'Confirm to Cancel the session',
+                                          type: 'Reject',
+                                          id: session!.sessionClinician!.id!,
+                                        );
+                                      },
+                                      child: Text(
+                                        'Reject',
+                                        style: textTheme.button?.copyWith(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 16),
+                            const SizedBox(height: 16),
+                          ],
                         ],
                       ),
                     ),

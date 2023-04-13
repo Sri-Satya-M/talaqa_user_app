@@ -56,7 +56,9 @@ class _SessionCardState extends State<SessionCard> {
                       horizontal: 12,
                     ),
                     child: Text(
-                      '${widget.session.status}',
+                      Helper.textCapitalization(
+                        text: widget.session.status!.split('_').join(' '),
+                      ),
                       style: textTheme.bodyText1?.copyWith(color: Colors.white),
                     ),
                   )
