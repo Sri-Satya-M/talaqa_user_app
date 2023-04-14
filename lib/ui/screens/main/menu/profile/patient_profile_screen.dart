@@ -141,29 +141,43 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                 ),
                 const SizedBox(height: 16),
                 const SizedBox(height: 8),
-                FutureBuilder<List<MedicalRecord>>(
-                  future: userBloc.getMedicalRecords(
-                    query: {'patientProfileId': profile.id},
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return CustomErrorWidget(error: snapshot.error);
-                    }
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Medical Reports',
+                      style: textTheme.subtitle2,
+                    ),
+                    const SizedBox(height: 4),
+                    FutureBuilder<List<MedicalRecord>>(
+                      future: userBloc.getMedicalRecords(
+                        query: {'patientProfileId': profile.id},
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return CustomErrorWidget(error: snapshot.error);
+                        }
 
-                    if (!snapshot.hasData) return const LoadingWidget();
+                        if (!snapshot.hasData) return const LoadingWidget();
 
-                    var medicalRecords = snapshot.data ?? [];
+                        var medicalRecords = snapshot.data ?? [];
 
-                    if (medicalRecords.isEmpty) return const SizedBox();
+                        if (medicalRecords.isEmpty) {
+                          return SizedBox(
+                            height: 20,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'No Medical Records on this Patient',
+                                  style: textTheme.caption,
+                                ),
+                              ],
+                            ),
+                          );
+                        };
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          'Medical Reports',
-                          style: textTheme.caption,
-                        ),
-                        ListView.separated(
+                        return ListView.separated(
                           itemCount: medicalRecords.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
@@ -213,10 +227,10 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                             );
                           },
                           separatorBuilder: (context, index) => const Divider(),
-                        ),
-                      ],
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 PatientProfileDashboard(
