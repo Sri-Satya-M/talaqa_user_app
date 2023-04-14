@@ -56,11 +56,9 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Patient Profile"),
-      ),
+      appBar: AppBar(title: const Text("Edit Patient Profile")),
       body: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
