@@ -9,9 +9,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../utils/helper.dart';
+import '../../../../widgets/date_picker.dart';
 import '../../../../widgets/image_picker.dart';
 
 class CreatePatient extends StatefulWidget {
@@ -27,6 +29,7 @@ class _CreatePatientState extends State<CreatePatient> {
   String? gender;
   File? profileImage;
   String relation = '';
+  var dateCtrl = TextEditingController();
   List<String> uploadKeys = [];
 
   final formKey = GlobalKey<FormState>();
@@ -171,15 +174,27 @@ class _CreatePatientState extends State<CreatePatient> {
                 ].toList(),
               ),
               const SizedBox(height: 12),
-              TextFormField(
-                onChanged: (value) {
-                  age = value;
+              DatePicker(
+                DateTime.now(),
+                dateCtrl: dateCtrl,
+                startDate: DateTime(1923),
+                hintText: 'Date Of Birth',
+                labelText: '',
+                onDateChange: () {
+                  age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
+                      .toString();
+                  setState(() {});
                 },
-                decoration: const InputDecoration(hintText: "Age*"),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                enabled: false,
+                decoration: const InputDecoration(hintText: "Age"),
                 keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                controller: TextEditingController(
+                  text:
+                      age.isEmpty ? '' : (age + (age == '1' ? ' yr' : ' yrs')),
+                ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return "Enter the age";
@@ -340,6 +355,8 @@ class _CreatePatientState extends State<CreatePatient> {
               "country": country,
               "gender": gender,
               "relation": relation,
+              "dob": DateFormat('yyyy-MM-dd')
+                  .format(DateTime.parse(dateCtrl.text)),
               if (profileImage != null) "image": imageResponse['key']
             };
 
