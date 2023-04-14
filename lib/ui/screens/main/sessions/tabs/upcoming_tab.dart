@@ -3,6 +3,7 @@ import 'package:alsan_app/model/session.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../bloc/user_bloc.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
@@ -20,9 +21,11 @@ class _UpcomingTabState extends State<UpcomingTab> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["PENDING", "APPROVED", "PAID", 'STARTED',"NEW_CLINICIAN_ASSIGNED"]
+        "status": ["PENDING", "APPROVED", "PAID", 'STARTED',"NEW_CLINICIAN_ASSIGNED"],
+        "patientId": userBloc.profile!.id,
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

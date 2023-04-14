@@ -70,22 +70,26 @@ class _SelectClinicianState extends State<SelectClinician> {
                 physics: const ScrollPhysics(),
                 itemBuilder: (context, index) => CustomCard(
                   radius: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: (sessionBloc.selectedClinician?.id ==
-                                clinicians[index].id)
-                            ? MyColors.primaryColor
-                            : Colors.transparent,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: (sessionBloc.selectedClinician?.id ==
+                                    clinicians[index].id)
+                                ? MyColors.primaryColor
+                                : Colors.transparent,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: ClinicianDetailsWidget(
+                          clinician: clinicians[index],
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ClinicianDetailsWidget(clinician: clinicians[index]),
-                        const Spacer(),
-                        Column(
+                      Positioned(
+                        bottom: 0,
+                        right: 5,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const SizedBox(height: 64),
@@ -100,8 +104,8 @@ class _SelectClinicianState extends State<SelectClinician> {
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

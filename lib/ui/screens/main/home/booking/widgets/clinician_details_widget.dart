@@ -26,55 +26,46 @@ class ClinicianDetailsWidget extends StatelessWidget {
             size: 72,
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              DetailsTile(
-                title: Text(
-                  clinician.user?.fullName ?? 'NA',
-                  style: textTheme.bodyText2,
+          DetailsTile(
+            title: Text(
+              clinician.user?.fullName ?? 'NA',
+              style: textTheme.bodyText2,
+            ),
+            value: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  clinician.designation ?? 'NA',
+                  style: textTheme.caption?.copyWith(
+                    color: MyColors.cerulean,
+                  ),
                 ),
-                value: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(height: 8),
+                Row(
                   children: [
-                    Text(
-                      clinician.designation ?? 'NA',
-                      style: textTheme.caption?.copyWith(
-                        color: MyColors.cerulean,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: MyColors.paleBlue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            '${clinician.experience} years Exp.',
-                            style: textTheme.subtitle2,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Image.asset(Images.voice, width: 12),
-                        const SizedBox(width: 8),
-                        Text(clinician.languagesKnown ?? 'NA')
-                      ],
-                    )
+                    Image.asset(Images.voice, width: 12),
+                    const SizedBox(width: 8),
+                    Text(clinician.languagesKnown ?? 'NA')
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 5,
+              horizontal: 10,
+            ),
+            decoration: BoxDecoration(
+              color: MyColors.paleBlue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              '${clinician.experience} years Exp.',
+              style: textTheme.subtitle2,
+            ),
           ),
         ],
       ),

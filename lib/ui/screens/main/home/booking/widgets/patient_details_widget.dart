@@ -25,7 +25,7 @@ class PatientDetailsWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(patient.fullName ?? 'NA'),
+              Text(patient.fullName ?? 'NA', style: textTheme.bodyText2),
               const SizedBox(height: 4),
               Row(
                 children: [
