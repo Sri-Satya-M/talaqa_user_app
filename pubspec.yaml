@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   agora_chat_sdk: ^1.0.9
   agora_rtc_engine: ^6.1.0
-  agora_uikit: ^1.1.2
   cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2

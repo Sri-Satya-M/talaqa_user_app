@@ -7,7 +7,8 @@ import 'custom_cache_interceptor.dart';
 class DioClient implements ApiClient {
   late Dio dio;
   String accessToken = "Bearer fiakb9318uishfsksn5oibbynn86gb3w";
-  String baseUrl = false ?  'https://api-alsan.7t6.in' : 'http://192.168.0.6:7000';
+  String baseUrl =
+      true ? 'https://api-alsan.7t6.in' : 'http://10.22.61.139:4040';
   String mapsKey = 'AIzaSyBTQ-RrVQbGz2ymNmdSkenm8vlkVR8Q_ec';
 
   DioClient() {
