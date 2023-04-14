@@ -66,7 +66,7 @@ class _MenuScreenState extends State<MenuScreen> {
       padding: const EdgeInsets.all(20),
       children: [
         Container(
-          padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: MyColors.profileCardColor,
             border: Border.all(color: Colors.grey.shade300),
@@ -74,8 +74,6 @@ class _MenuScreenState extends State<MenuScreen> {
               Radius.circular(10),
             ),
           ),
-          height: 140,
-          width: 320,
           child: Row(
             children: [
               Avatar(
@@ -139,11 +137,11 @@ class _MenuScreenState extends State<MenuScreen> {
           separatorBuilder: (context, index) => const Divider(),
         ),
         const SizedBox(height: 32),
-        Text("Privacy Policy", style: textTheme.subtitle1),
+        Text("Privacy Policy", style: textTheme.caption),
         const SizedBox(height: 16),
-        Text("Terms of Use", style: textTheme.subtitle1),
+        Text("Terms of Use", style: textTheme.caption),
         const SizedBox(height: 16),
-        Text("Cancellation & Refund Policy", style: textTheme.subtitle1)
+        Text("Cancellation & Refund Policy", style: textTheme.caption)
       ],
     );
   }
