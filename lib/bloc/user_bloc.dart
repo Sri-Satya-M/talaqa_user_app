@@ -115,8 +115,8 @@ class UserBloc with ChangeNotifier {
     return response.containsKey('id') ? true : false;
   }
 
-  Future<List<Clinician>> getClinicians() {
-    return _userRepo.getClinicians();
+  Future<List<Clinician>> getClinicians({query}) {
+    return _userRepo.getClinicians(query: query);
   }
 
   Future<List<Resources>> getResources({query}) {

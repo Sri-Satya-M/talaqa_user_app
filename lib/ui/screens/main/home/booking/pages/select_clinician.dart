@@ -33,7 +33,7 @@ class _SelectClinicianState extends State<SelectClinician> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<List<Clinician>>(
-        future: userBloc.getClinicians(),
+        future: userBloc.getClinicians(query: {}),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
