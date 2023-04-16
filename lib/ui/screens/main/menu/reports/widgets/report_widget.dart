@@ -1,10 +1,8 @@
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -28,36 +26,6 @@ class _ReportWidgetState extends State<ReportWidget> {
   @override
   void initState() {
     super.initState();
-    registerCallback();
-  }
-
-  void registerCallback() async {
-    ReceivePort _port = ReceivePort();
-    IsolateNameServer.registerPortWithName(
-        _port.sendPort, 'downloader_send_port');
-    _port.listen((dynamic data) {
-      String id = data[0];
-      DownloadTaskStatus status = data[1];
-      int progress = data[2];
-      setState(() {});
-    });
-
-    FlutterDownloader.registerCallback(downloadCallback);
-  }
-
-  @override
-  void dispose() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
-    super.dispose();
-  }
-
-  @pragma('vm:entry-point')
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
-    final SendPort? send = IsolateNameServer.lookupPortByName(
-      'downloader_send_port',
-    );
-    send?.send([id, status, progress]);
   }
 
   @override
@@ -124,13 +92,6 @@ class _ReportWidgetState extends State<ReportWidget> {
                   for (var report in reports) {
                     final externalDir = await getExternalStorageDirectory();
                     String url = '${report.fileUrl}';
-                    FlutterDownloader.enqueue(
-                      url: url,
-                      fileName: url.split('/').last,
-                      savedDir: externalDir?.path ?? '',
-                      showNotification: true,
-                      openFileFromNotification: true,
-                    );
                   }
                   ErrorSnackBar.show(context, 'Reports Downloaded');
                 } else {
