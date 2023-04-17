@@ -3,6 +3,7 @@ import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/error_screen.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -155,6 +156,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
   ];
 
   void onTap(int value) async {
+    if (widget.session.patient?.user?.mobileNumber == null ||
+        widget.session.patientAddress?.id == null ||
+        widget.session.patient?.user?.email == null) {
+      return ErrorSnackBar.show(
+        context,
+        'Kindly update mobile number, email, address to completed payment',
+      );
+    }
     switch (value) {
       case 0:
         ProgressUtils.handleProgress(context, task: () async {
