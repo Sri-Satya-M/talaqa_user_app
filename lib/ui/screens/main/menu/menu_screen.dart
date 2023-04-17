@@ -63,6 +63,8 @@ class _MenuScreenState extends State<MenuScreen> {
     var userBloc = Provider.of<UserBloc>(context, listen: true);
     var mainBloc = Provider.of<MainBloc>(context, listen: false);
     return ListView(
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
       padding: const EdgeInsets.all(20),
       children: [
         Container(
@@ -113,6 +115,7 @@ class _MenuScreenState extends State<MenuScreen> {
         const SizedBox(height: 16),
         ListView.separated(
           shrinkWrap: true,
+          physics: const ScrollPhysics(),
           itemCount: 6,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8),

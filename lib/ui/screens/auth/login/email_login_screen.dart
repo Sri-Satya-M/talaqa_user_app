@@ -24,13 +24,15 @@ class _EmailLoginState extends State<EmailLogin> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
+            SizedBox(height: size.height * 0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             const Text(
@@ -149,7 +151,6 @@ class _EmailLoginState extends State<EmailLogin> {
                 ),
               ],
             ),
-            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

@@ -22,13 +22,14 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
+            SizedBox(height: size.height*0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             const Text(
@@ -115,7 +116,6 @@ class _EmailScreenState extends State<EmailScreen> {
                 ),
               ],
             ),
-            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

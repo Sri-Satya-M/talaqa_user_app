@@ -25,12 +25,11 @@ class _MobileLoginState extends State<MobileLogin> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             const Text(
@@ -150,7 +149,6 @@ class _MobileLoginState extends State<MobileLogin> {
                 ),
               ],
             ),
-            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

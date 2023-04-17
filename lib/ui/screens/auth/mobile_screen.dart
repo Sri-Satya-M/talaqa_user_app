@@ -22,13 +22,14 @@ class _MobileScreenState extends State<MobileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
+            SizedBox(height: size.height*0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             const Text(
@@ -141,7 +142,6 @@ class _MobileScreenState extends State<MobileScreen> {
                 ),
               ],
             ),
-            const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),
