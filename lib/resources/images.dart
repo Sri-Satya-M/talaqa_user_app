@@ -32,6 +32,8 @@ class Images {
   static const download = 'assets/icons/download.png';
   static const upload = 'assets/icons/upload.png';
   static const timer = 'assets/icons/timer.png';
+  static const card = 'assets/icons/card.png';
+  static const cards = 'assets/icons/cards.png';
 
   ///images
   static const logo = 'assets/images/logo.png';
