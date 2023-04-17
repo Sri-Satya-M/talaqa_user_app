@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ResourcesScreen extends StatefulWidget {
+  const ResourcesScreen({super.key});
+
   @override
   _ResourcesScreenState createState() => _ResourcesScreenState();
 }

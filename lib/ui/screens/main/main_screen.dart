@@ -183,13 +183,13 @@ class _MainScreenState extends State<MainScreen> {
           builder: (context) {
             switch (mainBloc.index) {
               case 0:
-                return HomeScreen();
+                return const HomeScreen();
               case 1:
-                return BrowseScreen();
+                return const BrowseScreen();
               case 2:
-                return SessionScreen();
+                return const SessionScreen();
               case 3:
-                return ResourcesScreen();
+                return const ResourcesScreen();
               case 4:
                 return const MenuScreen();
               default:

@@ -7,6 +7,8 @@ import 'tabs/cancelled_tab.dart';
 import 'tabs/completed_tab.dart';
 
 class SessionScreen extends StatefulWidget {
+  const SessionScreen({super.key});
+
   @override
   _SessionScreenState createState() => _SessionScreenState();
 }

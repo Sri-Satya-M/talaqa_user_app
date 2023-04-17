@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'widgets/clinician_list.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -27,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
     var size = MediaQuery.of(context).size;
 
     return ListView(
+      shrinkWrap: true,
       padding: const EdgeInsets.all(16),
+      physics: const ScrollPhysics(),
       children: [
         CarouselSlider(
           items: [
