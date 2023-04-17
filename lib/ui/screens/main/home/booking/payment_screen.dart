@@ -184,7 +184,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
             child: InkWell(
               onTap: () async => onTap.call(index),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 32,
+                  horizontal: 24,
+                ),
                 child: Row(
                   children: [
                     DetailsTile(
@@ -192,7 +195,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       gap: 16,
                       value: Text(
                         'Pay with Card',
-                        style: textTheme.bodyText2,
+                        style: textTheme.bodyText2?.copyWith(fontSize: 16),
                       ),
                     ),
                     const Spacer(),
