@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:alsan_app/model/environment.dart';
+import 'package:alsan_app/ui/widgets/custom_card.dart';
+import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/error_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,6 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   late BillingDetails billingDetails;
-  final String _instructions = 'Tap on "Pay" Button to try PayTabs plugin';
 
   @override
   void initState() {
@@ -148,35 +149,60 @@ class _PaymentScreenState extends State<PaymentScreen> {
         'billingDetails: \n${billingDetails.name} \n${billingDetails.email} \n${billingDetails.phone} \n${billingDetails.addressLine} \n${billingDetails.country} \n${billingDetails.city} \n${billingDetails.state} \n${billingDetails.zipCode}');
   }
 
+  var list = [
+    {"title": 'Pay with Card', "value": 0},
+    {"title": 'Pay with Saved Card', "value": 1}
+  ];
+
+  void onTap(int value) async {
+    switch (value) {
+      case 0:
+        ProgressUtils.handleProgress(context, task: () async {
+          payPressed();
+        });
+
+        break;
+      case 1:
+        payWithSavedCards();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PayTabs Plugin Example App'),
+        title: const Text('Select Payment Method'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('$_instructions'),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () async {
-                ProgressUtils.handleProgress(context, task: () async {
-                  payPressed();
-                });
-              },
-              child: Text('Pay with Card'),
+      body: ListView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(16),
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return CustomCard(
+            child: InkWell(
+              onTap: () async => onTap.call(index),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    DetailsTile(
+                      title: Image.asset(Images.card, height: 25),
+                      gap: 16,
+                      value: Text(
+                        'Pay with Card',
+                        style: textTheme.bodyText2,
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.arrow_forward_ios_rounded)
+                  ],
+                ),
+              ),
             ),
-            TextButton(
-              onPressed: () async {
-                payWithSavedCards();
-              },
-              child: Text('Pay with saved cards'),
-            ),
-            const SizedBox(height: 16),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
