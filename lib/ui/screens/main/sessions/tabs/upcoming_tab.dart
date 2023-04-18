@@ -29,7 +29,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
     if (isFinished || isLoading) return;
     isLoading = true;
     try {
-      var limit = 3;
+      var limit = 20;
       var query = {
         "status": [
           "PENDING",

@@ -29,7 +29,7 @@ class _CompletedTabState extends State<CompletedTab> {
     if (isFinished || isLoading) return;
     isLoading = true;
     try {
-      var limit = 3;
+      var limit = 20;
       var query = {
         "status": ['COMPLETED', 'REPORT_SUBMITTED'],
         "patientId": userBloc.profile!.id,

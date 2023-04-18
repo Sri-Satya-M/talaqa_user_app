@@ -28,7 +28,7 @@ class _CancelledTabState extends State<CancelledTab> {
     if (isFinished || isLoading) return;
     isLoading = true;
     try {
-      var limit = 3;
+      var limit = 20;
       var query = {
         "status": ['CANCELLED', 'REJECTED'],
         "patientId": userBloc.profile!.id,
