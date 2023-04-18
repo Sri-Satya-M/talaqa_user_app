@@ -19,9 +19,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       builder: (context) {
         switch (mainBloc.tab) {
           case 0:
-            return ArticleScreen();
+            return const ArticleScreen();
           case 1:
-            return VideoScreen();
+            return const VideoScreen();
           default:
             return const SizedBox();
         }

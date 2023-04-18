@@ -8,94 +8,153 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/empty_widget.dart';
-import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
 
 class ArticleScreen extends StatefulWidget {
+  const ArticleScreen({super.key});
+
   @override
   _ArticleScreenState createState() => _ArticleScreenState();
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
+  bool isFinished = false;
+  bool isLoading = false;
+  bool isEmpty = false;
+  List<Resources> resources = [];
+
+  Future<void> fetchMore() async {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+
+    if (isFinished || isLoading) return;
+    isLoading = true;
+    try {
+      var limit = 20;
+      var query = {
+        'type': 'ARTICLE',
+        'offset': resources.length.toString(),
+        'limit': limit.toString(),
+      };
+
+      var list = await userBloc.getResources(query: query);
+      resources.addAll(list);
+
+      if (list.length < limit) isFinished = true;
+    } catch (e) {
+      isFinished = true;
+    }
+    isLoading = false;
+    isEmpty = resources.isEmpty;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
-    return FutureBuilder<List<Resources>>(
-        future: userBloc.getResources(query: {'type': 'ARTICLE'}),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return CustomErrorWidget(error: snapshot.error);
-          }
-          if (!snapshot.hasData) return const LoadingWidget();
-          var resources = snapshot.data ?? [];
-          if (resources.isEmpty) return const EmptyWidget();
-          return ListView.builder(
-            padding: const EdgeInsets.all(20),
-            itemCount: resources.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: InkWell(
-                  onTap: () {
-                    WebviewScreen.open(
-                      context,
-                      url: resources[index].link!,
-                      title: resources[index].title!,
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.black.withOpacity(0.05),
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(10),
-                        )),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 150,
-                          width: double.maxFinite,
-                          child: ImageFromNet(
-                            imageUrl: resources[index].thumbnail,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: (isEmpty)
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                EmptyWidget(message: "Articles not available at the moment"),
+              ],
+            )
+          : CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index == resources.length) {
+                        fetchMore();
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              children: [
+                                const LoadingWidget(),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Fetching Articles',
+                                  style: textTheme.caption!.copyWith(
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
                             ),
-                            fit: BoxFit.cover,
+                          ),
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: InkWell(
+                          onTap: () {
+                            WebviewScreen.open(
+                              context,
+                              url: resources[index].link!,
+                              title: resources[index].title!,
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.black.withOpacity(0.05),
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                )),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 150,
+                                  width: double.maxFinite,
+                                  child: ImageFromNet(
+                                    imageUrl: resources[index].thumbnail,
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                DetailsTile(
+                                  padding: const EdgeInsets.all(15),
+                                  gap: 8,
+                                  title: Text(resources[index].title!),
+                                  value: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        resources[index].description!,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: textTheme.caption,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Text(
+                                        "Read more",
+                                        style: TextStyle(
+                                            color: MyColors.primaryColor),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        DetailsTile(
-                          padding: const EdgeInsets.all(15),
-                          gap: 8,
-                          title: Text(resources[index].title!),
-                          value: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                resources[index].description!,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: textTheme.caption,
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                "Read more",
-                                style: TextStyle(color: MyColors.primaryColor),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
+                    childCount: resources.length + (isFinished ? 0 : 1),
                   ),
                 ),
-              );
-            },
-          );
-        });
+              ],
+            ),
+    );
   }
 }

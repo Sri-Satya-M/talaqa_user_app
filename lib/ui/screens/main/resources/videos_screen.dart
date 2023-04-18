@@ -7,11 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/empty_widget.dart';
-import '../../../widgets/error_widget.dart';
 import '../../../widgets/image_from_net.dart';
 import '../../../widgets/loading_widget.dart';
 
 class VideoScreen extends StatefulWidget {
+  const VideoScreen({super.key});
+
   @override
   _VideoScreenState createState() => _VideoScreenState();
 
@@ -19,69 +20,131 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  bool isFinished = false;
+  bool isLoading = false;
+  bool isEmpty = false;
+  List<Resources> videos = [];
+
+  Future<void> fetchMore() async {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+
+    if (isFinished || isLoading) return;
+    isLoading = true;
+    try {
+      var limit = 20;
+      var query = {
+        'type': "VIDEO",
+        'offset': videos.length.toString(),
+        'limit': limit.toString(),
+      };
+
+      var list = await userBloc.getResources(query: query);
+      videos.addAll(list);
+
+      if (list.length < limit) isFinished = true;
+    } catch (e) {
+      isFinished = true;
+    }
+    isLoading = false;
+    isEmpty = videos.isEmpty;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
-    return FutureBuilder<List<Resources>>(
-      future: userBloc.getResources(query: {'type': "VIDEO"}),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return CustomErrorWidget(error: snapshot.error);
-        if (!snapshot.hasData) return const LoadingWidget();
-        var resources = snapshot.data ?? [];
-        if (resources.isEmpty) return const EmptyWidget();
-        return ListView.builder(
-          itemCount: resources.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                PlayVideoScreen.open(context, link: resources[index].link!);
-              },
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    width: 2,
-                    color: Colors.black.withOpacity(0.05),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: (isEmpty)
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                EmptyWidget(message: "Videos not available at the moment"),
+              ],
+            )
+          : CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index == videos.length) {
+                        fetchMore();
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              children: [
+                                const LoadingWidget(),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'Fetching Videos',
+                                  style: textTheme.caption!.copyWith(
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          PlayVideoScreen.open(
+                            context,
+                            link: videos[index].link!,
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.black.withOpacity(0.05),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 150,
+                                width: double.maxFinite,
+                                child: ImageFromNet(
+                                  imageUrl: videos[index].thumbnail,
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10),
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              DetailsTile(
+                                padding: const EdgeInsets.all(15),
+                                gap: 15,
+                                title: Text(videos[index].title!),
+                                value: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Updated on ${DateFormat('dd MMM, yyyy').format(videos[index].updatedAt!)}',
+                                      style: textTheme.caption,
+                                    ),
+                                    const Icon(Icons.share, size: 18)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    childCount: videos.length + (isFinished ? 0 : 1),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 150,
-                      width: double.maxFinite,
-                      child: ImageFromNet(
-                        imageUrl: resources[index].thumbnail,
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          topLeft: Radius.circular(10),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    DetailsTile(
-                      padding: const EdgeInsets.all(15),
-                      gap: 15,
-                      title: Text(resources[index].title!),
-                      value: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Updated on ${DateFormat('dd MMM, yyyy').format(resources[index].updatedAt!)}',
-                            style: textTheme.caption,
-                          ),
-                          const Icon(Icons.share, size: 18)
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
+              ],
+            ),
     );
   }
 }
