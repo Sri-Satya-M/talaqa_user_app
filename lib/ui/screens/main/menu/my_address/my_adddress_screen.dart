@@ -27,6 +27,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
       appBar: AppBar(title: const Text('My Addresses')),
       body: ListView(
         shrinkWrap: true,
+        physics: const ScrollPhysics(),
         padding: const EdgeInsets.all(20),
         children: [
           GestureDetector(
@@ -74,6 +75,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
 
               return ListView.builder(
                 shrinkWrap: true,
+                physics: const ScrollPhysics(),
                 itemCount: addressList.length,
                 itemBuilder: (context, index) {
                   return AddressCard(
