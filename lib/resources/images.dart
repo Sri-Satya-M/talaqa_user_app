@@ -35,6 +35,15 @@ class Images {
   static const card = 'assets/icons/card.png';
   static const cards = 'assets/icons/cards.png';
 
+  static const sessionNotify = "assets/icons/notify/session_notify.png";
+  static const clinicianNotify = "assets/icons/notify/clinician_notify.png";
+  static const sessionStart = "assets/icons/notify/session_start.png";
+  static const twelveHrWindowNotify = "assets/icons/notify/twelve_hr_window_notify.png";
+  static const paymentNotify = "assets/icons/notify/payment_notify.png";
+  static const clinicianSignupNotify = "assets/icons/notify/clinician_signup_notify.png";
+  static const userSignupNotify = "assets/icons/notify/user_signup_notify.png";
+  static const resourceNotify = "assets/icons/notify/resource.png";
+
   ///images
   static const logo = 'assets/images/logo.png';
   static const onBoardingImage = 'assets/images/onboarding.png';
