@@ -5,7 +5,6 @@ import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/menu/my_address/my_adddress_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
-import 'package:alsan_app/ui/screens/main/menu/refer/refer_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/utils/helper.dart';
@@ -19,49 +18,42 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
-  List<Map<String, dynamic>> userList = [
-    {
-      'image': Images.profileIcon,
-      'title': 'Profile',
-      'screen': ProfileScreen()
-    },
-    {
-      'image': Images.address,
-      'title': 'My Address',
-      'screen': MyAddressScreen(),
-    },
-    {
-      'image': Images.sessionsIcon,
-      'title': 'My Sessions',
-    },
-    {
-      'image': Images.reportIcon,
-      'title': 'My Reports',
-      'screen': ReportScreen()
-    },
-    {
-      'image': Images.supportIcon,
-      'title': 'Support',
-      'screen': ProfileScreen()
-    },
-    {
-      'image': Images.referIcon,
-      'title': 'Refer a friend',
-      'screen': ReferScreen(),
-    },
-    {
-      'image': Images.faqIcon,
-      'title': 'FAQ',
-      'screen': ProfileScreen(),
-    },
-  ];
-
+class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
-    var mainBloc = Provider.of<MainBloc>(context, listen: false);
+
+    List<Map<String, dynamic>> userList = [
+      {
+        'image': Images.profileIcon,
+        'title': 'Profile',
+      },
+      {
+        'image': Images.address,
+        'title': 'My Address',
+      },
+      {
+        'image': Images.sessionsIcon,
+        'title': 'My Sessions',
+      },
+      {
+        'image': Images.reportIcon,
+        'title': 'My Reports',
+      },
+      {
+        'image': Images.supportIcon,
+        'title': 'Support',
+      },
+      {
+        'image': Images.referIcon,
+        'title': 'Refer a friend',
+      },
+      {
+        'image': Images.faqIcon,
+        'title': 'FAQ',
+      },
+    ];
     return ListView(
       shrinkWrap: true,
       physics: const ScrollPhysics(),
@@ -122,19 +114,7 @@ class _MenuScreenState extends State<MenuScreen> {
             child: MenuList(
               icon: userList[index]['image'],
               title: userList[index]['title'],
-              onTap: () {
-                switch (index) {
-                  case 2:
-                    mainBloc.changeIndex(2);
-                    return;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => userList[index]['screen'],
-                  ),
-                );
-              },
+              onTap: () => onTap.call(index),
             ),
           ),
           separatorBuilder: (context, index) => const Divider(),
@@ -146,6 +126,43 @@ class _MenuScreenState extends State<MenuScreen> {
         const SizedBox(height: 16),
         Text("Cancellation & Refund Policy", style: textTheme.caption)
       ],
+    );
+  }
+
+  onTap(int index) {
+    var mainBloc = Provider.of<MainBloc>(context, listen: false);
+    var screen;
+    switch (index) {
+      case 0:
+        screen = const ProfileScreen();
+        break;
+      case 1:
+        screen = const MyAddressScreen();
+        break;
+      case 2:
+        mainBloc.tabController = TabController(
+          initialIndex: 0,
+          length: mainBloc.tabLength(2),
+          vsync: this,
+        );
+        return mainBloc.changeIndex(2);
+
+      case 3:
+        screen = const ReportScreen();
+        break;
+      case 4:
+        screen = const ProfileScreen();
+        break;
+      case 5:
+        screen = const ProfileScreen();
+        break;
+      default:
+        return;
+    }
+
+    return Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => screen),
     );
   }
 }

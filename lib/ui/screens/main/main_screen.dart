@@ -31,19 +31,7 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  late TabController tabController;
-
-  int tabLength(int index) {
-    switch (index) {
-      case 2:
-        return 3;
-      case 3:
-        return 2;
-    }
-    return 0;
-  }
-
+class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   void _handleMessage(RemoteMessage? message,
       {var localNotificationMessage}) async {
     var data = message?.data;
@@ -78,6 +66,10 @@ class _MainScreenState extends State<MainScreen> {
       context: context,
       handleMessage: _handleMessage,
     );
+    context.read<MainBloc>().tabController = TabController(
+      length: 0,
+      vsync: this,
+    );
   }
 
   @override
@@ -86,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
     return DefaultTabController(
-      length: tabLength(mainBloc.index),
+      length: mainBloc.tabLength(mainBloc.index),
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 16,
@@ -102,17 +94,16 @@ class _MainScreenState extends State<MainScreen> {
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(
-              tabLength(mainBloc.index) > 0 ? 40 : 0,
+              mainBloc.tabLength(mainBloc.index) > 0 ? 40 : 0,
             ),
             child: Builder(
               builder: (context) {
                 switch (mainBloc.index) {
                   case 2:
                     return TabBar(
+                      controller: mainBloc.tabController,
                       onTap: (value) {
-                        setState(() {
-                          mainBloc.changeTab(value);
-                        });
+                        mainBloc.changeTab(value);
                       },
                       tabs: const [
                         Tab(text: 'Upcoming'),
@@ -122,10 +113,9 @@ class _MainScreenState extends State<MainScreen> {
                     );
                   case 3:
                     return TabBar(
+                      controller: mainBloc.tabController,
                       onTap: (value) {
-                        setState(() {
-                          mainBloc.changeTab(value);
-                        });
+                        mainBloc.changeTab(value);
                       },
                       tabs: const [
                         Tab(text: 'Articles'),
@@ -145,9 +135,12 @@ class _MainScreenState extends State<MainScreen> {
           type: BottomNavigationBarType.fixed,
           currentIndex: mainBloc.index,
           onTap: (value) {
-            setState(() {
-              mainBloc.changeIndex(value);
-            });
+            mainBloc.tabController = TabController(
+              initialIndex: 0,
+              length: mainBloc.tabLength(value),
+              vsync: this,
+            );
+            mainBloc.changeIndex(value);
           },
           selectedItemColor: MyColors.cerulean,
           unselectedItemColor: Colors.grey,

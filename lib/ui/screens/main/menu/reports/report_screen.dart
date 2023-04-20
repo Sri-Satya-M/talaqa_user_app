@@ -9,6 +9,8 @@ import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 
 class ReportScreen extends StatefulWidget {
+  const ReportScreen({super.key});
+
   @override
   _ReportScreenState createState() => _ReportScreenState();
 }

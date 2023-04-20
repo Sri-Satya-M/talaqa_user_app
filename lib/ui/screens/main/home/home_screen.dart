@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   var banners = [Images.topBanner1];
   int bannerIndex = 0;
 
@@ -103,7 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
         Text("Resources", style: textTheme.bodyText1),
         const SizedBox(height: 16),
         GestureDetector(
-          onTap: () => mainBloc.changeIndex(3),
+          onTap: () {
+            mainBloc.tabController = TabController(
+              initialIndex: 0,
+              length: mainBloc.tabLength(3),
+              vsync: this,
+            );
+            mainBloc.changeIndex(3);
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
