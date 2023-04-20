@@ -11,6 +11,8 @@ class Prefs {
   static const String phone = "phone";
   static const String avatar = "avatar";
   static const String brightness = "brightness";
+  static const String lang = "language";
+  static const String appLang = "app_language";
 
   static Future<bool> clearPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -127,5 +129,25 @@ class Prefs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(list);
     return prefs.setStringList('search', list);
+  }
+
+  static Future<bool?> getAppLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(appLang);
+  }
+
+  static Future<bool> setAppLanguage(bool toApp) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(appLang, toApp);
+  }
+
+  static Future<String?> getLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(lang);
+  }
+
+  static Future<bool> setLanguage(String language) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(lang, language);
   }
 }

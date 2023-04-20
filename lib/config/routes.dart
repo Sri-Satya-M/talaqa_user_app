@@ -4,7 +4,6 @@ import 'package:flutter/material.dart' as f;
 import '../ui/screens/auth/email_screen.dart';
 import '../ui/screens/auth/mobile_screen.dart';
 import '../ui/screens/auth/sign_up_screen.dart';
-import '../ui/screens/language/language_screen.dart';
 import '../ui/screens/onboarding/onboarding_screen.dart';
 import '../ui/screens/splash/splash_screen.dart';
 
@@ -26,7 +25,6 @@ extension RouteString on String {
 
 class Routes {
   static String root = '/';
-  static String language = '/language';
   static String onBoarding = "/onBoarding";
   static String signUp = "/signUp";
   static String mobile = "/mobile";
@@ -39,12 +37,6 @@ class Routes {
     router.define(
       root,
       handler: rootHandler,
-      transitionType: TransitionType.material,
-    );
-
-    router.define(
-      language,
-      handler: languageHandler,
       transitionType: TransitionType.material,
     );
 
@@ -90,10 +82,6 @@ var notFoundHandler = Handler(
 
 var rootHandler = Handler(
   handlerFunc: (context, params) => const SplashScreen(),
-);
-
-var languageHandler = Handler(
-  handlerFunc: (context, params) => const LanguageScreen(),
 );
 
 var onBoardingHandler = Handler(

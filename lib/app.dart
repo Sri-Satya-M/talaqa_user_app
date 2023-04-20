@@ -9,6 +9,7 @@ import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
 
 import 'bloc/agora_bloc.dart';
+import 'bloc/language_bloc.dart';
 import 'bloc/progress_bloc.dart';
 import 'config/application.dart';
 import 'config/routes.dart';
@@ -17,7 +18,9 @@ import 'ui/widgets/progress_block_widget.dart';
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
-  App({Key? key}) : super(key: key) {
+  final LangBloc langBloc;
+
+  App({Key? key, required this.langBloc}) : super(key: key) {
     final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
@@ -34,11 +37,12 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => SessionBloc()),
           ChangeNotifierProvider(create: (_) => LocationBloc()),
           ChangeNotifierProvider(create: (_) => AgoraBloc()),
+          ChangeNotifierProvider.value(value: langBloc),
         ],
         child: ProgressBlockWidget(
           child: MaterialApp(
             navigatorKey: navigatorKey,
-            title: 'ALSAN',
+            title: 'Talaqa',
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router?.generator,

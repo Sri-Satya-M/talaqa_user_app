@@ -19,20 +19,22 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2), () async {
       var token = await Prefs.getToken();
 
-      var nextScreen = (token == null) ? LanguageScreen() : MainScreen();
-      if(token != null)
-        {
-          var userBloc = Provider.of<UserBloc>(context, listen: false);
-          await userBloc.getProfile();
-        }
+      // var nextScreen = (token == null) ? LanguageScreen() : MainScreen();
+      if (token == null) {
+        await LanguageScreen.open(context: context, isFromLogin: true);
+      }
 
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => nextScreen,
-        ),
-        (route) => false,
-      );
+      if (token != null) {
+        var userBloc = Provider.of<UserBloc>(context, listen: false);
+        await userBloc.getProfile();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+          (route) => false,
+        );
+      }
+
+      return;
     });
   }
 
