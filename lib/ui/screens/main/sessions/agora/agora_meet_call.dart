@@ -371,7 +371,6 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     audioIcon = AssetImage((audio) ? Images.mic : Images.micOff);
 
     await agoraEngine.muteLocalAudioStream(!audio);
-    await agoraEngine.setEnableSpeakerphone(audio);
     setState(() {});
   }
 
