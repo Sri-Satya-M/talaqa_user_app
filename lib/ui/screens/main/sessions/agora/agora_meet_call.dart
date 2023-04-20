@@ -143,7 +143,6 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     if (widget.session.consultationMode == "VIDEO") {
       agoraEngine.enableVideo();
     }
-    await agoraEngine.setDefaultAudioRouteToSpeakerphone(true);
 
     // Set channel options including the client role and channel profile
     ChannelMediaOptions options = const ChannelMediaOptions(
@@ -186,13 +185,17 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                AgoraChatScreen.open(context,
-                    token: widget.token,
-                    session: widget.session,
-                    agoraEngine: agoraEngine,
-                    streamId: streamId!, onMessage: (Message chat) {
-                  this.chat.add(chat);
-                }, chat: chat);
+                AgoraChatScreen.open(
+                  context,
+                  token: widget.token,
+                  session: widget.session,
+                  agoraEngine: agoraEngine,
+                  streamId: streamId!,
+                  chat: chat,
+                  onMessage: (Message chat) {
+                    this.chat.add(chat);
+                  },
+                );
               },
               icon: const Icon(Icons.chat),
             ),
@@ -368,6 +371,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     audioIcon = AssetImage((audio) ? Images.mic : Images.micOff);
 
     await agoraEngine.muteLocalAudioStream(!audio);
+    await agoraEngine.setEnableSpeakerphone(audio);
     setState(() {});
   }
 
@@ -385,7 +389,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
       (volume) ? Icons.volume_up_outlined : Icons.volume_down_outlined,
     );
 
-    await agoraEngine.setDefaultAudioRouteToSpeakerphone(volume);
+    await agoraEngine.setEnableSpeakerphone(volume);
     setState(() {});
   }
 
