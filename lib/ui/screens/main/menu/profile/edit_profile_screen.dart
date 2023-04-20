@@ -40,7 +40,7 @@ class _EditProfileState extends State<EditProfile> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile"),
+        title: const Text("Edit Profile"),
       ),
       body: Form(
         key: formKey,
@@ -195,7 +195,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: ProgressButton(
           onPressed: () async {
             if (!formKey.currentState!.validate()) {
@@ -217,7 +217,7 @@ class _EditProfileState extends State<EditProfile> {
             await userBloc.updateProfile(body: body);
             Navigator.pop(context);
           },
-          child: Text("Save Changes"),
+          child: const Text("Save Changes"),
         ),
       ),
     );

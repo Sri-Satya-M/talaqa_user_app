@@ -58,172 +58,173 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
     return Scaffold(
       appBar: AppBar(title: const Text("Edit Patient Profile")),
       body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  (profileImage == null)
-                      ? Avatar(
-                          url: widget.profile.image,
-                          name: widget.profile.fullName,
-                          borderRadius: BorderRadius.circular(20),
-                          size: 90,
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.file(
-                            profileImage!,
-                            width: 90,
-                            height: 90,
-                          ),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                (profileImage == null)
+                    ? Avatar(
+                        url: widget.profile.image,
+                        name: widget.profile.fullName,
+                        borderRadius: BorderRadius.circular(20),
+                        size: 90,
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.file(
+                          profileImage!,
+                          width: 90,
+                          height: 90,
                         ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        profileImage = await ImagePickerContainer.getImage(
-                            context, ImageSource.gallery);
-                        setState(() {});
-                      },
-                      child: const Icon(Icons.edit),
-                    ),
-                  )
-                ],
+                      ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: () async {
+                      profileImage = await ImagePickerContainer.getImage(
+                          context, ImageSource.gallery);
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.edit),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: name,
+              decoration: const InputDecoration(
+                hintText: "Name*",
               ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: name,
-                decoration: const InputDecoration(
-                  hintText: "Name*",
-                ),
-                keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter the name';
-                  }
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Enter the name';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 12),
+            DatePicker(
+              DateTime.now(),
+              dateCtrl: dateCtrl,
+              startDate: DateTime(1923),
+              hintText: 'Date Of Birth',
+              labelText: '',
+              onDateChange: () {
+                age.text = Helper.calculateAge(DateTime.parse(dateCtrl.text))
+                    .toString();
+              },
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: age,
+              decoration: const InputDecoration(hintText: "Age*"),
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Enter the age";
+                } else {
                   return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              DatePicker(
-                DateTime.now(),
-                dateCtrl: dateCtrl,
-                startDate: DateTime(1923),
-                hintText: 'Date Of Birth',
-                labelText: '',
-                onDateChange: () {
-                  age.text = Helper.calculateAge(DateTime.parse(dateCtrl.text))
-                      .toString();
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: age,
-                decoration: const InputDecoration(hintText: "Age*"),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Enter the age";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField(
-                value: widget.profile.gender,
-                onChanged: (value) {
-                  gender.text = value.toString();
-                },
-                decoration: const InputDecoration(hintText: "Select Gender*"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter the gender";
-                  } else {
-                    return null;
-                  }
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: "MALE",
-                    child: Text("Male"),
-                  ),
-                  DropdownMenuItem(
-                    value: "FEMALE",
-                    child: Text("Female"),
-                  ),
-                  DropdownMenuItem(
-                    value: "OTHER",
-                    child: Text("Other"),
-                  )
-                ].toList(),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField(
-                value: widget.profile.city,
-                onChanged: (value) {
-                  city.text = value.toString();
-                },
-                decoration: const InputDecoration(hintText: "City*"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter the city";
-                  } else {
-                    return null;
-                  }
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: "Agra",
-                    child: Text("Agra"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Hyderabad",
-                    child: Text("Hyderabad"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Delhi",
-                    child: Text("Delhi"),
-                  )
-                ],
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField(
-                value: widget.profile.country,
-                onChanged: (value) {
-                  country.text = value.toString();
-                },
-                decoration: const InputDecoration(hintText: "Country*"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter the country";
-                  } else {
-                    return null;
-                  }
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: "India",
-                    child: Text("India"),
-                  ),
-                  DropdownMenuItem(
-                    value: "USA",
-                    child: Text("USA"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Dubai",
-                    child: Text("Dubai"),
-                  )
-                ],
-              ),
-            ],
-          )),
+                }
+              },
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField(
+              value: widget.profile.gender,
+              onChanged: (value) {
+                gender.text = value.toString();
+              },
+              decoration: const InputDecoration(hintText: "Select Gender*"),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter the gender";
+                } else {
+                  return null;
+                }
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: "MALE",
+                  child: Text("Male"),
+                ),
+                DropdownMenuItem(
+                  value: "FEMALE",
+                  child: Text("Female"),
+                ),
+                DropdownMenuItem(
+                  value: "OTHER",
+                  child: Text("Other"),
+                )
+              ].toList(),
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField(
+              value: widget.profile.city,
+              onChanged: (value) {
+                city.text = value.toString();
+              },
+              decoration: const InputDecoration(hintText: "City*"),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter the city";
+                } else {
+                  return null;
+                }
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: "Agra",
+                  child: Text("Agra"),
+                ),
+                DropdownMenuItem(
+                  value: "Hyderabad",
+                  child: Text("Hyderabad"),
+                ),
+                DropdownMenuItem(
+                  value: "Delhi",
+                  child: Text("Delhi"),
+                )
+              ],
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField(
+              value: widget.profile.country,
+              onChanged: (value) {
+                country.text = value.toString();
+              },
+              decoration: const InputDecoration(hintText: "Country*"),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter the country";
+                } else {
+                  return null;
+                }
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: "India",
+                  child: Text("India"),
+                ),
+                DropdownMenuItem(
+                  value: "USA",
+                  child: Text("USA"),
+                ),
+                DropdownMenuItem(
+                  value: "Dubai",
+                  child: Text("Dubai"),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(
           left: 20,

@@ -48,7 +48,7 @@ class _CreatePatientState extends State<CreatePatient> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text("Patient Profile")),
+      appBar: AppBar(title: const Text("Patient Profile")),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(

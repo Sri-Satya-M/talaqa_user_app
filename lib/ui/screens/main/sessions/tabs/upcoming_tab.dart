@@ -64,7 +64,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              EmptyWidget(message: "No Completed Sessions"),
+              EmptyWidget(message: "No Upcoming Sessions"),
             ],
           )
         : CustomScrollView(

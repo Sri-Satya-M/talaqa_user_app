@@ -17,19 +17,22 @@ class _SessionScreenState extends State<SessionScreen> {
   @override
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: true);
-    return Builder(
-      builder: (context) {
-        switch (mainBloc.tab) {
-          case 0:
-            return const UpcomingTab();
-          case 1:
-            return const CompletedTab();
-          case 2:
-            return const CancelledTab();
-          default:
-            return const SizedBox();
-        }
-      },
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Builder(
+        builder: (context) {
+          switch (mainBloc.tab) {
+            case 0:
+              return const UpcomingTab();
+            case 1:
+              return const CompletedTab();
+            case 2:
+              return const CancelledTab();
+            default:
+              return const SizedBox();
+          }
+        },
+      ),
     );
   }
 }

@@ -20,28 +20,29 @@ class _ReportScreenState extends State<ReportScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('My Reports')),
       body: FutureBuilder<List<Session>>(
-          future: sessionBloc.getSessions(query: {
-            "status": ["REPORT_SUBMITTED"]
-          }),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return CustomErrorWidget(error: snapshot.error);
-            }
+        future: sessionBloc.getSessions(query: {
+          "status": ["REPORT_SUBMITTED"]
+        }),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return CustomErrorWidget(error: snapshot.error);
+          }
 
-            if (!snapshot.hasData) return const LoadingWidget();
+          if (!snapshot.hasData) return const LoadingWidget();
 
-            var sessions = snapshot.data ?? [];
+          var sessions = snapshot.data ?? [];
 
-            if (sessions.isEmpty) return const EmptyWidget();
+          if (sessions.isEmpty) return const EmptyWidget();
 
-            return ListView.builder(
-              padding: const EdgeInsets.all(20),
-              itemCount: sessions.length,
-              itemBuilder: (context, index) {
-                return ReportWidget(session: sessions[index]);
-              },
-            );
-          }),
+          return ListView.builder(
+            padding: const EdgeInsets.all(20),
+            itemCount: sessions.length,
+            itemBuilder: (context, index) {
+              return ReportWidget(session: sessions[index]);
+            },
+          );
+        },
+      ),
     );
   }
 }
