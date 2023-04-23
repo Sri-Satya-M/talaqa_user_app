@@ -1,10 +1,13 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/auth/login/email_login_screen.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/routes.dart';
+import '../../../resources/strings.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -26,12 +30,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const Expanded(flex: 1, child: SizedBox()),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
-            const Text(
-              "Welcome!",
+            Text(
+              langBloc.getString(Strings.welcomeBack),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
             ),
-            const Text("create an account", textAlign: TextAlign.center),
+            Text(
+              langBloc.getString(Strings.enter10DigitMobileNumber),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
@@ -41,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   (route) => false,
                 );
               },
-              child: const Text("Sign Up With Mobile Number"),
+              child: Text(langBloc.getString(Strings.signUpWithMobileNumber)),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -56,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 );
               },
               child: Text(
-                "Sign Up With Email Address",
+                langBloc.getString(Strings.signUpWithEmailAddress),
                 style: textTheme.button?.copyWith(color: Colors.black),
               ),
             ),
@@ -64,7 +71,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Already an existing user?\t"),
+                Text(
+                  "${langBloc.getString(Strings.signUpWithMobileNumber)}?\t",
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -72,9 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       MaterialPageRoute(builder: (context) => EmailLogin()),
                     );
                   },
-                  child: const Text(
-                    "Login to your account",
-                    style: TextStyle(color: MyColors.primaryColor),
+                  child: Text(
+                    langBloc.getString(Strings.loginToYourAccount),
+                    style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 )
               ],

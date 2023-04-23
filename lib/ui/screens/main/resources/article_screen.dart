@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/resources.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -7,6 +8,7 @@ import 'package:alsan_app/ui/widgets/webview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/loading_widget.dart';
 
@@ -51,14 +53,19 @@ class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: (isEmpty)
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                EmptyWidget(message: "Articles not available at the moment"),
+              children: [
+                EmptyWidget(
+                  message: langBloc.getString(
+                    Strings.articlesNotAvailableAtTheMoment,
+                  ),
+                ),
               ],
             )
           : CustomScrollView(
@@ -77,7 +84,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 const LoadingWidget(),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Fetching Articles',
+                                  langBloc.getString(Strings.fetchingArticles),
                                   style: textTheme.caption!.copyWith(
                                     fontSize: 14,
                                   ),
@@ -136,10 +143,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                         style: textTheme.caption,
                                       ),
                                       const SizedBox(height: 8),
-                                      const Text(
-                                        "Read more",
-                                        style: TextStyle(
-                                            color: MyColors.primaryColor),
+                                      Text(
+                                        langBloc.getString(Strings.readMore),
+                                        style: const TextStyle(
+                                          color: MyColors.primaryColor,
+                                        ),
                                       )
                                     ],
                                   ),

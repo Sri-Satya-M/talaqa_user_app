@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/location_bloc.dart';
 import 'package:alsan_app/ui/screens/location/widgets/location_search_box.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
@@ -10,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/strings.dart';
 import '../main/home/booking/pages/add_address_screen.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -56,6 +58,7 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     var locationBloc = Provider.of<LocationBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -111,7 +114,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
               );
             },
-            child: const Text('Confirm Location'),
+            child: Text("${langBloc.getString(Strings.confirmLocation)}",),
           ),
         ),
       ),

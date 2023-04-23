@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -8,6 +9,8 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../resources/strings.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -22,6 +25,7 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -29,13 +33,13 @@ class _EmailScreenState extends State<EmailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: size.height*0.05),
+            SizedBox(height: size.height * 0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
-            const Text(
-              "Sign up with Email Address",
+            Text(
+              langBloc.getString(Strings.signUpWithEmailAddress),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 20),
             TextFormField(
@@ -44,15 +48,18 @@ class _EmailScreenState extends State<EmailScreen> {
               },
               style: const TextStyle(color: Colors.black),
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                hintText: "Enter your email ID",
+              decoration: InputDecoration(
+                hintText: langBloc.getString(Strings.enterYourEmailId),
               ),
             ),
             const SizedBox(height: 32),
             ProgressButton(
               onPressed: () async {
                 if (!emailId.contains("@") || !emailId.contains(".")) {
-                  return ErrorSnackBar.show(context, "Add Valid email ID");
+                  return ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(Strings.addValidEmailId),
+                  );
                 }
 
                 var body = {"type": "EMAIL", "email": emailId};
@@ -61,12 +68,13 @@ class _EmailScreenState extends State<EmailScreen> {
                     await userBloc.sendOTP(body: body) as Map<String, dynamic>;
 
                 if (!response.containsKey('token')) {
-                  return ErrorSnackBar.show(context, "Invalid Error");
+                  return ErrorSnackBar.show(
+                      context, langBloc.getString(Strings.invalidError));
                 }
                 userBloc.username = emailId;
                 OtpScreen.open(context, token: response['token']);
               },
-              child: const Text("Get OTP"),
+              child: Text(langBloc.getString(Strings.getOtp)),
             ),
             const SizedBox(height: 32),
             Row(
@@ -78,7 +86,7 @@ class _EmailScreenState extends State<EmailScreen> {
                   height: 1,
                   color: Colors.black.withOpacity(0.2),
                 ),
-                const Text("or"),
+                Text(langBloc.getString(Strings.or)),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   width: 50,
@@ -95,13 +103,13 @@ class _EmailScreenState extends State<EmailScreen> {
                   (route) => false,
                 );
               },
-              child: const Text("Sign Up With Mobile Number"),
+              child: Text(langBloc.getString(Strings.signUpWithMobileNumber)),
             ),
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Already an existing user?\t"),
+                Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -109,9 +117,9 @@ class _EmailScreenState extends State<EmailScreen> {
                       MaterialPageRoute(builder: (context) => EmailLogin()),
                     );
                   },
-                  child: const Text(
-                    "Login to your account",
-                    style: TextStyle(color: MyColors.primaryColor),
+                  child: Text(
+                    langBloc.getString(Strings.loginToYourAccount),
+                    style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 ),
               ],

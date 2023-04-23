@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/time_slots_widget.dart';
@@ -6,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 
 class SlotBooking extends StatefulWidget {
   final Function onTap;
@@ -26,6 +28,7 @@ class _SlotBookingState extends State<SlotBooking> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -39,21 +42,21 @@ class _SlotBookingState extends State<SlotBooking> {
         physics: const ScrollPhysics(),
         children: [
           Text(
-            'Select Date',
+            langBloc.getString(Strings.selectDate),
             style: textTheme.caption?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 8),
           buildCalendar(),
           const SizedBox(height: 16),
           Text(
-            'Available Time Slots',
+          langBloc.getString(Strings.availableTimeSlots),
             style: textTheme.caption?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 16),
           const TimeSlotsWidget(),
           const SizedBox(height: 16),
           Text(
-            'Description',
+            langBloc.getString(Strings.description),
             style: textTheme.caption?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 8),

@@ -1,9 +1,15 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../resources/strings.dart';
 
 class ReferScreen extends StatefulWidget {
+  const ReferScreen({super.key});
+
   @override
   _ReferScreenState createState() => _ReferScreenState();
 }
@@ -12,10 +18,9 @@ class _ReferScreenState extends State<ReferScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Refer a friend"),
-      ),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.referAFriend))),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 62, vertical: 82),
         child: Column(
@@ -27,13 +32,14 @@ class _ReferScreenState extends State<ReferScreen> {
               width: 182,
             ),
             const SizedBox(height: 12),
-            const Text(
-              "Refer to your friend and get \n a reward",
+            Text(
+              langBloc.getString(Strings.referToYourFriendAndGetAReward),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              "Share this link with your friends and after there install, both of you will get rewards.",
+              langBloc.getString(Strings
+                  .shareThisLinkWithYourFriendsAndAfterTheyInstallBothOfYouWillGetRewards),
               textAlign: TextAlign.center,
               style: textTheme.caption,
             ),
@@ -58,7 +64,7 @@ class _ReferScreenState extends State<ReferScreen> {
         ),
         child: ProgressButton(
           onPressed: () {},
-          child: const Text("Refer friend"),
+          child: Text(langBloc.getString(Strings.referFriend)),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
@@ -5,6 +6,7 @@ import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/dialog_confirm.dart';
 import '../../../../widgets/error_snackbar.dart';
 import '../../../../widgets/error_widget.dart';
@@ -23,8 +25,10 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: true);
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('My Addresses')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.myAddresses))),
       body: ListView(
         shrinkWrap: true,
         physics: const ScrollPhysics(),
@@ -52,7 +56,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     color: Colors.black.withOpacity(0.2),
                   ),
                   Text(
-                    '+ Add New Address',
+                    '+ ${langBloc.getString(Strings.addNewAddress)}',
                     style: textTheme.caption,
                   ),
                 ],
@@ -83,7 +87,8 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                     onTap: () async {
                       bool? confirm = await ConfirmDialog.show(
                         context,
-                        message: 'Confirm to delete address?',
+                        message:
+                            '${langBloc.getString(Strings.confirmToDeleteAddress)}?',
                       );
 
                       if (confirm == true) {

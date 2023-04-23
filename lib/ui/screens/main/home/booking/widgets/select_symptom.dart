@@ -1,3 +1,5 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +19,9 @@ class _SelectSymptomsState extends State<SelectSymptoms> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return DropdownButtonFormField(
-      hint: const Text("Select a Type"),
+      hint: Text(langBloc.getString(Strings.selectAType)),
       items: [
         for (String symptom in widget.symptoms)
           DropdownMenuItem<String>(

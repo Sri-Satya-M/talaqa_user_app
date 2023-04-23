@@ -1,9 +1,11 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../model/mode_of_consultation.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/details_tile.dart';
 import '../../../../../widgets/image_from_net.dart';
 
@@ -27,6 +29,8 @@ class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+
     return Column(
       children: [
         for (var mode in widget.consultations)
@@ -66,7 +70,9 @@ class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
                   color: MyColors.lightBlue,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                child: Text('${mode.price} Dirham', style: textTheme.bodyText2),
+                child: Text(
+                    '${mode.price} ${langBloc.getString(Strings.dirham)}',
+                    style: textTheme.bodyText2),
               ),
             ),
           ),

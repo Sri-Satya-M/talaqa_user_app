@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/create_patient_screen.dart';
@@ -10,10 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../model/profile.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 
 class PatientProfile extends StatefulWidget {
+  const PatientProfile({super.key});
+
   @override
   _PatientProfileState createState() => _PatientProfileState();
 }
@@ -23,8 +27,9 @@ class _PatientProfileState extends State<PatientProfile> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Patient Profiles")),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.patientDetails))),
       body: FutureBuilder<List<Profile>>(
         future: userBloc.getPatients(),
         builder: (context, snapshot) {
@@ -120,8 +125,10 @@ class _PatientProfileState extends State<PatientProfile> {
                           case 2:
                             bool? isConfirm = await ConfirmDialog.show(
                               context,
-                              message: 'Confirm to remove the profile',
-                              title: 'Delete Profile',
+                              message: langBloc.getString(
+                                Strings.confirmToRemoveTheProfile,
+                              ),
+                              title: langBloc.getString(Strings.deleteProfile),
                             );
                             if (isConfirm ?? false) {
                               var result = await userBloc.deletePatients(
@@ -135,13 +142,13 @@ class _PatientProfileState extends State<PatientProfile> {
                       },
                       icon: const Icon(Icons.more_vert, color: Colors.black),
                       itemBuilder: (context) => [
-                        const PopupMenuItem<int>(
+                        PopupMenuItem<int>(
                           value: 1,
-                          child: Text('Edit'),
+                          child: Text(langBloc.getString(Strings.edit)),
                         ),
-                        const PopupMenuItem<int>(
+                        PopupMenuItem<int>(
                           value: 2,
-                          child: Text('Remove'),
+                          child: Text(langBloc.getString(Strings.remove)),
                         ),
                       ],
                     ),

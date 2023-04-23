@@ -46,11 +46,13 @@ class OtherBubble extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(message,
-                      style: textTheme.subtitle2?.copyWith(
-                        color: Colors.black,
-                        fontSize: 18,
-                      )),
+                  Text(
+                    message,
+                    style: textTheme.subtitle2?.copyWith(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
                 ],
               ),
             ),

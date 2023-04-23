@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
@@ -25,7 +27,7 @@ class _SelectClinicianState extends State<SelectClinician> {
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -33,7 +35,7 @@ class _SelectClinicianState extends State<SelectClinician> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<List<Clinician>>(
-        future: userBloc.getClinicians(query: {"search":''}),
+        future: userBloc.getClinicians(query: {"search": ''}),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
@@ -50,7 +52,7 @@ class _SelectClinicianState extends State<SelectClinician> {
               TextFormField(
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 16),
-                  hintText: 'Search',
+                  hintText: langBloc.getString(Strings.search),
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: MyColors.divider),
                     borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/date_picker.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/local/shared_prefs.dart';
+import '../../../resources/strings.dart';
 
 class ProfileMobileScreen extends StatefulWidget {
   const ProfileMobileScreen({
@@ -26,7 +28,7 @@ class ProfileMobileScreen extends StatefulWidget {
   ) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProfileMobileScreen(),
+        builder: (context) => const ProfileMobileScreen(),
       ),
     );
   }
@@ -51,9 +53,10 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile Details"),
+        title: Text(langBloc.getString(Strings.profileDetails)),
       ),
       body: Form(
         key: formKey,
@@ -63,12 +66,14 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              const Text(
-                "Enter Profile Details",
+              Text(
+                langBloc.getString(Strings.enterProfileDetails),
                 textAlign: TextAlign.center,
               ),
-              const Text(
-                "Enter your details to complete user profile",
+              Text(
+                langBloc.getString(
+                  Strings.enterYourDetailsToCompleteUserProfile,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
@@ -78,8 +83,8 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                     name = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Name*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.name)}*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
@@ -87,7 +92,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the name';
+                    return langBloc.getString(Strings.enterTheName);
                   }
                   return null;
                 },
@@ -96,13 +101,14 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               TextFormField(
                 enabled: false,
                 initialValue: userBloc.username,
-                decoration: const InputDecoration(hintText: "Mobile Number*"),
+                decoration: InputDecoration(
+                    hintText: "${langBloc.getString(Strings.mobileNumber)}*"),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the mobile number';
+                    return langBloc.getString(Strings.enterTheMobileNumber);
                   } else if (value.length < 10) {
-                    return 'Enter 10 digit mobile number';
+                    return langBloc.getString(Strings.enter10DigitMobileNumber);
                   }
                   return null;
                 },
@@ -116,23 +122,25 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the gender';
+                    return langBloc.getString(Strings.enterTheGender);
                   }
                   return null;
                 },
-                decoration: const InputDecoration(hintText: "Select Gender"),
-                items: const [
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.selectGender),
+                ),
+                items: [
                   DropdownMenuItem(
                     value: "MALE",
-                    child: Text("Male"),
+                    child: Text(langBloc.getString(Strings.male)),
                   ),
                   DropdownMenuItem(
                     value: "FEMALE",
-                    child: Text("Female"),
+                    child: Text(langBloc.getString(Strings.female)),
                   ),
                   DropdownMenuItem(
                     value: "OTHER",
-                    child: Text("Other"),
+                    child: Text(langBloc.getString(Strings.other)),
                   )
                 ],
               ),
@@ -140,7 +148,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 DateTime.now(),
                 dateCtrl: dateCtrl,
                 startDate: DateTime(1923),
-                hintText: 'Date Of Birth',
+                hintText: langBloc.getString(Strings.dateOfBirth),
                 labelText: '',
                 onDateChange: () {
                   age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
@@ -149,7 +157,9 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               ),
               TextFormField(
                 enabled: false,
-                decoration: const InputDecoration(hintText: "Age"),
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.age),
+                ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(
                   text:
@@ -212,7 +222,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                     if (count == filesFormData.length) {
                       ErrorSnackBar.show(
                         context,
-                        'Files Uploaded Successfully',
+                        langBloc.getString(Strings.filesUploadedSuccessfully),
                       );
                     }
                     setState(() {});
@@ -226,8 +236,8 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                           child: Icon(Icons.picture_as_pdf),
                         ),
                   hintText: uploadKeys.isEmpty
-                      ? "Upload Medical Record"
-                      : "Medical Records.pdf",
+                      ? langBloc.getString(Strings.uploadMedicalRecord)
+                      : "${langBloc.getString(Strings.medicalRecords)}.pdf",
                   suffixIcon: const Icon(Icons.file_upload_outlined),
                 ),
               ),
@@ -242,7 +252,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
-                "Fill Mandatory Fields to Continue",
+                langBloc.getString(Strings.fillMandatoryFields),
               );
               return null;
             }
@@ -264,7 +274,10 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 as Map<String, dynamic>;
 
             if (!response.containsKey('access_token')) {
-              return ErrorSnackBar.show(context, "Invalid Error");
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.invalidError),
+              );
             }
 
             var token = response['access_token'];
@@ -282,11 +295,13 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             SuccessScreen.open(
               context,
               type: 'MAIN',
-              message: "Profile Details Updated Successfully",
+              message: langBloc.getString(
+                Strings.profileDetailsUpdatedSuccessfully,
+              ),
             );
           },
           color: MyColors.primaryColor,
-          child: const Text("Submit"),
+          child: Text(langBloc.getString(Strings.submit)),
         ),
       ),
     );

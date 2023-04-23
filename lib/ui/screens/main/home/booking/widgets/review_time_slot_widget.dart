@@ -1,9 +1,12 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 
 class ReviewTimeSlotWidget extends StatelessWidget {
@@ -34,6 +37,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
 
   Widget getCalendar(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Expanded(
       flex: 2,
       child: Container(
@@ -68,7 +72,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ReverseDetailsTile(
-              title: const Text('TimeSlot'),
+              title: Text(langBloc.getString(Strings.timeSlot)),
               value: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -88,6 +92,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
 
   Widget getDuration({required BuildContext context, required int time}) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -110,7 +115,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ReverseDetailsTile(
-                    title: const Text('Duration'),
+                    title: Text(langBloc.getString(Strings.duration)),
                     value: Text(
                       formatTime(),
                       style: textTheme.bodyText1,

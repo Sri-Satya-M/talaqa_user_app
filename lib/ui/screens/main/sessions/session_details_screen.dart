@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
@@ -6,7 +7,6 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
-import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../bloc/sesssion_bloc.dart';
 import '../../../../resources/images.dart';
+import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
@@ -50,9 +51,10 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Session Details'),
+        title: Text(langBloc.getString(Strings.sessionDetails)),
         actions: [
           PopupMenuButton(
             onSelected: (value) {
@@ -60,13 +62,13 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
             },
             itemBuilder: (context) {
               return <PopupMenuEntry<int>>[
-                const PopupMenuItem<int>(
+                PopupMenuItem<int>(
                   value: 0,
-                  child: Text('Cancel'),
+                  child: Text(langBloc.getString(Strings.cancel)),
                 ),
-                const PopupMenuItem<int>(
+                PopupMenuItem<int>(
                   value: 1,
-                  child: Text('Timeline'),
+                  child: Text(langBloc.getString(Strings.timeline)),
                 ),
               ];
             },
@@ -107,7 +109,10 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Speech Therapy', style: textTheme.headline4),
+                    Text(
+                      langBloc.getString(Strings.speechTherapy),
+                      style: textTheme.headline4,
+                    ),
                     if (session!.consultationMode == 'HOME') ...[
                       Row(
                         children: [
@@ -118,7 +123,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            'At Home',
+                            langBloc.getString(Strings.atHome),
                             style: textTheme.bodyText1?.copyWith(
                               color: Colors.blue,
                             ),
@@ -135,7 +140,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ),
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
-                  title: const Text('Clinician Details'),
+                  title: Text(langBloc.getString(Strings.clinicianDetails)),
                   value: Container(
                     decoration: BoxDecoration(
                       color: MyColors.paleLightGreen,
@@ -153,7 +158,9 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                             false)) ...[
                   const SizedBox(height: 16),
                   ReverseDetailsTile(
-                    title: const Text('New Clinician Details'),
+                    title: Text(
+                      langBloc.getString(Strings.newClinicianDetails),
+                    ),
                     value: Container(
                       decoration: BoxDecoration(
                         color: MyColors.paleLightGreen,
@@ -187,13 +194,15 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       onPressed: () async {
                                         changeClinician(
                                           context: this.context,
-                                          msg:
-                                              'Confirm to accept the New Clinician',
+                                          msg: langBloc.getString(Strings
+                                              .confirmToAcceptTheNewClinician),
                                           type: 'Accept',
                                           id: session!.sessionClinician!.id!,
                                         );
                                       },
-                                      child: const Text('Accept'),
+                                      child: Text(
+                                        langBloc.getString(Strings.accept),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 16),
@@ -206,13 +215,15 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       onPressed: () async {
                                         changeClinician(
                                           context: this.context,
-                                          msg: 'Confirm to Cancel the session',
+                                          msg: langBloc.getString(
+                                            Strings.confirmToCancelTheSession,
+                                          ),
                                           type: 'Reject',
                                           id: session!.sessionClinician!.id!,
                                         );
                                       },
                                       child: Text(
-                                        'Reject',
+                                        langBloc.getString(Strings.reject),
                                         style: textTheme.button?.copyWith(
                                           color: Colors.red,
                                         ),
@@ -231,7 +242,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ],
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
-                  title: const Text('Patient Details'),
+                  title: Text(langBloc.getString(Strings.patientDetails)),
                   value: Container(
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     decoration: const BoxDecoration(
@@ -267,12 +278,12 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ],
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
-                  title: const Text('Symptoms'),
+                  title: Text(langBloc.getString(Strings.symptoms)),
                   value: Text('${session!.type}', style: textTheme.headline2),
                 ),
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
-                  title: const Text('Description'),
+                  title: Text(langBloc.getString(Strings.description)),
                   value: Text(
                     '${session!.description}',
                     style: textTheme.headline2,
@@ -297,7 +308,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       children: [
                         Image.asset(Images.pdf, width: 24),
                         const SizedBox(width: 16),
-                        const Text('Medical Records'),
+                        Text(langBloc.getString(Strings.medicalRecords)),
                         const Spacer(),
                       ],
                     ),
@@ -337,29 +348,32 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   }
 
   Widget payNow() {
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return (session!.status == "APPROVED")
         ? ProgressButton(
             onPressed: () {
               PaymentScreen.open(context, session: session!);
             },
-            child: const Text('Pay Now'),
+            child: Text(langBloc.getString(Strings.payNow)),
           )
         : const SizedBox();
   }
 
   Widget joinOrStartSessionButton() {
-    bool flag = (session!.status == "PAID" || session!.status == "STARTED") &&
-        Helper.formatDate(date: DateTime.now()) ==
-            Helper.formatDate(date: session!.date);
+    // bool flag = (true || session!.status == "PAID" || session!.status == "STARTED") &&
+    //     Helper.formatDate(date: DateTime.now()) ==
+    //         Helper.formatDate(date: session!.date);
+    //
+    // if (!flag) {
+    //   return const SizedBox();
+    // }
 
-    if (!flag) {
-      return const SizedBox();
-    }
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
 
     return ProgressButton(
       onPressed: sessionOnTap,
       child: Text(
-        "Join Session${session!.consultationMode == 'HOME' ? ' At Home' : ''}",
+        "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
       ),
     );
   }
@@ -372,7 +386,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     if (!flag) {
       return const SizedBox();
     }
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
@@ -384,13 +398,15 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
             SuccessScreen.open(
               context,
               type: '',
-              message: 'You session has been successfully completed',
+              message: langBloc.getString(
+                Strings.yourSessionHasBeenSuccessfullyCompleted,
+              ),
               // session: session,
             );
           },
         );
       },
-      child: const Text("Finish"),
+      child: Text(langBloc.getString(Strings.finish)),
     );
   }
 
@@ -406,9 +422,11 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           scheduledTimeStamp,
         );
 
-    if (duration.inMinutes > (session!.clinicianTimeSlots!.length * 60 + 30)) {
-      return;
-    }
+    // if (duration.inMinutes > (session!.clinicianTimeSlots!.length * 60 + 30)) {
+    //   return;
+    // }
+
+    duration = const Duration(minutes: 60);
 
     switch (session!.consultationMode) {
       case 'HOME':
@@ -469,3 +487,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     }
   }
 }
+
+
+

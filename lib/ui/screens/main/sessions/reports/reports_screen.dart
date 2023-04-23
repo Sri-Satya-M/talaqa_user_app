@@ -1,9 +1,11 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../model/reports.dart';
 import '../../../../../resources/images.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
@@ -28,8 +30,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Reports')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.reports))),
       body: FutureBuilder<List<Report>>(
         future: sessionsBloc.getSessionReports(id: widget.id),
         builder: (context, snapshot) {
@@ -41,8 +44,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
           var reports = snapshot.data ?? [];
 
           if (reports.isEmpty) {
-            return const EmptyWidget(
-              message: 'Reports will be uploaded soon',
+            return EmptyWidget(
+              message: langBloc.getString(Strings.reportsWillBeUploadedSoon),
             );
           }
 
@@ -62,7 +65,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         children: [
                           Image.asset(Images.pdf, height: 40),
                           const SizedBox(width: 16),
-                          Text('Report ${i + 1}'),
+                          Text(
+                            '${langBloc.getString(Strings.report)} ${i + 1}',
+                          ),
                         ],
                       ),
                     ),

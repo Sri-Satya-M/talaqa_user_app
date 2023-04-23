@@ -1,9 +1,11 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_symptom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../model/mode_of_consultation.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
@@ -23,7 +25,7 @@ class _SymptomModeOfConsultationState extends State<SymptomModeOfConsultation> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       padding: const EdgeInsets.only(top: 16, left: 20, right: 20),
       decoration: const BoxDecoration(
@@ -32,7 +34,7 @@ class _SymptomModeOfConsultationState extends State<SymptomModeOfConsultation> {
       ),
       child: ListView(
         children: [
-          const Text('Symptoms'),
+          Text(langBloc.getString(Strings.symptoms)),
           const SizedBox(height: 16),
           FutureBuilder<List<String>>(
             future: sessionBloc.getPatientSymptoms(),
@@ -51,7 +53,7 @@ class _SymptomModeOfConsultationState extends State<SymptomModeOfConsultation> {
             },
           ),
           const SizedBox(height: 32),
-          const Text('Mode of Consultation'),
+          Text(langBloc.getString(Strings.modeOfConsultation)),
           const SizedBox(height: 16),
           FutureBuilder<List<ModeOfConsultation>>(
             future: sessionBloc.getModeOfConsultation(),

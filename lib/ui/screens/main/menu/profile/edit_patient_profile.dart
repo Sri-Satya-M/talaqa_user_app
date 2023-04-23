@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -11,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 import '../../../../widgets/date_picker.dart';
 import '../../../../widgets/image_picker.dart';
@@ -55,8 +57,11 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Patient Profile")),
+      appBar: AppBar(
+        title: Text(langBloc.getString(Strings.editPatientProfile)),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -96,13 +101,13 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
             const SizedBox(height: 12),
             TextFormField(
               controller: name,
-              decoration: const InputDecoration(
-                hintText: "Name*",
+              decoration: InputDecoration(
+                hintText: "${langBloc.getString(Strings.name)}*",
               ),
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Enter the name';
+                  return langBloc.getString(Strings.enterTheName);
                 }
                 return null;
               },
@@ -112,7 +117,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               DateTime.now(),
               dateCtrl: dateCtrl,
               startDate: DateTime(1923),
-              hintText: 'Date Of Birth',
+              hintText: langBloc.getString(Strings.dateOfBirth),
               labelText: '',
               onDateChange: () {
                 age.text = Helper.calculateAge(DateTime.parse(dateCtrl.text))
@@ -122,14 +127,16 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
             const SizedBox(height: 12),
             TextFormField(
               controller: age,
-              decoration: const InputDecoration(hintText: "Age*"),
+              decoration: InputDecoration(
+                hintText: "${langBloc.getString(Strings.age)}*",
+              ),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
               ],
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return "Enter the age";
+                  return langBloc.getString(Strings.enterTheAge);
                 } else {
                   return null;
                 }
@@ -141,26 +148,27 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               onChanged: (value) {
                 gender.text = value.toString();
               },
-              decoration: const InputDecoration(hintText: "Select Gender*"),
+              decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.selectGender)}*"),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Enter the gender";
+                  return langBloc.getString(Strings.enterTheGender);
                 } else {
                   return null;
                 }
               },
-              items: const [
+              items: [
                 DropdownMenuItem(
                   value: "MALE",
-                  child: Text("Male"),
+                  child: Text("${langBloc.getString(Strings.male)}"),
                 ),
                 DropdownMenuItem(
                   value: "FEMALE",
-                  child: Text("Female"),
+                  child: Text(langBloc.getString(Strings.female)),
                 ),
                 DropdownMenuItem(
                   value: "OTHER",
-                  child: Text("Other"),
+                  child: Text(langBloc.getString(Strings.other)),
                 )
               ].toList(),
             ),
@@ -170,10 +178,12 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               onChanged: (value) {
                 city.text = value.toString();
               },
-              decoration: const InputDecoration(hintText: "City*"),
+              decoration: InputDecoration(
+                hintText: "${langBloc.getString(Strings.city)}*",
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Enter the city";
+                  return langBloc.getString(Strings.enterCity);
                 } else {
                   return null;
                 }
@@ -199,10 +209,12 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               onChanged: (value) {
                 country.text = value.toString();
               },
-              decoration: const InputDecoration(hintText: "Country*"),
+              decoration: InputDecoration(
+                hintText: "${langBloc.getString(Strings.country)}*",
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Enter the country";
+                  return langBloc.getString(Strings.enterCountry);
                 } else {
                   return null;
                 }
@@ -251,12 +263,15 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
             var response = await userBloc.updatePatients(
                 id: widget.profile.id, body: body) as Map<String, dynamic>;
             if (!response.containsKey('status')) {
-              return ErrorSnackBar.show(context, "Invalid error");
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.invalidError),
+              );
             }
 
             Navigator.of(context).pop(true);
           },
-          child: const Text("Save Changes"),
+          child: Text(langBloc.getString(Strings.saveChanges)),
         ),
       ),
     );

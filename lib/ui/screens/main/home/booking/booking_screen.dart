@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/clinicians.dart';
 import '../../../../../model/profile.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 import '../../../../widgets/success_screen.dart';
 
@@ -40,11 +42,11 @@ class _BookingScreenState extends State<BookingScreen> {
   int pageIndex = 1;
   int steps = 5;
   List<String> titles = [
-    'Symptom and mode of consultation',
-    'Select Profile',
-    'Clinician',
-    'Slot Booking',
-    'Review'
+    '${Strings.symptomAndModeOfConsultation}',
+    '${Strings.selectProfile}',
+    "${Strings.clinician}",
+    '${Strings.slotBooking}',
+    '${Strings.review}',
   ];
 
   late PageController controller;
@@ -53,7 +55,7 @@ class _BookingScreenState extends State<BookingScreen> {
     if (titles.length == 6) return;
     setState(() {
       steps += 1;
-      titles.insert(4, 'Select Address');
+      titles.insert(4, '${Strings.selectAddress}');
     });
   }
 
@@ -79,9 +81,10 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       backgroundColor: MyColors.bookingBgColor,
-      appBar: AppBar(title: const Text('Book Session')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.bookSession))),
       body: Column(
         children: [
           const SizedBox(height: 16),
@@ -152,7 +155,7 @@ class _BookingScreenState extends State<BookingScreen> {
             if (sessionBloc.selectedModeOfConsultation != null &&
                 sessionBloc.timeslots.length > 0)
               ReverseDetailsTile(
-                title: const Text('Total Charges'),
+                title: Text(langBloc.getString(Strings.totalCharges)),
                 value: Text(
                     ' د.إ  ${sessionBloc.selectedModeOfConsultation!.price! * sessionBloc.timeslots.length}'),
               ),
@@ -163,7 +166,9 @@ class _BookingScreenState extends State<BookingScreen> {
                 maximumSize: const Size(150, 50),
               ),
               onPressed: (pageIndex == titles.length) ? bookNow : validateStep,
-              child: Text((pageIndex == titles.length) ? 'Book Now' : 'Next'),
+              child: Text((pageIndex == titles.length)
+                  ? langBloc.getString(Strings.bookNow)
+                  : langBloc.getString(Strings.next)),
             ),
           ],
         ),

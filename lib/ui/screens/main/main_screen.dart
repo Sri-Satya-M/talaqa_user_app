@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -13,6 +14,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/strings.dart';
 import '../../../utils/custom_notifications.dart';
 import 'sessions/session_details_screen.dart';
 
@@ -76,6 +78,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: true);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
     return DefaultTabController(
       length: mainBloc.tabLength(mainBloc.index),
@@ -105,10 +108,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       onTap: (value) {
                         mainBloc.changeTab(value);
                       },
-                      tabs: const [
-                        Tab(text: 'Upcoming'),
-                        Tab(text: 'Completed'),
-                        Tab(text: "Cancelled"),
+                      tabs: [
+                        Text(langBloc.getString(Strings.upcoming)),
+                        Text(langBloc.getString(Strings.completed)),
+                        Text(langBloc.getString(Strings.cancelled)),
                       ],
                     );
                   case 3:
@@ -117,9 +120,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       onTap: (value) {
                         mainBloc.changeTab(value);
                       },
-                      tabs: const [
-                        Tab(text: 'Articles'),
-                        Tab(text: 'Videos'),
+                      tabs: [
+                        Text(langBloc.getString(Strings.articles)),
+                        Text(langBloc.getString(Strings.videos)),
                       ],
                     );
 

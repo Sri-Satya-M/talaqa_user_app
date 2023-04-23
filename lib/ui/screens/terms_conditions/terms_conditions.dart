@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -5,11 +6,13 @@ import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/strings.dart';
+
 class TermsConditions extends StatefulWidget {
   static Future open(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => TermsConditions(),
+        builder: (context) => const TermsConditions(),
       ),
     );
   }
@@ -27,6 +30,7 @@ class _TermsConditionsState extends State<TermsConditions> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     isEmail = userBloc.username.contains("@");
     return Scaffold(
       body: Padding(
@@ -50,9 +54,9 @@ class _TermsConditionsState extends State<TermsConditions> {
                   thumbVisibility: true,
                   child: ListView(
                     padding: const EdgeInsets.all(25),
-                    children: const [
+                    children: [
                       Text(
-                        "Terms and Conditions\n",
+                        "${langBloc.getString(Strings.termsAndConditions)}\n",
                         textAlign: TextAlign.center,
                       ),
                       Text(
@@ -76,7 +80,7 @@ class _TermsConditionsState extends State<TermsConditions> {
                     });
                   },
                 ),
-                const Text("I agree to the terms and conditions")
+                Text(langBloc.getString(Strings.iAgreeToTheTermsAndConditions))
               ],
             ),
           ],
@@ -93,8 +97,12 @@ class _TermsConditionsState extends State<TermsConditions> {
               child: ProgressButton(
                 onPressed: () {
                   var message = isEmail
-                      ? "Your Email Id has been \n Successfully Verified"
-                      : "Your Mobile Number has been \n Successfully Verified";
+                      ? langBloc.getString(
+                          Strings.yourEmailIdHasBeenSuccessfullyVerified,
+                        )
+                      : langBloc.getString(
+                          Strings.yourMobileNumberHasBeenSuccessfullyVerified,
+                        );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -105,7 +113,7 @@ class _TermsConditionsState extends State<TermsConditions> {
                     ),
                   );
                 },
-                child: const Text("Proceed"),
+                child: Text(langBloc.getString(Strings.proceed)),
               ),
             ),
     );

@@ -3,7 +3,9 @@ import 'package:alsan_app/model/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../bloc/language_bloc.dart';
 import '../../../../../../resources/images.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/dynamic_grid_view.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
@@ -18,10 +20,14 @@ class PatientProfileDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("Session Analytics", style: textTheme.subtitle2),
+        Text(
+          langBloc.getString(Strings.sessionAnalytics),
+          style: textTheme.subtitle2,
+        ),
         const SizedBox(height: 14),
         FutureBuilder<Dashboard>(
           future: userBloc.getDashboard(
@@ -41,7 +47,7 @@ class PatientProfileDashboard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'No Sessions on this Patient',
+                      langBloc.getString(Strings.noSessionsOnThisPatient),
                       style: textTheme.caption,
                     ),
                   ],
@@ -57,7 +63,7 @@ class PatientProfileDashboard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "Session Details",
+                  langBloc.getString(Strings.sessionDetails),
                   style: textTheme.subtitle2?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
@@ -69,24 +75,24 @@ class PatientProfileDashboard extends StatelessWidget {
                   children: [
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Pending Sessions',
+                      title: langBloc.getString(Strings.pendingSessions),
                       count: data.sessionDetails!.pending.toString(),
                     ),
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Confirmed Sessions',
+                      title: langBloc.getString(Strings.completedSessions),
                       count: data.sessionDetails!.pending.toString(),
                     ),
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Completed Sessions',
+                      title: langBloc.getString(Strings.completedSessions),
                       count: data.sessionDetails!.pending.toString(),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  "Mode of Consultation",
+                  langBloc.getString(Strings.modeOfConsultation),
                   style: textTheme.subtitle2?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
@@ -98,19 +104,19 @@ class PatientProfileDashboard extends StatelessWidget {
                   children: [
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Online Consultations',
+                      title: langBloc.getString(Strings.onlineConsultations),
                       count: onlineConsultations.toString(),
                     ),
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Offline Consultations',
+                      title: langBloc.getString(Strings.offlineConsultations),
                       count: offlineConsultations.toString(),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  "Session Information",
+                  langBloc.getString(Strings.sessionInformation),
                   style: textTheme.subtitle2?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
@@ -122,17 +128,17 @@ class PatientProfileDashboard extends StatelessWidget {
                   children: [
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Total Duration',
+                      title: langBloc.getString(Strings.totalDuration),
                       count: data.sessionInfo!.duration.toString(),
                     ),
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'Total Amount',
+                      title: langBloc.getString(Strings.totalAmount),
                       count: data.sessionInfo!.totalAmount.toString(),
                     ),
                     SessionOverviewCard(
                       icon: Images.sessionsIcon,
-                      title: 'School Reports',
+                      title: langBloc.getString(Strings.schoolReport),
                       count: data.sessionDetails!.reportSubmitted.toString(),
                     ),
                   ],

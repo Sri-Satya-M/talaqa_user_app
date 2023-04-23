@@ -1,4 +1,7 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/resources/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
@@ -14,6 +17,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Row(
@@ -63,7 +67,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              '${clinician.experience} years Exp.',
+              '${clinician.experience} ${langBloc.getString(Strings.yearsExp)}',
               style: textTheme.subtitle2,
             ),
           ),

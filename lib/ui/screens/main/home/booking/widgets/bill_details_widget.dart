@@ -1,7 +1,10 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 
 class BillDetailsWidget extends StatelessWidget {
@@ -19,6 +22,7 @@ class BillDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -28,7 +32,10 @@ class BillDetailsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Consultation Bill Details', style: textTheme.bodyText1),
+          Text(
+            langBloc.getString(Strings.consultationBillDetails),
+            style: textTheme.bodyText1,
+          ),
           const SizedBox(height: 8),
           const Divider(),
           const SizedBox(height: 8),
@@ -36,10 +43,10 @@ class BillDetailsWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Consultation fee ($noOfTimeslots ${Helper.textCapitalization(text: consultationMode)} Slot${noOfTimeslots > 1 ? 's' : ''})',
+                  '${langBloc.getString(Strings.consultationFee)} ($noOfTimeslots ${Helper.textCapitalization(text: consultationMode)} Slot${noOfTimeslots > 1 ? 's' : ''})',
                 ),
               ),
-              Text('$totalAmount Dihram'),
+              Text('$totalAmount ${langBloc.getString(Strings.dirham)}'),
             ],
           ),
           const SizedBox(height: 12),
@@ -47,9 +54,9 @@ class BillDetailsWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              const Text('Total Amount'),
+              Text(langBloc.getString(Strings.totalAmount)),
               const Spacer(),
-              Text('$totalAmount Dirham'),
+              Text('$totalAmount ${langBloc.getString(Strings.dirham)}'),
             ],
           ),
         ],

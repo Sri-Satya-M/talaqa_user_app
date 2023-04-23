@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/bill_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
@@ -12,6 +13,7 @@ import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
+import '../../../../../../resources/strings.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({super.key});
@@ -26,6 +28,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     var noOfSlots = sessionBloc.selectedTimeSlotIds!.length;
     var totalAmount = sessionBloc.selectedModeOfConsultation!.price! *
         sessionBloc.selectedTimeSlotIds!.length;
@@ -61,13 +64,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Speech Therapy', style: textTheme.headline4),
+              Text(
+                langBloc.getString(Strings.speechTherapy),
+                style: textTheme.headline4,
+              ),
               if (sessionBloc.selectedModeOfConsultation!.type == 'Home') ...[
                 Row(
                   children: [
                     const Icon(Icons.home, color: Colors.lightBlue),
                     Text(
-                      'At Home',
+                      langBloc.getString(Strings.atHome),
                       style: textTheme.bodyText1?.copyWith(
                         color: Colors.lightBlue,
                       ),
@@ -105,7 +111,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           ),
           const SizedBox(height: 16),
           ReverseDetailsTile(
-            title: const Text('Patient Details'),
+            title: Text(langBloc.getString(Strings.patientDetails)),
             value: Container(
               margin: const EdgeInsets.symmetric(vertical: 2),
               decoration: const BoxDecoration(
@@ -119,12 +125,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           ),
           const SizedBox(height: 16),
           ReverseDetailsTile(
-            title: const Text('Symptoms'),
+            title: Text(langBloc.getString(Strings.symptoms)),
             value: Text('${sessionBloc.symptom}', style: textTheme.headline4),
           ),
           const SizedBox(height: 16),
           ReverseDetailsTile(
-            title: const Text('Description'),
+            title: Text(langBloc.getString(Strings.description)),
             value: Text(
               'Vivamus eget aliquam dui. Integer eu arcu vel arcu suscipit ultrices quis non mauris. Aenean scelerisque, sem eu dictum commodo.',
               style: textTheme.bodyText1,
@@ -145,7 +151,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                   Image.asset(Images.pdf, width: 24),
                   const SizedBox(width: 16),
                   Text(
-                    '(${sessionBloc.selectedPatient!.medicalRecords!.length}) Medical Records',
+                    '(${sessionBloc.selectedPatient!.medicalRecords!.length}) ${langBloc.getString(Strings.medicalRecords)}',
                   ),
                 ],
               ),

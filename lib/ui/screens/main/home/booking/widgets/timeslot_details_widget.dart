@@ -1,6 +1,9 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 
 class TimeslotDetailsWidget extends StatelessWidget {
@@ -16,6 +19,7 @@ class TimeslotDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return SizedBox(
       height: 75,
       child: Row(
@@ -46,7 +50,7 @@ class TimeslotDetailsWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Time Slot", style: textTheme.caption),
+                Text(langBloc.getString(Strings.timeSlot), style: textTheme.caption),
                 const SizedBox(height: 4),
                 for (var timeslot in timeslots)
                   Text(

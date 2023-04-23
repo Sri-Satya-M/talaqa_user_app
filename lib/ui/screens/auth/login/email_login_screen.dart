@@ -1,7 +1,9 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/data/local/shared_prefs.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/resources/strings.dart';
 import 'package:alsan_app/ui/screens/auth/email_screen.dart';
 import 'package:alsan_app/ui/screens/auth/login/mobile_login_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
@@ -24,6 +26,7 @@ class _EmailLoginState extends State<EmailLogin> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -35,14 +38,14 @@ class _EmailLoginState extends State<EmailLogin> {
             SizedBox(height: size.height * 0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
-            const Text(
-              "Welcome Back !",
+            Text(
+              "${langBloc.getString(Strings.welcomeBack)} !",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 16),
             Text(
-              'Login to your account with email address',
+              "${langBloc.getString(Strings.loginToYourAccountWithEmailAddress)}...!",
               style: textTheme.caption,
               textAlign: TextAlign.center,
             ),
@@ -53,8 +56,8 @@ class _EmailLoginState extends State<EmailLogin> {
               },
               style: const TextStyle(color: Colors.black),
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(
-                hintText: "Enter your email ID",
+              decoration: InputDecoration(
+                hintText: langBloc.getString(Strings.enterYourEmailId),
               ),
             ),
             const SizedBox(height: 16),
@@ -66,7 +69,7 @@ class _EmailLoginState extends State<EmailLogin> {
               style: const TextStyle(color: Colors.black),
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                hintText: "Password",
+                hintText: langBloc.getString(Strings.password),
                 suffixIcon: IconButton(
                     onPressed: () => setState(() {
                           visibility = !visibility;
@@ -79,7 +82,10 @@ class _EmailLoginState extends State<EmailLogin> {
             ProgressButton(
               onPressed: () async {
                 if (!email.contains("@") || !email.contains(".")) {
-                  return ErrorSnackBar.show(context, "Enter Valid email ID");
+                  return ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(Strings.enterValidEmailId),
+                  );
                 }
 
                 var body = {'email': email, 'password': password};
@@ -88,7 +94,10 @@ class _EmailLoginState extends State<EmailLogin> {
                     as Map<String, dynamic>;
 
                 if (!response.containsKey('access_token')) {
-                  return ErrorSnackBar.show(context, "Invalid Error");
+                  return ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(Strings.invalidError),
+                  );
                 }
 
                 var token = response['access_token'];
@@ -98,10 +107,10 @@ class _EmailLoginState extends State<EmailLogin> {
 
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => MainScreen()),
+                    MaterialPageRoute(builder: (context) => const MainScreen()),
                     (route) => false);
               },
-              child: const Text("Login"),
+              child: Text(langBloc.getString(Strings.login)),
             ),
             const SizedBox(height: 32),
             Row(
@@ -113,7 +122,7 @@ class _EmailLoginState extends State<EmailLogin> {
                   height: 1,
                   color: Colors.black.withOpacity(0.2),
                 ),
-                const Text("or"),
+                Text(langBloc.getString(Strings.or)),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   width: 50,
@@ -127,26 +136,28 @@ class _EmailLoginState extends State<EmailLogin> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MobileLogin()),
+                  MaterialPageRoute(builder: (context) => const MobileLogin()),
                 );
               },
-              child: const Text("Login With Mobile Number"),
+              child: Text(langBloc.getString(Strings.loginWithMobileNumber)),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("New user?\t"),
+                Text("${langBloc.getString(Strings.newUser)}?\t"),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EmailScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const EmailScreen()),
                     );
                   },
-                  child: const Text(
-                    "Create an account",
-                    style: TextStyle(color: MyColors.primaryColor),
+                  child: Text(
+                    // "Create an account",
+                    langBloc.getString(Strings.hello),
+                    style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 ),
               ],

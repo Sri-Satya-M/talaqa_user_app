@@ -1,9 +1,11 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/address.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
 import '../../../../location/location_screen.dart';
@@ -21,6 +23,7 @@ class _AddAddressState extends State<AddAddress> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return FutureBuilder<List<Address>>(
       future: userBloc.getAddresses(),
       builder: (context, snapshot) {
@@ -43,7 +46,7 @@ class _AddAddressState extends State<AddAddress> {
             padding: const EdgeInsets.all(16),
             children: [
               Text(
-                'Select your saved location',
+                langBloc.getString(Strings.selectYourSavedLocation),
                 style: textTheme.caption?.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 16),
@@ -69,7 +72,7 @@ class _AddAddressState extends State<AddAddress> {
                         color: Colors.black.withOpacity(0.2),
                       ),
                       Text(
-                        '+ Add New Address',
+                        '+ ${langBloc.getString(Strings.addNewAddress)}',
                         style: textTheme.caption,
                       ),
                     ],

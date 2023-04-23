@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -9,6 +10,8 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
+
+import '../../../resources/strings.dart';
 
 class MobileScreen extends StatefulWidget {
   const MobileScreen({super.key});
@@ -23,19 +26,20 @@ class _MobileScreenState extends State<MobileScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: size.height*0.05),
+            SizedBox(height: size.height * 0.05),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
-            const Text(
-              "Sign up with Mobile number",
+            Text(
+              langBloc.getString(Strings.signUpWithMobileNumber),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 32),
             Stack(
@@ -51,13 +55,14 @@ class _MobileScreenState extends State<MobileScreen> {
                   textStyle: const TextStyle(color: Colors.black),
                   formatInput: false,
                   maxLength: 10,
-                  errorMessage: 'Invalid Phone Number',
-                  inputDecoration: const InputDecoration(
+                  errorMessage: langBloc.getString(Strings.invalidPhoneNumber),
+                  inputDecoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Mobile Number',
+                    hintText: langBloc.getString(Strings.mobileNumber),
                   ),
                   selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                  ),
                   spaceBetweenSelectorAndTextField: 0,
                 ),
                 Positioned(
@@ -76,7 +81,12 @@ class _MobileScreenState extends State<MobileScreen> {
             ProgressButton(
               onPressed: () async {
                 if (mobileNumber.length < 10) {
-                  ErrorSnackBar.show(context, 'Enter 10 digit mobile number');
+                  ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(
+                      Strings.enter10DigitMobileNumber,
+                    ),
+                  );
                   return;
                 }
 
@@ -87,12 +97,15 @@ class _MobileScreenState extends State<MobileScreen> {
                     await userBloc.sendOTP(body: body) as Map<String, dynamic>;
 
                 if (!response.containsKey('token')) {
-                  return ErrorSnackBar.show(context, 'Invalid Error');
+                  return ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(Strings.invalidError),
+                  );
                 }
                 userBloc.username = mobileNumber;
                 OtpScreen.open(context, token: response['token']);
               },
-              child: const Text("Get OTP"),
+              child: Text(langBloc.getString(Strings.getOtp)),
             ),
             const SizedBox(height: 48),
             Row(
@@ -104,7 +117,7 @@ class _MobileScreenState extends State<MobileScreen> {
                   height: 1,
                   color: Colors.black.withOpacity(0.2),
                 ),
-                const Text("or"),
+                Text(langBloc.getString(Strings.or)),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   width: 50,
@@ -121,13 +134,13 @@ class _MobileScreenState extends State<MobileScreen> {
                   (route) => false,
                 );
               },
-              child: const Text("Sign Up With Email Address"),
+              child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
             ),
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Already an existing user?\t"),
+                Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -135,9 +148,9 @@ class _MobileScreenState extends State<MobileScreen> {
                       MaterialPageRoute(builder: (context) => MobileLogin()),
                     );
                   },
-                  child: const Text(
-                    "Login to your account",
-                    style: TextStyle(color: MyColors.primaryColor),
+                  child: Text(
+                    langBloc.getString(Strings.loginToYourAccount),
+                    style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 ),
               ],

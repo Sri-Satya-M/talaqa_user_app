@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/notification.dart' as n;
 import '../../../../../resources/images.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
@@ -26,8 +28,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Notifications')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.notifications))),
       body: FutureBuilder<List<n.Notification>>(
         future: userBloc.getNotifications(query: {
           'id': userBloc.profile!.user!.id,
@@ -42,7 +45,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           var notifications = snapshot.data ?? [];
 
           if (notifications.isEmpty) {
-            return const EmptyWidget(message: 'No Recent Notifications');
+            return EmptyWidget(
+              message: langBloc.getString(Strings.noRecentNotifications),
+            );
           }
 
           return ListView.separated(

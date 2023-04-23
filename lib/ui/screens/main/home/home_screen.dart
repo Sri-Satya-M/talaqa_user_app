@@ -9,6 +9,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../bloc/language_bloc.dart';
+import '../../../../resources/strings.dart';
 import 'widgets/clinician_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(16),
@@ -68,12 +70,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }),
         ),
         const SizedBox(height: 8),
-        const UpcomingSessions(),
+        UpcomingSessions(
+          onTap: () {
+            mainBloc.tabController = TabController(
+              initialIndex: 0,
+              length: mainBloc.tabLength(1),
+              vsync: this,
+            );
+            mainBloc.changeIndex(2);
+          },
+        ),
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Featured Clinicians", style: textTheme.bodyText1),
+            Text(
+              langBloc.getString(Strings.featuredClinicians),
+              style: textTheme.bodyText1,
+            ),
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -82,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 );
               },
               child: Text(
-                "See all",
+                langBloc.getString(Strings.seeAll),
                 style: textTheme.headline2?.copyWith(
                   color: MyColors.primaryColor,
                 ),
@@ -100,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(height: 16),
-        Text("Resources", style: textTheme.bodyText1),
+        Text(langBloc.getString(Strings.resources), style: textTheme.bodyText1),
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {

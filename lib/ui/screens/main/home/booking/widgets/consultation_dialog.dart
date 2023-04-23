@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -5,6 +6,7 @@ import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/details_tile.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
@@ -15,6 +17,7 @@ class ConsultationDialog extends StatefulWidget {
 
   static Future open(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return showDialog<ModeOfConsultation?>(
       context: context,
       builder: (context) {
@@ -24,7 +27,8 @@ class ConsultationDialog extends StatefulWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text('Mode of Consultation', style: textTheme.headline4),
+              Text(langBloc.getString(Strings.modeOfConsultation),
+                  style: textTheme.headline4),
               IconButton(
                 onPressed: () => Navigator.pop(context, null),
                 icon: Icon(
@@ -62,6 +66,7 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return SizedBox(
       height: 450,
       width: double.maxFinite,
@@ -125,7 +130,7 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
                                 Radius.circular(10),
                               ),
                             ),
-                            child: Text('${consultations[i].price} Dirham'),
+                            child: Text('${consultations[i].price} ${langBloc.getString(Strings.dirham)}'),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -152,7 +157,7 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
                   );
                   Navigator.pop(context, consultationMode);
                 },
-                child: const Text('Book Now'),
+                child: Text(langBloc.getString(Strings.bookNow)),
               ),
             ],
           );

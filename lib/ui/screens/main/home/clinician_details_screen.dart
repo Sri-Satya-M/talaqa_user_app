@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/feedback.dart' as f;
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../resources/colors.dart';
+import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
@@ -30,8 +32,9 @@ class ClinicianDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Book Session')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.bookSession))),
       body: ListView(
         padding: const EdgeInsets.all(20),
         shrinkWrap: true,
@@ -39,18 +42,23 @@ class ClinicianDetailsScreen extends StatelessWidget {
           ClinicianDetailsWidget(clinician: clinician),
           const SizedBox(height: 16),
           DetailsTile(
-            title: Text('Bio', style: textTheme.bodyText1),
+            title: Text(langBloc.getString(Strings.bio),
+                style: textTheme.bodyText1),
             value: Text(clinician.bio ?? 'NA'),
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Reviews", style: textTheme.bodyText1),
+              Text(
+                langBloc.getString(Strings.reviews),
+                style: textTheme.bodyText1,
+              ),
               TextButton(
-                onPressed: () => FeedbackScreen.open(context,id: clinician.id.toString()),
+                onPressed: () =>
+                    FeedbackScreen.open(context, id: clinician.id.toString()),
                 child: Text(
-                  "See all",
+                  langBloc.getString(Strings.seeAll),
                   style: textTheme.headline2?.copyWith(
                     color: MyColors.primaryColor,
                   ),

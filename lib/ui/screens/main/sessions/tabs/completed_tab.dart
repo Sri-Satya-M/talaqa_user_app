@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/screens/main/sessions/tabs/screens/completed_session_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../../model/session.dart';
 import '../../../../../bloc/user_bloc.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 import '../widgets/session_card.dart';
@@ -52,13 +54,13 @@ class _CompletedTabState extends State<CompletedTab> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return (isEmpty)
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              EmptyWidget(message: "No Completed Sessions"),
+            children: [
+              EmptyWidget(message: langBloc.getString(Strings.no)),
             ],
           )
         : CustomScrollView(
@@ -77,7 +79,7 @@ class _CompletedTabState extends State<CompletedTab> {
                               const LoadingWidget(),
                               const SizedBox(height: 8),
                               Text(
-                                'Fetching sessions',
+                                langBloc.getString(Strings.fetchingSessions),
                                 style: textTheme.caption!.copyWith(
                                   fontSize: 14,
                                 ),

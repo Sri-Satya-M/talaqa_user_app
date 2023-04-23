@@ -145,9 +145,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Arabic",
-                            style: TextStyle(
+                          Text(
+                            langBloc.getString(Strings.arabic),
+                            style: const TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.w800,
                             ),

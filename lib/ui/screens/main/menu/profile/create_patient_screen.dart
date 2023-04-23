@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -12,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 import '../../../../widgets/date_picker.dart';
 import '../../../../widgets/image_picker.dart';
@@ -47,8 +49,9 @@ class _CreatePatientState extends State<CreatePatient> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Patient Profile")),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.patientProfile))),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -57,13 +60,13 @@ class _CreatePatientState extends State<CreatePatient> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              const Text(
-                "Create new patient profile",
+              Text(
+                langBloc.getString(Strings.createNewPatientProfile),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 7),
               Text(
-                "Enter patient details to create profile",
+                langBloc.getString(Strings.enterPatientDetailsToCreateProfile),
                 textAlign: TextAlign.center,
                 style: textTheme.bodyText1
                     ?.copyWith(color: Colors.black.withOpacity(0.7)),
@@ -113,8 +116,8 @@ class _CreatePatientState extends State<CreatePatient> {
                     name = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Name*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.name)}*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
@@ -122,7 +125,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the name';
+                    return '${langBloc.getString(Strings.enterTheName)}';
                   }
                   return null;
                 },
@@ -150,26 +153,28 @@ class _CreatePatientState extends State<CreatePatient> {
                     gender = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "Select Gender*"),
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.selectGender)}*",
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Enter the gender";
+                    return "${langBloc.getString(Strings.selectGender)}";
                   } else {
                     return null;
                   }
                 },
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: "MALE",
-                    child: Text("Male"),
+                    child: Text(langBloc.getString(Strings.male)),
                   ),
                   DropdownMenuItem(
                     value: "FEMALE",
-                    child: Text("Female"),
+                    child: Text(langBloc.getString(Strings.female)),
                   ),
                   DropdownMenuItem(
                     value: "OTHER",
-                    child: Text("Other"),
+                    child: Text(langBloc.getString(Strings.other)),
                   )
                 ].toList(),
               ),
@@ -178,7 +183,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 DateTime.now(),
                 dateCtrl: dateCtrl,
                 startDate: DateTime(1923),
-                hintText: 'Date Of Birth',
+                hintText: langBloc.getString(Strings.dateOfBirth),
                 labelText: '',
                 onDateChange: () {
                   age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
@@ -189,7 +194,9 @@ class _CreatePatientState extends State<CreatePatient> {
               const SizedBox(height: 12),
               TextFormField(
                 enabled: false,
-                decoration: const InputDecoration(hintText: "Age"),
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.age),
+                ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(
                   text:
@@ -197,7 +204,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Enter the age";
+                    return langBloc.getString(Strings.enterTheAge);
                   } else {
                     return null;
                   }
@@ -210,8 +217,8 @@ class _CreatePatientState extends State<CreatePatient> {
                     relation = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Relation*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.relation)}*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
@@ -229,7 +236,9 @@ class _CreatePatientState extends State<CreatePatient> {
                 onChanged: (value) {
                   city = value;
                 },
-                decoration: const InputDecoration(hintText: "City*"),
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.city)}*",
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Enter the city";
@@ -257,10 +266,12 @@ class _CreatePatientState extends State<CreatePatient> {
                 onChanged: (value) {
                   country = value;
                 },
-                decoration: const InputDecoration(hintText: "Country*"),
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.country)}*",
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Enter the country";
+                    return langBloc.getString(Strings.enterCountry);
                   } else {
                     return null;
                   }
@@ -308,7 +319,7 @@ class _CreatePatientState extends State<CreatePatient> {
                     if (count == filesFormData.length) {
                       ErrorSnackBar.show(
                         context,
-                        'Files Uploaded Successfully',
+                        langBloc.getString(Strings.filesUploadedSuccessfully),
                       );
                     }
                     setState(() {});
@@ -322,8 +333,8 @@ class _CreatePatientState extends State<CreatePatient> {
                           child: Icon(Icons.picture_as_pdf),
                         ),
                   hintText: uploadKeys.isEmpty
-                      ? "Upload Medical Record"
-                      : "Medical Records.pdf",
+                      ? langBloc.getString(Strings.uploadMedicalRecord)
+                      : "${langBloc.getString(Strings.medicalRecords)}.pdf",
                   suffixIcon: const Icon(Icons.file_upload_outlined),
                 ),
               ),
@@ -339,7 +350,7 @@ class _CreatePatientState extends State<CreatePatient> {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
-                'Fill Mandatory Fields to Continue',
+                langBloc.getString(Strings.fillMandatoryFields),
               );
               return;
             }
@@ -363,7 +374,10 @@ class _CreatePatientState extends State<CreatePatient> {
             var response = await userBloc.createPatient(body: body);
 
             if (response.id == null) {
-              return ErrorSnackBar.show(context, "Invalid Error");
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.invalidError),
+              );
             }
 
             var result = await userBloc.saveMedicalRecords(
@@ -375,7 +389,7 @@ class _CreatePatientState extends State<CreatePatient> {
             }
           },
           color: MyColors.primaryColor,
-          child: const Text("Create Profile"),
+          child: Text(langBloc.getString(Strings.createProfile)),
         ),
       ),
     );

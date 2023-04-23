@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../model/profile.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/avatar.dart';
 import '../../../../../widgets/empty_widget.dart';
@@ -38,6 +40,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
 
     return Container(
       decoration: const BoxDecoration(
@@ -102,7 +105,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                 Row(
                                   children: [
                                     Text(
-                                      '${profiles[index].age?.toString()} years',
+                                      '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
                                       style: textTheme.caption,
                                     ),
                                   ],
@@ -179,14 +182,16 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                   children: [
                                     Image.asset(Images.pdf, width: 24),
                                     const SizedBox(width: 16),
-                                    const Text('Medical Record'),
+                                    Text(
+                                      langBloc.getString(Strings.medicalRecord),
+                                    ),
                                     const Spacer(),
                                     GestureDetector(
                                       onTap: () async {
                                         var res = await ConfirmDialog.show(
                                           context,
                                           message:
-                                              'Are you sure you want to delete?',
+                                              '${langBloc.getString(Strings.areYouSureYouWantToDelete)}?',
                                         );
                                         if (res == true) {
                                           await ProgressUtils.handleProgress(
@@ -254,7 +259,8 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                     ) as Map<String, dynamic>;
                                     ErrorSnackBar.show(
                                       context,
-                                      'Files Uploaded Successfully',
+                                      langBloc.getString(
+                                          Strings.filesUploadedSuccessfully),
                                     );
 
                                     setState(() {});
@@ -268,7 +274,9 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                 Image.asset(Images.upload, width: 18),
                                 const SizedBox(width: 16),
                                 Text(
-                                  'Upload Medical Record',
+                                  langBloc.getString(
+                                    Strings.uploadMedicalRecord,
+                                  ),
                                   style: textTheme.bodyText1,
                                 ),
                               ],
@@ -304,7 +312,10 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                     children: [
                       const Icon(Icons.add, size: 20),
                       const SizedBox(width: 18),
-                      Text('Add a Patient', style: textTheme.caption),
+                      Text(
+                        langBloc.getString(Strings.addAPatient),
+                        style: textTheme.caption,
+                      ),
                     ],
                   ),
                 ),

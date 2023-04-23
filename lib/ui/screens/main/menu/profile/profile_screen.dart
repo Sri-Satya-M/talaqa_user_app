@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../resources/images.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/confirm_logout.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -23,8 +25,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Profile")),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.profile))),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -110,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Image.asset(Images.patient, width: 18),
                     const SizedBox(width: 12),
-                    const Text("View Patient Profiles"),
+                    Text(langBloc.getString(Strings.viewPatientProfiles)),
                   ],
                 ),
                 Container(
@@ -126,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PatientProfile(),
+                          builder: (context) => const PatientProfile(),
                         ),
                       );
                     },
@@ -152,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             }
           },
-          child: const Text('Logout'),
+          child: Text(langBloc.getString(Strings.logout)),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/resources/strings.dart';
 import 'package:alsan_app/ui/screens/main/menu/my_address/my_adddress_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
@@ -10,6 +11,8 @@ import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../bloc/language_bloc.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -23,11 +26,11 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     List<Map<String, dynamic>> userList = [
       {
         'image': Images.profileIcon,
-        'title': 'Profile',
+        'title': Strings.profile,
       },
       {
         'image': Images.address,
@@ -35,7 +38,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       },
       {
         'image': Images.sessionsIcon,
-        'title': 'My Sessions',
+        'title': Strings.mySessions,
       },
       {
         'image': Images.reportIcon,
@@ -43,15 +46,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       },
       {
         'image': Images.supportIcon,
-        'title': 'Support',
+        'title': Strings.support,
       },
       {
         'image': Images.referIcon,
-        'title': 'Refer a friend',
+        'title': Strings.referAFriend,
       },
       {
         'image': Images.faqIcon,
-        'title': 'FAQ',
+        'title': Strings.faq,
       },
     ];
     return ListView(
@@ -120,11 +123,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           separatorBuilder: (context, index) => const Divider(),
         ),
         const SizedBox(height: 32),
-        Text("Privacy Policy", style: textTheme.caption),
+        Text(langBloc.getString(Strings.privacyPolicy),
+            style: textTheme.caption),
         const SizedBox(height: 16),
-        Text("Terms of Use", style: textTheme.caption),
+        Text(langBloc.getString(Strings.termsOfUse), style: textTheme.caption),
         const SizedBox(height: 16),
-        Text("Cancellation & Refund Policy", style: textTheme.caption)
+        Text(
+          langBloc.getString(Strings.cancellationRefundPolicy),
+          style: textTheme.caption,
+        )
       ],
     );
   }

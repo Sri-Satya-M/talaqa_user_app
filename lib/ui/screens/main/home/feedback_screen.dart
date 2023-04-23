@@ -1,8 +1,10 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/feedback_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
@@ -22,8 +24,9 @@ class FeedbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Reviews')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.reviews))),
       body: FutureBuilder<List<f.Feedback>>(
         future: userBloc.getFeedback(id: id),
         builder: (context, snapshot) {

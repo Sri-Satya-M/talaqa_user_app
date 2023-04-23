@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/clinician_list.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../../resources/strings.dart';
 
 class BrowseScreen extends StatefulWidget {
   const BrowseScreen({super.key});
@@ -39,6 +43,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20),
@@ -51,9 +56,9 @@ class _BrowseScreenState extends State<BrowseScreen> {
               Expanded(
                 child: TextFormField(
                   controller: searchCtrl,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                    hintText: 'Search by clinician name',
+                    hintText: langBloc.getString(Strings.searchByClinicianName),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                   ),
@@ -70,7 +75,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
         ),
         const SizedBox(height: 12),
         Text(
-          "Top Rated Clinicians",
+          langBloc.getString(Strings.topRatedClinicians),
           style: textTheme.subtitle2,
         ),
         const SizedBox(height: 12),

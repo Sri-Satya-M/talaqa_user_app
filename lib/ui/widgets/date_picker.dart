@@ -1,7 +1,10 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/images.dart';
+import '../../resources/strings.dart';
 
 class DatePicker extends StatelessWidget {
   DateTime? date;
@@ -26,6 +29,7 @@ class DatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return TextFormField(
       readOnly: true,
       controller: dateCtrl,
@@ -43,7 +47,7 @@ class DatePicker extends StatelessWidget {
       },
       validator: (value) {
         if (value == null || value.trim().isEmpty && value == '') {
-          return 'This field can\'t be empty';
+          return langBloc.getString(Strings.thisFieldCantBeEmpty);
         }
         return null;
       },

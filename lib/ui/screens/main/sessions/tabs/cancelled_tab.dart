@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../bloc/language_bloc.dart';
 import '../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/session.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 import '../widgets/session_card.dart';
@@ -51,13 +53,15 @@ class _CancelledTabState extends State<CancelledTab> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return (isEmpty)
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              EmptyWidget(message: "No Cancelled Sessions"),
+            children: [
+              EmptyWidget(
+                message: langBloc.getString(Strings.noCancelledSessions),
+              ),
             ],
           )
         : CustomScrollView(
@@ -76,7 +80,7 @@ class _CancelledTabState extends State<CancelledTab> {
                               const LoadingWidget(),
                               const SizedBox(height: 8),
                               Text(
-                                'Fetching sessions',
+                                langBloc.getString(Strings.fetchingSessions),
                                 style: textTheme.caption!.copyWith(
                                   fontSize: 14,
                                 ),

@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
@@ -5,8 +6,10 @@ import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../model/clinicians.dart';
+import '../../../../../resources/strings.dart';
 
 class DoctorCard extends StatefulWidget {
   final Clinician clinician;
@@ -27,6 +30,7 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return CustomCard(
       height: 200,
       width: size.width * 0.8,
@@ -130,7 +134,7 @@ class _DoctorCardState extends State<DoctorCard> {
             onPressed: () {
               widget.onTap(widget.clinician);
             },
-            child: const Text('Book a session'),
+            child: Text(langBloc.getString(Strings.bookASession)),
           ),
         ],
       ),

@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../resources/colors.dart';
 import '../../../../../resources/images.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 
 class SessionAtHomeScreen extends StatefulWidget {
@@ -63,8 +66,9 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('At Home')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.atHome))),
       body: RefreshIndicator(
         onRefresh: () async => setState(() {}),
         child: SingleChildScrollView(
@@ -84,7 +88,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                     Row(
                       children: [
                         Text(
-                          'Speech Therapy',
+                          langBloc.getString(Strings.speechTherapy),
                           style: textTheme.bodyText2?.copyWith(fontSize: 12),
                         ),
                         const Spacer(),
@@ -112,7 +116,9 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                       Row(
                         children: [
                           Text(
-                            'Your Session Has been Started',
+                            langBloc.getString(
+                              Strings.yourSessionHasBeenStarted,
+                            ),
                             style: textTheme.caption?.copyWith(fontSize: 14),
                           ),
                           const SizedBox(width: 16),
@@ -155,6 +161,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
 
   Widget otpBloc() {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       width: double.maxFinite,
       padding: const EdgeInsets.all(16),
@@ -208,7 +215,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
           const Divider(),
           const SizedBox(height: 16),
           Text(
-            '*Please share the OTP with the Therapist when the session has started',
+            '*${langBloc.getString(Strings.pleaseShareTheOtpWithTheTherapistWhenTheSessionHasStarted)}',
             style: textTheme.caption,
           ),
         ],

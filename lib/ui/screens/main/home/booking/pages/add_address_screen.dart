@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/location_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/error_snackbar.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -54,11 +56,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget build(BuildContext context) {
     var locationBloc = Provider.of<LocationBloc>(context, listen: true);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     initialize(locationBloc.address);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add Location"),
-      ),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.addLocation))),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -66,8 +67,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Enter your location details",
+              Text(
+                langBloc.getString(Strings.enterYourLocationDetails),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
@@ -78,8 +79,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     addressLine1 = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Address Line 1*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.addressLine1)}*",
                 ),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
@@ -87,7 +88,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the address line 1';
+                    return langBloc.getString(Strings.enterTheAddressLine1);
                   }
                   return null;
                 },
@@ -100,8 +101,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     addressLine2 = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Address Line 2",
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.addressLine2),
                 ),
                 keyboardType: TextInputType.text,
                 inputFormatters: [
@@ -116,13 +117,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     landmark = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Landmark",
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.landmark),
                 ),
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter landmark';
+                    return langBloc.getString(Strings.enterLandmark);
                   }
                   return null;
                 },
@@ -135,13 +136,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     city = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "City*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.city)}*",
                 ),
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter City';
+                    return langBloc.getString(Strings.enterCity);
                   }
                   return null;
                 },
@@ -154,14 +155,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     pincode = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "Pincode*"),
+                decoration: InputDecoration(
+                    hintText: "${langBloc.getString(Strings.pincode)}*"),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Enter pincode';
+                    return langBloc.getString(Strings.enterPincode);
                   }
                   return null;
                 },
@@ -174,13 +176,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     country = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Country",
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.country),
                 ),
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter Country';
+                    return langBloc.getString(Strings.enterCountry);
                   }
                   return null;
                 },
@@ -193,13 +195,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     mobileNumber = value;
                   });
                 },
-                decoration: const InputDecoration(hintText: "Mobile Number*"),
+                decoration: InputDecoration(
+                    hintText: langBloc.getString(Strings.mobileNumber)),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the mobile number';
+                    return langBloc.getString(Strings.enterTheMobileNumber);
                   } else if (value.length < 10) {
-                    return 'Enter 10 digit mobile number';
+                    return langBloc.getString(Strings.enter10DigitMobileNumber);
                   }
                   return null;
                 },
@@ -215,7 +218,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
-                "Fill Mandatory Fields to Continue",
+                langBloc.getString(Strings.fillMandatoryFields),
               );
               return null;
             }
@@ -238,7 +241,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             }
           },
           color: MyColors.primaryColor,
-          child: const Text("Submit"),
+          child: Text(langBloc.getString(Strings.submit)),
         ),
       ),
     );

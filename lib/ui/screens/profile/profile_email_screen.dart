@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/data/local/shared_prefs.dart';
 import 'package:alsan_app/resources/colors.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/strings.dart';
 import '../../../utils/helper.dart';
 import '../../widgets/date_picker.dart';
 
@@ -51,8 +53,9 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
   @override
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Profile Details")),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.profileDetails))),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -61,12 +64,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              const Text(
-                "Enter Profile Details",
+              Text(
+                langBloc.getString(Strings.enterProfileDetails),
                 textAlign: TextAlign.center,
               ),
-              const Text(
-                "Enter your details to complete user profile",
+              Text(
+                langBloc
+                    .getString(Strings.enterYourDetailsToCompleteUserProfile),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
@@ -76,8 +80,8 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     name = value;
                   });
                 },
-                decoration: const InputDecoration(
-                  hintText: "Name*",
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.name)}*",
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
@@ -85,7 +89,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Enter the name';
+                    return langBloc.getString(Strings.enterTheName);
                   } else {
                     return null;
                   }
@@ -95,13 +99,15 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               TextFormField(
                 initialValue: userBloc.username,
                 enabled: false,
-                decoration: const InputDecoration(hintText: "Email Address*"),
+                decoration: InputDecoration(
+                  hintText: "${langBloc.getString(Strings.emailAddress)}*",
+                ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Enter the email Id";
+                    return langBloc.getString(Strings.enterTheEmailId);
                   } else if (!value.contains("@") || !value.contains('.')) {
-                    return "Enter valid email id";
+                    return langBloc.getString(Strings.enterValidEmailId);
                   } else {
                     return null;
                   }
@@ -116,24 +122,26 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Enter the gender";
+                    return langBloc.getString(Strings.enterTheGender);
                   } else {
                     return null;
                   }
                 },
-                decoration: const InputDecoration(hintText: "Select Gender"),
-                items: const [
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.selectGender),
+                ),
+                items: [
                   DropdownMenuItem(
                     value: "MALE",
-                    child: Text("Male"),
+                    child: Text(langBloc.getString(Strings.male)),
                   ),
                   DropdownMenuItem(
                     value: "FEMALE",
-                    child: Text("Female"),
+                    child: Text(langBloc.getString(Strings.female)),
                   ),
                   DropdownMenuItem(
                     value: "OTHER",
-                    child: Text("Other"),
+                    child: Text(langBloc.getString(Strings.other)),
                   )
                 ],
               ),
@@ -142,7 +150,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 DateTime.now(),
                 dateCtrl: dateCtrl,
                 startDate: DateTime(1923),
-                hintText: 'Date Of Birth',
+                hintText: langBloc.getString(Strings.dateOfBirth),
                 labelText: '',
                 onDateChange: () {
                   age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
@@ -152,7 +160,9 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
               TextFormField(
                 enabled: false,
-                decoration: const InputDecoration(hintText: "Age"),
+                decoration: InputDecoration(
+                  hintText: langBloc.getString(Strings.age),
+                ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(
                   text:
@@ -215,7 +225,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                     if (count == filesFormData.length) {
                       ErrorSnackBar.show(
                         context,
-                        'Files Uploaded Successfully',
+                        langBloc.getString(Strings.filesUploadedSuccessfully),
                       );
                     }
                     setState(() {});
@@ -229,8 +239,8 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                           child: Icon(Icons.picture_as_pdf),
                         ),
                   hintText: uploadKeys.isEmpty
-                      ? "Upload Medical Record"
-                      : "Medical Records.pdf",
+                      ? langBloc.getString(Strings.uploadMedicalRecord)
+                      : "${langBloc.getString(Strings.medicalRecord)}.pdf",
                   suffixIcon: const Icon(Icons.file_upload_outlined),
                 ),
               ),
@@ -243,7 +253,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
                 obscureText: visibility,
                 decoration: InputDecoration(
-                  hintText: "New Password*",
+                  hintText: "${langBloc.getString(Strings.newPassword)}*",
                   suffixIcon: IconButton(
                     onPressed: () => setState(() {
                       visibility = !visibility;
@@ -256,7 +266,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Enter the password";
+                    return langBloc.getString(Strings.enterThePassword);
                   } else {
                     return null;
                   }
@@ -271,7 +281,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
                 obscureText: visibility2,
                 decoration: InputDecoration(
-                  hintText: "Confirm Password*",
+                  hintText: "${langBloc.getString(Strings.confirmPassword)}*",
                   suffixIcon: IconButton(
                     onPressed: () => setState(() {
                       visibility2 = !visibility2;
@@ -284,7 +294,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Enter the confirm password";
+                    return langBloc.getString(Strings.enterTheConfirmPassword);
                   } else {
                     return null;
                   }
@@ -301,13 +311,16 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
                 context,
-                "Fill Mandatory Fields to Continue",
+                langBloc.getString(Strings.fillMandatoryFields),
               );
               return;
             }
 
             if (confirmPassword != password) {
-              return ErrorSnackBar.show(context, "Password does not match");
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.passwordDoesNotMatch),
+              );
             }
 
             var body = {
@@ -327,7 +340,10 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 as Map<String, dynamic>;
 
             if (!response.containsKey('access_token')) {
-              return ErrorSnackBar.show(context, "Invalid Error");
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.invalidError),
+              );
             }
 
             var token = response['access_token'];
@@ -345,11 +361,13 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             SuccessScreen.open(
               context,
               type: 'MAIN',
-              message: "Profile Details Updated Successfully",
+              message: langBloc.getString(
+                Strings.profileDetailsUpdatedSuccessfully,
+              ),
             );
           },
           color: MyColors.primaryColor,
-          child: const Text("Submit"),
+          child: Text(langBloc.getString(Strings.submit)),
         ),
       ),
     );

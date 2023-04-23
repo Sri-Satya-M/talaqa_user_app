@@ -1,8 +1,10 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/profile.dart';
-import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/avatar.dart';
 
@@ -26,6 +28,7 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return InkWell(
       onTap: widget.onTap,
       child: Container(
@@ -60,7 +63,7 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
                     Row(
                       children: [
                         Text(
-                          '${widget.profile.age?.toString()} years',
+                          '${widget.profile.age?.toString()} ${langBloc.getString(Strings.years)}',
                           style: textTheme.caption,
                         ),
                       ],

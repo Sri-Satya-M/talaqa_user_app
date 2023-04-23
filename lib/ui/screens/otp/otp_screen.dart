@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/local/shared_prefs.dart';
+import '../../../resources/strings.dart';
 
 class OtpScreen extends StatefulWidget {
   String token;
@@ -40,6 +42,7 @@ class _OtpScreenState extends State<OtpScreen> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var isEmail = userBloc.username.contains('@');
     var text = isEmail ? "email id" : "mobile number";
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -49,12 +52,12 @@ class _OtpScreenState extends State<OtpScreen> {
             const Expanded(flex: 1, child: SizedBox()),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
-            const Text(
-              "OTP Verification",
+            Text(
+              langBloc.getString(Strings.otpVerification),
               textAlign: TextAlign.center,
             ),
             Text(
-              "Enter the otp code sent on your \n$text ",
+              "${langBloc.getString(Strings.enterTheOtpCodeSentToYour)} \n$text ",
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
@@ -72,7 +75,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MobileScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const MobileScreen(),
+                      ),
                     );
                   },
                   child: Image.asset(Images.editIcon, height: 16, width: 16),
@@ -113,7 +118,7 @@ class _OtpScreenState extends State<OtpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Didn't receive the OTP?\t"),
+                Text("${langBloc.getString(Strings.didntReceiveTheOtp)}?\t"),
                 TextButton(
                   onPressed: () async {
                     var body = {};
@@ -125,14 +130,15 @@ class _OtpScreenState extends State<OtpScreen> {
                         as Map<String, dynamic>;
 
                     if (!response.containsKey('token')) {
-                      return ErrorSnackBar.show(context, 'Invalid Error');
+                      return ErrorSnackBar.show(
+                          context, langBloc.getString(Strings.invalidError));
                     }
 
                     widget.token = response['token'];
                   },
-                  child: const Text(
-                    "Resend",
-                    style: TextStyle(color: MyColors.primaryColor),
+                  child: Text(
+                    langBloc.getString(Strings.resend),
+                    style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 ),
               ],
@@ -160,13 +166,19 @@ class _OtpScreenState extends State<OtpScreen> {
                 await userBloc.getProfile();
                 MainScreen.open(context);
               } else {
-                ErrorSnackBar.show(context, 'Invalid Error');
+                ErrorSnackBar.show(
+                  context,
+                  langBloc.getString(Strings.invalidError),
+                );
               }
             } else {
-              ErrorSnackBar.show(context, 'Enter 4-digit otp');
+              ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.enter4digitOtp),
+              );
             }
           },
-          child: const Text("Submit"),
+          child: Text(langBloc.getString(Strings.submit)),
         ),
       ),
     );

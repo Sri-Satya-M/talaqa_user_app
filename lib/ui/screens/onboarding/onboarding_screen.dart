@@ -1,9 +1,12 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/screens/onboarding/widgets/how_to_use.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/routes.dart';
 import '../../../resources/colors.dart';
 import '../../../resources/images.dart';
+import '../../../resources/strings.dart';
 import '../../widgets/progress_button.dart';
 import 'widgets/onboarding_widget.dart';
 
@@ -29,6 +32,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       body: Stack(
         children: [
@@ -40,23 +44,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               setState(() {});
             },
             children: [
-              const OnBoardingWidget(
+              OnBoardingWidget(
                 image: Images.onBoardingImage1,
-                title: 'Book Speech Therapy Sessions Online',
-                description:
-                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
+                title: langBloc.getString(
+                  Strings.bookSpeechTherapySessionsOnline,
+                ),
+                description: langBloc.getString(
+                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                ),
               ),
-              const OnBoardingWidget(
+              OnBoardingWidget(
                 image: Images.onBoardingImage2,
-                title: 'Book Speech Therapy Sessions Online',
-                description:
-                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
+                title: langBloc.getString(
+                  Strings.bookSpeechTherapySessionsOnline,
+                ),
+                description: langBloc.getString(
+                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                ),
               ),
-              const OnBoardingWidget(
+              OnBoardingWidget(
                 image: Images.onBoardingImage3,
-                title: 'Book Speech Therapy Sessions Online',
-                description:
-                    'Users can search and book online/offline sessions with speech therapy consultants right from their fingertips.',
+                title: langBloc.getString(
+                  Strings.bookSpeechTherapySessionsOnline,
+                ),
+                description: langBloc.getString(
+                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                ),
               ),
               HowToUse()
             ],
@@ -105,7 +118,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             (_) => false,
                           );
                         },
-                        child: const Text('Get Started'),
+                        child: Text(langBloc.getString(Strings.getStarted)),
                       ),
               ],
             ),

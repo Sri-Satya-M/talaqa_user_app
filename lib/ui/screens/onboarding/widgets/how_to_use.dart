@@ -1,39 +1,42 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../../../resources/colors.dart';
+import '../../../../resources/strings.dart';
 import '../../../widgets/details_tile.dart';
 
 class HowToUse extends StatelessWidget {
   HowToUse({super.key});
 
-  var steps = [
-    StepDetails(
-      icon: Images.step1,
-      title: 'Step 1',
-      subtitle: 'Select patient profile.',
-    ),
-    StepDetails(
-      icon: Images.step2,
-      title: 'Step 2',
-      subtitle: 'Select clinician profile.',
-    ),
-    StepDetails(
-      icon: Images.step3,
-      title: 'Step 3',
-      subtitle: 'Select mode of consultation',
-    ),
-    StepDetails(
-      icon: Images.step4,
-      title: 'Step 4',
-      subtitle: 'Slot Booking',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var steps = [
+      StepDetails(
+        icon: Images.step1,
+        title: '${langBloc.getString(Strings.step)} 1',
+        subtitle: 'Select patient profile.',
+      ),
+      StepDetails(
+        icon: Images.step2,
+        title: '${langBloc.getString(Strings.step)} 2',
+        subtitle: langBloc.getString(Strings.selectClinicianProfile),
+      ),
+      StepDetails(
+        icon: Images.step3,
+        title: '${langBloc.getString(Strings.step)} 3',
+        subtitle: langBloc.getString(Strings.selectModeOfConsultation),
+      ),
+      StepDetails(
+        icon: Images.step4,
+        title: '${langBloc.getString(Strings.step)} 4',
+        subtitle: langBloc.getString(Strings.slotBooking),
+      ),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -43,14 +46,17 @@ class HowToUse extends StatelessWidget {
         RichText(
           text: TextSpan(
             style: DefaultTextStyle.of(context).style,
-            children: const <TextSpan>[
+            children: <TextSpan>[
               TextSpan(
-                text: 'How to ',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                text: '${langBloc.getString(Strings.howTo)} ',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               TextSpan(
-                text: 'use Talaqa App',
-                style: TextStyle(
+                text: langBloc.getString(Strings.useTalaqaApp),
+                style: const TextStyle(
                   fontSize: 24,
                   color: MyColors.darkGreenAccent,
                   fontWeight: FontWeight.bold,

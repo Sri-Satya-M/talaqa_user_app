@@ -1,9 +1,12 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../app.dart';
 import '../../data/local/shared_prefs.dart';
 import '../../resources/images.dart';
+import '../../resources/strings.dart';
 import 'custom_card.dart';
 
 class LoginExpiredScreen extends StatelessWidget {
@@ -34,6 +37,7 @@ class LoginExpiredScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: Container(
@@ -49,8 +53,9 @@ class LoginExpiredScreen extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(Images.logo, height: 160),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Your session has been expired.\nPlease auth again',
+                    Text(
+                      langBloc.getString(
+                          Strings.yourSessionHasExpiredPleaseLoginAgain),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -63,7 +68,7 @@ class LoginExpiredScreen extends StatelessWidget {
                           (route) => false,
                         );
                       },
-                      child: const Text('OK'),
+                      child: Text(langBloc.getString(Strings.ok)),
                     ),
                   ],
                 ),

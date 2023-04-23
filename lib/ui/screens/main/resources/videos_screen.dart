@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/resources.dart';
 import 'package:alsan_app/ui/screens/main/resources/play_video_screen.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/image_from_net.dart';
 import '../../../widgets/loading_widget.dart';
@@ -53,14 +55,19 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: (isEmpty)
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                EmptyWidget(message: "Videos not available at the moment"),
+              children: [
+                EmptyWidget(
+                  message: langBloc.getString(
+                    Strings.videosNotAvailableAtTheMoment,
+                  ),
+                ),
               ],
             )
           : CustomScrollView(
@@ -79,7 +86,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                 const LoadingWidget(),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'Fetching Videos',
+                                  langBloc.getString(Strings.fetchingVideos),
                                   style: textTheme.caption!.copyWith(
                                     fontSize: 14,
                                   ),
@@ -128,7 +135,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Updated on ${DateFormat('dd MMM, yyyy').format(videos[index].updatedAt!)}',
+                                      '${langBloc.getString(Strings.updatedOn)} ${DateFormat('dd MMM, yyyy').format(videos[index].updatedAt!)}',
                                       style: textTheme.caption,
                                     ),
                                     const Icon(Icons.share, size: 18)

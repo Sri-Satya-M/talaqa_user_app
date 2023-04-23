@@ -1,4 +1,8 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../resources/strings.dart';
 
 class SimplestDialog {
   static Future<bool?> show(
@@ -6,6 +10,7 @@ class SimplestDialog {
     String message, {
     String? title,
   }) {
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return showDialog(
       context: context,
       builder: (context) {
@@ -17,7 +22,7 @@ class SimplestDialog {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('OK'),
+              child: Text(langBloc.getString(Strings.ok)),
             ),
           ],
         );

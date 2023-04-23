@@ -1,7 +1,10 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/avatar.dart';
 
 class RemoteUserPreview extends StatefulWidget {
@@ -40,6 +43,7 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     if (widget.remoteUid != null) {
       return (widget.isVideo)
           ? AgoraVideoView(
@@ -74,9 +78,15 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
       return RichText(
         text: TextSpan(
           children: [
-            TextSpan(text: "Waiting for ", style: textTheme.headline3),
+            TextSpan(
+              text: "${langBloc.getString(Strings.waitingFor)} ",
+              style: textTheme.headline3,
+            ),
             TextSpan(text: name, style: textTheme.headline4),
-            TextSpan(text: " to join", style: textTheme.headline3),
+            TextSpan(
+              text: " ${langBloc.getString(Strings.toJoin)}",
+              style: textTheme.headline3,
+            ),
           ],
         ),
       );

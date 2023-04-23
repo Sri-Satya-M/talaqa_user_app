@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../../model/session.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/error_snackbar.dart';
 import '../../../../../widgets/progress_button.dart';
 import '../../../home/booking/widgets/timeslot_details_widget.dart';
@@ -32,6 +34,7 @@ class _ReportWidgetState extends State<ReportWidget> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -52,7 +55,8 @@ class _ReportWidgetState extends State<ReportWidget> {
             count: 2,
             children: [
               DetailsTile(
-                title: Text("Patient", style: textTheme.caption),
+                title: Text(langBloc.getString(Strings.patient),
+                    style: textTheme.caption),
                 value: Text(
                   "${widget.session.patientProfile!.fullName}",
                   style: textTheme.headline3?.copyWith(
@@ -61,7 +65,8 @@ class _ReportWidgetState extends State<ReportWidget> {
                 ),
               ),
               DetailsTile(
-                title: Text("Clinican", style: textTheme.caption),
+                title: Text(langBloc.getString(Strings.clinician),
+                    style: textTheme.caption),
                 value: Text(
                   "Dr. ${widget.session.clinician!.user!.fullName}",
                   style: textTheme.headline3?.copyWith(
@@ -88,19 +93,26 @@ class _ReportWidgetState extends State<ReportWidget> {
                 final permission = await Permission.storage.request();
 
                 if (permission.isGranted) {
-                  ErrorSnackBar.show(context, 'Downloading Reports...!');
+                  ErrorSnackBar.show(context,
+                      '${langBloc.getString(Strings.downloadingReports)}...!');
                   for (var report in reports) {
                     final externalDir = await getExternalStorageDirectory();
                     String url = '${report.fileUrl}';
                   }
-                  ErrorSnackBar.show(context, 'Reports Downloaded');
+                  ErrorSnackBar.show(
+                    context,
+                    '${langBloc.getString(Strings.reportsDownloaded)}',
+                  );
                 } else {
-                  ErrorSnackBar.show(context, 'Permission Denied');
+                  ErrorSnackBar.show(
+                    context,
+                    langBloc.getString(Strings.permissionDenied),
+                  );
                 }
               } catch (e) {}
             },
-            child: const Text("Download Report"),
-          )
+            child: Text(langBloc.getString(Strings.downloadReport)),
+          ),
         ],
       ),
     );

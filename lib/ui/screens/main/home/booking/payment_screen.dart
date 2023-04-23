@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
@@ -12,9 +13,11 @@ import 'package:flutter_paytabs_bridge/PaymentSdkApms.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkConfigurationDetails.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkLocale.dart';
 import 'package:flutter_paytabs_bridge/flutter_paytabs_bridge.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../model/session.dart';
 import '../../../../../resources/images.dart';
+import '../../../../../resources/strings.dart';
 import 'handle_payment_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -180,9 +183,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Payment Method'),
+        title: Text(langBloc.getString(Strings.selectPaymentMethod)),
       ),
       body: ListView.builder(
         shrinkWrap: true,
@@ -203,7 +207,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       title: Image.asset(Images.card, height: 25),
                       gap: 16,
                       value: Text(
-                        'Pay with Card',
+                        langBloc.getString(Strings.payWithCard),
                         style: textTheme.bodyText2?.copyWith(fontSize: 16),
                       ),
                     ),

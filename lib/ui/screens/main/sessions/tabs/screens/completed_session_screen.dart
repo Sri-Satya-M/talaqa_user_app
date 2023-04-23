@@ -1,10 +1,11 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
-import 'package:alsan_app/model/duration_time.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../model/session.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/details_tile.dart';
 import '../../../../../widgets/empty_widget.dart';
@@ -38,8 +39,9 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text("Completed")),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.completed))),
       body: FutureBuilder<Session>(
         future: sessionsBloc.getSessionById(widget.id.toString()),
         builder: (context, snapshot) {
@@ -70,7 +72,10 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Speech Therapy', style: textTheme.headline4),
+                  Text(
+                    langBloc.getString(Strings.speechTherapy),
+                    style: textTheme.headline4,
+                  ),
                   if (session.consultationMode == 'HOME') ...[
                     Row(
                       children: [
@@ -81,7 +86,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'At Home',
+                          langBloc.getString(Strings.atHome),
                           style: textTheme.bodyText1?.copyWith(
                             color: Colors.blue,
                           ),
@@ -99,7 +104,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
-                title: const Text('Clinician Details'),
+                title: Text(langBloc.getString(Strings.clinicianDetails)),
                 value: Container(
                   decoration: BoxDecoration(
                     color: MyColors.paleLightGreen,
@@ -112,7 +117,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
-                title: const Text('Patient Details'),
+                title: Text(langBloc.getString(Strings.patientDetails)),
                 value: Container(
                   margin: const EdgeInsets.symmetric(vertical: 2),
                   decoration: const BoxDecoration(
@@ -148,12 +153,12 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               ],
               const SizedBox(height: 16),
               ReverseDetailsTile(
-                title: const Text('Symptoms'),
+                title: Text(langBloc.getString(Strings.symptoms)),
                 value: Text('${session.type}', style: textTheme.headline2),
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(
-                title: const Text('Description'),
+                title: Text(langBloc.getString(Strings.description)),
                 value: Text(
                   '${session.description}',
                   style: textTheme.headline2,
@@ -178,9 +183,11 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text("User Location Details"),
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          langBloc.getString(Strings.userLocationDetails),
+                        ),
                       ),
                       Divider(color: MyColors.divider.withOpacity(0.1)),
                       Padding(
@@ -239,10 +246,10 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(15),
                           child: Row(
-                            children: const [
-                              Text("Reports"),
-                              Spacer(),
-                              Icon(Icons.arrow_forward, size: 16)
+                            children: [
+                              Text(langBloc.getString(Strings.reports)),
+                              const Spacer(),
+                              const Icon(Icons.arrow_forward, size: 16)
                             ],
                           ),
                         ),

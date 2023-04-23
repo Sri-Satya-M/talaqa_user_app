@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/rating_widget.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/time_of_day.dart';
 import '../../../../resources/colors.dart';
+import '../../../../resources/strings.dart';
 import '../../../widgets/dynamic_grid_view.dart';
 import '../../../widgets/reverse_details_tile.dart';
 import '../home/booking/widgets/timeslot_details_widget.dart';
@@ -37,8 +39,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Feedback')),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.feedback))),
       body: ListView(
         physics: const ScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -54,9 +57,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Text("Session Details"),
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(langBloc.getString(Strings.sessionDetails)),
                 ),
                 Divider(color: MyColors.divider.withOpacity(0.1)),
                 Padding(
@@ -83,7 +86,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             title: Padding(
                               padding: const EdgeInsets.only(top: 6),
                               child: Text(
-                                "Session Duration",
+                                langBloc.getString(Strings.sessionDuration),
                                 style: textTheme.bodySmall,
                               ),
                             ),
@@ -104,7 +107,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           SizedBox(
             width: 300,
             child: Text(
-              'Your session has been successfully completed',
+              langBloc.getString(
+                Strings.yourSessionHasBeenSuccessfullyCompleted,
+              ),
               style: textTheme.headline3,
               textAlign: TextAlign.center,
             ),
@@ -116,7 +121,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             onTap: (rating) => this.rating = rating.toDouble(),
           ),
           const SizedBox(height: 24),
-          const Text('Write Review'),
+          Text(langBloc.getString(Strings.writeReview)),
           const SizedBox(height: 8),
           TextFormField(
             minLines: 5,
@@ -139,8 +144,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Want a School Report",
-                  style: textTheme.caption?.copyWith(fontSize: 14)),
+              Text(
+                langBloc.getString(Strings.wantASchoolReport),
+                style: textTheme.caption?.copyWith(fontSize: 14),
+              ),
               const SizedBox(height: 4),
               Row(
                 children: [
@@ -150,7 +157,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       onChanged: (value) => setState(() {
                             isReport = value;
                           })),
-                  const Text("Yes"),
+                  Text(langBloc.getString(Strings.yes)),
                 ],
               )
             ],
@@ -168,7 +175,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   );
                 },
                 child: Text(
-                  'Skip',
+                  langBloc.getString(Strings.skip),
                   style: textTheme.caption?.copyWith(
                     fontSize: 16,
                     color: MyColors.primaryColor,
@@ -215,7 +222,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 );
               }
             },
-            child: const Text("Submit your feedback"),
+            child: Text(langBloc.getString(Strings.submitYourFeedback)),
           )
         ],
       ),
