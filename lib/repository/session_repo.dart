@@ -32,7 +32,7 @@ class SessionRepo {
       Api.sessions,
       query: query,
     );
-    var list = response as List;
+    var list = response['sessions'] as List;
     return list.map((e) => Session.fromMap(e)).toList();
   }
 

@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 16,
-          title: Text("Hi ${userBloc.profile?.user?.fullName ?? ''}"),
+          title: Text("${langBloc.getString(Strings.hi)} ${userBloc.profile?.user?.fullName ?? ''}"),
           actions: [
             IconButton(
               onPressed: () => NotificationScreen.open(context),

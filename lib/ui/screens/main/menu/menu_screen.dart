@@ -30,31 +30,31 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     List<Map<String, dynamic>> userList = [
       {
         'image': Images.profileIcon,
-        'title': Strings.profile,
+        'title': langBloc.getString(Strings.profile),
       },
       {
         'image': Images.address,
-        'title': 'My Address',
+        'title': langBloc.getString(Strings.myAddress),
       },
       {
         'image': Images.sessionsIcon,
-        'title': Strings.mySessions,
+        'title': langBloc.getString(Strings.mySessions),
       },
       {
         'image': Images.reportIcon,
-        'title': 'My Reports',
+        'title': langBloc.getString(Strings.myReports),
       },
       {
         'image': Images.supportIcon,
-        'title': Strings.support,
+        'title': langBloc.getString(Strings.support),
       },
       {
         'image': Images.referIcon,
-        'title': Strings.referAFriend,
+        'title': langBloc.getString(Strings.referAFriend),
       },
       {
         'image': Images.faqIcon,
-        'title': Strings.faq,
+        'title': langBloc.getString(Strings.faq),
       },
     ];
     return ListView(
@@ -123,8 +123,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           separatorBuilder: (context, index) => const Divider(),
         ),
         const SizedBox(height: 32),
-        Text(langBloc.getString(Strings.privacyPolicy),
-            style: textTheme.caption),
+        Text(
+          langBloc.getString(Strings.privacyPolicy),
+          style: textTheme.caption,
+        ),
         const SizedBox(height: 16),
         Text(langBloc.getString(Strings.termsOfUse), style: textTheme.caption),
         const SizedBox(height: 16),

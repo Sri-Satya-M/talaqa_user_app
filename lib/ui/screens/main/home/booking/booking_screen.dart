@@ -41,21 +41,27 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   int pageIndex = 1;
   int steps = 5;
-  List<String> titles = [
-    '${Strings.symptomAndModeOfConsultation}',
-    '${Strings.selectProfile}',
-    "${Strings.clinician}",
-    '${Strings.slotBooking}',
-    '${Strings.review}',
-  ];
+  List<String> titles = [];
 
   late PageController controller;
 
+  initializeTitles() {
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    titles = [
+      langBloc.getString(Strings.symptomAndModeOfConsultation),
+      langBloc.getString(Strings.selectProfile),
+      langBloc.getString(Strings.clinician),
+      langBloc.getString(Strings.slotBooking),
+      langBloc.getString(Strings.review),
+    ];
+  }
+
   addExtraStep() {
     if (titles.length == 6) return;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     setState(() {
       steps += 1;
-      titles.insert(4, '${Strings.selectAddress}');
+      titles.insert(4, langBloc.getString(Strings.selectAddress));
     });
   }
 
@@ -75,6 +81,7 @@ class _BookingScreenState extends State<BookingScreen> {
     sessionBloc.selectedDate = DateTime.now();
     sessionBloc.selectedPatient = Profile();
     controller = PageController(initialPage: pageIndex - 1);
+    initializeTitles();
     super.initState();
   }
 
