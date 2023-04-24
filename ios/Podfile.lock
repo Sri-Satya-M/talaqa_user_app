@@ -148,6 +148,9 @@ PODS:
   - flutter_paytabs_bridge (2.3.2):
     - Flutter
     - PayTabsSDK (= 6.4.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -223,6 +226,8 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - OrderedSet (5.0.0)
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -236,6 +241,10 @@ PODS:
   - PhoneNumberKit/UIKit (3.3.4):
     - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (2.2.0)
+  - razorpay-pod (1.3.1)
+  - razorpay_flutter (1.1.10):
+    - Flutter
+    - razorpay-pod
   - SDWebImage (5.15.4):
     - SDWebImage/Core (= 5.15.4)
   - SDWebImage/Core (5.15.4)
@@ -247,6 +256,7 @@ PODS:
   - SwiftyGif (5.4.4)
   - syncfusion_flutter_pdfviewer (0.0.1):
     - Flutter
+  - Toast (4.0.0)
   - url_launcher_ios (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
@@ -264,6 +274,7 @@ DEPENDENCIES:
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_paytabs_bridge (from `.symlinks/plugins/flutter_paytabs_bridge/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geocoding (from `.symlinks/plugins/geocoding/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
@@ -271,8 +282,10 @@ DEPENDENCIES:
   - iris_event (from `.symlinks/plugins/iris_event/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - razorpay_flutter (from `.symlinks/plugins/razorpay_flutter/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - syncfusion_flutter_pdfviewer (from `.symlinks/plugins/syncfusion_flutter_pdfviewer/ios`)
@@ -304,8 +317,10 @@ SPEC REPOS:
     - PayTabsSDK
     - PhoneNumberKit
     - PromisesObjC
+    - razorpay-pod
     - SDWebImage
     - SwiftyGif
+    - Toast
 
 EXTERNAL SOURCES:
   agora_chat_sdk:
@@ -330,6 +345,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_paytabs_bridge:
     :path: ".symlinks/plugins/flutter_paytabs_bridge/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   geocoding:
     :path: ".symlinks/plugins/geocoding/ios"
   geolocator_apple:
@@ -344,10 +361,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   map_launcher:
     :path: ".symlinks/plugins/map_launcher/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  razorpay_flutter:
+    :path: ".symlinks/plugins/razorpay_flutter/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
@@ -383,6 +404,7 @@ SPEC CHECKSUMS:
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_paytabs_bridge: 6a5a2afdecd5a7eb61c6e3a74c5a8b1782a3e32f
+  fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
@@ -398,19 +420,23 @@ SPEC CHECKSUMS:
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
   PayTabsSDK: 825c609aed2b03bef8e7e586bdd880bd54a56d41
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PhoneNumberKit: 441e8b26ec88d598e3591de9061eff18f5dd12e8
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  razorpay-pod: 1ca021af16022084c1b368be9f030a4931f1e5f8
+  razorpay_flutter: 84b3bfd206ae9c9c2a9ba585524a1b3d8102b6c1
   SDWebImage: 1c39de67663e5eebb2f41324d5d580eeea12dd4c
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   syncfusion_flutter_pdfviewer: bb9998884b864cfedf72628df3503bdf57e397c0
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: b528c30625d8fcadc02a8b48d99aa4886f2fe72e
+PODFILE CHECKSUM: 6d015086ade529abd2315a9915fd1629f22671ec
 
 COCOAPODS: 1.11.3

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:alsan_app/model/environment.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../model/chat.dart';
 import '../model/clinicians.dart';
+import '../model/create_razor_pay.dart';
 import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
@@ -11,6 +14,9 @@ import '../model/reports.dart';
 import '../model/session.dart';
 import '../model/time_of_day.dart';
 import '../repository/session_repo.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+import '../resources/images.dart';
 
 class SessionBloc with ChangeNotifier {
   final sessionRepo = SessionRepo();
@@ -117,6 +123,71 @@ class SessionBloc with ChangeNotifier {
 
   Future updateSessionClinician({required String id, required body}) {
     return sessionRepo.updateSessionClinician(id: id, body: body);
+  }
+
+  Future createRazorPayOrder({required int id}) async {
+    var order = await sessionRepo.createRazorPayOrder(body: {"sessionId": id});
+
+    var response = await executeRazorPay(order: order);
+
+    var body = {};
+
+    body['rzpOrderId'] = response.orderId;
+    body['rzpPaymentId'] = response.paymentId;
+    body['rzpSignature'] = response.signature;
+
+    var verifyResponse = await sessionRepo.verifyOrder(body: body);
+    clear();
+
+    return verifyResponse;
+  }
+
+  Completer<PaymentSuccessResponse>? razorpayCompleter;
+
+  executeRazorPay({required CreateRazorPay order}) async {
+    print(Environment.razorPayKey);
+    var options = {
+      'order_id': order.rzpOrderId,
+      'key': Environment.razorPayKey,
+      'amount': order.rzpOrderAmount,
+      'currency': 'INR',
+      'name': 'Talaqa',
+      'description': 'Online Session Booking Payment',
+      'image': Images.logo,
+      'prefill': {
+        'contact': '7702165416',
+        'email': 'yashwanth@janaspandana.in',
+      },
+      "theme": {"color": "#02283D"}
+    };
+
+    var _razorpay = Razorpay();
+    razorpayCompleter = Completer();
+
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+        (PaymentSuccessResponse response) {
+      print(response.orderId);
+      print(response.paymentId);
+      print(response.signature);
+      razorpayCompleter!.complete(response);
+    });
+
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+        (PaymentFailureResponse response) {
+      print('Razorpay error : ${response.code}, ${response.message}');
+      try {
+        var error = jsonDecode(response.message ?? '')['error']['description'];
+        razorpayCompleter!.completeError(error);
+      } catch (e) {
+        print(e);
+        razorpayCompleter!.completeError('Something went wrong');
+      }
+    });
+
+    _razorpay.open(options);
+    var response = await razorpayCompleter!.future;
+    _razorpay.clear();
+    return response;
   }
 
   ///Handling chat in bloc

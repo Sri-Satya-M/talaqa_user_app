@@ -11,5 +11,8 @@ class Environment {
 
   ///AGORA
   static String agoraAppId = dotenv.get('AGORA_APP_ID');
+
+  ///RAZOR_PAY_KEY
+  static String razorPayKey = dotenv.get('RAZOR_PAY_KEY');
 }
 

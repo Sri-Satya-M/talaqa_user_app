@@ -2,6 +2,7 @@ import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
+import '../model/create_razor_pay.dart';
 import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/reports.dart';
@@ -79,5 +80,14 @@ class SessionRepo {
 
   Future updateSessionClinician({required String id, required body}) {
     return apiClient.patch('${Api.sessionClinician}/$id', body);
+  }
+
+  Future<CreateRazorPay> createRazorPayOrder({required body}) async {
+    var res = await apiClient.post('${Api.payments}/create-order', body);
+    return CreateRazorPay.fromJson(res);
+  }
+
+  Future verifyOrder({required body}) {
+    return apiClient.post('${Api.payments}/verify-transaction', body);
   }
 }

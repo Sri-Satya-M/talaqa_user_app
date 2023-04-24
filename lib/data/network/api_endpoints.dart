@@ -21,6 +21,7 @@ class Api {
   static const updateSession = '$sessions/update-session-status';
   static const meeting = '$sessions/meeting';
   static const payment = '$sessions/payment';
+  static const payments = '$sessions/payments';
   static const upload = '/common/upload';
   static const reports = '/reports';
   static const tokens = '/tokens';

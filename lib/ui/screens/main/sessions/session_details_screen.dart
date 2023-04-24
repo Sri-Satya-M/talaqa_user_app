@@ -349,10 +349,22 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
 
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return (session!.status == "APPROVED")
         ? ProgressButton(
-            onPressed: () {
-              PaymentScreen.open(context, session: session!);
+            onPressed: () async {
+              // PaymentScreen.open(context, session: session!);
+              var response = await sessionBloc.createRazorPayOrder(
+                id: int.parse(widget.id),
+              ) as Map<String, dynamic>;
+              if (response.containsKey('status') &&
+                  response['status'] == 'success') {
+                SuccessScreen.open(
+                  context,
+                  type: '',
+                  message: response['message'],
+                );
+              }
             },
             child: Text(langBloc.getString(Strings.payNow)),
           )
@@ -487,6 +499,3 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     }
   }
 }
-
-
-
