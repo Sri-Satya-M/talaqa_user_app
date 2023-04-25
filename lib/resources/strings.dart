@@ -239,6 +239,7 @@ enum Strings {
   searchForADate,
   seeAll,
   selectAddress,
+  selectASlot,
   selectAType,
   selectClinicianProfile,
   selectDate,

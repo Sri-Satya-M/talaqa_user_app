@@ -239,6 +239,7 @@ const arabicTranslations = {
   Strings.searchForADate: 'ابحث عن موعد',
   Strings.seeAll: 'اظهار الكل',
   Strings.selectAddress: "اختيار العنوان",
+  Strings.selectASlot: "حدد فتحة",
   Strings.selectAType: "اختر نوعًا",
   Strings.selectClinicianProfile: "اختيار ملف المعالج",
   Strings.selectDate: "اختيار التاريخ",
