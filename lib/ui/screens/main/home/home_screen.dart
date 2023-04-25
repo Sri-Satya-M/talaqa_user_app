@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           onTap: () {
             mainBloc.tabController = TabController(
               initialIndex: 0,
-              length: mainBloc.tabLength(1),
+              length: mainBloc.tabLength(2),
               vsync: this,
             );
             mainBloc.changeIndex(2);
