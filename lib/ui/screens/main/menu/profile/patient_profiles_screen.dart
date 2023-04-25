@@ -15,14 +15,16 @@ import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 
-class PatientProfile extends StatefulWidget {
-  const PatientProfile({super.key});
+class PatientProfiles extends StatefulWidget {
+  final String id;
+
+  const PatientProfiles({super.key, required this.id});
 
   @override
-  _PatientProfileState createState() => _PatientProfileState();
+  _PatientProfilesState createState() => _PatientProfilesState();
 }
 
-class _PatientProfileState extends State<PatientProfile> {
+class _PatientProfilesState extends State<PatientProfiles> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -31,7 +33,7 @@ class _PatientProfileState extends State<PatientProfile> {
     return Scaffold(
       appBar: AppBar(title: Text(langBloc.getString(Strings.patientDetails))),
       body: FutureBuilder<List<Profile>>(
-        future: userBloc.getPatients(),
+        future: userBloc.getPatients(id: widget.id),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);

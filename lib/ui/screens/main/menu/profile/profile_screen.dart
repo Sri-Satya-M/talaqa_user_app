@@ -129,7 +129,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PatientProfile(),
+                          builder: (context) => PatientProfiles(
+                            id: userBloc.profile!.id.toString(),
+                          ),
                         ),
                       );
                     },

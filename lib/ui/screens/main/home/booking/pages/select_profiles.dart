@@ -48,7 +48,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<List<Profile>>(
-        future: userBloc.getPatients(),
+        future: userBloc.getPatients(id: userBloc.profile!.id.toString()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);

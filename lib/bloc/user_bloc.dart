@@ -100,8 +100,8 @@ class UserBloc with ChangeNotifier {
     return data;
   }
 
-  Future<List<Profile>> getPatients() {
-    return _userRepo.getPatients();
+  Future<List<Profile>> getPatients({required id}) {
+    return _userRepo.getPatients(id: id);
   }
 
   Future updatePatients({id, body}) async {
