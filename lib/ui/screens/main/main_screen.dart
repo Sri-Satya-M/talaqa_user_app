@@ -85,7 +85,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 16,
-          title: Text("${langBloc.getString(Strings.hi)} ${userBloc.profile?.user?.fullName ?? ''}"),
+          title: Text(
+              "${langBloc.getString(Strings.hi)} ${userBloc.profile?.user?.fullName ?? ''}"),
           actions: [
             IconButton(
               onPressed: () => NotificationScreen.open(context),
@@ -109,9 +110,18 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         mainBloc.changeTab(value);
                       },
                       tabs: [
-                        Text(langBloc.getString(Strings.upcoming)),
-                        Text(langBloc.getString(Strings.completed)),
-                        Text(langBloc.getString(Strings.cancelled)),
+                        SizedBox(
+                          height: 30,
+                          child: Text(langBloc.getString(Strings.upcoming)),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          child: Text(langBloc.getString(Strings.completed)),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          child: Text(langBloc.getString(Strings.cancelled)),
+                        ),
                       ],
                     );
                   case 3:

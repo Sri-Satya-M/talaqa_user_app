@@ -41,7 +41,7 @@ const englishTranslations = {
   Strings.commentsAndRecommendations: 'Comments and Recommendations',
   Strings.communication:"communication",
   Strings.complete: 'complete',
-  Strings.completed: 'completed',
+  Strings.completed: 'Completed',
   Strings.completedPayout:'Completed Payout',
   Strings.completedSessions:'Completed Sessions',
   Strings.confirmedSessions:'Confirmed Sessions',
