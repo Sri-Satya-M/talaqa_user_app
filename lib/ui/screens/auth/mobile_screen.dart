@@ -28,20 +28,20 @@ class _MobileScreenState extends State<MobileScreen> {
     var size = MediaQuery.of(context).size;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: size.height * 0.05),
+            SizedBox(height: size.height * 0.1),
             Image.asset(Images.logo, height: 140),
-            const SizedBox(height: 32),
+            const SizedBox(height: 48),
             Text(
               langBloc.getString(Strings.signUpWithMobileNumber),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 48),
             Stack(
               children: [
                 InternationalPhoneNumberInput(
@@ -58,7 +58,7 @@ class _MobileScreenState extends State<MobileScreen> {
                   errorMessage: langBloc.getString(Strings.invalidPhoneNumber),
                   inputDecoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: langBloc.getString(Strings.mobileNumber),
+                    hintText: langBloc.getString(Strings.enter10DigitMobileNumber),
                   ),
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -77,7 +77,7 @@ class _MobileScreenState extends State<MobileScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 54),
+            const SizedBox(height: 64),
             ProgressButton(
               onPressed: () async {
                 if (mobileNumber.length < 10) {
@@ -107,6 +107,8 @@ class _MobileScreenState extends State<MobileScreen> {
               },
               child: Text(langBloc.getString(Strings.getOtp)),
             ),
+
+
             const SizedBox(height: 48),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -131,33 +133,33 @@ class _MobileScreenState extends State<MobileScreen> {
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.email,
-                  (route) => false,
+                      (route) => false,
                 );
               },
               child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
             ),
-            const SizedBox(height: 32),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MobileLogin(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    langBloc.getString(Strings.loginToYourAccount),
-                    style: const TextStyle(color: MyColors.primaryColor),
-                  ),
-                ),
-              ],
-            ),
+            // const SizedBox(height: 32),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
+            //     TextButton(
+            //       onPressed: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => const MobileLogin(),
+            //           ),
+            //         );
+            //       },
+            //       child: Text(
+            //         langBloc.getString(Strings.loginToYourAccount),
+            //         style: const TextStyle(color: MyColors.primaryColor),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
