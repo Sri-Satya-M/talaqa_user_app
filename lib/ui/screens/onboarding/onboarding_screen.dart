@@ -38,7 +38,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         children: [
           PageView(
             controller: pageController,
-            physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (value) {
               currentIndex = value;
               setState(() {});
@@ -113,9 +112,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       )
                     : ProgressButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                            Routes.signUp,
-                            (_) => false,
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            Routes.mobile,
+                            (route) => false,
                           );
                         },
                         child: Text(langBloc.getString(Strings.getStarted)),
@@ -129,9 +129,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               right: 20,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
                     Routes.mobile,
-                    (_) => false,
+                    (route) => false,
                   );
                 },
                 child: Text(

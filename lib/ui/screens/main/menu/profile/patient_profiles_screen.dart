@@ -67,51 +67,46 @@ class _PatientProfilesState extends State<PatientProfiles> {
                       url: profiles[index].image,
                       name: profiles[index].fullName,
                       borderRadius: BorderRadius.circular(10),
-                      size: 72,
+                      size: 100,
                     ),
                     const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(profiles[index].fullName ?? 'NA'),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Text(
-                              profiles[index].age?.toString() ?? 'NA',
-                              style: textTheme.caption,
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                                vertical: 2,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(profiles[index].fullName ?? 'NA'),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Text(
+                                profiles[index].age?.toString() ?? 'NA',
+                                style: textTheme.caption,
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                borderRadius: BorderRadius.circular(3),
+                              const SizedBox(width: 12),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                child: Text(
+                                  profiles[index].gender ?? 'NA',
+                                  style: textTheme.subtitle2,
+                                ),
                               ),
-                              child: Text(profiles[index].gender ?? 'NA',
-                                  style: textTheme.subtitle2),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Text(
-                              '${profiles[index].city ?? 'NA'}, ',
-                              style: textTheme.subtitle2,
-                            ),
-                            Text(
-                              profiles[index].country ?? 'NA',
-                              style: textTheme.subtitle2,
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            '${profiles[index].city ?? 'NA'}, \n${profiles[index].country ?? 'NA'}',
+                            style: textTheme.subtitle2,
+                          ),
+                        ],
+                      ),
                     ),
-                    const Spacer(flex: 1),
                     PopupMenuButton<int>(
                       onSelected: (int value) async {
                         switch (value) {

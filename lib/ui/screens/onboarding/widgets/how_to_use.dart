@@ -34,7 +34,7 @@ class HowToUse extends StatelessWidget {
       StepDetails(
         icon: Images.step4,
         title: '${langBloc.getString(Strings.step)} 4',
-        subtitle: langBloc.getString(Strings.slotBooking),
+        subtitle: langBloc.getString(Strings.selectASlot),
       ),
     ];
     return Column(

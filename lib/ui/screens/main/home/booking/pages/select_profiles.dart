@@ -97,35 +97,29 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                               size: 72,
                             ),
                             const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(profiles[index].fullName ?? 'NA'),
-                                const SizedBox(height: 4),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
-                                      style: textTheme.caption,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${profiles[index].city ?? 'NA'}, ',
-                                      style: textTheme.subtitle2,
-                                    ),
-                                    Text(
-                                      profiles[index].country ?? 'NA',
-                                      style: textTheme.subtitle2,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(profiles[index].fullName ?? 'NA'),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
+                                        style: textTheme.caption,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    '${profiles[index].city ?? 'NA'}, \n${profiles[index].country ?? 'NA'}',
+                                    style: textTheme.subtitle2,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const Spacer(),
+
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

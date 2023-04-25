@@ -156,8 +156,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
               body[isEmail ? 'email' : 'mobileNumber'] = userBloc.username;
               print(body);
-              var response =
-                  await userBloc.verifyOTP(body: body) as Map<String, dynamic>;
+              var response = await userBloc.verifyOTP(
+                body: body,
+              ) as Map<String, dynamic>;
 
               if (response.containsKey('message')) {
                 TermsConditions.open(context);

@@ -100,22 +100,20 @@ class _LocationScreenState extends State<LocationScreen> {
       extendBody: true,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Expanded(
-          child: ProgressButton(
-            onPressed: () {
-              locationBloc.currentPosition = latLng;
-              locationBloc.setAddress(address);
+        child: ProgressButton(
+          onPressed: () {
+            locationBloc.currentPosition = latLng;
+            locationBloc.setAddress(address);
 
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const AddAddressScreen();
-                  },
-                ),
-              );
-            },
-            child: Text("${langBloc.getString(Strings.confirmLocation)}",),
-          ),
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const AddAddressScreen();
+                },
+              ),
+            );
+          },
+          child: Text(langBloc.getString(Strings.confirmLocation),),
         ),
       ),
     );
