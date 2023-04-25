@@ -57,9 +57,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Image.asset(
-                  //   getNotificationIcon(type: notifications[index].type!),
-                  // ),
                   Image.asset(
                     getNotificationIcon(type: 'session'),
                     height: 25,

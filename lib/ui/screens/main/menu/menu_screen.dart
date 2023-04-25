@@ -160,10 +160,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         screen = const ReportScreen();
         break;
       case 4:
-        screen = const ProfileScreen();
+        return;
         break;
       case 5:
-        screen = const ProfileScreen();
+        return;
         break;
       default:
         return;

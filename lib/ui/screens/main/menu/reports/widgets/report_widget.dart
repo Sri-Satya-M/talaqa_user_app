@@ -68,20 +68,20 @@ class _ReportWidgetState extends State<ReportWidget> {
                 title: Text(langBloc.getString(Strings.clinician),
                     style: textTheme.caption),
                 value: Text(
-                  "Dr. ${widget.session.clinician!.user!.fullName}",
+                  "${widget.session.clinician!.user!.fullName}",
                   style: textTheme.headline3?.copyWith(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: TimeslotDetailsWidget(
-                  dateTime: widget.session.date!,
-                  timeslots: widget.session.clinicianTimeSlots!,
-                ),
-              ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: TimeslotDetailsWidget(
+              dateTime: widget.session.date!,
+              timeslots: widget.session.clinicianTimeSlots!,
+            ),
           ),
           ProgressButton(
             onPressed: () async {

@@ -137,15 +137,18 @@ class _MobileScreenState extends State<MobileScreen> {
               child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
             ),
             const SizedBox(height: 32),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MobileLogin()),
+                      MaterialPageRoute(
+                        builder: (context) => const MobileLogin(),
+                      ),
                     );
                   },
                   child: Text(
