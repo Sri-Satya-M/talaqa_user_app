@@ -125,7 +125,7 @@ const englishTranslations = {
   Strings.getOtp: 'Get Otp',
   Strings.getStarted:"Get Started",
   Strings.hello: 'Hello',
-  Strings.hi: 'Hi',
+  Strings.hi: 'Hi,',
   Strings.home: 'home',
   Strings.howTo: "How to",
   Strings.iAgreeToTheTermsAndConditions:'I Agree to the Terms and Conditions',

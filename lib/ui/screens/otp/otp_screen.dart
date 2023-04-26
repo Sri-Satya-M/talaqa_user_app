@@ -161,19 +161,19 @@ class _OtpScreenState extends State<OtpScreen> {
               ) as Map<String, dynamic>;
 
               if (response.containsKey('message')) {
-                TermsConditions.open(context);
+                return TermsConditions.open(context);
               } else if (response.containsKey('access_token')) {
                 await Prefs.setToken(response['access_token']);
                 await userBloc.getProfile();
                 MainScreen.open(context);
               } else {
-                ErrorSnackBar.show(
+                return ErrorSnackBar.show(
                   context,
                   langBloc.getString(Strings.invalidError),
                 );
               }
             } else {
-              ErrorSnackBar.show(
+              return ErrorSnackBar.show(
                 context,
                 langBloc.getString(Strings.enter4digitOtp),
               );
