@@ -40,6 +40,10 @@ class _ClinicianListState extends State<ClinicianList> {
         'limit': limit.toString(),
       };
 
+      if (widget.search.isNotEmpty) {
+        query['search'] = widget.search;
+      }
+
       var list = await context.read<UserBloc>().getClinicians(query: query);
       clinicians.addAll(list);
 

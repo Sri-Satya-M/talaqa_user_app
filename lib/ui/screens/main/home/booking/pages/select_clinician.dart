@@ -1,17 +1,11 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_clinician_widget.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
-import '../../../../../../bloc/user_bloc.dart';
-import '../../../../../../model/clinicians.dart';
-import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/strings.dart';
-import '../../../../../widgets/empty_widget.dart';
-import '../../../../../widgets/error_widget.dart';
-import '../../../../../widgets/loading_widget.dart';
 
 class SelectClinician extends StatefulWidget {
   final Function onTap;
@@ -23,97 +17,70 @@ class SelectClinician extends StatefulWidget {
 }
 
 class _SelectClinicianState extends State<SelectClinician> {
+  final searchSubject = BehaviorSubject<String>();
+  final searchCtrl = TextEditingController();
+  Stream<String>? searchStream;
+
+  @override
+  void initState() {
+    super.initState();
+    searchStream = searchSubject.debounceTime(
+      const Duration(milliseconds: 600),
+    );
+  }
+
+  void onSearch(String value) {
+    searchSubject.add(value);
+  }
+
+  @override
+  void dispose() {
+    searchSubject.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
-      child: FutureBuilder<List<Clinician>>(
-        future: userBloc.getClinicians(query: {"search": ''}),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return CustomErrorWidget(error: snapshot.error);
-          }
-
-          if (!snapshot.hasData) return const LoadingWidget();
-
-          var clinicians = snapshot.data ?? [];
-
-          if (clinicians.isEmpty) return const EmptyWidget();
-
-          return ListView(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(left: 16),
-                  hintText: langBloc.getString(Strings.search),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: MyColors.divider),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: MyColors.primaryColor),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+      child: ListView(
+        children: [
+          CustomCard(
+            child: TextFormField(
+              style: textTheme.bodyText1?.copyWith(fontSize: 16),
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(16),
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.search),
                 ),
+                hintText: langBloc.getString(Strings.searchByClinicianName),
+                hintStyle: textTheme.caption?.copyWith(fontSize: 14),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
-              const SizedBox(height: 16),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: clinicians.length,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                physics: const ScrollPhysics(),
-                itemBuilder: (context, index) => CustomCard(
-                  radius: 5,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: (sessionBloc.selectedClinician?.id ==
-                                    clinicians[index].id)
-                                ? MyColors.primaryColor
-                                : Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: ClinicianDetailsWidget(
-                          clinician: clinicians[index],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox(height: 64),
-                            Radio(
-                              value: clinicians[index].id,
-                              groupValue: sessionBloc.selectedClinician?.id,
-                              onChanged: (value) {
-                                sessionBloc.selectedClinician =
-                                    clinicians[index];
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+              onChanged: onSearch,
+            ),
+          ),
+          const SizedBox(height: 16),
+          StreamBuilder<String>(
+            stream: searchStream,
+            builder: (context, snapshot) {
+              var search = snapshot.data ?? '';
+              return SelectClinicianWidget(
+                key: ValueKey(search),
+                onTap: () {},
+                search: search,
+              );
+            },
+          ),
+        ],
       ),
     );
   }

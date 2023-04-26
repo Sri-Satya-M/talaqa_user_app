@@ -53,11 +53,16 @@ class _BrowseScreenState extends State<BrowseScreen> {
           height: 50,
           child: Row(
             children: [
+              const SizedBox(width: 12),
+              InkWell(
+                onTap: () => onSearch.call(searchCtrl.text),
+                child: const Icon(Icons.search, size: 22),
+              ),
               Expanded(
                 child: TextFormField(
                   controller: searchCtrl,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     hintText: langBloc.getString(Strings.searchByClinicianName),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -65,11 +70,6 @@ class _BrowseScreenState extends State<BrowseScreen> {
                   onChanged: onSearch,
                 ),
               ),
-              InkWell(
-                onTap: () {},
-                child: const Icon(Icons.tune),
-              ),
-              const SizedBox(width: 16),
             ],
           ),
         ),
@@ -84,6 +84,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
           builder: (context, snapshot) {
             var search = snapshot.data ?? '';
             return ClinicianList(
+              key: ValueKey(search),
               search: search,
               scrollDirection: Axis.vertical,
               onTap: (clinician) {
