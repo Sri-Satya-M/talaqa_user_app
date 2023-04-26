@@ -125,8 +125,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
           if (currentIndex < 3)
             Positioned(
-              top: 40,
-              right: 20,
+              top: 60,
+              right: 30,
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(

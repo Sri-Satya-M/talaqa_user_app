@@ -101,7 +101,7 @@ class _PatientProfilesState extends State<PatientProfiles> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            '${profiles[index].city ?? 'NA'}, \n${profiles[index].country ?? 'NA'}',
+                            '${profiles[index].city ?? 'NA'},\n${profiles[index].state ?? 'NA'},\n${profiles[index].country ?? 'NA'}',
                             style: textTheme.subtitle2,
                           ),
                         ],

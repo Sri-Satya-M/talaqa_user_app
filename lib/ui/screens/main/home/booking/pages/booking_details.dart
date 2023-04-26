@@ -68,19 +68,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 langBloc.getString(Strings.speechTherapy),
                 style: textTheme.headline4,
               ),
-              if (sessionBloc.selectedModeOfConsultation!.type == 'Home') ...[
-                Row(
-                  children: [
-                    const Icon(Icons.home, color: Colors.lightBlue),
-                    Text(
-                      langBloc.getString(Strings.atHome),
-                      style: textTheme.bodyText1?.copyWith(
-                        color: Colors.lightBlue,
-                      ),
-                    ),
-                  ],
-                )
-              ],
+              getModeOfConsultation(
+                mode: sessionBloc.selectedModeOfConsultation!.type!,
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -168,5 +158,40 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
       key: 'startAt',
       obj: (json) => TimeSlot.fromJson(json),
     ).map((e) => e as TimeSlot).toList();
+  }
+
+  Widget getModeOfConsultation({required String mode}) {
+    String icon = '';
+    String modeText = '';
+    var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    switch (mode) {
+      case 'AUDIO':
+        icon = Images.callMode;
+        modeText = langBloc.getString(Strings.audio);
+        break;
+      case 'VIDEO':
+        icon = Images.videoMode;
+        modeText = langBloc.getString(Strings.video);
+        break;
+      case 'HOME':
+        icon = Images.homeMode;
+        modeText = langBloc.getString(Strings.atHome);
+        break;
+    }
+    return Row(
+      children: [
+        Image.asset(
+          icon,
+          height: 16,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          modeText,
+          style: textTheme.bodyText1
+              ?.copyWith(color: Colors.lightBlue, fontSize: 16),
+        ),
+      ],
+    );
   }
 }

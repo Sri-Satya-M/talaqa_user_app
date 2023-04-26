@@ -43,7 +43,7 @@ class _SelectCliniciansState extends State<SelectClinicians> {
             onTap: (clinician) {
               BookingScreen.open(context, clinician: clinician);
             },
-          )
+          ),
         ],
       ),
     );

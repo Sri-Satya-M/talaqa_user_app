@@ -10,14 +10,14 @@ import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
 import 'package:alsan_app/model/feedback.dart' as f;
 
-class FeedbackScreen extends StatelessWidget {
+class ClinicianFeedbackScreen extends StatelessWidget {
   final String id;
 
-  const FeedbackScreen({super.key, required this.id});
+  const ClinicianFeedbackScreen({super.key, required this.id});
 
   static Future open(BuildContext context, {required String id}) {
     return Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => FeedbackScreen(id: id)),
+      MaterialPageRoute(builder: (context) => ClinicianFeedbackScreen(id: id)),
     );
   }
 

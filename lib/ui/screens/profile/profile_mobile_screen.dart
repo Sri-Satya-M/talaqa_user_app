@@ -41,8 +41,9 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
   var name = '';
   var gender = '';
   var age = '';
-  var city = 'Hyderabad';
-  var country = 'India';
+  var city = '';
+  var state = '';
+  var country = '';
   var dateCtrl = TextEditingController();
   List<String> uploadKeys = [];
   FilePickerResult? pdfs;
@@ -153,6 +154,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 onDateChange: () {
                   age = Helper.calculateAge(DateTime.parse(dateCtrl.text))
                       .toString();
+                  setState(() {});
                 },
               ),
               TextFormField(
@@ -173,6 +175,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 disableCountry: true,
                 showStates: true,
                 showCities: true,
+                flagState: CountryFlag.DISABLE,
                 dropdownDecoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: MyColors.divider),
@@ -185,7 +188,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 },
                 onStateChanged: (value) {
                   setState(() {
-                    // stateValue = value;
+                    state = value.toString();
                   });
                 },
                 onCityChanged: (value) {
@@ -266,6 +269,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 DateTime.parse(dateCtrl.text),
               ),
               "city": city,
+              "state": state,
               "country": country,
               "gender": gender,
             };
@@ -281,16 +285,19 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             }
 
             var token = response['access_token'];
+
             await Prefs.setToken(token);
 
             await userBloc.getProfile();
 
-            await userBloc.saveMedicalRecords(
-              body: {
-                'patientProfileId': userBloc.profile!.patientProfile!.id!,
-                'fileKeys': uploadKeys
-              },
-            );
+            if (uploadKeys.isNotEmpty) {
+              await userBloc.saveMedicalRecords(
+                body: {
+                  'patientProfileId': userBloc.profile!.patientProfile!.id!,
+                  'fileKeys': uploadKeys
+                },
+              );
+            }
 
             SuccessScreen.open(
               context,

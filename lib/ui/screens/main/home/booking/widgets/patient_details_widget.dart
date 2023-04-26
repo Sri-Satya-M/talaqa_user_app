@@ -22,46 +22,40 @@ class PatientDetailsWidget extends StatelessWidget {
             size: 72,
           ),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(patient.fullName ?? 'NA', style: textTheme.bodyText2),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  Text(
-                    patient.age?.toString() ?? 'NA',
-                    style: textTheme.caption,
-                  ),
-                  const SizedBox(width: 12),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 2,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(patient.fullName ?? 'NA', style: textTheme.bodyText2),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      patient.age?.toString() ?? 'NA',
+                      style: textTheme.caption,
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(3),
+                    const SizedBox(width: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Text(patient.gender ?? 'NA',
+                          style: textTheme.subtitle2),
                     ),
-                    child: Text(patient.gender ?? 'NA',
-                        style: textTheme.subtitle2),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Text(
-                    '${patient.city ?? 'NA'}, ',
-                    style: textTheme.subtitle2,
-                  ),
-                  Text(
-                    patient.country ?? 'NA',
-                    style: textTheme.subtitle2,
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '${patient.city ?? 'NA'},\n${patient.state ?? 'NA'}\n,${patient.country ?? 'NA'}',
+                  style: textTheme.subtitle2,
+                ),
+              ],
+            ),
           ),
         ],
       ),

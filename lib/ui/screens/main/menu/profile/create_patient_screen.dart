@@ -6,6 +6,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,7 @@ class _CreatePatientState extends State<CreatePatient> {
   var age = '';
   String? city;
   String? country;
+  String? state;
   String? gender;
   File? profileImage;
   String relation = '';
@@ -232,64 +234,33 @@ class _CreatePatientState extends State<CreatePatient> {
                 },
               ),
               const SizedBox(height: 12),
-              DropdownButtonFormField(
-                onChanged: (value) {
-                  city = value;
-                },
-                decoration: InputDecoration(
-                  hintText: "${langBloc.getString(Strings.city)}*",
+              CSCPicker(
+                layout: Layout.vertical,
+                defaultCountry: CscCountry.United_Arab_Emirates,
+                flagState: CountryFlag.DISABLE,
+                disableCountry: true,
+                showStates: true,
+                showCities: true,
+                dropdownDecoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: MyColors.divider),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter the city";
-                  } else {
-                    return null;
-                  }
+                onCountryChanged: (value) {
+                  setState(() {
+                    country = value;
+                  });
                 },
-                items: const [
-                  DropdownMenuItem(
-                    value: "Agra",
-                    child: Text("Agra"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Hyderabad",
-                    child: Text("Hyderabad"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Delhi",
-                    child: Text("Delhi"),
-                  )
-                ],
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField(
-                onChanged: (value) {
-                  country = value;
+                onStateChanged: (value) {
+                  setState(() {
+                    state = value.toString();
+                  });
                 },
-                decoration: InputDecoration(
-                  hintText: "${langBloc.getString(Strings.country)}*",
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return langBloc.getString(Strings.enterCountry);
-                  } else {
-                    return null;
-                  }
+                onCityChanged: (value) {
+                  setState(() {
+                    city = value.toString();
+                  });
                 },
-                items: const [
-                  DropdownMenuItem(
-                    value: "India",
-                    child: Text("India"),
-                  ),
-                  DropdownMenuItem(
-                    value: "USA",
-                    child: Text("USA"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Dubai",
-                    child: Text("Dubai"),
-                  )
-                ],
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -363,6 +334,7 @@ class _CreatePatientState extends State<CreatePatient> {
               "fullName": name,
               "age": int.parse(age),
               "city": city,
+              "state": state,
               "country": country,
               "gender": gender,
               "relation": relation,

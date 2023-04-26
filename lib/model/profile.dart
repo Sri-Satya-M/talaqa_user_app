@@ -11,6 +11,7 @@ class Profile {
     this.gender,
     this.dob,
     this.city,
+    this.state,
     this.country,
     this.pincode,
     this.userId,
@@ -29,6 +30,7 @@ class Profile {
   String? gender;
   String? dob;
   String? city;
+  String? state;
   String? country;
   int? pincode;
   int? userId;
@@ -47,6 +49,7 @@ class Profile {
     gender: json["gender"],
     dob: json["dob"],
     city: json["city"],
+    state: json["state"],
     country: json["country"],
     userId: json["userId"],
     pincode: json["pincode"],
@@ -66,6 +69,7 @@ class Profile {
     "gender": gender,
     "dob": dob,
     "city": city,
+    "state": state,
     "country": country,
     "userId": userId,
     "patientId": patientId,

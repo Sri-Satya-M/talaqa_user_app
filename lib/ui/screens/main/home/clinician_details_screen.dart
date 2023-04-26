@@ -3,7 +3,7 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/model/feedback.dart' as f;
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
-import 'package:alsan_app/ui/screens/main/home/feedback_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/clinician_feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/feedback_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class ClinicianDetailsScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () =>
-                    FeedbackScreen.open(context, id: clinician.id.toString()),
+                    ClinicianFeedbackScreen.open(context, id: clinician.id.toString()),
                 child: Text(
                   langBloc.getString(Strings.seeAll),
                   style: textTheme.headline2?.copyWith(

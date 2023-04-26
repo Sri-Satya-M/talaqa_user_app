@@ -84,7 +84,7 @@ class _SessionCardState extends State<SessionCard> {
               ),
               const SizedBox(height: 12),
               DynamicGridView(
-                spacing: 5,
+                spacing: 16,
                 count: 2,
                 children: [
                   DetailsTile(

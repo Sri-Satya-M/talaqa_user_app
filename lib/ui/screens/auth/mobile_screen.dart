@@ -1,9 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
-import 'package:alsan_app/config/routes.dart';
-import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
-import 'package:alsan_app/ui/screens/auth/login/mobile_login_screen.dart';
 import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -109,35 +106,35 @@ class _MobileScreenState extends State<MobileScreen> {
             ),
 
 
-            const SizedBox(height: 48),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  width: 50,
-                  height: 1,
-                  color: Colors.black.withOpacity(0.2),
-                ),
-                Text(langBloc.getString(Strings.or)),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  width: 50,
-                  height: 1,
-                  color: Colors.black.withOpacity(0.2),
-                ),
-              ],
-            ),
-            const SizedBox(height: 40),
-            ProgressButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  Routes.email,
-                      (route) => false,
-                );
-              },
-              child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
-            ),
+            // const SizedBox(height: 48),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Container(
+            //       margin: const EdgeInsets.symmetric(horizontal: 10),
+            //       width: 50,
+            //       height: 1,
+            //       color: Colors.black.withOpacity(0.2),
+            //     ),
+            //     Text(langBloc.getString(Strings.or)),
+            //     Container(
+            //       margin: const EdgeInsets.symmetric(horizontal: 10),
+            //       width: 50,
+            //       height: 1,
+            //       color: Colors.black.withOpacity(0.2),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(height: 40),
+            // ProgressButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pushNamedAndRemoveUntil(
+            //       Routes.email,
+            //           (route) => false,
+            //     );
+            //   },
+            //   child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
+            // ),
             // const SizedBox(height: 32),
             // Column(
             //   mainAxisAlignment: MainAxisAlignment.center,

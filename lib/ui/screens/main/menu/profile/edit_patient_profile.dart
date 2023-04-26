@@ -6,12 +6,14 @@ import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../resources/colors.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 import '../../../../widgets/date_picker.dart';
@@ -38,6 +40,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   final TextEditingController name = TextEditingController();
   final TextEditingController gender = TextEditingController();
   final TextEditingController city = TextEditingController();
+  final TextEditingController state = TextEditingController();
   final TextEditingController country = TextEditingController();
   final TextEditingController age = TextEditingController();
   final TextEditingController dateCtrl = TextEditingController();
@@ -48,6 +51,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
     name.text = widget.profile.fullName ?? '';
     gender.text = widget.profile.gender ?? '';
     city.text = widget.profile.city ?? '';
+    state.text = widget.profile.state ?? '';
     country.text = widget.profile.country ?? '';
     age.text = widget.profile.age?.toString() ?? '';
     dateCtrl.text = widget.profile.dob?.toString() ?? '';
@@ -58,6 +62,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
   Widget build(BuildContext context) {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(langBloc.getString(Strings.editPatientProfile)),
@@ -173,66 +178,34 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               ].toList(),
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField(
-              value: widget.profile.city,
-              onChanged: (value) {
-                city.text = value.toString();
-              },
-              decoration: InputDecoration(
-                hintText: "${langBloc.getString(Strings.city)}*",
+            CSCPicker(
+              layout: Layout.vertical,
+              defaultCountry: CscCountry.United_Arab_Emirates,
+              stateDropdownLabel: state.text,
+              flagState: CountryFlag.DISABLE,
+              disableCountry: true,
+              showStates: true,
+              showCities: true,
+              dropdownDecoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: MyColors.divider),
+                borderRadius: BorderRadius.circular(5),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return langBloc.getString(Strings.enterCity);
-                } else {
-                  return null;
-                }
+              onCountryChanged: (value) {
+                setState(() {
+                  country.text = value;
+                });
               },
-              items: const [
-                DropdownMenuItem(
-                  value: "Agra",
-                  child: Text("Agra"),
-                ),
-                DropdownMenuItem(
-                  value: "Hyderabad",
-                  child: Text("Hyderabad"),
-                ),
-                DropdownMenuItem(
-                  value: "Delhi",
-                  child: Text("Delhi"),
-                )
-              ],
-            ),
-            const SizedBox(height: 12),
-            DropdownButtonFormField(
-              value: widget.profile.country,
-              onChanged: (value) {
-                country.text = value.toString();
+              onStateChanged: (value) {
+                setState(() {
+                  state.text = value.toString();
+                });
               },
-              decoration: InputDecoration(
-                hintText: "${langBloc.getString(Strings.country)}*",
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return langBloc.getString(Strings.enterCountry);
-                } else {
-                  return null;
-                }
+              onCityChanged: (value) {
+                setState(() {
+                  city.text = value.toString();
+                });
               },
-              items: const [
-                DropdownMenuItem(
-                  value: "India",
-                  child: Text("India"),
-                ),
-                DropdownMenuItem(
-                  value: "USA",
-                  child: Text("USA"),
-                ),
-                DropdownMenuItem(
-                  value: "Dubai",
-                  child: Text("Dubai"),
-                )
-              ],
             ),
           ],
         ),
@@ -254,6 +227,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               "fullName": name.text,
               "age": int.tryParse(age.text),
               "city": city.text,
+              "state": state.text,
               "country": country.text,
               "gender": gender.text,
               "dob": DateFormat('yyyy-MM-dd')
