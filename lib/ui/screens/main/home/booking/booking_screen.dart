@@ -99,7 +99,7 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
-              // physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
                 setState(() {

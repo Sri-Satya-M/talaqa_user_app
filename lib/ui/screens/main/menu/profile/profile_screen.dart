@@ -1,6 +1,7 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/patient_profiles_screen.dart';
 import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -92,6 +93,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(width: 12),
                           Text(userBloc.profile?.user?.email ?? 'NA')
                         ],
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: PopupMenuButton<int>(
+                    onSelected: (int value) async {
+                      switch (value) {
+                        case 1:
+                          await EditProfileScreen.open(context).then(
+                            (value) => setState(() {}),
+                          );
+                          break;
+                      }
+                    },
+                    icon: const Icon(Icons.more_vert, color: Colors.black),
+                    itemBuilder: (context) => [
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: Text(langBloc.getString(Strings.edit)),
                       ),
                     ],
                   ),

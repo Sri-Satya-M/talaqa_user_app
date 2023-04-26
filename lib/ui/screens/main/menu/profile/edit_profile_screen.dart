@@ -6,34 +6,46 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../model/profile.dart';
+import '../../../../../resources/colors.dart';
 import '../../../../../resources/strings.dart';
+import '../../../../../utils/helper.dart';
 
-class EditProfile extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
+
   @override
-  _EditProfileState createState() => _EditProfileState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
+
+  static Future open(BuildContext context) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EditProfileScreen(),
+      ),
+    );
+  }
 }
 
-class _EditProfileState extends State<EditProfile> {
-  String? name;
+class _EditProfileScreenState extends State<EditProfileScreen> {
   String? gender;
-  String? city;
-  String? dob;
-  int? age;
-  var dateCtrl = TextEditingController();
+  Profile? profile;
+  final TextEditingController email = TextEditingController();
+  final TextEditingController age = TextEditingController();
+  final TextEditingController dateCtrl = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var profile = userBloc.profile;
-    name = profile!.user!.fullName!;
-    gender = profile.gender!;
-    age = profile.age;
-    city = profile.city!;
-    dob = profile.dob!;
+    profile = userBloc.profile;
+    gender = profile!.gender!.toUpperCase();
+    age.text = profile!.age.toString();
+    email.text = profile?.user?.email ?? '';
+    dateCtrl.text = profile!.dob?.toString() ?? '';
     super.initState();
   }
 
@@ -64,105 +76,34 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const SizedBox(height: 24),
               TextFormField(
-                initialValue: name,
-                onChanged: (value) {
-                  name = value;
-                },
+                initialValue: userBloc.profile!.user!.fullName!,
+                enabled: false,
                 decoration: InputDecoration(
+                  labelText: langBloc.getString(Strings.name),
+                  contentPadding: const EdgeInsets.only(left: 16),
                   hintText: langBloc.getString(Strings.name),
+                  fillColor: MyColors.divider,
+                  filled: true,
                 ),
                 keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return langBloc.getString(Strings.enterTheName);
-                  } else {
-                    return null;
-                  }
-                },
               ),
-              const SizedBox(height: 12),
-              DatePicker(
-                DateTime.parse(dob!),
-                dateCtrl: dateCtrl,
-                onDateChange: () {},
-              ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 18),
               TextFormField(
                 enabled: false,
                 initialValue: userBloc.profile?.user?.mobileNumber,
                 onChanged: (value) {},
-                decoration: const InputDecoration(
-                  hintText: "Number",
-                  counter: SizedBox(),
+                decoration: InputDecoration(
+                  labelText: langBloc.getString(Strings.mobileNumber),
+                  contentPadding: const EdgeInsets.only(left: 16),
+                  counter: const SizedBox(),
+                  fillColor: MyColors.divider,
+                  filled: true,
                 ),
                 keyboardType: TextInputType.number,
                 maxLength: 10,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return langBloc.getString(Strings.enterTheMobileNumber);
-                  } else if (value.length < 10) {
-                    return langBloc.getString(Strings.enter10DigitMobileNumber);
-                  } else {
-                    return null;
-                  }
-                },
               ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField(
-                value: gender,
-                onChanged: (value) {
-                  gender = value.toString();
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return langBloc.getString(Strings.gender);
-                  } else {
-                    return null;
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: langBloc.getString(Strings.selectGender),
-                ),
-                items: [
-                  DropdownMenuItem(
-                    value: "MALE",
-                    child: Text(langBloc.getString(Strings.male)),
-                  ),
-                  DropdownMenuItem(
-                    value: "FEMALE",
-                    child: Text(langBloc.getString(Strings.female)),
-                  ),
-                  DropdownMenuItem(
-                    value: "OTHER",
-                    child: Text(langBloc.getString(Strings.other)),
-                  )
-                ],
-              ),
-              const SizedBox(height: 12),
               TextFormField(
-                initialValue: age.toString(),
-                onChanged: (value) {
-                  age = int.tryParse(value.trim());
-                },
-                decoration: InputDecoration(
-                  hintText: langBloc.getString(Strings.age),
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return langBloc.getString(Strings.enterTheAge);
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                initialValue: userBloc.profile?.user?.email,
-                onChanged: (value) {},
+                controller: email,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.emailAddress),
                 ),
@@ -178,54 +119,97 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
               const SizedBox(height: 12),
+              DatePicker(
+                DateTime.parse(dateCtrl.text),
+                dateCtrl: dateCtrl,
+                labelText: 'DOB',
+                onDateChange: () {
+                  age.text = Helper.calculateAge(
+                    DateTime.parse(dateCtrl.text),
+                  ).toString();
+                  setState(() {});
+                },
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: age,
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: langBloc.getString(Strings.age),
+                  contentPadding: const EdgeInsets.only(left: 16),
+                  fillColor: MyColors.divider,
+                  filled: true,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return langBloc.getString(Strings.enterTheAge);
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(height: 12),
               DropdownButtonFormField(
-                value: city,
+                value: gender,
                 onChanged: (value) {
-                  city = value.toString();
+                  setState(() {
+                    gender = value;
+                  });
                 },
                 decoration: InputDecoration(
-                  hintText: langBloc.getString(Strings.city),),
-                items: const [
+                  hintText: "${langBloc.getString(Strings.selectGender)}*",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "${langBloc.getString(Strings.selectGender)}";
+                  } else {
+                    return null;
+                  }
+                },
+                items: [
                   DropdownMenuItem(
-                    value: "Agra",
-                    child: Text("Agra"),
+                    value: "MALE",
+                    child: Text(langBloc.getString(Strings.male)),
                   ),
                   DropdownMenuItem(
-                    value: "Hyderabad",
-                    child: Text("Hyderabad"),
+                    value: "FEMALE",
+                    child: Text(langBloc.getString(Strings.female)),
                   ),
                   DropdownMenuItem(
-                    value: "Delhi",
-                    child: Text("Delhi"),
+                    value: "OTHER",
+                    child: Text(langBloc.getString(Strings.other)),
                   )
-                ],
+                ].toList(),
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
         child: ProgressButton(
           onPressed: () async {
             if (!formKey.currentState!.validate()) {
-              ErrorSnackBar.show(
-                  context,
-                  langBloc.getString(Strings.fillMandatoryFields)
+              return ErrorSnackBar.show(
+                context,
+                langBloc.getString(Strings.fillMandatoryFields),
               );
-              return;
             }
 
             var body = {
-              "city": city,
-              // "image": image,
-              "fullName": name,
-              "age": age,
+              "dob": DateFormat('yyyy-MM-dd').format(
+                DateTime.parse(dateCtrl.text),
+              ),
+              "age": int.tryParse(age.text),
+              "email": email.text,
               "gender": gender,
             };
 
             await userBloc.updateProfile(body: body);
-            Navigator.pop(context);
+            await userBloc.getProfile();
+
+            ErrorSnackBar.show(context, 'Profile Updated Successfully');
+            Navigator.pop(context, true);
           },
           child: const Text("Save Changes"),
         ),
