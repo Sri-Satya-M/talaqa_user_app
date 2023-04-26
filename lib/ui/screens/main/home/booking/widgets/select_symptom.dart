@@ -20,19 +20,31 @@ class _SelectSymptomsState extends State<SelectSymptoms> {
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
-    return DropdownButtonFormField(
-      hint: Text(langBloc.getString(Strings.selectAType)),
-      items: [
-        for (String symptom in widget.symptoms)
-          DropdownMenuItem<String>(
-            value: symptom,
-            child: Text(Helper.textCapitalization(text: symptom)),
-          ),
-      ],
-      onChanged: (value) {
-        sessionBloc.symptom = value;
-        setState(() {});
-      },
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          value: sessionBloc.symptom,
+          underline: null,
+          isExpanded: true,
+          hint: Text(langBloc.getString(Strings.selectAType)),
+          items: [
+            for (String symptom in widget.symptoms)
+              DropdownMenuItem<String>(
+                value: symptom,
+                child: Text(Helper.textCapitalization(text: symptom)),
+              ),
+          ],
+          onChanged: (value) {
+            sessionBloc.symptom = value;
+            setState(() {});
+          },
+        ),
+      ),
     );
   }
 }

@@ -65,11 +65,11 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return ListView.builder(
-      scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: clinicians.length + ((isFinished) ? 0 : 1),
       padding: EdgeInsets.zero,
       physics: const ScrollPhysics(),
+      scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         if (index == clinicians.length) {
           fetchMore();

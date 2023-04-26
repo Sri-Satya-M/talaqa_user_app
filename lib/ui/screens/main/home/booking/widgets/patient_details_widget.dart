@@ -51,7 +51,7 @@ class PatientDetailsWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '${patient.city ?? 'NA'},\n${patient.state ?? 'NA'}\n,${patient.country ?? 'NA'}',
+                  '${patient.city ?? 'NA'},\n${patient.state ?? 'NA'},\n${patient.country ?? 'NA'}',
                   style: textTheme.subtitle2,
                 ),
               ],

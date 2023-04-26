@@ -1,19 +1,19 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
-import 'package:alsan_app/model/feedback.dart' as f;
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
-import 'package:alsan_app/ui/screens/main/home/clinician_feedback_screen.dart';
-import 'package:alsan_app/ui/screens/main/home/widgets/feedback_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../model/review.dart';
 import '../../../../resources/colors.dart';
 import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
+import 'clinician_review_screen.dart';
+import 'widgets/review_card.dart';
 
 class ClinicianDetailsScreen extends StatelessWidget {
   final Clinician clinician;
@@ -55,8 +55,8 @@ class ClinicianDetailsScreen extends StatelessWidget {
                 style: textTheme.bodyText1,
               ),
               TextButton(
-                onPressed: () =>
-                    ClinicianFeedbackScreen.open(context, id: clinician.id.toString()),
+                onPressed: () => ClinicianReviewsScreen.open(context,
+                    id: clinician.id.toString()),
                 child: Text(
                   langBloc.getString(Strings.seeAll),
                   style: textTheme.headline2?.copyWith(
@@ -66,20 +66,20 @@ class ClinicianDetailsScreen extends StatelessWidget {
               ),
             ],
           ),
-          FutureBuilder<List<f.Feedback>>(
-            future: userBloc.getFeedback(id: clinician.id.toString()),
+          FutureBuilder<List<Review>>(
+            future: userBloc.getReview(id: clinician.id.toString()),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return CustomErrorWidget(error: snapshot.error);
               }
               if (!snapshot.hasData) return const LoadingWidget();
-              var feedbackList = snapshot.data ?? [];
-              if (feedbackList.isEmpty) return const EmptyWidget();
+              var reviews = snapshot.data ?? [];
+              if (reviews.isEmpty) return const EmptyWidget();
               return ListView.builder(
-                itemCount: feedbackList.length,
+                itemCount: reviews.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return FeedbackCard(feedback: feedbackList[index]);
+                  return ReviewCard(review: reviews[index]);
                 },
               );
             },
