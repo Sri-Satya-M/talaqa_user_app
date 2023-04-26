@@ -31,5 +31,7 @@ class Api {
   static const patientProfile = '/patientProfile';
   static const symptoms = '/symptoms';
   static const notifications = '/notifications';
+  static const reviews = '/reviews';
   static const sessionClinician = '$sessions/update-session-clinician-patient';
+
 }

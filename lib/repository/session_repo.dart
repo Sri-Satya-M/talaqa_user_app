@@ -64,7 +64,7 @@ class SessionRepo {
   }
 
   Future postSessionFeedback({required int id, body}) {
-    return apiClient.post('${Api.sessions}/feedback/$id', body);
+    return apiClient.post('${Api.reviews}/$id', body);
   }
 
   Future<List<Report>> getSessionReports({required int id}) async {

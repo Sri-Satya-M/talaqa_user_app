@@ -4,6 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
+import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
@@ -21,7 +22,6 @@ import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/reverse_details_tile.dart';
 import '../../../widgets/success_screen.dart';
-import '../home/booking/payment_screen.dart';
 import '../home/booking/widgets/bill_details_widget.dart';
 import '../menu/profile/patient_profile_screen.dart';
 import 'agora/agora_meet_call.dart';
@@ -407,14 +407,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         ProgressUtils.handleProgress(
           context,
           task: () async {
-            SuccessScreen.open(
-              context,
-              type: '',
-              message: langBloc.getString(
-                Strings.yourSessionHasBeenSuccessfullyCompleted,
-              ),
-              // session: session,
-            );
+            FeedbackScreen.open(context, session: session!);
           },
         );
       },
