@@ -2,7 +2,6 @@ import 'package:alsan_app/data/network/api_client.dart';
 import 'package:alsan_app/data/network/api_endpoints.dart';
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
-import 'package:alsan_app/model/feedback.dart';
 import 'package:alsan_app/model/medical_records.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/model/resources.dart';
@@ -10,6 +9,7 @@ import 'package:dio/dio.dart';
 
 import '../model/dashboard.dart';
 import '../model/notification.dart';
+import '../model/review.dart';
 
 class UserRepo {
   Future sendOTP({body}) async {
@@ -29,7 +29,9 @@ class UserRepo {
   }
 
   Future<Profile> getPatientProfile({required String id}) async {
-    var response = await apiClient.get('${Api.patientProfiles}/$id');
+    var response = await apiClient.get(
+      '${'${Api.patients}/${Api.patientProfile}'}/$id',
+    );
     return Profile.fromJson(response);
   }
 
@@ -114,10 +116,10 @@ class UserRepo {
     return apiClient.post(Api.tokens, body);
   }
 
-  Future<List<Feedback>> getFeedback({required String id}) async {
-    var response = await apiClient.get('${Api.clinicians}/$id${Api.feedback}');
-    var list = response as List;
-    return list.map((f) => Feedback.fromJson(f)).toList();
+  Future<List<Review>> getReview({required String id}) async {
+    var response = await apiClient.get(Api.reviews, query: {'clinicianId': id});
+    var list = response['reviews'] as List;
+    return list.map((f) => Review.fromJson(f)).toList();
   }
 
   Future removeAddresses({required String id}) async {

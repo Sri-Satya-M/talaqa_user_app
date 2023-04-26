@@ -1,6 +1,5 @@
 import 'package:alsan_app/model/address.dart';
 import 'package:alsan_app/model/clinicians.dart';
-import 'package:alsan_app/model/feedback.dart';
 import 'package:alsan_app/model/medical_records.dart';
 import 'package:alsan_app/model/profile.dart';
 import 'package:alsan_app/repository/user_repo.dart';
@@ -13,6 +12,7 @@ import '../data/local/shared_prefs.dart';
 import '../model/dashboard.dart';
 import '../model/resources.dart';
 import '../model/notification.dart' as n;
+import '../model/review.dart';
 
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
@@ -143,8 +143,8 @@ class UserBloc with ChangeNotifier {
     await _userRepo.updateFCMToken(body: body);
   }
 
-  Future<List<Feedback>> getFeedback({required String id}) {
-    return _userRepo.getFeedback(id: id);
+  Future<List<Review>> getReview({required String id}) {
+    return _userRepo.getReview(id: id);
   }
 
   Future removeAddresses({required String id}) async {
