@@ -7,6 +7,7 @@ class Api {
   static const patients = '/patients';
   static const profile = '$patients/profile';
   static const patientProfiles = '$patients/patient-profiles';
+  static const patientProfile = '/patient-profile';
   static const clinicians = '/clinicians';
   static const clinician = '/clinician';
   static const modeOfConsultation = '/mode-of-consultation';
@@ -28,7 +29,7 @@ class Api {
   static const feedback = '/feedback';
   static const medicalRecords = '/medical-records';
   static const dashboard = '/dashboard';
-  static const patientProfile = '/patientProfile';
+  // static const patientProfile = '/patientProfile';
   static const symptoms = '/symptoms';
   static const notifications = '/notifications';
   static const reviews = '/reviews';
