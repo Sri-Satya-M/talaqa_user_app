@@ -1,21 +1,21 @@
-import 'package:alsan_app/model/feedback.dart' as f;
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
+import '../../../../../model/review.dart';
 import '../../../../../resources/colors.dart';
 import '../../../../widgets/avatar.dart';
 import '../../../../widgets/custom_card.dart';
 import '../../../../widgets/details_tile.dart';
 
-class FeedbackCard extends StatelessWidget {
-  final f.Feedback feedback;
+class ReviewCard extends StatelessWidget {
+  final Review review;
 
-  const FeedbackCard({super.key, required this.feedback});
+  const ReviewCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var moment = Moment.now().from(feedback.createdAt!);
+    var moment = Moment.now().from(review.createdAt!);
     return CustomCard(
       radius: 4,
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -28,8 +28,8 @@ class FeedbackCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Avatar(
-                  url: feedback.patient?.image,
-                  name: feedback.patient!.user!.fullName!,
+                  url: review.patient?.image,
+                  name: review.patient!.user!.fullName!,
                   borderRadius: BorderRadius.circular(20),
                   size: 40,
                 ),
@@ -40,7 +40,7 @@ class FeedbackCard extends StatelessWidget {
                   children: [
                     DetailsTile(
                       title: Text(
-                        feedback.patient!.user!.fullName!,
+                        review.patient!.user!.fullName!,
                         style: textTheme.bodyText2,
                       ),
                       value: Text(moment, style: textTheme.caption),
@@ -66,7 +66,7 @@ class FeedbackCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        feedback.rating.toString(),
+                        review.rating.toString(),
                         style: textTheme.bodyText1,
                       ),
                     ],
@@ -76,7 +76,7 @@ class FeedbackCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              '${feedback.comment}',
+              '${review.comment}',
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),

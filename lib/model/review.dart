@@ -1,7 +1,7 @@
 import 'package:alsan_app/model/profile.dart';
 
-class Feedback {
-  Feedback({
+class Review {
+  Review({
     this.id,
     this.sessionId,
     this.clinicianId,
@@ -23,7 +23,7 @@ class Feedback {
   DateTime? updatedAt;
   Profile? patient;
 
-  factory Feedback.fromJson(Map<String, dynamic> json) => Feedback(
+  factory Review.fromJson(Map<String, dynamic> json) => Review(
         id: json["id"],
         sessionId: json["sessionId"],
         clinicianId: json["clinicianId"],
