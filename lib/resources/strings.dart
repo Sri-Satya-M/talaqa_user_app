@@ -19,6 +19,8 @@ enum Strings {
   articlesNotAvailableAtTheMoment,
   articulation,
   atHome,
+  audio,
+  video,
   availableTimeSlots,
   basicInformation,
   bio,

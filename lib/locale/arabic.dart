@@ -20,6 +20,8 @@ const arabicTranslations = {
   Strings.articlesNotAvailableAtTheMoment: 'المقالات غير متاحة في الوقت الحالي',
   Strings.articulation: "النطق",
   Strings.atHome: 'في المنزل',
+  Strings.audio: 'صوتي',
+  Strings.video: 'فيديو',
   Strings.availableTimeSlots: "فتحات الوقت المتاحة",
   Strings.basicInformation: 'معلومات اساسية',
   Strings.bio: 'السيرة الذاتية',

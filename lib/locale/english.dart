@@ -20,6 +20,8 @@ const englishTranslations = {
   Strings.articlesNotAvailableAtTheMoment:'articles Not Available At The Moment',
   Strings.articulation:"articulation",
   Strings.atHome:'At Home',
+  Strings.audio:'Audio',
+  Strings.video:'Video',
   Strings.availableTimeSlots:"Available Time Slots",
   Strings.basicInformation: 'Basic Information',
   Strings.bio: 'Bio',
