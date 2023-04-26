@@ -18,6 +18,9 @@ class Images {
   static const video = 'assets/icons/video.png';
   static const call = 'assets/icons/call.png';
   static const home = 'assets/icons/home.png';
+  static const homeMode = 'assets/icons/mode/home.png';
+  static const callMode = 'assets/icons/mode/call.png';
+  static const videoMode = 'assets/icons/mode/video.png';
   static const marker = 'assets/icons/marker.png';
   static const mic = 'assets/icons/mic.png';
   static const micOff = 'assets/icons/mic_off.png';
