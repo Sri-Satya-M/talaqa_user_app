@@ -80,7 +80,7 @@ class SessionBloc with ChangeNotifier {
     description = null;
     selectedAddressId = null;
     timeslots.clear();
-    // notifyListeners();
+    notifyListeners();
   }
 
   ///Apis
@@ -125,10 +125,12 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.updateSessionClinician(id: id, body: body);
   }
 
-  Future createRazorPayOrder({required int id}) async {
-    var order = await sessionRepo.createRazorPayOrder(body: {"sessionId": id});
+  Future createRazorPayOrder({required Session session}) async {
+    var order = await sessionRepo.createRazorPayOrder(
+      body: {"sessionId": session.id},
+    );
 
-    var response = await executeRazorPay(order: order);
+    var response = await executeRazorPay(order: order, session: session);
 
     var body = {};
 
@@ -144,7 +146,10 @@ class SessionBloc with ChangeNotifier {
 
   Completer<PaymentSuccessResponse>? razorpayCompleter;
 
-  executeRazorPay({required CreateRazorPay order}) async {
+  executeRazorPay({
+    required CreateRazorPay order,
+    required Session session,
+  }) async {
     print(Environment.razorPayKey);
     var options = {
       'order_id': order.rzpOrderId,
@@ -155,8 +160,8 @@ class SessionBloc with ChangeNotifier {
       'description': 'Online Session Booking Payment',
       'image': Images.logo,
       'prefill': {
-        'contact': '7702165416',
-        'email': 'yashwanth@janaspandana.in',
+        'contact': session.patient!.user!.mobileNumber!,
+        'email': session.patient!.user!.email!,
       },
       "theme": {"color": "#02283D"}
     };
@@ -166,9 +171,6 @@ class SessionBloc with ChangeNotifier {
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
         (PaymentSuccessResponse response) {
-      print(response.orderId);
-      print(response.paymentId);
-      print(response.signature);
       razorpayCompleter!.complete(response);
     });
 
@@ -185,8 +187,10 @@ class SessionBloc with ChangeNotifier {
     });
 
     _razorpay.open(options);
+
     var response = await razorpayCompleter!.future;
     _razorpay.clear();
+
     return response;
   }
 

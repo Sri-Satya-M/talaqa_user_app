@@ -68,10 +68,6 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
             children: [
               const SizedBox(height: 8),
               Text(
-                langBloc.getString(Strings.enterProfileDetails),
-                textAlign: TextAlign.center,
-              ),
-              Text(
                 langBloc.getString(
                   Strings.enterYourDetailsToCompleteUserProfile,
                 ),

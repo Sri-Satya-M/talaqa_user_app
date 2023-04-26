@@ -255,6 +255,10 @@ class AppTheme {
         ),
         hintStyle: caption.copyWith(color: Colors.black.withOpacity(0.3)),
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
       ),
       iconTheme: const IconThemeData(color: Colors.black, size: 24),
       dividerTheme: const DividerThemeData(
