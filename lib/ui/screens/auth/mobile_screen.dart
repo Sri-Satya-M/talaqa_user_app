@@ -55,7 +55,9 @@ class _MobileScreenState extends State<MobileScreen> {
                   errorMessage: langBloc.getString(Strings.invalidPhoneNumber),
                   inputDecoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: langBloc.getString(Strings.enter10DigitMobileNumber),
+                    hintText: langBloc.getString(
+                      Strings.enter10DigitMobileNumber,
+                    ),
                   ),
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -104,7 +106,6 @@ class _MobileScreenState extends State<MobileScreen> {
               },
               child: Text(langBloc.getString(Strings.getOtp)),
             ),
-
 
             // const SizedBox(height: 48),
             // Row(

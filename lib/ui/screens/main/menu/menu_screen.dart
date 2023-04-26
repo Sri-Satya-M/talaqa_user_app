@@ -3,6 +3,7 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/resources/strings.dart';
+import 'package:alsan_app/ui/screens/language/language_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/my_address/my_adddress_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
@@ -43,6 +44,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
       {
         'image': Images.reportIcon,
         'title': langBloc.getString(Strings.myReports),
+      },
+      {
+        'image': Images.language,
+        'title': langBloc.getString(Strings.yourLanguage),
       },
       {
         'image': Images.supportIcon,
@@ -155,16 +160,16 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           vsync: this,
         );
         return mainBloc.changeIndex(2);
-
       case 3:
         screen = const ReportScreen();
         break;
       case 4:
-        return;
+        screen = const LanguageScreen(isLoggingIn: false);
         break;
       case 5:
         return;
-        break;
+      case 6:
+        return;
       default:
         return;
     }
@@ -172,6 +177,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     return Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => screen),
-    );
+    ).then((value) => setState(() {}));
   }
 }

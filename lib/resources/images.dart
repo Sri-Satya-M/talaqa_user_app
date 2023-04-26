@@ -7,6 +7,7 @@ class Images {
   static const profileIcon = 'assets/icons/profile.png';
   static const sessionsIcon = 'assets/icons/sessions.png';
   static const reportIcon = 'assets/icons/report.png';
+  static const language = "assets/icons/language.png";
   static const supportIcon = 'assets/icons/support.png';
   static const referIcon = 'assets/icons/refer.png';
   static const faqIcon = 'assets/icons/faq.png';

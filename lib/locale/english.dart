@@ -245,7 +245,7 @@ const englishTranslations = {
   Strings.selectAType:"Select a Type",
   Strings.selectClinicianProfile: "Select clinician profile",
   Strings.selectDate:"Select Date",
-  Strings.selectGender:"select Gender",
+  Strings.selectGender:"Select Gender",
   Strings.selectModeOfConsultation: "Select mode of consultation",
   Strings.selectPaymentMethod:"Select Payment Method",
   Strings.selectProfile:"Select Profile",

@@ -78,7 +78,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: true);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: true);
     var textTheme = Theme.of(context).textTheme;
     return DefaultTabController(
       length: mainBloc.tabLength(mainBloc.index),
@@ -162,26 +162,26 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             color: MyColors.cerulean,
           ),
           unselectedLabelStyle: textTheme.caption?.copyWith(color: Colors.grey),
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: "Home",
+              icon: const Icon(Icons.home_outlined),
+              label: langBloc.getString(Strings.home),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              label: "Browse",
+              icon: const Icon(Icons.search_outlined),
+              label: langBloc.getString(Strings.browse),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.watch_later_outlined),
-              label: "Sessions",
+              icon: const Icon(Icons.watch_later_outlined),
+              label: langBloc.getString(Strings.sessions),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.language),
-              label: "Resources",
+              icon: const Icon(Icons.language),
+              label: langBloc.getString(Strings.resources),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_rounded),
-              label: "Menu",
+              icon: const Icon(Icons.menu_rounded),
+              label: langBloc.getString(Strings.menu),
             ),
           ],
         ),
