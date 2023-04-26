@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -6,6 +8,7 @@ import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +16,7 @@ import '../../../../../model/profile.dart';
 import '../../../../../resources/colors.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
+import '../../../../widgets/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -35,6 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController age = TextEditingController();
   final TextEditingController dateCtrl = TextEditingController();
+  File? profileImage;
 
   final formKey = GlobalKey<FormState>();
 
@@ -65,11 +70,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Center(
                 child: Stack(
                   children: [
-                    Avatar(
-                      url: userBloc.profile?.image,
-                      name: userBloc.profile?.user?.fullName,
-                      borderRadius: BorderRadius.circular(20),
-                      size: 70,
+                    Stack(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            profileImage = await ImagePickerContainer.getImage(
+                              context,
+                              ImageSource.gallery,
+                            );
+                            setState(() {});
+                          },
+                          child: (profileImage == null)
+                              ? Avatar(
+                                  url: userBloc.profile?.image,
+                                  name: userBloc.profile?.user?.fullName,
+                                  borderRadius: BorderRadius.circular(20),
+                                  size: 90,
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.file(
+                                    profileImage!,
+                                    width: 90,
+                                    height: 90,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                        const Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Icon(Icons.edit,color: MyColors.primaryColor),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -196,13 +229,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               );
             }
 
+            var imageResponse = {};
+
+            if (profileImage != null) {
+              imageResponse = await userBloc.uploadFile(profileImage!.path);
+            }
+
             var body = {
               "dob": DateFormat('yyyy-MM-dd').format(
                 DateTime.parse(dateCtrl.text),
               ),
               "age": int.tryParse(age.text),
-              "email": email.text,
-              "gender": gender,
+              if (profile?.user?.email != email.text) "email": email.text,
+              if (profile?.gender != email.text)"gender": gender,
+              if (profileImage != null) "image": imageResponse['key']
             };
 
             await userBloc.updateProfile(body: body);

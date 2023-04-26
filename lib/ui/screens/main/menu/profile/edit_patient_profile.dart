@@ -87,6 +87,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
                           profileImage!,
                           width: 90,
                           height: 90,
+                          fit: BoxFit.cover,
                         ),
                       ),
                 Positioned(
@@ -98,9 +99,9 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
                           context, ImageSource.gallery);
                       setState(() {});
                     },
-                    child: const Icon(Icons.edit),
+                    child: const Icon(Icons.edit,color: MyColors.primaryColor),
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 12),
