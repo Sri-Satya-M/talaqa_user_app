@@ -8,6 +8,7 @@ import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bloc/sesssion_bloc.dart';
+import '../../../../bloc/user_bloc.dart';
 import '../../../../resources/images.dart';
 import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
@@ -350,12 +352,18 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return (session!.status == "APPROVED")
         ? ProgressButton(
             onPressed: () async {
-              // PaymentScreen.open(context, session: session!);
+              if (session?.patient?.user?.email?.isEmpty == null ||
+                  session?.patient?.user?.mobileNumber == null)
+                return ErrorSnackBar.show(
+                  context,
+                  'Please Update Email and Mobile Number to Complete the Session Payment',
+                );
               var response = await sessionBloc.createRazorPayOrder(
-                id: int.parse(widget.id),
+                session: session!,
               ) as Map<String, dynamic>;
               if (response.containsKey('status') &&
                   response['status'] == 'success') {
@@ -372,13 +380,31 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   }
 
   Widget joinOrStartSessionButton() {
-    // bool flag = (true || session!.status == "PAID" || session!.status == "STARTED") &&
-    //     Helper.formatDate(date: DateTime.now()) ==
-    //         Helper.formatDate(date: session!.date);
-    //
-    // if (!flag) {
-    //   return const SizedBox();
-    // }
+
+    bool flag = (session!.status == "PAID" || session!.status == "STARTED") &&
+        Helper.formatDate(date: DateTime.now()) ==
+            Helper.formatDate(date: session!.date);
+
+    if (!flag) {
+      return const SizedBox();
+    }
+
+    String date = DateFormat('yyyy-MM-dd').format(
+      session!.date!,
+    );
+    String time = "${session!.startAt!}:00";
+    String timestamp = '$date $time';
+    var scheduledTimeStamp = DateTime.parse(timestamp);
+    var duration = DateTime.now().toUtc().difference(
+          scheduledTimeStamp,
+        );
+
+    if (duration.inMinutes.isNegative) {
+      ErrorSnackBar.show(context, 'Your Session Starts At ${session!.startAt}');
+    } else if (duration.inMinutes >
+        (session!.clinicianTimeSlots!.length * 60 + 30)) {
+      ErrorSnackBar.show(context, "Your Session time is up");
+    }
 
     var langBloc = Provider.of<LangBloc>(context, listen: false);
 
@@ -391,9 +417,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   }
 
   Widget finishButton() {
-    bool flag = (session?.status == "STARTED") &&
-        Helper.formatDate(date: DateTime.now()) ==
-            Helper.formatDate(date: session?.date);
+    bool flag = (session?.status == "STARTED");
 
     if (!flag) {
       return const SizedBox();
@@ -427,11 +451,9 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           scheduledTimeStamp,
         );
 
-    // if (duration.inMinutes > (session!.clinicianTimeSlots!.length * 60 + 30)) {
-    //   return;
-    // }
-
-    duration = const Duration(minutes: 60);
+    if (duration.inMinutes > (session!.clinicianTimeSlots!.length * 60 + 30)) {
+      return;
+    }
 
     switch (session!.consultationMode) {
       case 'HOME':

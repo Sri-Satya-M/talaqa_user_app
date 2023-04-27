@@ -28,8 +28,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
         id: sessionBloc.selectedClinician!.id.toString(),
         query: {
           'date': Helper.formatDate(date: sessionBloc.selectedDate),
-          'day': Helper.formatDate(
-              date: sessionBloc.selectedDate, pattern: 'EEEE'),
+          'time': DateTime.now(),
         },
       ),
       builder: (context, snapshot) {
