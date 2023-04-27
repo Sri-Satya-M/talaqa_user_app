@@ -4,6 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/resources/strings.dart';
 import 'package:alsan_app/ui/screens/language/language_screen.dart';
+import 'package:alsan_app/ui/screens/main/menu/faq/faq_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/my_address/my_adddress_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
@@ -170,6 +171,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         return;
       case 6:
         return;
+      case 7:
+        FAQScreen.open(context);
+        break;
       default:
         return;
     }
