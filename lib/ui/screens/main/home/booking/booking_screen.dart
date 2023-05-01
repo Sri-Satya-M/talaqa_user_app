@@ -50,8 +50,8 @@ class _BookingScreenState extends State<BookingScreen> {
     titles = [
       langBloc.getString(Strings.symptomAndModeOfConsultation),
       langBloc.getString(Strings.selectProfile),
-      langBloc.getString(Strings.clinician),
       langBloc.getString(Strings.slotBooking),
+      langBloc.getString(Strings.clinician),
       langBloc.getString(Strings.review),
     ];
   }
@@ -124,12 +124,6 @@ class _BookingScreenState extends State<BookingScreen> {
                     sessionBloc.selectedPatient = profile;
                   },
                 ),
-                SelectClinician(
-                  onTap: (clinician) {
-                    sessionBloc.selectedClinician = clinician;
-                    animateToNextPage();
-                  },
-                ),
                 SlotBooking(
                   onTap: (ModeOfConsultation value) {
                     if (value != null) {
@@ -140,6 +134,12 @@ class _BookingScreenState extends State<BookingScreen> {
                       }
                       setState(() {});
                     }
+                  },
+                ),
+                SelectClinician(
+                  onTap: (clinician) {
+                    sessionBloc.selectedClinician = clinician;
+                    animateToNextPage();
                   },
                 ),
                 if (sessionBloc.selectedModeOfConsultation?.type == 'HOME') ...[
@@ -283,12 +283,6 @@ class _BookingScreenState extends State<BookingScreen> {
         }
         break;
       case 3:
-        if (sessionBloc.selectedClinician?.id == null) {
-          flag = true;
-          msg = 'Please select a clinician';
-        }
-        break;
-      case 4:
         if (sessionBloc.selectedDate == null ||
             sessionBloc.selectedTimeSlotIds == null ||
             sessionBloc.selectedTimeSlotIds!.isEmpty) {
@@ -296,6 +290,13 @@ class _BookingScreenState extends State<BookingScreen> {
           msg = 'Please select Date & Time slot';
         }
         break;
+      case 4:
+        if (sessionBloc.selectedClinician?.id == null) {
+          flag = true;
+          msg = 'Please select a clinician';
+        }
+        break;
+
       case 5:
         if (sessionBloc.selectedAddressId == null) {
           flag = true;

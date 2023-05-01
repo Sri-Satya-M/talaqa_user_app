@@ -10,6 +10,7 @@ class Api {
   static const patientProfile = '/patient-profile';
   static const clinicians = '/clinicians';
   static const clinician = '/clinician';
+  static const timeslots = '/timeslots';
   static const modeOfConsultation = '/mode-of-consultation';
   static const clinicianTimeSlot = '/clinician-time-slot';
   static const resources = '/resources';
