@@ -82,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           },
                           child: (profileImage == null)
                               ? Avatar(
-                                  url: userBloc.profile?.image,
+                                  url: userBloc.profile?.imageUrl,
                                   name: userBloc.profile?.user?.fullName,
                                   borderRadius: BorderRadius.circular(20),
                                   size: 90,
@@ -242,7 +242,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "age": int.tryParse(age.text),
               if (profile?.user?.email != email.text) "email": email.text,
               if (profile?.gender != email.text)"gender": gender,
-              if (profileImage != null) "image": imageResponse['key']
+              if (profileImage != null) "imageUrl": imageResponse['key']
             };
 
             await userBloc.updateProfile(body: body);

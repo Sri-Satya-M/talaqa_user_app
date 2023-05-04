@@ -76,7 +76,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               children: [
                 (profileImage == null)
                     ? Avatar(
-                        url: widget.profile.image,
+                        url: widget.profile.imageUrl,
                         name: widget.profile.fullName,
                         borderRadius: BorderRadius.circular(20),
                         size: 90,
@@ -233,7 +233,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
               "gender": gender.text,
               "dob": DateFormat('yyyy-MM-dd')
                   .format(DateTime.parse(dateCtrl.text)),
-              if (profileImage != null) "image": imageResponse['key']
+              if (profileImage != null) "imageUrl": imageResponse['key']
             };
             var response = await userBloc.updatePatients(
                 id: widget.profile.id, body: body) as Map<String, dynamic>;
