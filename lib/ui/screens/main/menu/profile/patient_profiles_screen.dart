@@ -64,7 +64,7 @@ class _PatientProfilesState extends State<PatientProfiles> {
                 child: Row(
                   children: [
                     Avatar(
-                      url: profiles[index].image,
+                      url: profiles[index].imageUrl,
                       name: profiles[index].fullName,
                       borderRadius: BorderRadius.circular(10),
                       size: 100,

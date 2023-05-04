@@ -80,7 +80,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           child: Row(
             children: [
               Avatar(
-                url: userBloc.profile?.image,
+                url: userBloc.profile?.imageUrl,
                 name: userBloc.profile?.user?.fullName,
                 borderRadius: const BorderRadius.all(Radius.circular(35)),
                 size: 75,

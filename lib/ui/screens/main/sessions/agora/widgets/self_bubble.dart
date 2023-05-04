@@ -55,7 +55,7 @@ class SelfBubble extends StatelessWidget {
             ),
           ),
           Avatar(
-            url: session.patientProfile?.image,
+            url: session.patientProfile?.imageUrl,
             name: session.patientProfile?.user?.fullName,
             size: 30,
             borderRadius: BorderRadius.circular(15),

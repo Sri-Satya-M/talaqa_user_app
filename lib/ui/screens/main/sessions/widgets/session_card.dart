@@ -143,7 +143,9 @@ class _SessionCardState extends State<SessionCard> {
               const SizedBox(height: 16),
               TimeslotDetailsWidget(
                 dateTime: widget.session.date!,
-                timeslots: widget.session.clinicianTimeSlots!,
+                timeslots: widget.session.sessionTimeslots!
+                    .map((e) => e.timeslot!)
+                    .toList(),
               ),
             ],
           ),

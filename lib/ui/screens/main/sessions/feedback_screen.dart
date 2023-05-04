@@ -7,7 +7,6 @@ import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../model/time_of_day.dart';
 import '../../../../resources/colors.dart';
 import '../../../../resources/strings.dart';
 import '../../../widgets/dynamic_grid_view.dart';
@@ -78,10 +77,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         children: [
                           TimeslotDetailsWidget(
                             dateTime: widget.session.date!,
-                            timeslots: TimeSlot().showTimeslots(
-                              widget.session.clinicianTimeSlots!,
-                            ),
+                            timeslots: widget.session.sessionTimeslots!
+                                .map((e) => e.timeslot!)
+                                .toList(),
                           ),
+                          const SizedBox(),
                           ReverseDetailsTile(
                             title: Padding(
                               padding: const EdgeInsets.only(top: 6),
@@ -204,7 +204,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               body['patientId'] = widget.session.patientId;
 
               if (reviewController.text != null &&
-                  reviewController.text.isEmpty) {
+                  reviewController.text.isNotEmpty) {
                 body['comment'] = reviewController.text;
               }
 

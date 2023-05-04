@@ -16,7 +16,7 @@ class PatientDetailsWidget extends StatelessWidget {
       child: Row(
         children: [
           Avatar(
-            url: patient.image,
+            url: patient.imageUrl,
             name: patient.fullName,
             borderRadius: BorderRadius.circular(10),
             size: 72,

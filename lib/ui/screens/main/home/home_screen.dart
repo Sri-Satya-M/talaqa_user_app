@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
         SizedBox(
-          height: 200,
+          height: 160,
           child: ClinicianList(
             scrollDirection: Axis.horizontal,
             onTap: (clinician) {

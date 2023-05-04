@@ -1,5 +1,4 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +27,10 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["APPROVED", "PAID", 'STARTED'],
+        "status": ["PENDING","APPROVED", "PAID", 'STARTED'],
         "patientId": userBloc.profile!.id,
       }),
       builder: (context, snapshot) {
@@ -65,7 +63,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
               ],
             ),
             SizedBox(
-              height: 380,
+              height: 410,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: sessions.length,

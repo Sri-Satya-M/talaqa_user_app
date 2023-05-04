@@ -28,7 +28,7 @@ class ReviewCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Avatar(
-                  url: review.patient?.image,
+                  url: review.patient?.imageUrl,
                   name: review.patient!.user!.fullName!,
                   borderRadius: BorderRadius.circular(20),
                   size: 40,

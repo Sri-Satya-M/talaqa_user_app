@@ -55,7 +55,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   void initState() {
     session = widget.session;
     duration = widget.duration;
-    totalTime = widget.session.clinicianTimeSlots!.length * 60;
+    totalTime = widget.session.sessionTimeslots!.length * 60;
     super.initState();
     if (duration.inMinutes > 0) {
       isRunning = true;

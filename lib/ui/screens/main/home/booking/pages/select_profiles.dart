@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
 import 'package:alsan_app/ui/widgets/error_widget.dart';
@@ -39,7 +38,6 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: true);
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
 
     return Container(
@@ -91,7 +89,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                         Row(
                           children: [
                             Avatar(
-                              url: profiles[index].image,
+                              url: profiles[index].imageUrl,
                               name: profiles[index].fullName,
                               borderRadius: BorderRadius.circular(10),
                               size: 72,

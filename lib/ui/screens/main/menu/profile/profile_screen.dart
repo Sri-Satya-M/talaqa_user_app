@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Avatar(
-                            url: userBloc.profile?.image,
+                            url: userBloc.profile?.imageUrl,
                             name: userBloc.profile?.user?.fullName,
                             borderRadius: BorderRadius.circular(35),
                             size: 70,

@@ -161,7 +161,7 @@ class _OtpScreenState extends State<OtpScreen> {
               ) as Map<String, dynamic>;
 
               if (response.containsKey('message')) {
-                return TermsConditions.open(context);
+                TermsConditions.open(context);
               } else if (response.containsKey('access_token')) {
                 await Prefs.setToken(response['access_token']);
                 await userBloc.getProfile();
