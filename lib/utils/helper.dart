@@ -47,10 +47,38 @@ class Helper {
     return a;
   }
 
-  static String formatDate(
-      {required DateTime? date, String pattern = 'yyyy-MM-dd'}) {
+  static String formatDate({
+    required DateTime? date,
+    String pattern = 'yyyy-MM-dd',
+  }) {
     if (date == null) return 'NA';
     return DateFormat(pattern).format(date);
+  }
+
+  static downloadFiles({required List<String> urls}) async {
+    try {
+      String directory;
+      bool isAndroid = Platform.isAndroid;
+
+      if (isAndroid) {
+        directory = "/storage/emulated/0/Download";
+      } else {
+        directory = '${(await getApplicationDocumentsDirectory())?.path ?? ''}/Talaqa';
+      }
+
+      print(directory);
+      print(urls);
+
+      for (var url in urls) {
+        String fileName = url.split('/').last;
+        print('$directory/$fileName');
+        await Dio().download(url, '$directory/$fileName');
+      }
+
+      return 'Downloaded Successfully';
+    } catch (e) {
+      return 'Error while Downloading';
+    }
   }
 
   ///Parameter format

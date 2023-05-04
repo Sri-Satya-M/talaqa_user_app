@@ -4,6 +4,7 @@ import 'package:alsan_app/model/time_of_day.dart';
 import 'address.dart';
 import 'clinicians.dart';
 import 'duration_time.dart';
+import 'session_payment.dart';
 
 class Session {
   Session(
@@ -32,8 +33,9 @@ class Session {
       this.patientAddress,
       this.clinician,
       this.sessionStatuses,
-      this.clinicianTimeSlots,
+      this.sessionTimeslots,
       this.sessionClinician,
+      this.sessionPayment,
       this.type,
       this.startAt,
       this.endAt,
@@ -53,7 +55,6 @@ class Session {
   int? patientAddressId;
   int? clinicianId;
   String? status;
-  List<DurationTime>? duration;
   int? otp;
   String? reportDocument;
   DateTime? createdAt;
@@ -62,19 +63,20 @@ class Session {
   Profile? patientProfile;
   Address? patientAddress;
   Clinician? clinician;
-  List<SessionStatus>? sessionStatuses;
-  List<TimeSlot>? clinicianTimeSlots;
-  SessionClinician? sessionClinician;
   String? type;
   String? startAt;
   String? endAt;
+  List<DurationTime>? duration;
+  List<SessionStatus>? sessionStatuses;
+  List<SessionTimeslot>? sessionTimeslots;
+  SessionClinician? sessionClinician;
+  SessionPayment? sessionPayment;
 
   factory Session.fromMap(Map<String, dynamic> json) => Session(
       id: json["id"],
       sessionId: json["sessionId"],
-      clinicianTimeSlotIds: json["clinicianSlotIds"],
+    sessionTimeslots: List<SessionTimeslot>.from(json["sessionTimeslots"].map((x) => SessionTimeslot.fromJson(x))),
       date: json["date"] == null ? null : DateTime.parse(json["date"]),
-      day: json["day"],
       description: json["description"],
       consultationMode: json["consultationMode"],
       consultationFee: json["consultationFee"],
@@ -98,13 +100,12 @@ class Session {
           ? null
           : Address.fromMap(json["patientAddress"]),
       clinician: Clinician.fromMap(json["clinician"]),
+      sessionPayment: SessionPayment.fromJson(json["sessionPayment"]),
       sessionStatuses: json["sessionStatuses"] == null
           ? []
           : List<SessionStatus>.from(
               json["sessionStatuses"]?.map((x) => SessionStatus.fromJson(x)) ??
                   []),
-      clinicianTimeSlots: List<TimeSlot>.from(
-          json["clinicianTimeSlots"]?.map((x) => TimeSlot.fromJson(x)) ?? []),
       sessionClinician : json['sessionClinician']==null ? null: SessionClinician.fromJson(json['sessionClinician']),
       type: json["type"],
       startAt: json["startAt"] == null ? null: json["startAt"],
@@ -114,7 +115,7 @@ class Session {
   Map<String, dynamic> toMap() => {
         "id": id,
         "sessionId": sessionId,
-        "clinicianTimeSlotIds": clinicianTimeSlotIds,
+        "sessionTimeslots": sessionTimeslots,
         "date":
             "${date?.year.toString().padLeft(4, '0')}-${date?.month.toString().padLeft(2, '0')}-${date?.day.toString().padLeft(2, '0')}",
         "day": day,
@@ -136,10 +137,11 @@ class Session {
         "patientProfile": patientProfile?.toJson(),
         "patientAddress": patientAddress?.toMap(),
         "clinician": clinician?.toMap(),
-        "clinicianTimeSlots": List<dynamic>.from(
-            clinicianTimeSlots?.map((x) => x.toJson()) ?? []),
+        "sessionTimeslots": List<dynamic>.from(
+            sessionTimeslots?.map((x) => x.toJson()) ?? []),
         "sessionStatuses":
             List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
+        "sessionPayment": sessionPayment?.toJson(),
         "type": type,
         "startAt": startAt,
         "endAt": endAt,
