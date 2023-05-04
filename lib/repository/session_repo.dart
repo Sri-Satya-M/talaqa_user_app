@@ -16,10 +16,7 @@ class SessionRepo {
   }
 
   Future<List<TimeOfDay>> getTimeSlots({required String id, query}) async {
-    var response = await apiClient.get(
-      '${Api.clinicianTimeSlot}${Api.clinician}/$id',
-      query: query,
-    );
+    var response = await apiClient.get(Api.timeslots, query: query);
     var list = response as List;
     return list.map((e) => TimeOfDay.fromJson(e)).toList();
   }
