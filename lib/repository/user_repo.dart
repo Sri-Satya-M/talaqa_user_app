@@ -95,6 +95,12 @@ class UserRepo {
     return list.map((e) => Clinician.fromMap(e)).toList();
   }
 
+  Future<List<Clinician>> getAvailableClinicians({query}) async {
+    var response = await apiClient.get(Api.sessions+Api.availableClinicians, query: query);
+    var list = response['clinicians'] as List;
+    return list.map((e) => Clinician.fromMap(e)).toList();
+  }
+
   Future<List<Resources>> getResources({query}) async {
     var response = await apiClient.get(Api.resources, query: query);
     var list = response['resources'] as List;

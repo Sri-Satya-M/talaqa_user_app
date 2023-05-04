@@ -119,6 +119,10 @@ class UserBloc with ChangeNotifier {
     return _userRepo.getClinicians(query: query);
   }
 
+  Future<List<Clinician>> getAvailableClinicians({query}) {
+    return _userRepo.getAvailableClinicians(query: query);
+  }
+
   Future<List<Resources>> getResources({query}) {
     return _userRepo.getResources(query: query);
   }

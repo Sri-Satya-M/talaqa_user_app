@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/custom_card.dart';
 import '../../../../../widgets/loading_widget.dart';
 import 'clinician_details_widget.dart';
@@ -31,6 +32,7 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
   List<Clinician> clinicians = [];
 
   Future<void> fetchMore() async {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     if (isFinished || isLoading) return;
     isLoading = true;
     try {
@@ -38,13 +40,15 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
       var query = {
         'offset': clinicians.length.toString(),
         'limit': limit.toString(),
+        'date': Helper.formatDate(date: sessionBloc.selectedDate),
+        'timeslotIds': sessionBloc.selectedTimeSlotIds!.join(','),
       };
 
       if (widget.search.isNotEmpty) {
         query['search'] = widget.search;
       }
 
-      var list = await context.read<UserBloc>().getClinicians(query: query);
+      var list = await context.read<UserBloc>().getAvailableClinicians(query: query);
       clinicians.addAll(list);
 
       if (list.length < limit) isFinished = true;
