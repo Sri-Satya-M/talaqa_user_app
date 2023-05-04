@@ -49,7 +49,7 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
             Row(
               children: [
                 Avatar(
-                  url: widget.profile.image,
+                  url: widget.profile.imageUrl,
                   name: widget.profile.fullName,
                   borderRadius: BorderRadius.circular(10),
                   size: 72,

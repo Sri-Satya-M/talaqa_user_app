@@ -32,11 +32,11 @@ class _DoctorCardState extends State<DoctorCard> {
     var textTheme = Theme.of(context).textTheme;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return CustomCard(
-      height: 200,
       width: size.width * 0.8,
       radius: 5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -119,23 +119,23 @@ class _DoctorCardState extends State<DoctorCard> {
               ],
             ),
           ),
-          const Spacer(),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(5),
-                  bottomLeft: Radius.circular(5),
-                ),
-              ),
-              // textStyle: textTheme.headline3,
-              fixedSize: const Size(140, 50),
-            ),
-            onPressed: () {
-              widget.onTap(widget.clinician);
-            },
-            child: Text(langBloc.getString(Strings.bookASession)),
-          ),
+          // const Spacer(),
+          // ElevatedButton(
+          //   style: ElevatedButton.styleFrom(
+          //     shape: const RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.only(
+          //         bottomRight: Radius.circular(5),
+          //         bottomLeft: Radius.circular(5),
+          //       ),
+          //     ),
+          //     // textStyle: textTheme.headline3,
+          //     fixedSize: const Size(140, 50),
+          //   ),
+          //   onPressed: () {
+          //     widget.onTap(widget.clinician);
+          //   },
+          //   child: Text(langBloc.getString(Strings.bookASession)),
+          // ),
         ],
       ),
     );

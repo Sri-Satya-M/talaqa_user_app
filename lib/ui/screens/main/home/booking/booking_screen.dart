@@ -319,28 +319,25 @@ class _BookingScreenState extends State<BookingScreen> {
   bookNow() async {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var noOfSlots = sessionBloc.selectedTimeSlotIds!.length;
-    var totalAmount = sessionBloc.selectedModeOfConsultation!.price! *
-        sessionBloc.selectedTimeSlotIds!.length;
     var description =
         sessionBloc.description == null || sessionBloc.description!.isEmpty
             ? 'NA'
             : sessionBloc.description;
 
     var body = {
-      'timeSlotIds': sessionBloc.selectedTimeSlotIds,
+      'timeslotIds': sessionBloc.selectedTimeSlotIds,
       'date': Helper.formatDate(date: sessionBloc.selectedDate),
-      'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
       'description': description,
       'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
-      'consultationFee': totalAmount,
       'patientId': userBloc.profile!.id,
       'patientProfileId': sessionBloc.selectedPatient!.id,
       'clinicianId': sessionBloc.selectedClinician!.id,
-      'totalAmount': totalAmount,
-      'patientAddressId': sessionBloc.selectedAddressId,
       'type': sessionBloc.symptom
     };
+
+    if (sessionBloc.selectedAddressId != null) {
+      body['patientAddressId'] = sessionBloc.selectedAddressId!;
+    }
 
     print(body);
 
