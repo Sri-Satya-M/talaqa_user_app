@@ -79,6 +79,10 @@ class SessionRepo {
     return apiClient.patch('${Api.sessionClinician}/$id', body);
   }
 
+  Future postDuration({ required body}) {
+    return apiClient.post(Api.duration, body);
+  }
+
   Future<CreateRazorPay> createRazorPayOrder({required body}) async {
     var res = await apiClient.post('${Api.payments}/create-order', body);
     return CreateRazorPay.fromJson(res);

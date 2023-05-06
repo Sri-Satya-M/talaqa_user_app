@@ -125,6 +125,10 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.updateSessionClinician(id: id, body: body);
   }
 
+  Future postDuration({ required body}) {
+    return sessionRepo.postDuration(body: body);
+  }
+
   Future createRazorPayOrder({required Session session}) async {
     var order = await sessionRepo.createRazorPayOrder(
       body: {"sessionId": session.id},
