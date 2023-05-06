@@ -99,9 +99,8 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               const SizedBox(height: 8),
               ReviewTimeSlotWidget(
                 dateTime: session.date!,
-                timeslots: session!.sessionTimeslots!
-              .map((e) => e.timeslot!)
-              .toList(),
+                timeslots:
+                    session.sessionTimeslots!.map((e) => e.timeslot!).toList(),
                 duration: Helper.getDuration(session.duration),
               ),
               const SizedBox(height: 16),
@@ -169,7 +168,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               const SizedBox(height: 16),
               BillDetailsWidget(
                 noOfTimeslots: session.sessionTimeslots!.length,
-                totalAmount: (session.consultationFee)!.toDouble(),
+                totalAmount: session.sessionPayment!.totalAmount!.toDouble(),
                 consultationMode: Helper.textCapitalization(
                   text: session.consultationMode,
                 ),

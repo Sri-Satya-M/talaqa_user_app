@@ -10,6 +10,7 @@ import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart'
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/symptom_mode_of_consultation.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
+import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -317,38 +318,47 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   bookNow() async {
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var description =
-        sessionBloc.description == null || sessionBloc.description!.isEmpty
-            ? 'NA'
-            : sessionBloc.description;
+    ProgressUtils.handleProgress(
+      context,
+      task: () async {
+        var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+        var userBloc = Provider.of<UserBloc>(context, listen: false);
+        var description =
+            sessionBloc.description == null || sessionBloc.description!.isEmpty
+                ? 'NA'
+                : sessionBloc.description;
 
-    var body = {
-      'timeslotIds': sessionBloc.selectedTimeSlotIds,
-      'date': Helper.formatDate(date: sessionBloc.selectedDate),
-      'description': description,
-      'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
-      'patientId': userBloc.profile!.id,
-      'patientProfileId': sessionBloc.selectedPatient!.id,
-      'clinicianId': sessionBloc.selectedClinician!.id,
-      'type': sessionBloc.symptom
-    };
+        var body = {
+          'timeslotIds': sessionBloc.selectedTimeSlotIds,
+          'date': Helper.formatDate(date: sessionBloc.selectedDate),
+          'description': description,
+          'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
+          'patientId': userBloc.profile!.id,
+          'patientProfileId': sessionBloc.selectedPatient!.id,
+          'clinicianId': sessionBloc.selectedClinician!.id,
+          'type': sessionBloc.symptom
+        };
 
-    if (sessionBloc.selectedAddressId != null) {
-      body['patientAddressId'] = sessionBloc.selectedAddressId!;
-    }
+        if (sessionBloc.selectedAddressId != null) {
+          body['patientAddressId'] = sessionBloc.selectedAddressId!;
+        }
 
-    print(body);
+        print(body);
 
-    var response =
-        await sessionBloc.createSessions(body: body) as Map<String, dynamic>;
-    if (response.containsKey('status') && response['status'] != null) {
-      SuccessScreen.open(
-        context,
-        type: '',
-        message: response['message'],
-      );
-    }
+        var response = await sessionBloc.createSessions(body: body)
+            as Map<String, dynamic>;
+        if (response.containsKey('status') && response['status'] != null) {
+          SuccessScreen.open(
+            context,
+            type: '',
+            message:
+            'Your speech therapy request has been placed successfully.',
+            subtitle:
+            'Updates Will be sent to your registered mobile number or email address.',
+            sessionId: response['id'].toString(),
+          );
+        }
+      },
+    );
   }
 }

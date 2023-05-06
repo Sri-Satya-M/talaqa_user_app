@@ -50,7 +50,10 @@ class TimeslotDetailsWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(langBloc.getString(Strings.timeSlot), style: textTheme.caption),
+                Text(
+                  langBloc.getString(Strings.timeSlot),
+                  style: textTheme.caption,
+                ),
                 const SizedBox(height: 4),
                 for (var timeslot in timeslots)
                   Text(

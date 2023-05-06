@@ -43,9 +43,10 @@ class BillDetailsWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${langBloc.getString(Strings.consultationFee)} ($noOfTimeslots ${Helper.textCapitalization(text: consultationMode)} Slot${noOfTimeslots > 1 ? 's' : ''})',
+                  '${langBloc.getString(Strings.consultationFee)}\n($noOfTimeslots ${Helper.textCapitalization(text: consultationMode)} Slot${noOfTimeslots > 1 ? 's' : ''})',
                 ),
               ),
+              const SizedBox(width: 32),
               Text('$totalAmount ${langBloc.getString(Strings.dirham)}'),
             ],
           ),

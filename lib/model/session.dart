@@ -16,8 +16,6 @@ class Session {
       this.day,
       this.description,
       this.consultationMode,
-      this.consultationFee,
-      this.totalAmount,
       this.patientId,
       this.patientProfileId,
       this.patientAddressId,
@@ -48,7 +46,6 @@ class Session {
   String? day;
   String? description;
   String? consultationMode;
-  int? consultationFee;
   int? totalAmount;
   int? patientId;
   int? patientProfileId;
@@ -75,12 +72,10 @@ class Session {
   factory Session.fromMap(Map<String, dynamic> json) => Session(
       id: json["id"],
       sessionId: json["sessionId"],
-    sessionTimeslots: List<SessionTimeslot>.from(json["sessionTimeslots"].map((x) => SessionTimeslot.fromJson(x))),
+      sessionTimeslots: List<SessionTimeslot>.from(json["sessionTimeslots"].map((x) => SessionTimeslot.fromJson(x))),
       date: json["date"] == null ? null : DateTime.parse(json["date"]),
       description: json["description"],
       consultationMode: json["consultationMode"],
-      consultationFee: json["consultationFee"],
-      totalAmount: json["totalAmount"],
       patientId: json["patientId"],
       patientProfileId: json["patientProfileId"],
       patientAddressId: json["patientAddressId"],
@@ -121,7 +116,6 @@ class Session {
         "day": day,
         "description": description,
         "consultationMode": consultationMode,
-        "consultationFee": consultationFee,
         "totalAmount": totalAmount,
         "patientId": patientId,
         "patientProfileId": patientProfileId,
