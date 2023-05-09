@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:alsan_app/model/environment.dart';
+import 'package:alsan_app/model/service.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../model/chat.dart';
@@ -26,10 +27,12 @@ class SessionBloc with ChangeNotifier {
 
   ModeOfConsultation? selectedModeOfConsultation;
   String? symptom;
+  Service? service;
   DateTime? selectedDate;
   List<int>? selectedTimeSlotIds;
   String? description;
   int? selectedAddressId;
+  int? selectedStatement;
   Map<int, TimeSlot> timeslots = {};
 
   ///chat
@@ -42,8 +45,8 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getModeOfConsultation();
   }
 
-  Future<List<TimeOfDay>> getTimeSlots({required String id, query}) async {
-    return sessionRepo.getTimeSlots(id: id, query: query);
+  Future<List<TimeOfDay>> getTimeSlots({query}) async {
+    return sessionRepo.getTimeSlots(query: query);
   }
 
   Future createSessions({body}) {
@@ -72,12 +75,14 @@ class SessionBloc with ChangeNotifier {
   }
 
   clear() {
-    selectedClinician = null;
     selectedPatient = null;
+    service=null;
+    symptom=null;
     selectedModeOfConsultation = null;
     selectedDate = null;
     selectedTimeSlotIds?.clear();
     description = null;
+    selectedClinician = null;
     selectedAddressId = null;
     timeslots.clear();
     notifyListeners();
@@ -125,7 +130,7 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.updateSessionClinician(id: id, body: body);
   }
 
-  Future postDuration({ required body}) {
+  Future postDuration({required body}) {
     return sessionRepo.postDuration(body: body);
   }
 
@@ -196,6 +201,10 @@ class SessionBloc with ChangeNotifier {
     _razorpay.clear();
 
     return response;
+  }
+
+  Future<Services> getServices({query}) {
+    return sessionRepo.getServices(query: query);
   }
 
   ///Handling chat in bloc

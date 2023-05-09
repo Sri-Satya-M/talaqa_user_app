@@ -32,6 +32,7 @@ class Api {
   static const medicalRecords = '/medical-records';
   static const dashboard = '/dashboard';
   static const duration = '/duration';
+  static const services = '/services';
   // static const patientProfile = '/patientProfile';
   static const symptoms = '/symptoms';
   static const notifications = '/notifications';

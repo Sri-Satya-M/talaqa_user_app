@@ -1,4 +1,5 @@
 import 'package:alsan_app/data/network/api_client.dart';
+import 'package:alsan_app/model/service.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
@@ -15,7 +16,7 @@ class SessionRepo {
     return list.map((e) => ModeOfConsultation.fromMap(e)).toList();
   }
 
-  Future<List<TimeOfDay>> getTimeSlots({required String id, query}) async {
+  Future<List<TimeOfDay>> getTimeSlots({query}) async {
     var response = await apiClient.get(Api.timeslots, query: query);
     var list = response as List;
     return list.map((e) => TimeOfDay.fromJson(e)).toList();
@@ -76,10 +77,10 @@ class SessionRepo {
   }
 
   Future updateSessionClinician({required String id, required body}) {
-    return apiClient.patch('${Api.sessionClinician}/$id', body);
+    return apiClient.patch('${Api.sessionClinician }/$id', body);
   }
 
-  Future postDuration({ required body}) {
+  Future postDuration({required body}) {
     return apiClient.post(Api.duration, body);
   }
 
@@ -90,5 +91,10 @@ class SessionRepo {
 
   Future verifyOrder({required body}) {
     return apiClient.post('${Api.payments}/verify-transaction', body);
+  }
+
+  Future<Services> getServices({query}) async {
+    var response = await apiClient.get(Api.services);
+    return Services.fromJson(response);
   }
 }
