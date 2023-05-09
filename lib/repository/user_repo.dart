@@ -96,7 +96,10 @@ class UserRepo {
   }
 
   Future<List<Clinician>> getAvailableClinicians({query}) async {
-    var response = await apiClient.get(Api.sessions+Api.availableClinicians, query: query);
+    var response = await apiClient.get(
+      Api.sessions + Api.availableClinicians,
+      query: query,
+    );
     var list = response['clinicians'] as List;
     return list.map((e) => Clinician.fromMap(e)).toList();
   }
@@ -134,7 +137,7 @@ class UserRepo {
 
   Future<Dashboard> getDashboard({required String id}) async {
     var response = await apiClient.get(
-      '${Api.dashboard}/${Api.patientProfile}/$id',
+      '${Api.dashboard}/patient-profiles/$id',
     );
     return Dashboard.fromJson(response);
   }

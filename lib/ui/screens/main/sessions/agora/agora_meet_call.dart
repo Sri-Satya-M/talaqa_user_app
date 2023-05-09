@@ -22,12 +22,14 @@ class AgoraMeetScreen extends StatefulWidget {
   final Session session;
   final Duration duration;
   final String token;
+  final int hitTime;
 
   const AgoraMeetScreen({
     super.key,
     required this.session,
     required this.duration,
     required this.token,
+    required this.hitTime,
   });
 
   static Future open({
@@ -35,6 +37,7 @@ class AgoraMeetScreen extends StatefulWidget {
     required Session session,
     required Duration duration,
     required String token,
+    required int hitTime,
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
@@ -42,6 +45,7 @@ class AgoraMeetScreen extends StatefulWidget {
           session: session,
           duration: duration,
           token: token,
+          hitTime: hitTime,
         ),
       ),
     );
@@ -68,11 +72,15 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   List<Message> chat = [];
 
   Timer? _timer;
+  Timer? _hitTimer;
   bool isExtended = false;
 
   late Duration duration;
+  late Duration hitDuration;
   late int totalTime;
   final Duration oneSecond = const Duration(seconds: 1);
+
+  bool isTimerActive = false;
 
   initializeSDK() async {
     // Set up an instance of Agora engine
@@ -99,18 +107,27 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
         isJoined = true;
         setState(() {});
-      }, onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+      }, onUserJoined: (
+        RtcConnection connection,
+        int remoteUid,
+        int elapsed,
+      ) {
         _remoteUid = remoteUid;
         if (widget.session.consultationMode == "VIDEO") {
           remoteVideo = true;
         }
+        startTimer();
         setState(() {});
-      }, onUserOffline: (RtcConnection connection, int remoteUid,
-              UserOfflineReasonType reason) {
+      }, onUserOffline: (
+        RtcConnection connection,
+        int remoteUid,
+        UserOfflineReasonType reason,
+      ) {
         if (widget.session.consultationMode == "VIDEO") {
           remoteVideo = true;
         }
         _remoteUid = null;
+        pauseTimer();
         setState(() {});
       }, onStreamMessage: (
         RtcConnection connection,
@@ -169,9 +186,12 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
   @override
   void initState() {
     duration = widget.duration;
-    totalTime = widget.session.clinicianTimeSlots!.length * 60;
+    hitDuration = Duration(minutes: widget.hitTime);
+    totalTime = widget.session.sessionTimeslots!.length * 60;
     super.initState();
     _startTimer();
+    _hitIntervalTimer();
+
     video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
   }
@@ -233,7 +253,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                         isVideo: video,
                         agoraEngine: agoraEngine,
                         username: widget.session.patientProfile!.fullName!,
-                        imageUrl: widget.session.patientProfile?.image,
+                        imageUrl: widget.session.patientProfile?.imageUrl,
                       ),
                     ),
                   ),
@@ -409,11 +429,40 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     });
   }
 
+  void _hitIntervalTimer() async {
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    _hitTimer = Timer.periodic(oneSecond, (timer) async {
+      hitDuration -= oneSecond;
+      if (hitDuration.isNegative || hitDuration == Duration.zero) {
+        hitDuration = Duration(minutes: widget.hitTime);
+        await sessionBloc.postDuration(body: {
+          'sessionId': widget.session.id,
+          'duration': widget.hitTime,
+          'userType': 'PATIENT'
+        });
+      }
+      setState(() {});
+    });
+  }
+
+  void pauseTimer() {
+    if (isTimerActive && _hitTimer != null) {
+      _hitTimer?.cancel();
+      isTimerActive = false;
+    }
+  }
+
+  void startTimer() {
+    if (!isTimerActive) {
+      _hitIntervalTimer();
+      isTimerActive = true;
+    }
+  }
+
   @override
   void dispose() {
-    // var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
-    // sessionsBloc.dispose();
     _timer?.cancel();
+    _hitTimer?.cancel();
     agoraEngine.disableVideo();
     agoraEngine.disableAudio();
     agoraEngine.release();
