@@ -95,14 +95,14 @@ class Session {
           ? null
           : Address.fromMap(json["patientAddress"]),
       clinician: Clinician.fromMap(json["clinician"]),
-      sessionPayment: SessionPayment.fromJson(json["sessionPayment"]),
+      sessionPayment: json["sessionPayment"] == null ? null : SessionPayment.fromJson(json["sessionPayment"]),
       sessionStatuses: json["sessionStatuses"] == null
           ? []
           : List<SessionStatus>.from(
               json["sessionStatuses"]?.map((x) => SessionStatus.fromJson(x)) ??
                   []),
       sessionClinician : json['sessionClinician']==null ? null: SessionClinician.fromJson(json['sessionClinician']),
-      type: json["type"],
+      type: json["type"] == null? null: json["type"],
       startAt: json["startAt"] == null ? null: json["startAt"],
       endAt: json["endAt"] == null ? null: json["endAt"],
   );

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../bloc/user_bloc.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/error_widget.dart';
@@ -22,11 +23,13 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: Text(langBloc.getString(Strings.reports))),
       body: FutureBuilder<List<Session>>(
         future: sessionBloc.getSessions(query: {
-          "status": ["REPORT_SUBMITTED"]
+          "status": ["REPORT_SUBMITTED"],
+          'patientId': userBloc.profile!.id!,
         }),
         builder: (context, snapshot) {
           if (snapshot.hasError) {

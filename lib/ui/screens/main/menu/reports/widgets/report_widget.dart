@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
+import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +80,9 @@ class _ReportWidgetState extends State<ReportWidget> {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: TimeslotDetailsWidget(
               dateTime: widget.session.date!,
-              timeslots: widget.session.clinicianTimeSlots!,
+              timeslots: widget.session.sessionTimeslots!
+                  .map((e) => e.timeslot!)
+                  .toList(),
             ),
           ),
           ProgressButton(
@@ -90,26 +92,30 @@ class _ReportWidgetState extends State<ReportWidget> {
                   id: widget.session.id!,
                 );
 
-                final permission = await Permission.storage.request();
+                bool permission = await Permission.storage.isGranted;
 
-                if (permission.isGranted) {
-                  ErrorSnackBar.show(context,
-                      '${langBloc.getString(Strings.downloadingReports)}...!');
-                  for (var report in reports) {
-                    final externalDir = await getExternalStorageDirectory();
-                    String url = '${report.fileUrl}';
-                  }
-                  ErrorSnackBar.show(
-                    context,
-                    '${langBloc.getString(Strings.reportsDownloaded)}',
+                if (!permission) {
+                  var request = await Permission.storage.request();
+                  permission = request.isGranted;
+                }
+
+                if (permission) {
+                  ErrorSnackBar.show(context, "Downloading Reports");
+
+                  String message = await Helper.downloadFiles(
+                    urls: reports.map((e) => e.fileUrl ?? '').toList(),
                   );
+
+                  ErrorSnackBar.show(context, message);
                 } else {
-                  ErrorSnackBar.show(
+                  return ErrorSnackBar.show(
                     context,
                     langBloc.getString(Strings.permissionDenied),
                   );
                 }
-              } catch (e) {}
+              } catch (e) {
+                ErrorSnackBar.show(context, 'Something Went Wrong');
+              }
             },
             child: Text(langBloc.getString(Strings.downloadReport)),
           ),
