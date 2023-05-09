@@ -37,6 +37,7 @@ class MyColors {
   static const glacier = Color(0xFFD5DFE6);
   static const profileCardColor = Color(0xFFE8F9F7);
   static const bookingBgColor = Color(0xFFFBF2F2);
+  static const seaBlue = Color(0xFFECF3F9);
 
   //status colors
   static const Color pending = Color(0xFFCED500);
