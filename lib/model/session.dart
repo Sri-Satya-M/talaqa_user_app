@@ -34,7 +34,7 @@ class Session {
       this.sessionTimeslots,
       this.sessionClinician,
       this.sessionPayment,
-      this.type,
+      this.symptom,
       this.startAt,
       this.endAt,
       });
@@ -60,7 +60,7 @@ class Session {
   Profile? patientProfile;
   Address? patientAddress;
   Clinician? clinician;
-  String? type;
+  String? symptom;
   String? startAt;
   String? endAt;
   List<DurationTime>? duration;
@@ -102,7 +102,7 @@ class Session {
               json["sessionStatuses"]?.map((x) => SessionStatus.fromJson(x)) ??
                   []),
       sessionClinician : json['sessionClinician']==null ? null: SessionClinician.fromJson(json['sessionClinician']),
-      type: json["type"] == null? null: json["type"],
+      symptom: json["symptom"] == null? null: json["symptom"],
       startAt: json["startAt"] == null ? null: json["startAt"],
       endAt: json["endAt"] == null ? null: json["endAt"],
   );
@@ -136,7 +136,7 @@ class Session {
         "sessionStatuses":
             List<dynamic>.from(sessionStatuses?.map((x) => x.toJson()) ?? []),
         "sessionPayment": sessionPayment?.toJson(),
-        "type": type,
+        "symptom": symptom,
         "startAt": startAt,
         "endAt": endAt,
       };
