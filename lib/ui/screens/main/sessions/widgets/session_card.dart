@@ -110,7 +110,7 @@ class _SessionCardState extends State<SessionCard> {
                   ReverseDetailsTile(
                     title: const Text('Type'),
                     value: Text(
-                      widget.session.type.toString(),
+                      widget.session.symptom.toString(),
                       style: textTheme.bodyText1,
                     ),
                   ),

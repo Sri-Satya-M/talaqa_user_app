@@ -9,11 +9,11 @@ import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../../resources/strings.dart';
+import '../widgets/service_card.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({super.key});
@@ -27,30 +27,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
-    var noOfSlots = sessionBloc.selectedTimeSlotIds!.length;
-    var totalAmount = sessionBloc.selectedModeOfConsultation!.price! *
-        sessionBloc.selectedTimeSlotIds!.length;
-    var description =
-        sessionBloc.description == null || sessionBloc.description!.isEmpty
-            ? 'NA'
-            : sessionBloc.description;
-
-    var body = {
-      'timeSlotIds': sessionBloc.selectedTimeSlotIds,
-      'date': Helper.formatDate(date: sessionBloc.selectedDate),
-      'day': Helper.formatDate(date: sessionBloc.selectedDate, pattern: 'EEEE'),
-      'description': description,
-      'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
-      'consultationFee': totalAmount,
-      'patientId': userBloc.profile!.id,
-      'patientProfileId': sessionBloc.selectedPatient!.id,
-      'clinicianId': sessionBloc.selectedClinician!.id,
-      'totalAmount': totalAmount,
-      'patientAddressId': sessionBloc.selectedAddressId,
-      'type': sessionBloc.symptom
-    };
 
     return Container(
       decoration: const BoxDecoration(
@@ -78,6 +55,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             dateTime: sessionBloc.selectedDate!,
             timeslots: sessionBloc.timeslots.values.toList(),
           ),
+          ServiceCard(service: sessionBloc.service!),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
@@ -114,10 +92,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          ReverseDetailsTile(
-            title: Text(langBloc.getString(Strings.symptoms)),
-            value: Text('${sessionBloc.symptom}', style: textTheme.headline4),
-          ),
+          if (sessionBloc.symptom != null) ...[
+            ReverseDetailsTile(
+              title: Text(langBloc.getString(Strings.symptoms)),
+              value: Text('${sessionBloc.symptom}', style: textTheme.headline4),
+            ),
+          ],
           const SizedBox(height: 16),
           ReverseDetailsTile(
             title: Text(langBloc.getString(Strings.description)),

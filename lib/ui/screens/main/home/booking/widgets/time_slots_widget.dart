@@ -25,7 +25,6 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     return FutureBuilder<List<t.TimeOfDay>>(
       future: sessionBloc.getTimeSlots(
-        id: sessionBloc.selectedClinician!.id.toString(),
         query: {
           'date': Helper.formatDate(date: sessionBloc.selectedDate),
           'time': DateTime.now(),

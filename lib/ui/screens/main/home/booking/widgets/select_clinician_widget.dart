@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/ui/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,13 +43,18 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
         'limit': limit.toString(),
         'date': Helper.formatDate(date: sessionBloc.selectedDate),
         'timeslotIds': sessionBloc.selectedTimeSlotIds!.join(','),
+        'serviceId': sessionBloc.service!.id!,
+        'modeId': sessionBloc.selectedModeOfConsultation!.id!
       };
 
       if (widget.search.isNotEmpty) {
         query['search'] = widget.search;
       }
 
-      var list = await context.read<UserBloc>().getAvailableClinicians(query: query);
+      var list = await context.read<UserBloc>().getAvailableClinicians(
+            query: query,
+          );
+
       clinicians.addAll(list);
 
       if (list.length < limit) isFinished = true;
@@ -68,74 +74,76 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: clinicians.length + ((isFinished) ? 0 : 1),
-      padding: EdgeInsets.zero,
-      physics: const ScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-        if (index == clinicians.length) {
-          fetchMore();
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const LoadingWidget(),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Fetching more Clinicians',
-                    style: textTheme.caption!.copyWith(
-                      fontSize: 14,
+    return (isFinished && clinicians.isEmpty)
+        ? const EmptyWidget(message: 'Clinicians Not available')
+        : ListView.builder(
+            shrinkWrap: true,
+            itemCount: clinicians.length + ((isFinished) ? 0 : 1),
+            padding: EdgeInsets.zero,
+            physics: const ScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              if (index == clinicians.length) {
+                fetchMore();
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        const LoadingWidget(),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Fetching more Clinicians',
+                          style: textTheme.caption!.copyWith(
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
-        }
-
-        return CustomCard(
-          radius: 5,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: (sessionBloc.selectedClinician?.id ==
-                            clinicians[index].id)
-                        ? MyColors.primaryColor
-                        : Colors.transparent,
                   ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: ClinicianDetailsWidget(
-                  clinician: clinicians[index],
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                );
+              }
+
+              return CustomCard(
+                radius: 5,
+                child: Stack(
                   children: [
-                    const SizedBox(height: 64),
-                    Radio(
-                      value: clinicians[index].id,
-                      groupValue: sessionBloc.selectedClinician?.id,
-                      onChanged: (value) {
-                        sessionBloc.selectedClinician = clinicians[index];
-                        setState(() {});
-                      },
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: (sessionBloc.selectedClinician?.id ==
+                                  clinicians[index].id)
+                              ? MyColors.primaryColor
+                              : Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: ClinicianDetailsWidget(
+                        clinician: clinicians[index],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 5,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(height: 64),
+                          Radio(
+                            value: clinicians[index].id,
+                            groupValue: sessionBloc.selectedClinician?.id,
+                            onChanged: (value) {
+                              sessionBloc.selectedClinician = clinicians[index];
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 }

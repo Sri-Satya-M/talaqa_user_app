@@ -155,7 +155,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               const SizedBox(height: 16),
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.symptoms)),
-                value: Text('${session.type}', style: textTheme.headline2),
+                value: Text('${session.symptom}', style: textTheme.headline2),
               ),
               const SizedBox(height: 16),
               ReverseDetailsTile(

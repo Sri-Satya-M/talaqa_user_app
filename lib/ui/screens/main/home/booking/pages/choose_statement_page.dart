@@ -1,0 +1,124 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
+import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_widget.dart';
+import '../../../../../widgets/loading_widget.dart';
+import '../widgets/select_symptom.dart';
+
+class ChooseStatementPage extends StatefulWidget {
+  const ChooseStatementPage({super.key});
+
+  @override
+  _ChooseStatementPageState createState() => _ChooseStatementPageState();
+}
+
+class _ChooseStatementPageState extends State<ChooseStatementPage> {
+  int selectedIndex = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        children: [
+          Container(
+            height: 90,
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              color: MyColors.seaBlue,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    "I know what i have, I've been diagnosed before",
+                    style: textTheme.headline3,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Radio(
+                    value: 1,
+                    groupValue: selectedIndex,
+                    onChanged: (value) {
+                      sessionBloc.selectedStatement = selectedIndex = 1;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              color: MyColors.seaBlue,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    "I don't know what I might have",
+                    style: textTheme.headline3,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Radio(
+                    value: 2,
+                    groupValue: selectedIndex,
+                    onChanged: (value) {
+                      sessionBloc.selectedStatement = selectedIndex = 2;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (selectedIndex == 1) ...[
+            const SizedBox(height: 16),
+            Text(langBloc.getString(Strings.symptoms)),
+            const SizedBox(height: 16),
+            FutureBuilder<List<String>>(
+              future: sessionBloc.getPatientSymptoms(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return CustomErrorWidget(error: snapshot.error);
+                }
+
+                if (!snapshot.hasData) return const LoadingWidget();
+
+                var symptoms = snapshot.data ?? [];
+
+                if (symptoms.isEmpty) return const EmptyWidget();
+
+                return SelectSymptoms(symptoms: symptoms);
+              },
+            ),
+          ]
+        ],
+      ),
+    );
+  }
+}

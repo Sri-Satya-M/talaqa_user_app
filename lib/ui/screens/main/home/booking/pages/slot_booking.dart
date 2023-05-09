@@ -1,6 +1,7 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_mode_of_consultation.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/time_slots_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +42,8 @@ class _SlotBookingState extends State<SlotBooking> {
         scrollDirection: Axis.vertical,
         physics: const ScrollPhysics(),
         children: [
+          SelectModeOfConsultation(onSelect: widget.onTap),
+          const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.selectDate),
             style: textTheme.caption?.copyWith(color: Colors.black),
@@ -49,7 +52,7 @@ class _SlotBookingState extends State<SlotBooking> {
           buildCalendar(),
           const SizedBox(height: 16),
           Text(
-          langBloc.getString(Strings.availableTimeSlots),
+            langBloc.getString(Strings.availableTimeSlots),
             style: textTheme.caption?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 16),

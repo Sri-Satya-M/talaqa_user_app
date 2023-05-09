@@ -1,23 +1,19 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../../model/mode_of_consultation.dart';
-import '../../../../../../resources/colors.dart';
-import '../../../../../../resources/strings.dart';
-import '../../../../../widgets/details_tile.dart';
-import '../../../../../widgets/image_from_net.dart';
+import '../../../../../../utils/helper.dart';
+import '../../../../../widgets/empty_widget.dart';
+import '../../../../../widgets/error_widget.dart';
+import '../../../../../widgets/loading_widget.dart';
 
 class SelectModeOfConsultation extends StatefulWidget {
-  final List<ModeOfConsultation> consultations;
-  final Function onTap;
+  final Function onSelect;
 
-  const SelectModeOfConsultation({
-    super.key,
-    required this.consultations,
-    required this.onTap,
-  });
+  const SelectModeOfConsultation({super.key, required this.onSelect});
 
   @override
   _SelectModeOfConsultationState createState() =>
@@ -25,58 +21,56 @@ class SelectModeOfConsultation extends StatefulWidget {
 }
 
 class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
+  int? modeId;
+
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    return FutureBuilder<List<ModeOfConsultation>>(
+      future: sessionBloc.getModeOfConsultation(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return CustomErrorWidget(error: snapshot.error);
+        }
 
-    return Column(
-      children: [
-        for (var mode in widget.consultations)
-          Container(
-            padding: const EdgeInsets.all(18),
-            width: double.maxFinite,
-            margin: const EdgeInsets.symmetric(vertical: 4),
-            decoration: const BoxDecoration(
-              color: MyColors.paleLightBlue,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            child: DetailsTile(
-              title: Row(
-                children: [
-                  ImageFromNet(imageUrl: mode.imageUrl, width: 12),
-                  const SizedBox(width: 12),
-                  Text(mode.title!, style: textTheme.bodyText1),
-                  const Spacer(),
-                  Radio(
+        if (!snapshot.hasData) return const LoadingWidget();
+
+        var modes = snapshot.data ?? [];
+
+        if (modes.isEmpty) return const EmptyWidget();
+
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: sessionBloc.selectedModeOfConsultation?.id,
+              underline: null,
+              isExpanded: true,
+              hint: Text(langBloc.getString(Strings.selectAType)),
+              items: [
+                for (var mode in modes)
+                  DropdownMenuItem<int>(
                     value: mode.id,
-                    groupValue: sessionBloc.selectedModeOfConsultation?.id,
-                    onChanged: (value) {
-                      setState(() {
-                        sessionBloc.selectedModeOfConsultation = mode;
-                        widget.onTap(mode);
-                      });
-                    },
-                  )
-                ],
-              ),
-              value: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 2,
-                ),
-                decoration: const BoxDecoration(
-                  color: MyColors.lightBlue,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Text(
-                    '${mode.price} ${langBloc.getString(Strings.dirham)}',
-                    style: textTheme.bodyText2),
-              ),
+                    child: Text(Helper.textCapitalization(text: mode.type)),
+                  ),
+              ],
+              onChanged: (value) {
+                modeId = value;
+                sessionBloc.selectedModeOfConsultation = modes.firstWhere(
+                  (mode) => mode.id == modeId,
+                );
+                widget.onSelect.call(sessionBloc.selectedModeOfConsultation);
+                setState(() {});
+              },
             ),
           ),
-      ],
+        );
+      },
     );
   }
 }

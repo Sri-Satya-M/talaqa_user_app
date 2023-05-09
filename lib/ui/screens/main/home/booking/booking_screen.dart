@@ -1,13 +1,14 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/model/mode_of_consultation.dart';
+import 'package:alsan_app/model/service.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/pages/booking_details.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/pages/choose_statement_page.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/pages/select_clinician.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/pages/select_profiles.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/pages/slot_booking.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/add_address.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/symptom_mode_of_consultation.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
@@ -21,6 +22,7 @@ import '../../../../../model/profile.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
 import '../../../../widgets/success_screen.dart';
+import 'pages/select_service_page.dart';
 
 class BookingScreen extends StatefulWidget {
   final Clinician clinician;
@@ -41,7 +43,7 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   int pageIndex = 1;
-  int steps = 5;
+  int steps = 6;
   List<String> titles = [];
 
   late PageController controller;
@@ -49,28 +51,29 @@ class _BookingScreenState extends State<BookingScreen> {
   initializeTitles() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     titles = [
-      langBloc.getString(Strings.symptomAndModeOfConsultation),
       langBloc.getString(Strings.selectProfile),
-      langBloc.getString(Strings.slotBooking),
-      langBloc.getString(Strings.clinician),
+      langBloc.getString(Strings.selectService),
+      langBloc.getString(Strings.chooseStatement),
+      langBloc.getString(Strings.consultationModeSlotBooking),
+      langBloc.getString(Strings.selectClinicianProfile),
       langBloc.getString(Strings.review),
     ];
   }
 
   addExtraStep() {
-    if (titles.length == 6) return;
+    if (titles.length == 7) return;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     setState(() {
       steps += 1;
-      titles.insert(4, langBloc.getString(Strings.selectAddress));
+      titles.insert(5, langBloc.getString(Strings.selectAddress));
     });
   }
 
   removeExtraStep() {
-    if (titles.length <= 5) return;
+    if (titles.length <= 6) return;
     setState(() {
       steps -= 1;
-      titles.removeAt(3);
+      titles.removeAt(4);
     });
   }
 
@@ -78,9 +81,7 @@ class _BookingScreenState extends State<BookingScreen> {
   void initState() {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     sessionBloc.clear();
-    sessionBloc.selectedClinician = widget.clinician;
     sessionBloc.selectedDate = DateTime.now();
-    sessionBloc.selectedPatient = Profile();
     controller = PageController(initialPage: pageIndex - 1);
     initializeTitles();
     super.initState();
@@ -100,7 +101,7 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
@@ -108,27 +109,21 @@ class _BookingScreenState extends State<BookingScreen> {
                 });
               },
               children: [
-                SymptomModeOfConsultation(
-                  onTap: (ModeOfConsultation mode) {
-                    if (mode != null) {
-                      if (mode.type == 'HOME') {
-                        addExtraStep();
-                      } else {
-                        removeExtraStep();
-                      }
-                      setState(() {});
-                    }
-                  },
-                ),
                 SelectPatientProfile(
                   onTap: (Profile profile) {
                     sessionBloc.selectedPatient = profile;
                   },
                 ),
+                SelectServicePage(
+                  onTap: (Service service) {
+                    sessionBloc.service = service;
+                  },
+                ),
+                const ChooseStatementPage(),
                 SlotBooking(
-                  onTap: (ModeOfConsultation value) {
-                    if (value != null) {
-                      if (value.type == 'HOME') {
+                  onTap: (ModeOfConsultation mode) {
+                    if (mode != null) {
+                      if (mode.type == 'HOME') {
                         addExtraStep();
                       } else {
                         removeExtraStep();
@@ -270,20 +265,32 @@ class _BookingScreenState extends State<BookingScreen> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     switch (pageIndex) {
       case 1:
-        if (sessionBloc.symptom == null ||
-            sessionBloc.selectedModeOfConsultation == null) {
-          flag = true;
-          msg = 'Please select a Symptom & Mode of Consultation';
-        }
-        break;
-
-      case 2:
         if (sessionBloc.selectedPatient?.id == null) {
           flag = true;
           msg = 'Please select a patient';
         }
         break;
+
+      case 2:
+        if (sessionBloc.service == null) {
+          flag = true;
+          msg = 'Please select a Service';
+        }
+        break;
+
       case 3:
+        if (sessionBloc.selectedStatement == 1) {
+          if (sessionBloc.symptom == null) {
+            return ErrorSnackBar.show(context, 'Please select a Symptom');
+          }
+        }
+        break;
+
+      case 4:
+        if (sessionBloc.selectedModeOfConsultation == null) {
+          flag = true;
+          msg = 'Please Select Mode of Consultation';
+        }
         if (sessionBloc.selectedDate == null ||
             sessionBloc.selectedTimeSlotIds == null ||
             sessionBloc.selectedTimeSlotIds!.isEmpty) {
@@ -291,14 +298,15 @@ class _BookingScreenState extends State<BookingScreen> {
           msg = 'Please select Date & Time slot';
         }
         break;
-      case 4:
+
+      case 5:
         if (sessionBloc.selectedClinician?.id == null) {
           flag = true;
           msg = 'Please select a clinician';
         }
         break;
 
-      case 5:
+      case 6:
         if (sessionBloc.selectedAddressId == null) {
           flag = true;
           msg = 'Please select an address';
@@ -334,10 +342,14 @@ class _BookingScreenState extends State<BookingScreen> {
           'description': description,
           'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
           'patientId': userBloc.profile!.id,
+          'serviceId': sessionBloc.service!.id,
           'patientProfileId': sessionBloc.selectedPatient!.id,
           'clinicianId': sessionBloc.selectedClinician!.id,
-          'type': sessionBloc.symptom
         };
+
+        if (sessionBloc.selectedStatement == 1 && sessionBloc.symptom != null) {
+          body['symptom'] = sessionBloc.symptom;
+        }
 
         if (sessionBloc.selectedAddressId != null) {
           body['patientAddressId'] = sessionBloc.selectedAddressId!;
@@ -352,13 +364,19 @@ class _BookingScreenState extends State<BookingScreen> {
             context,
             type: '',
             message:
-            'Your speech therapy request has been placed successfully.',
+                'Your speech therapy request has been placed successfully.',
             subtitle:
-            'Updates Will be sent to your registered mobile number or email address.',
+                'Updates Will be sent to your registered mobile number or email address.',
             sessionId: response['id'].toString(),
           );
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    context.read<SessionBloc>().clear();
+    super.dispose();
   }
 }
