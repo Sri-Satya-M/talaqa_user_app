@@ -125,8 +125,8 @@ class UserRepo {
     return apiClient.post(Api.tokens, body);
   }
 
-  Future<List<Review>> getReview({required String id}) async {
-    var response = await apiClient.get(Api.reviews, query: {'clinicianId': id});
+  Future<List<Review>> getReview({required query}) async {
+    var response = await apiClient.get(Api.reviews, query: query);
     var list = response['reviews'] as List;
     return list.map((f) => Review.fromJson(f)).toList();
   }

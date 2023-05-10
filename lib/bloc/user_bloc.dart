@@ -147,8 +147,8 @@ class UserBloc with ChangeNotifier {
     await _userRepo.updateFCMToken(body: body);
   }
 
-  Future<List<Review>> getReview({required String id}) {
-    return _userRepo.getReview(id: id);
+  Future<List<Review>> getReview({required query}) {
+    return _userRepo.getReview(query: query);
   }
 
   Future removeAddresses({required String id}) async {

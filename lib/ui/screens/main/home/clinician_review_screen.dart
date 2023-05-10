@@ -1,5 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:alsan_app/ui/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,9 +39,10 @@ class _ClinicianReviewsScreenState extends State<ClinicianReviewsScreen> {
       var query = {
         'offset': reviews.length.toString(),
         'limit': limit.toString(),
+        'clinicianId': widget.id,
       };
 
-      var list = await context.read<UserBloc>().getReview(id: widget.id);
+      var list = await context.read<UserBloc>().getReview(query: query);
       reviews.addAll(list);
 
       if (list.length < limit) isFinished = true;
@@ -63,34 +65,36 @@ class _ClinicianReviewsScreenState extends State<ClinicianReviewsScreen> {
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(title: Text(langBloc.getString(Strings.reviews))),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: reviews.length + ((isFinished) ? 0 : 1),
-        padding: const EdgeInsets.all(20),
-        itemBuilder: (context, index) {
-          if (index == reviews.length) {
-            fetchMore();
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    const LoadingWidget(),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Fetching more Reviews',
-                      style: textTheme.caption!.copyWith(
-                        fontSize: 14,
+      body: (isFinished && reviews.isEmpty)
+          ? const EmptyWidget(message: 'No Reviews')
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: reviews.length + ((isFinished) ? 0 : 1),
+              padding: const EdgeInsets.all(20),
+              itemBuilder: (context, index) {
+                if (index == reviews.length) {
+                  fetchMore();
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          const LoadingWidget(),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Fetching more Reviews',
+                            style: textTheme.caption!.copyWith(
+                              fontSize: 14,
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }
-          return ReviewCard(review: reviews[index]);
-        },
-      ),
+                    ),
+                  );
+                }
+                return ReviewCard(review: reviews[index]);
+              },
+            ),
     );
   }
 }
