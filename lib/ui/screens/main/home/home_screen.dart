@@ -93,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SelectClinicians()),
+                  MaterialPageRoute(
+                    builder: (context) => const SelectClinicians(),
+                  ),
                 );
               },
               child: Text(

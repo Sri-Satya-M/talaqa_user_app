@@ -57,57 +57,62 @@ class _DoctorCardState extends State<DoctorCard> {
                         width: 100,
                       ),
                       const SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          DetailsTile(
-                            title: Text(
-                              widget.clinician.user?.fullName ?? ' NA',
-                              style: textTheme.headline2,
-                            ),
-                            value: Text(
-                              widget.clinician.designation ?? 'NA',
-                              style: textTheme.caption?.copyWith(
-                                color: MyColors.cerulean,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            DetailsTile(
+                              title: Text(
+                                widget.clinician.user?.fullName ?? ' NA',
+                                style: textTheme.headline2,
+                              ),
+                              value: Text(
+                                widget.clinician.designation ?? 'NA',
+                                style: textTheme.caption?.copyWith(
+                                  color: MyColors.cerulean,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 10,
-                                ),
-                                decoration: const BoxDecoration(
-                                  color: MyColors.paleBlue,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(25),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 5,
+                                    horizontal: 10,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    color: MyColors.paleBlue,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(25),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '${widget.clinician.experience} years Exp.',
+                                    style: textTheme.subtitle2,
                                   ),
                                 ),
-                                child: Text(
-                                  '${widget.clinician.experience} years Exp.',
-                                  style: textTheme.subtitle2,
+                                const SizedBox(width: 18),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Image.asset(Images.voice,
+                                    height: 16, width: 16),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    widget.clinician.languagesKnown ?? 'NA',
+                                    style: textTheme.bodyText1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 18),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Image.asset(Images.voice, height: 16, width: 16),
-                              const SizedBox(width: 8),
-                              Text(
-                                widget.clinician.languagesKnown ?? 'NA',
-                                style: textTheme.bodyText1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 14),
                     ],

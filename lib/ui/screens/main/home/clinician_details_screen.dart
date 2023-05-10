@@ -2,7 +2,6 @@ import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +9,9 @@ import 'package:provider/provider.dart';
 import '../../../../model/review.dart';
 import '../../../../model/service.dart';
 import '../../../../resources/colors.dart';
+import '../../../../resources/images.dart';
 import '../../../../resources/strings.dart';
+import '../../../widgets/avatar.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
@@ -44,7 +45,56 @@ class ClinicianDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         physics: const ScrollPhysics(),
         children: [
-          ClinicianDetailsWidget(clinician: clinician),
+          Row(
+            children: [
+              Avatar(
+                url: clinician.imageUrl,
+                name: clinician.user?.fullName,
+                borderRadius: BorderRadius.circular(10),
+                size: 72,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      clinician.user?.fullName ?? 'NA',
+                      style: textTheme.bodyText2,
+                    ),
+                    Text(
+                      clinician.designation ?? 'NA',
+                      style: textTheme.caption?.copyWith(
+                        color: MyColors.cerulean,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${clinician.experience} ${langBloc.getString(Strings.yearsExp)}',
+                      style: textTheme.subtitle2,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          DetailsTile(
+            title: const Text('Languages Known'),
+            value: Row(
+              children: [
+                Image.asset(Images.voice, width: 12),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    clinician.languagesKnown ?? 'NA',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
           DetailsTile(
             title: Text(langBloc.getString(Strings.bio)),
@@ -95,7 +145,11 @@ class ClinicianDetailsScreen extends StatelessWidget {
             ],
           ),
           FutureBuilder<List<Review>>(
-            future: userBloc.getReview(id: clinician.id.toString()),
+            future: userBloc.getReview(query: {
+              'offset':0,
+              'limit':10,
+              'clinicianId': clinician.id.toString()
+            }),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return CustomErrorWidget(error: snapshot.error);

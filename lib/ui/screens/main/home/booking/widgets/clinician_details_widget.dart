@@ -7,7 +7,6 @@ import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../widgets/avatar.dart';
-import '../../../../../widgets/details_tile.dart';
 
 class ClinicianDetailsWidget extends StatelessWidget {
   final Clinician clinician;
@@ -30,15 +29,15 @@ class ClinicianDetailsWidget extends StatelessWidget {
             size: 72,
           ),
           const SizedBox(width: 16),
-          DetailsTile(
-            title: Text(
-              clinician.user?.fullName ?? 'NA',
-              style: textTheme.bodyText2,
-            ),
-            value: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  clinician.user?.fullName ?? 'NA',
+                  style: textTheme.bodyText2,
+                ),
                 Text(
                   clinician.designation ?? 'NA',
                   style: textTheme.caption?.copyWith(
@@ -50,13 +49,17 @@ class ClinicianDetailsWidget extends StatelessWidget {
                   children: [
                     Image.asset(Images.voice, width: 12),
                     const SizedBox(width: 8),
-                    Text(clinician.languagesKnown ?? 'NA')
+                    Expanded(
+                      child: Text(
+                        clinician.languagesKnown ?? 'NA',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-          const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 5,
