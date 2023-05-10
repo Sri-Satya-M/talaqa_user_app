@@ -1,5 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/service_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -99,10 +100,15 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               const SizedBox(height: 8),
               ReviewTimeSlotWidget(
                 dateTime: session.date!,
-                timeslots:
-                    session.sessionTimeslots!.map((e) => e.timeslot!).toList(),
+                timeslots: session.sessionTimeslots!
+                    .map(
+                      (e) => e.timeslot!,
+                    )
+                    .toList(),
                 duration: Helper.getDuration(session.duration),
               ),
+              const SizedBox(height: 16),
+              ServiceCard(service: session.service!),
               const SizedBox(height: 16),
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.clinicianDetails)),
@@ -111,9 +117,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                     color: MyColors.paleLightGreen,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: ClinicianDetailsWidget(
-                    clinician: session.clinician!,
-                  ),
+                  child: ClinicianDetailsWidget(clinician: session.clinician!),
                 ),
               ),
               const SizedBox(height: 16),
@@ -125,9 +129,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                     color: MyColors.paleLightBlue,
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),
-                  child: PatientDetailsWidget(
-                    patient: session.patientProfile!,
-                  ),
+                  child: PatientDetailsWidget(patient: session.patientProfile!),
                 ),
               ),
               if (session.consultationMode == "HOME") ...[
@@ -153,10 +155,16 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                 ),
               ],
               const SizedBox(height: 16),
-              ReverseDetailsTile(
-                title: Text(langBloc.getString(Strings.symptoms)),
-                value: Text('${session.symptom}', style: textTheme.headline2),
-              ),
+              if (session.symptom != null) ...[
+                const SizedBox(height: 16),
+                ReverseDetailsTile(
+                  title: Text(langBloc.getString(Strings.symptoms)),
+                  value: Text(
+                    '${session.symptom}',
+                    style: textTheme.headline2,
+                  ),
+                ),
+              ],
               const SizedBox(height: 16),
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.description)),
@@ -178,8 +186,9 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    border:
-                        Border.all(color: MyColors.divider.withOpacity(0.1)),
+                    border: Border.all(
+                      color: MyColors.divider.withOpacity(0.1),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

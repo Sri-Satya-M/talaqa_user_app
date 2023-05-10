@@ -3,6 +3,7 @@ import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
+import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/upcoming_sessions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: ClinicianList(
             scrollDirection: Axis.horizontal,
             onTap: (clinician) {
-              BookingScreen.open(context, clinician: clinician);
+              ClinicianDetailsScreen.open(context, clinician: clinician);
             },
           ),
         ),

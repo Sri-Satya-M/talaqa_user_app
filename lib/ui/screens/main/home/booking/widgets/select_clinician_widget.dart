@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -118,8 +119,14 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
                         ),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: ClinicianDetailsWidget(
-                        clinician: clinicians[index],
+                      child: InkWell(
+                        onTap: () => ClinicianDetailsScreen.open(
+                          context,
+                          clinician: clinicians[index],
+                        ),
+                        child: ClinicianDetailsWidget(
+                          clinician: clinicians[index],
+                        ),
                       ),
                     ),
                     Positioned(

@@ -1,14 +1,16 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../resources/strings.dart';
-import 'booking/booking_screen.dart';
 import 'widgets/clinician_list.dart';
 
 class SelectClinicians extends StatefulWidget {
+  const SelectClinicians({super.key});
+
   @override
   _SelectCliniciansState createState() => _SelectCliniciansState();
 }
@@ -71,7 +73,7 @@ class _SelectCliniciansState extends State<SelectClinicians> {
                 search: search,
                 scrollDirection: Axis.vertical,
                 onTap: (clinician) {
-                  BookingScreen.open(context, clinician: clinician);
+                  ClinicianDetailsScreen.open(context, clinician: clinician);
                 },
               );
             },

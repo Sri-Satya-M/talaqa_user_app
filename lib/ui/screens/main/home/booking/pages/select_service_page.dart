@@ -66,58 +66,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
                 ),
               ],
             ),
-            //     Container(
-            //   padding: const EdgeInsets.all(16),
-            //   margin: const EdgeInsets.symmetric(vertical: 8),
-            //   decoration: BoxDecoration(
-            //     color: MyColors.cement,
-            //     borderRadius: BorderRadius.circular(5),
-            //   ),
-            //   child:
-            //   Column(
-            //     crossAxisAlignment: CrossAxisAlignment.stretch,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Image.asset(Images.voice),
-            //           const SizedBox(width: 16),
-            //           Text(services[index].title!, style: textTheme.headline5),
-            //           const Spacer(),
-            //           Radio(
-            //             value: services[index].id,
-            //             groupValue: selectedIndex,
-            //             onChanged: (value) {
-            //               selectedIndex = services[index].id;
-            //               widget.onTap(services[index]);
-            //               setState(() {});
-            //             },
-            //           ),
-            //         ],
-            //       ),
-            //       const SizedBox(height: 16),
-            //       ReverseDetailsTile(
-            //         title: const Text('Symptoms'),
-            //         value: Text(
-            //           services[index]
-            //                   .symptoms
-            //                   ?.map((e) => e.title)
-            //                   .toList()
-            //                   .join(", ") ??
-            //               'NA',
-            //           style: textTheme.bodyText1,
-            //         ),
-            //       ),
-            //       const SizedBox(height: 16),
-            //       ReverseDetailsTile(
-            //         title: const Text('Description'),
-            //         value: Text(
-            //           services[index].description ?? 'NA',
-            //           style: textTheme.bodyText1,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           );
         },
       ),

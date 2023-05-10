@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
@@ -7,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/review.dart';
+import '../../../../model/service.dart';
 import '../../../../resources/colors.dart';
 import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
+import 'booking/widgets/service_card.dart';
 import 'clinician_review_screen.dart';
 import 'widgets/review_card.dart';
 
@@ -33,20 +36,45 @@ class ClinicianDetailsScreen extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text(langBloc.getString(Strings.bookSession))),
+      appBar: AppBar(title: Text(langBloc.getString(Strings.clinicianDetails))),
       body: ListView(
-        padding: const EdgeInsets.all(20),
         shrinkWrap: true,
+        padding: const EdgeInsets.all(20),
+        physics: const ScrollPhysics(),
         children: [
           ClinicianDetailsWidget(clinician: clinician),
           const SizedBox(height: 16),
           DetailsTile(
-            title: Text(langBloc.getString(Strings.bio),
-                style: textTheme.bodyText1),
+            title: Text(langBloc.getString(Strings.bio)),
             value: Text(clinician.bio ?? 'NA'),
           ),
           const SizedBox(height: 16),
+          Text(langBloc.getString(Strings.services)),
+          FutureBuilder<Services>(
+            future: sessionBloc.getServices(query: {}),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return CustomErrorWidget(error: snapshot.error);
+              }
+
+              if (!snapshot.hasData) return const LoadingWidget();
+
+              var services = snapshot.data?.services ?? [];
+
+              if (services.isEmpty) return const EmptyWidget();
+
+              return ListView.builder(
+                itemCount: services.length,
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemBuilder: (context, index) => ServiceCard(
+                  service: services[index],
+                ),
+              );
+            },
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
