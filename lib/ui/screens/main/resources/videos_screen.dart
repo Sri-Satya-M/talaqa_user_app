@@ -17,8 +17,6 @@ class VideoScreen extends StatefulWidget {
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
-
-  static void open(BuildContext context, String link) {}
 }
 
 class _VideoScreenState extends State<VideoScreen> {
@@ -100,7 +98,7 @@ class _VideoScreenState extends State<VideoScreen> {
                         onTap: () {
                           PlayVideoScreen.open(
                             context,
-                            link: videos[index].link!,
+                            resource: videos[index],
                           );
                         },
                         child: Container(
@@ -138,7 +136,6 @@ class _VideoScreenState extends State<VideoScreen> {
                                       '${langBloc.getString(Strings.updatedOn)} ${DateFormat('dd MMM, yyyy').format(videos[index].updatedAt!)}',
                                       style: textTheme.caption,
                                     ),
-                                    const Icon(Icons.share, size: 18)
                                   ],
                                 ),
                               ),

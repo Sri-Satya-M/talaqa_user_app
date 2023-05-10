@@ -1,16 +1,16 @@
+import 'package:alsan_app/model/resources.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PlayVideoScreen extends StatefulWidget {
-  final String link;
+  final Resources resource;
 
-  const PlayVideoScreen({super.key, required this.link});
+  const PlayVideoScreen({super.key, required this.resource});
 
-  static Future open(BuildContext context, {required String link}) {
+  static Future open(BuildContext context, {required Resources resource}) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => PlayVideoScreen(link: link),
+        builder: (context) => PlayVideoScreen(resource: resource),
       ),
     );
   }
@@ -20,34 +20,57 @@ class PlayVideoScreen extends StatefulWidget {
 }
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
+  late YoutubePlayerController youtubeController;
+  bool isFullScreen = false;
+
   @override
-  Widget build(BuildContext context) {
-    final controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.link).toString(),
+  void initState() {
+    youtubeController = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+        widget.resource.link!,
+      ).toString(),
       flags: const YoutubePlayerFlags(autoPlay: true, mute: false),
     );
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-        Navigator.pop(context);
         return true;
       },
       child: Scaffold(
+        appBar: (isFullScreen)
+            ? null
+            : AppBar(
+                title: Text(
+                  widget.resource.title!,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
         body: YoutubePlayerBuilder(
-          onExitFullScreen: () {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitUp]);
-            Navigator.pop(context);
-          },
-          onEnterFullScreen: () {},
           player: YoutubePlayer(
             aspectRatio: 16 / 9,
-            controller: controller,
+            controller: youtubeController,
           ),
+          onEnterFullScreen: () {
+            isFullScreen = true;
+            setState(() {});
+          },
+          onExitFullScreen: () {
+            isFullScreen = false;
+            setState(() {});
+          },
           builder: (context, player) => player,
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    youtubeController.dispose();
+    super.dispose();
   }
 }
