@@ -1,4 +1,5 @@
 import 'package:alsan_app/model/profile.dart';
+import 'package:alsan_app/model/service.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 
 import 'address.dart';
@@ -37,6 +38,8 @@ class Session {
       this.symptom,
       this.startAt,
       this.endAt,
+      this.serviceId,
+      this.service,
       });
 
   int? id;
@@ -68,6 +71,8 @@ class Session {
   List<SessionTimeslot>? sessionTimeslots;
   SessionClinician? sessionClinician;
   SessionPayment? sessionPayment;
+  int? serviceId;
+  Service? service;
 
   factory Session.fromMap(Map<String, dynamic> json) => Session(
       id: json["id"],
@@ -105,6 +110,8 @@ class Session {
       symptom: json["symptom"] == null? null: json["symptom"],
       startAt: json["startAt"] == null ? null: json["startAt"],
       endAt: json["endAt"] == null ? null: json["endAt"],
+      serviceId: json["serviceId"] == null ? null : json["serviceId"],
+      service: json["service"]==null? null : Service.fromJson(json["service"]),
   );
 
   Map<String, dynamic> toMap() => {
@@ -139,6 +146,8 @@ class Session {
         "symptom": symptom,
         "startAt": startAt,
         "endAt": endAt,
+        "serviceId": serviceId,
+        "service": service?.toJson(),
       };
 }
 
