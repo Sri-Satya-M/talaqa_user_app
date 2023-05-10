@@ -252,6 +252,7 @@ const englishTranslations = {
   Strings.selectPaymentMethod:"Select Payment Method",
   Strings.selectProfile:"Select Profile",
   Strings.selectYourSavedLocation:"Select your saved location",
+  Strings.services: "Services",
   Strings.sessionAlreadyExtended: 'Session Already Extended',
   Strings.sessionAnalytics:"Session Analytics",
   Strings.sessionDetails: 'Session Details',

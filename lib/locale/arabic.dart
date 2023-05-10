@@ -252,6 +252,7 @@ const arabicTranslations = {
   Strings.selectPaymentMethod: "اختيار وسيلة الدفع",
   Strings.selectProfile: "اختيار الملف الشخصي",
   Strings.selectYourSavedLocation: "اختيار موقعك المحفوظ",
+  Strings.services: "خدمات",
   Strings.sessionAlreadyExtended: 'تم تمديد الجلسة بالفعل',
   Strings.sessionAnalytics: "تحليلات الجلسة",
   Strings.sessionDetails: 'تفاصيل الجلسة',

@@ -252,6 +252,7 @@ enum Strings {
   selectPaymentMethod,
   selectProfile,
   selectYourSavedLocation,
+  services,
   sessionAlreadyExtended,
   sessionAnalytics,
   sessionDetails,
