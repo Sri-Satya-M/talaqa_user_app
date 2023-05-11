@@ -126,7 +126,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         UserOfflineReasonType reason,
       ) {
         if (widget.session.consultationMode == "VIDEO") {
-          remoteVideo = true;
+          remoteVideo = false;
         }
         _remoteUid = null;
         pauseHitTimer();
@@ -192,7 +192,6 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     totalTime = widget.session.sessionTimeslots!.length * 60;
     super.initState();
     _startTimer();
-
     video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
   }
@@ -428,7 +427,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         });
       }
       if (!mounted) return;
-       setState(() {});
+      setState(() {});
     });
   }
 

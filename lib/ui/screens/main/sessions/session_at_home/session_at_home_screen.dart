@@ -55,11 +55,13 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   void initState() {
     session = widget.session;
     duration = widget.duration;
-    totalTime = widget.session.sessionTimeslots!.length * 60;
+    totalTime = widget.duration.inMinutes;
     super.initState();
     if (duration.inMinutes > 0) {
       isRunning = true;
       startTimer();
+    } else {
+      Navigator.pop(context);
     }
   }
 
@@ -152,10 +154,6 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   }
 
   calculateTimeCompleted() {
-    if (extendTime) {
-      totalTime += 30 * 60;
-    }
-
     return (totalTime - duration.inMinutes) / totalTime;
   }
 
@@ -224,17 +222,13 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
   }
 
   void startTimer() {
-    if (duration.isNegative || duration == Duration.zero) {
-      duration = Duration.zero;
-      return;
-    }
-
     _timer = Timer.periodic(oneSecond, (timer) {
       duration -= oneSecond;
 
       if (duration.isNegative || duration == Duration.zero) {
         duration = Duration.zero;
         _timer!.cancel();
+        Navigator.pop(context);
       }
 
       setState(() {});

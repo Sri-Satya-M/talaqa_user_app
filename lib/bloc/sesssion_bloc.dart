@@ -223,5 +223,6 @@ class SessionBloc with ChangeNotifier {
   dispose() {
     messages.clear();
     messageController.close();
+    super.dispose();
   }
 }
