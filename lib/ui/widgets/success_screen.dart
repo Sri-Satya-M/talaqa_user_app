@@ -1,4 +1,5 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
@@ -51,7 +52,8 @@ class SuccessScreen extends StatefulWidget {
   State<SuccessScreen> createState() => _SuccessScreenState();
 }
 
-class _SuccessScreenState extends State<SuccessScreen> {
+class _SuccessScreenState extends State<SuccessScreen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -150,15 +152,20 @@ class _SuccessScreenState extends State<SuccessScreen> {
         ),
         child: ProgressButton(
           onPressed: () {
+            if (widget.type == 'PAYMENT' || widget.type == 'FEEDBACK') {
+              var mainBloc = Provider.of<MainBloc>(context, listen: false);
+              mainBloc.changeIndex(0);
+            }
+
             switch (widget.type) {
               case 'MOBILE':
                 ProfileMobileScreen.open(context);
                 break;
-              case 'MAIN':
-                MainScreen.open(context);
-                break;
               case 'EMAIL':
                 ProfileEmailScreen.open(context);
+                break;
+              case 'MAIN':
+                MainScreen.open(context);
                 break;
               case 'Payment':
                 Navigator.pushAndRemoveUntil(

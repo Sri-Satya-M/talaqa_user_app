@@ -138,6 +138,8 @@ class _SlotBookingState extends State<SlotBooking> {
               if (day == "Sun") return;
               sessionBloc.setDate(date: currentDate.add(Duration(days: index)));
               selectedDate = currentDate.add(Duration(days: index));
+              sessionBloc.timeslots={};
+              sessionBloc.selectedTimeSlotIds=[];
             },
             child: Container(
               height: 80,

@@ -4,19 +4,18 @@ import 'dart:convert';
 import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../model/address.dart';
 import '../model/chat.dart';
 import '../model/clinicians.dart';
 import '../model/create_razor_pay.dart';
-import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
 import '../model/reports.dart';
 import '../model/session.dart';
 import '../model/time_of_day.dart';
 import '../repository/session_repo.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
-
 import '../resources/images.dart';
 
 class SessionBloc with ChangeNotifier {
@@ -34,6 +33,7 @@ class SessionBloc with ChangeNotifier {
   int? selectedAddressId;
   int? selectedStatement;
   Map<int, TimeSlot> timeslots = {};
+  Address? selectedAddress;
 
   ///chat
   List<Message> messages = [];
@@ -76,8 +76,8 @@ class SessionBloc with ChangeNotifier {
 
   clear() {
     selectedPatient = null;
-    service=null;
-    symptom=null;
+    service = null;
+    symptom = null;
     selectedModeOfConsultation = null;
     selectedDate = null;
     selectedTimeSlotIds?.clear();
@@ -106,8 +106,8 @@ class SessionBloc with ChangeNotifier {
     return await sessionRepo.postPaymentDetails(id: id, body: body);
   }
 
-  Future<Meeting> joinMeeting({required int id}) async {
-    return await sessionRepo.joinMeeting(id: id);
+  Future joinSession({required query}) async {
+    return await sessionRepo.joinSession(query: query);
   }
 
   Future generateToken(String channel, int userId) {
@@ -203,7 +203,7 @@ class SessionBloc with ChangeNotifier {
     return response;
   }
 
-  Future<Services> getServices({query}) {
+  Future<Services> getServices({required query}) {
     return sessionRepo.getServices(query: query);
   }
 

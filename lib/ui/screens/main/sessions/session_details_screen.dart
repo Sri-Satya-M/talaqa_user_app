@@ -4,6 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
+import 'package:alsan_app/ui/screens/main/home/booking/widgets/service_card.dart';
 import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
@@ -16,7 +17,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bloc/sesssion_bloc.dart';
-import '../../../../bloc/user_bloc.dart';
 import '../../../../resources/images.dart';
 import '../../../../resources/strings.dart';
 import '../../../widgets/empty_widget.dart';
@@ -92,8 +92,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
             return ListView(
               padding: const EdgeInsets.all(20),
               shrinkWrap: true,
-              scrollDirection: Axis.vertical,
               physics: const ScrollPhysics(),
+              scrollDirection: Axis.vertical,
               children: [
                 Row(
                   children: [
@@ -115,31 +115,20 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       langBloc.getString(Strings.speechTherapy),
                       style: textTheme.headline4,
                     ),
-                    if (session!.consultationMode == 'HOME') ...[
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.home,
-                            color: Colors.blue,
-                            size: 18,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            langBloc.getString(Strings.atHome),
-                            style: textTheme.bodyText1?.copyWith(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                    getModeOfConsultation(
+                      mode: session!.consultationMode!,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 ReviewTimeSlotWidget(
                   dateTime: session!.date!,
-                  timeslots: session!.clinicianTimeSlots!,
+                  timeslots: session!.sessionTimeslots!
+                      .map((e) => e.timeslot!)
+                      .toList(),
                 ),
+                const SizedBox(height: 16),
+                ServiceCard(service: session!.service!),
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.clinicianDetails)),
@@ -278,11 +267,16 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     suffixIconColor: MyColors.primaryColor,
                   ),
                 ],
-                const SizedBox(height: 16),
-                ReverseDetailsTile(
-                  title: Text(langBloc.getString(Strings.symptoms)),
-                  value: Text('${session!.type}', style: textTheme.headline2),
-                ),
+                if (session?.symptom != null) ...[
+                  const SizedBox(height: 16),
+                  ReverseDetailsTile(
+                    title: Text(langBloc.getString(Strings.symptoms)),
+                    value: Text(
+                      '${session!.symptom}',
+                      style: textTheme.headline2,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.description)),
@@ -318,15 +312,16 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ),
                 const SizedBox(height: 16),
                 BillDetailsWidget(
-                  noOfTimeslots: session!.clinicianTimeSlots!.length,
-                  totalAmount: (session!.consultationFee)!.toDouble(),
+                  noOfTimeslots: session!.sessionTimeslots!.length,
+                  totalAmount:
+                      (session!.sessionPayment!.totalAmount)!.toDouble(),
                   consultationMode: Helper.textCapitalization(
                     text: session!.consultationMode,
                   ),
                 ),
                 const SizedBox(height: 16),
                 payNow(),
-                joinOrStartSessionButton(),
+                joinOrStartSessionButton(context),
                 const SizedBox(height: 16),
                 finishButton(),
               ],
@@ -352,7 +347,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-    var userBloc = Provider.of<UserBloc>(context, listen: false);
     return (session!.status == "APPROVED")
         ? ProgressButton(
             onPressed: () async {
@@ -369,7 +363,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   response['status'] == 'success') {
                 SuccessScreen.open(
                   context,
-                  type: '',
+                  type: 'PAYMENT',
                   message: response['message'],
                 );
               }
@@ -379,45 +373,25 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         : const SizedBox();
   }
 
-  Widget joinOrStartSessionButton() {
-
-    bool flag = (session!.status == "PAID" || session!.status == "STARTED") &&
+  Widget joinOrStartSessionButton(BuildContext context) {
+    bool flag = (session!.status == "STARTED") &&
         Helper.formatDate(date: DateTime.now()) ==
             Helper.formatDate(date: session!.date);
 
-    if (!flag) {
-      return const SizedBox();
-    }
-
-    String date = DateFormat('yyyy-MM-dd').format(
-      session!.date!,
-    );
-    String time = "${session!.startAt!}:00";
-    String timestamp = '$date $time';
-    var scheduledTimeStamp = DateTime.parse(timestamp);
-    var duration = DateTime.now().toUtc().difference(
-          scheduledTimeStamp,
-        );
-
-    if (duration.inMinutes.isNegative) {
-      ErrorSnackBar.show(context, 'Your Session Starts At ${session!.startAt}');
-    } else if (duration.inMinutes >
-        (session!.clinicianTimeSlots!.length * 60 + 30)) {
-      ErrorSnackBar.show(context, "Your Session time is up");
-    }
-
     var langBloc = Provider.of<LangBloc>(context, listen: false);
 
-    return ProgressButton(
-      onPressed: sessionOnTap,
-      child: Text(
-        "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
-      ),
-    );
+    return flag
+        ? ProgressButton(
+            onPressed: sessionOnTap,
+            child: Text(
+              "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
+            ),
+          )
+        : const SizedBox();
   }
 
   Widget finishButton() {
-    bool flag = (session?.status == "STARTED");
+    bool flag = (session?.status == "COMPLETED");
 
     if (!flag) {
       return const SizedBox();
@@ -428,12 +402,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         backgroundColor: Colors.green,
       ),
       onPressed: () async {
-        ProgressUtils.handleProgress(
-          context,
-          task: () async {
-            FeedbackScreen.open(context, session: session!);
-          },
-        );
+        FeedbackScreen.open(context, session: session!);
       },
       child: Text(langBloc.getString(Strings.finish)),
     );
@@ -441,17 +410,26 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
 
   sessionOnTap() async {
     var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
+
+    var response = await sessionsBloc.joinSession(query: {
+      'id': session!.id,
+      'time': DateTime.now(),
+    }) as Map<String, dynamic>;
+
+    if (response.containsKey('status') && response['status'] == false) {
+      return ErrorSnackBar.show(context, response['message']);
+    }
+
+    ///Calculate duration to run timer
     String date = DateFormat('yyyy-MM-dd').format(
       session!.date!,
     );
-    String time = "${session!.startAt!}:00";
+    String time = "${session!.endAt!}:00";
     String timestamp = '$date $time';
     var scheduledTimeStamp = DateTime.parse(timestamp);
-    var duration = DateTime.now().toUtc().difference(
-          scheduledTimeStamp,
-        );
+    var duration = scheduledTimeStamp.toUtc().difference(DateTime.now());
 
-    if (duration.inMinutes > (session!.clinicianTimeSlots!.length * 60 + 30)) {
+    if (duration.isNegative) {
       return;
     }
 
@@ -460,7 +438,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         SessionAtHomeScreen.open(
           context,
           session: session!,
-          duration: duration,
+          duration: Duration(minutes: duration.inMinutes),
         ).then((value) => setState(() {}));
         break;
       case 'AUDIO':
@@ -473,7 +451,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration: duration,
+          duration: Duration(minutes: duration.inMinutes),
+          hitTime: 1,
         ).then((value) async {
           setState(() {});
         });
@@ -512,5 +491,40 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         },
       );
     }
+  }
+
+  Widget getModeOfConsultation({required String mode}) {
+    String icon = '';
+    String modeText = '';
+    var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+    switch (mode) {
+      case 'AUDIO':
+        icon = Images.callMode;
+        modeText = langBloc.getString(Strings.audio);
+        break;
+      case 'VIDEO':
+        icon = Images.videoMode;
+        modeText = langBloc.getString(Strings.video);
+        break;
+      case 'HOME':
+        icon = Images.homeMode;
+        modeText = langBloc.getString(Strings.atHome);
+        break;
+    }
+    return Row(
+      children: [
+        Image.asset(
+          icon,
+          height: 16,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          modeText,
+          style: textTheme.bodyText1
+              ?.copyWith(color: Colors.lightBlue, fontSize: 16),
+        ),
+      ],
+    );
   }
 }

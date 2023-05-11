@@ -53,6 +53,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
                       child: Text(
                         clinician.languagesKnown ?? 'NA',
                         overflow: TextOverflow.ellipsis,
+                        style: textTheme.bodyText1,
                       ),
                     ),
                   ],

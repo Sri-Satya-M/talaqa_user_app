@@ -156,7 +156,7 @@ class _BookingScreenState extends State<BookingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (sessionBloc.selectedModeOfConsultation != null &&
-                sessionBloc.timeslots.length > 0)
+                sessionBloc.timeslots.isNotEmpty && pageIndex>=5)
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.totalCharges)),
                 value: Text(

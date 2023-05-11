@@ -103,8 +103,10 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
 
     // Register the event handler
     agoraEngine.registerEventHandler(
-      RtcEngineEventHandler(
-          onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+      RtcEngineEventHandler(onJoinChannelSuccess: (
+        RtcConnection connection,
+        int elapsed,
+      ) {
         isJoined = true;
         setState(() {});
       }, onUserJoined: (
@@ -116,7 +118,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         if (widget.session.consultationMode == "VIDEO") {
           remoteVideo = true;
         }
-        startTimer();
+        startHitTimer();
         setState(() {});
       }, onUserOffline: (
         RtcConnection connection,
@@ -127,7 +129,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           remoteVideo = true;
         }
         _remoteUid = null;
-        pauseTimer();
+        pauseHitTimer();
         setState(() {});
       }, onStreamMessage: (
         RtcConnection connection,
@@ -190,7 +192,6 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
     totalTime = widget.session.sessionTimeslots!.length * 60;
     super.initState();
     _startTimer();
-    _hitIntervalTimer();
 
     video = widget.session.consultationMode == "VIDEO" ? true : false;
     initializeSDK();
@@ -273,23 +274,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                                 task: () async {
                                   isJoined = false;
                                   _remoteUid = null;
-                                  // var duration =
-                                  //     DateTime.now().difference(startTime);
-                                  // var sessionBloc = Provider.of<SessionBloc>(
-                                  //   context,
-                                  //   listen: false,
-                                  // );
-                                  // agoraEngine.disableVideo();
-                                  // agoraEngine.disableAudio();
-                                  // await sessionBloc.updateSession(
-                                  //   id: widget.session.id!,
-                                  //   body: {
-                                  //     "status": "COMPLETED",
-                                  //     "duration": 30
-                                  //   },
-                                  // ).then(
-                                  //   (value) => Navigator.pop(context),
-                                  // );
+                                  _hitTimer?.cancel();
                                   Navigator.pop(context);
                                 },
                               );
@@ -425,6 +410,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
         duration = Duration.zero;
         Navigator.pop(context, true);
       }
+      if (!mounted) return;
       setState(() {});
     });
   }
@@ -441,18 +427,19 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
           'userType': 'PATIENT'
         });
       }
-      setState(() {});
+      if (!mounted) return;
+       setState(() {});
     });
   }
 
-  void pauseTimer() {
+  void pauseHitTimer() {
     if (isTimerActive && _hitTimer != null) {
       _hitTimer?.cancel();
       isTimerActive = false;
     }
   }
 
-  void startTimer() {
+  void startHitTimer() {
     if (!isTimerActive) {
       _hitIntervalTimer();
       isTimerActive = true;

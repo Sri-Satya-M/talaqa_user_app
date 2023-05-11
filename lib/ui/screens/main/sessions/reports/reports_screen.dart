@@ -59,7 +59,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     child: InkWell(
                       onTap: () {
-                        PdfViewerScreen.open(context, url: reports[1].fileUrl!);
+                        PdfViewerScreen.open(context, url: reports[i].fileUrl!);
                       },
                       child: Row(
                         children: [

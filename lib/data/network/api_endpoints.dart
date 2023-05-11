@@ -22,7 +22,7 @@ class Api {
       'https://maps.googleapis.com/maps/api/place/details/json';
   static const addresses = '/addresses';
   static const updateSession = '$sessions/update-session-status';
-  static const meeting = '$sessions/meeting';
+  static const join = '$sessions/join';
   static const payment = '$sessions/payment';
   static const payments = '$sessions/payments';
   static const upload = '/common/upload';

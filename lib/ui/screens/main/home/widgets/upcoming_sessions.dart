@@ -41,7 +41,9 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
+        
         if (sessions.isEmpty) return const SizedBox();
+
         return Column(
           children: [
             Row(

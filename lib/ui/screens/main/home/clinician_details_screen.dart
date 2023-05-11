@@ -103,7 +103,7 @@ class ClinicianDetailsScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(langBloc.getString(Strings.services)),
           FutureBuilder<Services>(
-            future: sessionBloc.getServices(query: {}),
+            future: sessionBloc.getServices(query: {'clinicianId': clinician.id}),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return CustomErrorWidget(error: snapshot.error);

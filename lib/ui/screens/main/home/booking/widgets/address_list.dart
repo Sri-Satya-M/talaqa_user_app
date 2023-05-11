@@ -33,6 +33,9 @@ class _AddressListState extends State<AddressList> {
           onSelectAddress: (addressId) {
             selectedAddress = addressId as int;
             sessionBloc.setAddress(addressId: addressId);
+            sessionBloc.selectedAddress = widget.addresses.firstWhere(
+              (a) => a.id == addressId,
+            );
             setState(() {});
           },
         );

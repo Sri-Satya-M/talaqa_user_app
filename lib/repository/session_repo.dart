@@ -4,7 +4,6 @@ import 'package:alsan_app/model/time_of_day.dart';
 
 import '../data/network/api_endpoints.dart';
 import '../model/create_razor_pay.dart';
-import '../model/meeting.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/reports.dart';
 import '../model/session.dart';
@@ -44,9 +43,8 @@ class SessionRepo {
     return apiClient.patch('${Api.updateSession}/$id', body);
   }
 
-  Future<Meeting> joinMeeting({required int id}) async {
-    var response = await apiClient.get('${Api.meeting}/$id');
-    return Meeting.fromJson(response);
+  Future joinSession({required query}) async {
+    return await apiClient.get(Api.join, query: query);
   }
 
   Future postPaymentDetails({required int id, required body}) async {
@@ -77,7 +75,7 @@ class SessionRepo {
   }
 
   Future updateSessionClinician({required String id, required body}) {
-    return apiClient.patch('${Api.sessionClinician }/$id', body);
+    return apiClient.patch('${Api.sessionClinician}/$id', body);
   }
 
   Future postDuration({required body}) {
@@ -93,8 +91,8 @@ class SessionRepo {
     return apiClient.post('${Api.payments}/verify-transaction', body);
   }
 
-  Future<Services> getServices({query}) async {
-    var response = await apiClient.get(Api.services);
+  Future<Services> getServices({required query}) async {
+    var response = await apiClient.get(Api.services, query: query);
     return Services.fromJson(response);
   }
 }

@@ -217,7 +217,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   response['status'] == 'success') {
                 SuccessScreen.open(
                   context,
-                  type: '',
+                  type: 'FEEDBACK',
                   message: response["message"],
                 );
               }

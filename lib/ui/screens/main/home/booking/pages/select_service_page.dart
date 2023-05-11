@@ -30,7 +30,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<Services>(
-        future: sessionBloc.getServices(query: {}),
+        future: sessionBloc.getServices(query: {'offset': 0}),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);

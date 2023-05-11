@@ -13,6 +13,7 @@ import '../../../../../../model/time_of_day.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';
 import '../../../../../../resources/strings.dart';
+import '../../../sessions/widgets/address_card.dart';
 import '../widgets/service_card.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
@@ -90,6 +91,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 patient: sessionBloc.selectedPatient!,
               ),
             ),
+          ),
+          const SizedBox(height: 16),
+          AddressCard(
+            address: sessionBloc.selectedAddress!,
+            onTap: () async {},
+            suffixIcon: Icons.directions,
+            suffixIconColor: MyColors.primaryColor,
           ),
           const SizedBox(height: 16),
           if (sessionBloc.symptom != null) ...[
