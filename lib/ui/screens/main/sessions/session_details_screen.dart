@@ -438,7 +438,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         SessionAtHomeScreen.open(
           context,
           session: session!,
-          duration: Duration(minutes: duration.inMinutes),
+          duration: duration,
         ).then((value) => setState(() {}));
         break;
       case 'AUDIO':
@@ -451,7 +451,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration: Duration(minutes: duration.inMinutes),
+          duration: duration,
           hitTime: 1,
         ).then((value) async {
           setState(() {});
