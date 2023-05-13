@@ -38,7 +38,9 @@ class _UpcomingTabState extends State<UpcomingTab> {
           "APPROVED",
           "PAID",
           'STARTED',
-          "NEW_CLINICIAN_ASSIGNED"
+          "NEW_CLINICIAN_ASSIGNED",
+          'CLINICIAN_ACCEPTED',
+          'CLINICIAN_REJECTED'
         ],
         "patientId": userBloc.profile!.id,
         'offset': sessions.length.toString(),

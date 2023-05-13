@@ -167,10 +167,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       ?.isNewClinicianAccepted ==
                                   true &&
                               (session?.sessionClinician?.isPatientAccepted ==
-                                      null ||
-                                  session?.sessionClinician
-                                          ?.isPatientAccepted ==
-                                      false)) ...[
+                                  null)) ...[
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),

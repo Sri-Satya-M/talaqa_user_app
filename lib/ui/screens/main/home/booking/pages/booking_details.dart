@@ -93,12 +93,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          AddressCard(
-            address: sessionBloc.selectedAddress!,
-            onTap: () async {},
-            suffixIcon: Icons.directions,
-            suffixIconColor: MyColors.primaryColor,
-          ),
+          if (sessionBloc.selectedModeOfConsultation?.type == 'HOME') ...[
+            AddressCard(
+              address: sessionBloc.selectedAddress!,
+              onTap: () async {},
+              suffixIcon: Icons.directions,
+              suffixIconColor: MyColors.primaryColor,
+            ),
+          ],
           const SizedBox(height: 16),
           if (sessionBloc.symptom != null) ...[
             ReverseDetailsTile(

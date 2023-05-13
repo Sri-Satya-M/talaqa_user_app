@@ -30,7 +30,15 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
       future: sessionBloc.getSessions(query: {
-        "status": ["PENDING","APPROVED", "PAID", 'STARTED'],
+        "status": [
+          "PENDING",
+          "APPROVED",
+          "PAID",
+          'STARTED',
+          'NEW_CLINICIAN_ASSIGNED',
+          'CLINICIAN_ACCEPTED',
+          'CLINICIAN_REJECTED'
+        ],
         "patientId": userBloc.profile!.id,
       }),
       builder: (context, snapshot) {
@@ -41,7 +49,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
-        
+
         if (sessions.isEmpty) return const SizedBox();
 
         return Column(

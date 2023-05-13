@@ -343,6 +343,7 @@ class _BookingScreenState extends State<BookingScreen> {
           'consultationMode': sessionBloc.selectedModeOfConsultation!.type,
           'patientId': userBloc.profile!.id,
           'serviceId': sessionBloc.service!.id,
+          'modeId': sessionBloc.selectedModeOfConsultation!.id!,
           'patientProfileId': sessionBloc.selectedPatient!.id,
           'clinicianId': sessionBloc.selectedClinician!.id,
         };
