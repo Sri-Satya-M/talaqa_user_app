@@ -1,10 +1,12 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/service_card.dart';
+import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
@@ -343,29 +345,42 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
 
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return (session!.status == "APPROVED")
-        ? ProgressButton(
-            onPressed: () async {
-              if (session?.patient?.user?.email?.isEmpty == null ||
-                  session?.patient?.user?.mobileNumber == null)
-                return ErrorSnackBar.show(
-                  context,
-                  'Please Update Email and Mobile Number to Complete the Session Payment',
-                );
-              var response = await sessionBloc.createRazorPayOrder(
-                session: session!,
-              ) as Map<String, dynamic>;
-              if (response.containsKey('status') &&
-                  response['status'] == 'success') {
-                SuccessScreen.open(
-                  context,
-                  type: 'PAYMENT',
-                  message: response['message'],
-                );
-              }
-            },
-            child: Text(langBloc.getString(Strings.payNow)),
+        ? Column(
+            children: [
+              ProgressButton(
+                onPressed: () async {
+                  if (session?.patient?.user?.email?.isEmpty == null ||
+                      session?.patient?.user?.mobileNumber == null)
+                    return ErrorSnackBar.show(
+                      context,
+                      'Please Update Email and Mobile Number to Complete the Session Payment',
+                    );
+                  var response = await sessionBloc.createRazorPayOrder(
+                    session: session!,
+                  ) as Map<String, dynamic>;
+                  if (response.containsKey('status') &&
+                      response['status'] == 'success') {
+                    SuccessScreen.open(
+                      context,
+                      type: 'PAYMENT',
+                      message: response['message'],
+                    );
+                  }
+                },
+                child: Text(langBloc.getString(Strings.payNow)),
+              ),
+              if (userBloc.profile?.user?.email != null &&
+                  userBloc.profile!.user!.email!.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => EditProfileScreen.open(context),
+                  child: const Text('Update Profile'),
+                ),
+              ]
+            ],
           )
         : const SizedBox();
   }
@@ -449,7 +464,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           session: session!,
           token: token['token'],
           duration: duration,
-          hitTime: 1,
+          hitTime: 15,
         ).then((value) async {
           setState(() {});
         });

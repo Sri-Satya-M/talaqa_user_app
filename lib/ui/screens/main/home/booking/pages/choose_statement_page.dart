@@ -5,9 +5,6 @@ import 'package:provider/provider.dart';
 import '../../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/strings.dart';
-import '../../../../../widgets/empty_widget.dart';
-import '../../../../../widgets/error_widget.dart';
-import '../../../../../widgets/loading_widget.dart';
 import '../widgets/select_symptom.dart';
 
 class ChooseStatementPage extends StatefulWidget {
@@ -19,12 +16,15 @@ class ChooseStatementPage extends StatefulWidget {
 
 class _ChooseStatementPageState extends State<ChooseStatementPage> {
   int selectedIndex = -1;
+  List<String> symptoms = [];
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    symptoms =
+        sessionBloc.service?.symptoms?.map((e) => e.title!).toList() ?? [];
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
@@ -100,22 +100,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
             const SizedBox(height: 16),
             Text(langBloc.getString(Strings.symptoms)),
             const SizedBox(height: 16),
-            FutureBuilder<List<String>>(
-              future: sessionBloc.getPatientSymptoms(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return CustomErrorWidget(error: snapshot.error);
-                }
-
-                if (!snapshot.hasData) return const LoadingWidget();
-
-                var symptoms = snapshot.data ?? [];
-
-                if (symptoms.isEmpty) return const EmptyWidget();
-
-                return SelectSymptoms(symptoms: symptoms);
-              },
-            ),
+            SelectSymptoms(symptoms: symptoms),
           ]
         ],
       ),

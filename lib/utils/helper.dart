@@ -63,7 +63,7 @@ class Helper {
       if (isAndroid) {
         directory = "/storage/emulated/0/Download";
       } else {
-        directory = '${(await getApplicationDocumentsDirectory())?.path ?? ''}/Talaqa';
+        directory = '${(await getApplicationDocumentsDirectory()).path ?? ''}/Talaqa';
       }
 
       print(directory);

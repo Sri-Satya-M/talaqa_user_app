@@ -27,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
-    var size = MediaQuery.of(context).size;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ListView(
       shrinkWrap: true,

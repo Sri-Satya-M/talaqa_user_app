@@ -46,28 +46,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               OnBoardingWidget(
                 image: Images.onBoardingImage1,
                 title: langBloc.getString(
-                  Strings.bookSpeechTherapySessionsOnline,
+                  Strings.selectService,
                 ),
                 description: langBloc.getString(
-                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                  Strings.identifyYourSymptom,
                 ),
               ),
               OnBoardingWidget(
                 image: Images.onBoardingImage2,
                 title: langBloc.getString(
-                  Strings.bookSpeechTherapySessionsOnline,
+                  Strings.chooseClinician,
                 ),
                 description: langBloc.getString(
-                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                  Strings.findTheIdealClinicianWhoUnderstands,
                 ),
               ),
               OnBoardingWidget(
                 image: Images.onBoardingImage3,
                 title: langBloc.getString(
-                  Strings.bookSpeechTherapySessionsOnline,
+                  Strings.bookOnlineTherapySession,
                 ),
                 description: langBloc.getString(
-                  Strings.usersCanSearchAndBookOnlineofflineSessions,
+                  Strings.easilyScheduleYourTherapySessionOnline,
                 ),
               ),
               HowToUse()
