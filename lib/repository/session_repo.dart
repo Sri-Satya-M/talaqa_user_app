@@ -63,8 +63,11 @@ class SessionRepo {
     return apiClient.post('${Api.reviews}/$id', body);
   }
 
-  Future<List<Report>> getSessionReports({required int id}) async {
-    var res = await apiClient.get('${Api.reports}/$id');
+  Future<List<Report>> getSessionReports({
+    required int id,
+    required query,
+  }) async {
+    var res = await apiClient.get('${Api.reports}/$id', query: query);
     var list = res['data'] as List;
     return list.map((e) => Report.fromJson(e)).toList();
   }

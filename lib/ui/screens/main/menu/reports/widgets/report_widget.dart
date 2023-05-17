@@ -90,6 +90,7 @@ class _ReportWidgetState extends State<ReportWidget> {
               try {
                 var reports = await sessionBloc.getSessionReports(
                   id: widget.session.id!,
+                  query: {'userType': 'PATIENT'},
                 );
 
                 bool permission = await Permission.storage.isGranted;

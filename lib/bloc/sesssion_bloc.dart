@@ -118,8 +118,8 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.postSessionFeedback(id: id, body: body);
   }
 
-  Future<List<Report>> getSessionReports({required int id}) {
-    return sessionRepo.getSessionReports(id: id);
+  Future<List<Report>> getSessionReports({required int id, required query}) {
+    return sessionRepo.getSessionReports(id: id, query: query);
   }
 
   Future<List<String>> getPatientSymptoms() {

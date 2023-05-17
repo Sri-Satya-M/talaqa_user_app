@@ -34,7 +34,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(langBloc.getString(Strings.reports))),
       body: FutureBuilder<List<Report>>(
-        future: sessionsBloc.getSessionReports(id: widget.id),
+        future: sessionsBloc.getSessionReports(
+          id: widget.id,
+          query: {'userType': 'CLINICIAN'},
+        ),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
