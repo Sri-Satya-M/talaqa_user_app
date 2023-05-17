@@ -344,4 +344,9 @@ enum Strings {
   yourSessionHasBeenStarted,
   yourSessionHasBeenSuccessfullyCompleted,
   yourSessionHasExpiredPleaseLoginAgain,
+  chooseClinician,
+  bookOnlineTherapySession,
+  identifyYourSymptom,
+  findTheIdealClinicianWhoUnderstands,
+  easilyScheduleYourTherapySessionOnline
 }

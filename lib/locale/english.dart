@@ -262,7 +262,6 @@ const englishTranslations = {
   Strings.sessionNotAvailable: 'Session Not Available',
   Strings.sessions: 'Sessions',
   Strings.sessionsNotAvailable: 'Sessions Not Available',
-  Strings.selectService : "Select Service",
   Strings.shareThisLinkWithYourFriendsAndAfterTheyInstallBothOfYouWillGetRewards:"ShareThisLinkWithYourFriendsAndAfterTheyInstallBothOfYouWillGetRewardsShare this Link with Your Friends and After They Install, Both of You Will Get Rewards.",
   Strings.shuttering:"Shuttering",
   Strings.signUpWithEmailAddress:"Sign Up with Email Address",
@@ -344,6 +343,12 @@ const englishTranslations = {
   Strings.yourSessionHasBeenStarted: 'Your Session Has been Started',
   Strings.yourSessionHasBeenSuccessfullyCompleted:"Your Session Has Been Successfully Completed",
   Strings.yourSessionHasExpiredPleaseLoginAgain: 'Your Session Has Expired Please Login Again',
+  Strings.selectService : "Select Service",
+  Strings.chooseClinician: "Choose Clinician",
+  Strings.bookOnlineTherapySession: "Book Online Therapy Session",
+  Strings.identifyYourSymptom: "Identify your symptom",
+  Strings.findTheIdealClinicianWhoUnderstands: "Find the ideal clinician who understands your unique requirements.",
+  Strings.easilyScheduleYourTherapySessionOnline: "Easily schedule your therapy session online for convenience and comfort."
 };
 
 
