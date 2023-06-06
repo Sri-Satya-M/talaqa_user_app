@@ -25,141 +25,145 @@ class _MobileScreenState extends State<MobileScreen> {
     var size = MediaQuery.of(context).size;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: size.height * 0.1),
-            Image.asset(Images.logo, height: 140),
-            const SizedBox(height: 48),
-            Text(
-              langBloc.getString(Strings.signUpWithMobileNumber),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 48),
-            Stack(
-              children: [
-                InternationalPhoneNumberInput(
-                  onInputChanged: (value) {
-                    if (value.phoneNumber == null) return;
-                    mobileNumber = value.phoneNumber
-                        .toString()
-                        .replaceFirst(value.dialCode.toString(), '')
-                        .trim();
-                  },
-                  textStyle: const TextStyle(color: Colors.black),
-                  formatInput: false,
-                  maxLength: 10,
-                  errorMessage: langBloc.getString(Strings.invalidPhoneNumber),
-                  inputDecoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: langBloc.getString(
-                      Strings.enter10DigitMobileNumber,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: size.height * 0.1),
+              Image.asset(Images.logo, height: 140),
+              const SizedBox(height: 48),
+              Text(
+                langBloc.getString(Strings.signUpWithMobileNumber),
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 48),
+              Stack(
+                children: [
+                  InternationalPhoneNumberInput(
+                    onInputChanged: (value) {
+                      if (value.phoneNumber == null) return;
+                      mobileNumber = value.phoneNumber
+                          .toString()
+                          .replaceFirst(value.dialCode.toString(), '')
+                          .trim();
+                    },
+                    textStyle: const TextStyle(color: Colors.black),
+                    formatInput: false,
+                    maxLength: 10,
+                    errorMessage:
+                        langBloc.getString(Strings.invalidPhoneNumber),
+                    inputDecoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: langBloc.getString(
+                        Strings.enter10DigitMobileNumber,
+                      ),
+                    ),
+                    selectorConfig: const SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                    ),
+                    spaceBetweenSelectorAndTextField: 0,
+                  ),
+                  Positioned(
+                    left: 90,
+                    top: 8,
+                    bottom: 8,
+                    child: Container(
+                      height: 40,
+                      width: 1,
+                      color: Colors.black.withOpacity(0.2),
                     ),
                   ),
-                  selectorConfig: const SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                  ),
-                  spaceBetweenSelectorAndTextField: 0,
-                ),
-                Positioned(
-                  left: 90,
-                  top: 8,
-                  bottom: 8,
-                  child: Container(
-                    height: 40,
-                    width: 1,
-                    color: Colors.black.withOpacity(0.2),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 64),
-            ProgressButton(
-              onPressed: () async {
-                if (mobileNumber.length < 10) {
-                  ErrorSnackBar.show(
-                    context,
-                    langBloc.getString(
-                      Strings.enter10DigitMobileNumber,
-                    ),
-                  );
-                  return;
-                }
+                ],
+              ),
+              const SizedBox(height: 64),
+              ProgressButton(
+                onPressed: () async {
+                  if (mobileNumber.length < 10) {
+                    ErrorSnackBar.show(
+                      context,
+                      langBloc.getString(
+                        Strings.enter10DigitMobileNumber,
+                      ),
+                    );
+                    return;
+                  }
 
-                var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
+                  var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
 
-                var userBloc = Provider.of<UserBloc>(context, listen: false);
-                var response =
-                    await userBloc.sendOTP(body: body) as Map<String, dynamic>;
+                  var userBloc = Provider.of<UserBloc>(context, listen: false);
+                  var response = await userBloc.sendOTP(body: body)
+                      as Map<String, dynamic>;
 
-                if (!response.containsKey('token')) {
-                  return ErrorSnackBar.show(
-                    context,
-                    langBloc.getString(Strings.invalidError),
-                  );
-                }
-                userBloc.username = mobileNumber;
-                OtpScreen.open(context, token: response['token']);
-              },
-              child: Text(langBloc.getString(Strings.getOtp)),
-            ),
+                  if (!response.containsKey('token')) {
+                    return ErrorSnackBar.show(
+                      context,
+                      langBloc.getString(Strings.invalidError),
+                    );
+                  }
+                  userBloc.username = mobileNumber;
+                  OtpScreen.open(context, token: response['token']);
+                },
+                child: Text(langBloc.getString(Strings.getOtp)),
+              ),
 
-            // const SizedBox(height: 48),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //       margin: const EdgeInsets.symmetric(horizontal: 10),
-            //       width: 50,
-            //       height: 1,
-            //       color: Colors.black.withOpacity(0.2),
-            //     ),
-            //     Text(langBloc.getString(Strings.or)),
-            //     Container(
-            //       margin: const EdgeInsets.symmetric(horizontal: 10),
-            //       width: 50,
-            //       height: 1,
-            //       color: Colors.black.withOpacity(0.2),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(height: 40),
-            // ProgressButton(
-            //   onPressed: () {
-            //     Navigator.of(context).pushNamedAndRemoveUntil(
-            //       Routes.email,
-            //           (route) => false,
-            //     );
-            //   },
-            //   child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
-            // ),
-            // const SizedBox(height: 32),
-            // Column(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: [
-            //     Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
-            //     TextButton(
-            //       onPressed: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //             builder: (context) => const MobileLogin(),
-            //           ),
-            //         );
-            //       },
-            //       child: Text(
-            //         langBloc.getString(Strings.loginToYourAccount),
-            //         style: const TextStyle(color: MyColors.primaryColor),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-          ],
-        ),
+              // const SizedBox(height: 48),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       margin: const EdgeInsets.symmetric(horizontal: 10),
+              //       width: 50,
+              //       height: 1,
+              //       color: Colors.black.withOpacity(0.2),
+              //     ),
+              //     Text(langBloc.getString(Strings.or)),
+              //     Container(
+              //       margin: const EdgeInsets.symmetric(horizontal: 10),
+              //       width: 50,
+              //       height: 1,
+              //       color: Colors.black.withOpacity(0.2),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 40),
+              // ProgressButton(
+              //   onPressed: () {
+              //     Navigator.of(context).pushNamedAndRemoveUntil(
+              //       Routes.email,
+              //           (route) => false,
+              //     );
+              //   },
+              //   child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
+              // ),
+              // const SizedBox(height: 32),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => const MobileLogin(),
+              //           ),
+              //         );
+              //       },
+              //       child: Text(
+              //         langBloc.getString(Strings.loginToYourAccount),
+              //         style: const TextStyle(color: MyColors.primaryColor),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+            ],
+          )
+        ],
       ),
     );
   }
