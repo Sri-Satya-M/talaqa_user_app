@@ -348,36 +348,40 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return (session!.status == "APPROVED")
-        ? Column(
+        ? Row(
             children: [
-              ProgressButton(
-                onPressed: () async {
-                  if (session?.patient?.user?.email?.isEmpty == null ||
-                      session?.patient?.user?.mobileNumber == null)
-                    return ErrorSnackBar.show(
-                      context,
-                      'Please Update Email and Mobile Number to Complete the Session Payment',
-                    );
-                  var response = await sessionBloc.createRazorPayOrder(
-                    session: session!,
-                  ) as Map<String, dynamic>;
-                  if (response.containsKey('status') &&
-                      response['status'] == 'success') {
-                    SuccessScreen.open(
-                      context,
-                      type: 'PAYMENT',
-                      message: response['message'],
-                    );
-                  }
-                },
-                child: Text(langBloc.getString(Strings.payNow)),
+              Expanded(
+                child: ProgressButton(
+                  onPressed: () async {
+                    if (session?.patient?.user?.email?.isEmpty == null ||
+                        session?.patient?.user?.mobileNumber == null)
+                      return ErrorSnackBar.show(
+                        context,
+                        'Please Update Email and Mobile Number to Complete the Session Payment',
+                      );
+                    var response = await sessionBloc.createRazorPayOrder(
+                      session: session!,
+                    ) as Map<String, dynamic>;
+                    if (response.containsKey('status') &&
+                        response['status'] == 'success') {
+                      SuccessScreen.open(
+                        context,
+                        type: 'PAYMENT',
+                        message: response['message'],
+                      );
+                    }
+                  },
+                  child: Text(langBloc.getString(Strings.payNow)),
+                ),
               ),
               if (userBloc.profile?.user?.email != null &&
                   userBloc.profile!.user!.email!.isNotEmpty) ...[
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () => EditProfileScreen.open(context),
-                  child: const Text('Update Profile'),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => EditProfileScreen.open(context),
+                    child: const Text('Update Profile'),
+                  ),
                 ),
               ]
             ],
@@ -386,13 +390,13 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   }
 
   Widget joinOrStartSessionButton(BuildContext context) {
-    bool flag = (session!.status == "STARTED") &&
-        Helper.formatDate(date: DateTime.now()) ==
-            Helper.formatDate(date: session!.date);
+    // bool flag = (session!.status == "STARTED") &&
+    //     Helper.formatDate(date: DateTime.now()) ==
+    //         Helper.formatDate(date: session!.date);
 
     var langBloc = Provider.of<LangBloc>(context, listen: false);
 
-    return flag
+    return true
         ? ProgressButton(
             onPressed: sessionOnTap,
             child: Text(
@@ -423,34 +427,34 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   sessionOnTap() async {
     var sessionsBloc = Provider.of<SessionBloc>(context, listen: false);
 
-    var response = await sessionsBloc.joinSession(query: {
-      'id': session!.id,
-      'time': DateTime.now(),
-    }) as Map<String, dynamic>;
+    // var response = await sessionsBloc.joinSession(query: {
+    //   'id': session!.id,
+    //   'time': DateTime.now(),
+    // }) as Map<String, dynamic>;
 
-    if (response.containsKey('status') && response['status'] == false) {
-      return ErrorSnackBar.show(context, response['message']);
-    }
+    // if (response.containsKey('status') && response['status'] == false) {
+    //   return ErrorSnackBar.show(context, response['message']);
+    // }
 
-    ///Calculate duration to run timer
-    String date = DateFormat('yyyy-MM-dd').format(
-      session!.date!,
-    );
-    String time = "${session!.endAt!}:00";
-    String timestamp = '$date $time';
-    var scheduledTimeStamp = DateTime.parse(timestamp);
-    var duration = scheduledTimeStamp.toUtc().difference(DateTime.now());
-
-    if (duration.isNegative) {
-      return;
-    }
+    // ///Calculate duration to run timer
+    // String date = DateFormat('yyyy-MM-dd').format(
+    //   session!.date!,
+    // );
+    // String time = "${session!.endAt!}:00";
+    // String timestamp = '$date $time';
+    // var scheduledTimeStamp = DateTime.parse(timestamp);
+    // var duration = scheduledTimeStamp.toUtc().difference(DateTime.now());
+    //
+    // if (duration.isNegative) {
+    //   return;
+    // }
 
     switch (session!.consultationMode) {
       case 'HOME':
         SessionAtHomeScreen.open(
           context,
           session: session!,
-          duration: duration,
+          duration: const Duration(minutes: 60),
         ).then((value) => setState(() {}));
         break;
       case 'AUDIO':
@@ -463,7 +467,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration: duration,
+          duration:  const Duration(minutes: 60),
           hitTime: 15,
         ).then((value) async {
           setState(() {});

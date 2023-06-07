@@ -39,7 +39,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
           'CLINICIAN_ACCEPTED',
           'CLINICIAN_REJECTED'
         ],
-        "patientId": userBloc.profile!.id,
+        "patientId": userBloc.profile?.id,
       }),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
