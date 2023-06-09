@@ -13,11 +13,11 @@ class Review {
     this.patient,
   });
 
-  int? id;
-  int? sessionId;
-  int? clinicianId;
-  int? patientId;
-  int? rating;
+  num? id;
+  num? sessionId;
+  num? clinicianId;
+  num? patientId;
+  num? rating;
   String? comment;
   DateTime? createdAt;
   DateTime? updatedAt;

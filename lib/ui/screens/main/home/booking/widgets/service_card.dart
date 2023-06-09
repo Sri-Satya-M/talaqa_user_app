@@ -27,7 +27,7 @@ class ServiceCard extends StatelessWidget {
             children: [
               Image.asset(Images.voice),
               const SizedBox(width: 16),
-              Text(service.title!, style: textTheme.headline5),
+              Text(service.title ?? '--', style: textTheme.headline5),
             ],
           ),
           const SizedBox(height: 16),
