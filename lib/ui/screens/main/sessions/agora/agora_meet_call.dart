@@ -235,7 +235,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                 children: [
                   Center(
                     child: RemoteUserPreview(
-                      isJoined: isJoined!,
+                      isJoined: isJoined ?? true,
                       isVideo: remoteVideo,
                       remoteUid: _remoteUid,
                       agoraEngine: agoraEngine,
