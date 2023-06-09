@@ -1,35 +1,34 @@
-import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/user_bloc.dart';
-import 'package:alsan_app/model/session.dart';
-import 'package:alsan_app/resources/colors.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/clinician_details_widget.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/patient_details_widget.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/review_time_slot_widget.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/service_card.dart';
-import 'package:alsan_app/ui/screens/main/menu/profile/edit_profile_screen.dart';
-import 'package:alsan_app/ui/screens/main/sessions/feedback_screen.dart';
-import 'package:alsan_app/ui/screens/main/sessions/session_at_home/session_at_home_screen.dart';
-import 'package:alsan_app/ui/screens/main/sessions/widgets/address_card.dart';
-import 'package:alsan_app/ui/widgets/dialog_confirm.dart';
-import 'package:alsan_app/ui/widgets/error_snackbar.dart';
-import 'package:alsan_app/ui/widgets/progress_button.dart';
-import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../bloc/language_bloc.dart';
 import '../../../../bloc/sesssion_bloc.dart';
+import '../../../../bloc/user_bloc.dart';
+import '../../../../model/session.dart';
+import '../../../../resources/colors.dart';
 import '../../../../resources/images.dart';
 import '../../../../resources/strings.dart';
+import '../../../../utils/helper.dart';
+import '../../../widgets/dialog_confirm.dart';
 import '../../../widgets/empty_widget.dart';
+import '../../../widgets/error_snackbar.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
+import '../../../widgets/progress_button.dart';
 import '../../../widgets/reverse_details_tile.dart';
 import '../../../widgets/success_screen.dart';
 import '../home/booking/widgets/bill_details_widget.dart';
+import '../home/booking/widgets/clinician_details_widget.dart';
+import '../home/booking/widgets/patient_details_widget.dart';
+import '../home/booking/widgets/review_time_slot_widget.dart';
+import '../home/booking/widgets/service_card.dart';
+import '../menu/profile/edit_profile_screen.dart';
 import '../menu/profile/patient_profile_screen.dart';
 import 'agora/agora_meet_call.dart';
+import 'feedback_screen.dart';
+import 'session_at_home/session_at_home_screen.dart';
 import 'timeline/timeline_screen.dart';
+import 'widgets/address_card.dart';
 
 class SessionDetailsScreen extends StatefulWidget {
   final String id;
@@ -90,7 +89,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
             if (!snapshot.hasData) return const LoadingWidget();
             session = snapshot.data;
             if (session == null) return const EmptyWidget();
-
             return ListView(
               padding: const EdgeInsets.all(20),
               shrinkWrap: true,
@@ -105,7 +103,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                         color: const Color(0xFF5BFF9F),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: Text('${session!.sessionId}'),
+                      child: Text(session?.sessionId ?? ''),
                     ),
                   ],
                 ),
@@ -396,14 +394,12 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
 
     var langBloc = Provider.of<LangBloc>(context, listen: false);
 
-    return true
-        ? ProgressButton(
-            onPressed: sessionOnTap,
-            child: Text(
-              "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
-            ),
-          )
-        : const SizedBox();
+    return ProgressButton(
+      onPressed: sessionOnTap,
+      child: Text(
+        "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
+      ),
+    );
   }
 
   Widget finishButton() {
@@ -467,7 +463,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration:  const Duration(minutes: 60),
+          duration: const Duration(minutes: 60),
           hitTime: 15,
         ).then((value) async {
           setState(() {});
