@@ -86,7 +86,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         appBar: AppBar(
           titleSpacing: 16,
           title: Text(
-              "${langBloc.getString(Strings.hi)} ${userBloc.profile?.user?.fullName ?? ''}"),
+            "${langBloc.getString(Strings.hi)} "
+            "${userBloc.profile?.user?.fullName ?? ''}",
+          ),
           actions: [
             IconButton(
               onPressed: () => NotificationScreen.open(context),
@@ -131,11 +133,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         mainBloc.changeTab(value);
                       },
                       tabs: [
-                        Text(langBloc.getString(Strings.articles)),
-                        Text(langBloc.getString(Strings.videos)),
+                        SizedBox(
+                          height: 30,
+                          child: Text(langBloc.getString(Strings.articles)),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          child: Text(langBloc.getString(Strings.videos)),
+                        ),
                       ],
                     );
-
                   default:
                     return const SizedBox();
                 }
