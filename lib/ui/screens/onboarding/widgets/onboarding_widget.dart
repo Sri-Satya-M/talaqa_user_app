@@ -20,12 +20,12 @@ class OnBoardingWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: 3,
+          flex: 8,
           child: Image.asset(image, fit: BoxFit.fitWidth),
         ),
         const SizedBox(height: 16),
         Expanded(
-          flex: 2,
+          flex: 4,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(

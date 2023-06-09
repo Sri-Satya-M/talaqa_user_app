@@ -97,8 +97,9 @@ class HowToUse extends StatelessWidget {
                 ),
               ),
               itemExtentBuilder: (_, index) => 100,
-              nodeItemOverlapBuilder: (_, index) =>
-                  (index != 0 || index != 5) ? true : null,
+              nodeItemOverlapBuilder: (_, index) {
+                return (index != 0 || index != 5) ? true : null;
+              },
               contentsBuilder: (_, index) {
                 return DetailsTile(
                   padding: const EdgeInsets.only(left: 16),

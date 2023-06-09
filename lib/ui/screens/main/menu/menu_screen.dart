@@ -117,7 +117,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         ListView.separated(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          itemCount: 6,
+          itemCount: 5,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8),
             child: MenuList(
