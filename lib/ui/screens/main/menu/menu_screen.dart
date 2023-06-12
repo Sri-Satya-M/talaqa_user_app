@@ -50,18 +50,18 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         'image': Images.language,
         'title': langBloc.getString(Strings.yourLanguage),
       },
-      {
-        'image': Images.supportIcon,
-        'title': langBloc.getString(Strings.support),
-      },
-      {
-        'image': Images.referIcon,
-        'title': langBloc.getString(Strings.referAFriend),
-      },
-      {
-        'image': Images.faqIcon,
-        'title': langBloc.getString(Strings.faq),
-      },
+      // {
+      //   'image': Images.supportIcon,
+      //   'title': langBloc.getString(Strings.support),
+      // },
+      // {
+      //   'image': Images.referIcon,
+      //   'title': langBloc.getString(Strings.referAFriend),
+      // },
+      // {
+      //   'image': Images.faqIcon,
+      //   'title': langBloc.getString(Strings.faq),
+      // },
     ];
     return ListView(
       shrinkWrap: true,
@@ -117,7 +117,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         ListView.separated(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          itemCount: 5,
+          itemCount: userList.length,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8),
             child: MenuList(
