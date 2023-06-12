@@ -9,7 +9,6 @@ import 'package:dio/dio.dart';
 
 import '../model/dashboard.dart';
 import '../model/notification.dart';
-import '../model/review.dart';
 
 class UserRepo {
   Future sendOTP({body}) async {
@@ -125,11 +124,11 @@ class UserRepo {
     return apiClient.post(Api.tokens, body);
   }
 
-  Future<List<Review>> getReview({required query}) async {
-    var response = await apiClient.get(Api.reviews, query: query);
-    var list = response['reviews'] as List;
-    return list.map((f) => Review.fromJson(f)).toList();
-  }
+  // Future<List<Review>> getReview({required query}) async {
+  //   var response = await apiClient.get(Api.reviews, query: query);
+  //   var list = response['reviews'] as List;
+  //   return list.map((f) => Review.fromJson(f)).toList();
+  // }
 
   Future removeAddresses({required String id}) async {
     return await apiClient.delete('${Api.patients}${Api.addresses}/$id');

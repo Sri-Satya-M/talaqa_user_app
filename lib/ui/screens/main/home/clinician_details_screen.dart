@@ -5,7 +5,6 @@ import '../../../../bloc/language_bloc.dart';
 import '../../../../bloc/sesssion_bloc.dart';
 import '../../../../bloc/user_bloc.dart';
 import '../../../../model/clinicians.dart';
-import '../../../../model/review.dart';
 import '../../../../model/service.dart';
 import '../../../../resources/colors.dart';
 import '../../../../resources/images.dart';
@@ -16,8 +15,6 @@ import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
 import 'booking/widgets/service_card.dart';
-import 'clinician_review_screen.dart';
-import 'widgets/review_card.dart';
 
 class ClinicianDetailsScreen extends StatefulWidget {
   final Clinician clinician;
@@ -46,11 +43,11 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     futures = Future.wait([
       sessionBloc.getServices(query: {'clinicianId': widget.clinician.id}),
-      userBloc.getReview(query: {
-        'offset': 0,
-        'limit': 10,
-        'clinicianId': widget.clinician.id.toString()
-      }),
+      // userBloc.getReview(query: {
+      //   'offset': 0,
+      //   'limit': 10,
+      //   'clinicianId': widget.clinician.id.toString()
+      // }),
     ]);
   }
 
@@ -149,46 +146,46 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
                   );
                 }
               }),
-              const SizedBox(height: 30),
-              Builder(builder: (context) {
-                List<Review> reviews = list[1] ?? [];
-                if (reviews.isEmpty) {
-                  return const EmptyWidget();
-                } else {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            langBloc.getString(Strings.reviews),
-                            style: textTheme.bodyText1,
-                          ),
-                          TextButton(
-                            onPressed: () => ClinicianReviewsScreen.open(
-                                context,
-                                id: widget.clinician.id.toString()),
-                            child: Text(
-                              langBloc.getString(Strings.seeAll),
-                              style: textTheme.headline2?.copyWith(
-                                color: MyColors.primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ListView.builder(
-                        itemCount: reviews.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ReviewCard(review: reviews[index]);
-                        },
-                      ),
-                    ],
-                  );
-                }
-              }),
+              // const SizedBox(height: 30),
+              // Builder(builder: (context) {
+              //   List<Review> reviews = list[1] ?? [];
+              //   if (reviews.isEmpty) {
+              //     return const EmptyWidget();
+              //   } else {
+              //     return Column(
+              //       children: [
+              //         Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //           children: [
+              //             Text(
+              //               langBloc.getString(Strings.reviews),
+              //               style: textTheme.bodyText1,
+              //             ),
+              //             TextButton(
+              //               onPressed: () => ClinicianReviewsScreen.open(
+              //                   context,
+              //                   id: widget.clinician.id.toString()),
+              //               child: Text(
+              //                 langBloc.getString(Strings.seeAll),
+              //                 style: textTheme.headline2?.copyWith(
+              //                   color: MyColors.primaryColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         ListView.builder(
+              //           itemCount: reviews.length,
+              //           shrinkWrap: true,
+              //           physics: const NeverScrollableScrollPhysics(),
+              //           itemBuilder: (context, index) {
+              //             return ReviewCard(review: reviews[index]);
+              //           },
+              //         ),
+              //       ],
+              //     );
+              //   }
+              // }),
             ],
           );
         },

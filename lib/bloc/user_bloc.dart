@@ -10,9 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../data/local/shared_prefs.dart';
 import '../model/dashboard.dart';
-import '../model/resources.dart';
 import '../model/notification.dart' as n;
-import '../model/review.dart';
+import '../model/resources.dart';
 
 class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
@@ -147,9 +146,9 @@ class UserBloc with ChangeNotifier {
     await _userRepo.updateFCMToken(body: body);
   }
 
-  Future<List<Review>> getReview({required query}) {
-    return _userRepo.getReview(query: query);
-  }
+  // Future<List<Review>> getReview({required query}) {
+  //   return _userRepo.getReview(query: query);
+  // }
 
   Future removeAddresses({required String id}) async {
     var response = await _userRepo.removeAddresses(id: id);

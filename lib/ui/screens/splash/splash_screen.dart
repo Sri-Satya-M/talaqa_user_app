@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/main_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/ui/screens/language/language_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
@@ -19,22 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2), () async {
       var token = await Prefs.getToken();
 
-      // var nextScreen = (token == null) ? LanguageScreen() : MainScreen();
-      if (token == null) {
-        await LanguageScreen.open(context: context, isFromLogin: true);
-      }
-
       if (token != null) {
         var userBloc = Provider.of<UserBloc>(context, listen: false);
+        var mainBloc = Provider.of<MainBloc>(context, listen: false);
         await userBloc.getProfile();
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
-          (route) => false,
-        );
+        MainScreen.open(context);
+        mainBloc.changeIndex(0);
+      } else {
+        await LanguageScreen.open(context: context, isFromLogin: true);
       }
-
-      return;
     });
   }
 
