@@ -27,25 +27,27 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    return CustomCard(
-      width: size.width * 0.8,
-      radius: 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () => ClinicianDetailsScreen.open(
-                    context,
-                    clinician: widget.clinician,
-                  ),
-                  child: Row(
+    return InkWell(
+      onTap: () {
+        ClinicianDetailsScreen.open(
+          context,
+          clinician: widget.clinician,
+        );
+      },
+      child: CustomCard(
+        width: size.width * 0.8,
+        radius: 5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ImageFromNet(
@@ -117,28 +119,28 @@ class _DoctorCardState extends State<DoctorCard> {
                       const SizedBox(height: 14),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          // const Spacer(),
-          // ElevatedButton(
-          //   style: ElevatedButton.styleFrom(
-          //     shape: const RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.only(
-          //         bottomRight: Radius.circular(5),
-          //         bottomLeft: Radius.circular(5),
-          //       ),
-          //     ),
-          //     // textStyle: textTheme.headline3,
-          //     fixedSize: const Size(140, 50),
-          //   ),
-          //   onPressed: () {
-          //     widget.onTap(widget.clinician);
-          //   },
-          //   child: Text(langBloc.getString(Strings.bookASession)),
-          // ),
-        ],
+            // const Spacer(),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     shape: const RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.only(
+            //         bottomRight: Radius.circular(5),
+            //         bottomLeft: Radius.circular(5),
+            //       ),
+            //     ),
+            //     // textStyle: textTheme.headline3,
+            //     fixedSize: const Size(140, 50),
+            //   ),
+            //   onPressed: () {
+            //     widget.onTap(widget.clinician);
+            //   },
+            //   child: Text(langBloc.getString(Strings.bookASession)),
+            // ),
+          ],
+        ),
       ),
     );
   }

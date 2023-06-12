@@ -69,7 +69,9 @@ class _EmailScreenState extends State<EmailScreen> {
 
                 if (!response.containsKey('token')) {
                   return ErrorSnackBar.show(
-                      context, langBloc.getString(Strings.invalidError));
+                    context,
+                    langBloc.getString(Strings.invalidError),
+                  );
                 }
                 userBloc.username = emailId;
                 OtpScreen.open(context, token: response['token']);
