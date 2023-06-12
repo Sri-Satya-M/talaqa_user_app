@@ -35,13 +35,9 @@ class _SelectServicePageState extends State<SelectServicePage> {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
           }
-
           if (!snapshot.hasData) return const LoadingWidget();
-
           var services = snapshot.data?.services ?? [];
-
           if (services.isEmpty) return const EmptyWidget();
-
           return ListView.builder(
             itemCount: services.length,
             shrinkWrap: true,
@@ -50,6 +46,11 @@ class _SelectServicePageState extends State<SelectServicePage> {
               children: [
                 ServiceCard(
                   service: services[index],
+                  onTap: () {
+                    selectedIndex = services[index].id;
+                    widget.onTap(services[index]);
+                    setState(() {});
+                  },
                 ),
                 Positioned(
                   top: 20,
