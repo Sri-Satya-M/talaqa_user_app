@@ -101,12 +101,9 @@ class _BookingScreenState extends State<BookingScreen> {
           Expanded(
             flex: 5,
             child: PageView(
-              // physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               onPageChanged: (index) {
-                setState(() {
-                  pageIndex = index + 1;
-                });
+                setState(() => pageIndex = index + 1);
               },
               children: [
                 SelectPatientProfile(
@@ -156,7 +153,8 @@ class _BookingScreenState extends State<BookingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (sessionBloc.selectedModeOfConsultation != null &&
-                sessionBloc.timeslots.isNotEmpty && pageIndex>=5)
+                sessionBloc.timeslots.isNotEmpty &&
+                pageIndex >= 5)
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.totalCharges)),
                 value: Text(
@@ -209,41 +207,58 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget getPageIndex(int value) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    return DetailsTile(
-      gap: 10,
-      title: (pageIndex >= value)
-          ? Container(
-              height: 26,
-              width: (size.width / steps) - 20,
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.check_circle,
-                color: MyColors.primaryColor,
-                size: 29,
-              ),
-            )
-          : Container(
-              height: 26,
-              width: (size.width / steps) - 20,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                border: Border.all(color: MyColors.primaryColor),
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                '$value',
-                style: textTheme.button?.copyWith(
+    return InkWell(
+      onTap: () {
+        if (pageIndex > value) {
+          controller.animateToPage(
+            value - 1,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.linear,
+          );
+          setState(() {});
+        } else {
+          return ErrorSnackBar.show(
+            context,
+            'You can\'t jump to the ${value} step',
+          );
+        }
+      },
+      child: DetailsTile(
+        gap: 10,
+        title: (pageIndex >= value)
+            ? Container(
+                height: 26,
+                width: (size.width / steps) - 20,
+                alignment: Alignment.center,
+                child: const Icon(
+                  Icons.check_circle,
                   color: MyColors.primaryColor,
+                  size: 29,
+                ),
+              )
+            : Container(
+                height: 26,
+                width: (size.width / steps) - 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  border: Border.all(color: MyColors.primaryColor),
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  '$value',
+                  style: textTheme.button?.copyWith(
+                    color: MyColors.primaryColor,
+                  ),
                 ),
               ),
-            ),
-      value: Container(
-        height: 4,
-        width: (size.width / steps) - 20,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color:
-              (pageIndex >= value) ? MyColors.primaryColor : Colors.grey[300],
+        value: Container(
+          height: 4,
+          width: (size.width / steps) - 20,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color:
+                (pageIndex >= value) ? MyColors.primaryColor : Colors.grey[300],
+          ),
         ),
       ),
     );
