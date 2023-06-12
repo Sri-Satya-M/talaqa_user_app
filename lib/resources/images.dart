@@ -17,10 +17,10 @@ class Images {
   static const pendingSession = 'assets/icons/pendingSession.png';
   static const voice = 'assets/icons/voice.png';
   static const video = 'assets/icons/video.png';
-  static const call = 'assets/icons/call.png';
+  static const audio = 'assets/icons/audio.png';
   static const home = 'assets/icons/home.png';
   static const homeMode = 'assets/icons/mode/home.png';
-  static const callMode = 'assets/icons/mode/call.png';
+  static const callMode = 'assets/icons/mode/audio.png';
   static const videoMode = 'assets/icons/mode/video.png';
   static const marker = 'assets/icons/marker.png';
   static const mic = 'assets/icons/mic.png';
@@ -42,9 +42,11 @@ class Images {
   static const sessionNotify = "assets/icons/notify/session_notify.png";
   static const clinicianNotify = "assets/icons/notify/clinician_notify.png";
   static const sessionStart = "assets/icons/notify/session_start.png";
-  static const twelveHrWindowNotify = "assets/icons/notify/twelve_hr_window_notify.png";
+  static const twelveHrWindowNotify =
+      "assets/icons/notify/twelve_hr_window_notify.png";
   static const paymentNotify = "assets/icons/notify/payment_notify.png";
-  static const clinicianSignupNotify = "assets/icons/notify/clinician_signup_notify.png";
+  static const clinicianSignupNotify =
+      "assets/icons/notify/clinician_signup_notify.png";
   static const userSignupNotify = "assets/icons/notify/user_signup_notify.png";
   static const resourceNotify = "assets/icons/notify/resource.png";
 
@@ -66,4 +68,10 @@ class Images {
 
   static const doneIcon = "assets/icons/done_icon.png";
   static const notDoneIcon = "assets/icons/not_done_icon.png";
+
+  static const mode = {
+    'AUDIO': Images.callMode,
+    'VIDEO': Images.videoMode,
+    'HOME': Images.homeMode,
+  };
 }

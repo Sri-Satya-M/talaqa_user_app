@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../bloc/sesssion_bloc.dart';
 import '../../../../../../model/mode_of_consultation.dart';
+import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/images.dart';
 import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
@@ -33,13 +35,9 @@ class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);
         }
-
         if (!snapshot.hasData) return const LoadingWidget();
-
         var modes = snapshot.data ?? [];
-
         if (modes.isEmpty) return const EmptyWidget();
-
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
@@ -56,7 +54,18 @@ class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
                 for (var mode in modes)
                   DropdownMenuItem<int>(
                     value: mode.id,
-                    child: Text(Helper.textCapitalization(text: mode.type)),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          '${Images.mode[mode.type]}',
+                          color: MyColors.primaryColor,
+                          height: mode.type == 'HOME' ? 30 : 20,
+                          width: 20,
+                        ),
+                        SizedBox(width: 15),
+                        Text(Helper.textCapitalization(text: mode.type)),
+                      ],
+                    ),
                   ),
               ],
               onChanged: (value) {
