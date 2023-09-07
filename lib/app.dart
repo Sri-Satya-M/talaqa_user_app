@@ -42,7 +42,7 @@ class App extends StatelessWidget {
         child: ProgressBlockWidget(
           child: MaterialApp(
             navigatorKey: navigatorKey,
-            title: 'Talaqa',
+            title: 'Talaqa App: Book A Doctor Now',
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router?.generator,

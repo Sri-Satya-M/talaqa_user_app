@@ -20,7 +20,7 @@
 
 
    <application
-        android:label="Talaqa"
+        android:label="Talaqa App: Book A Doctor Now"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
