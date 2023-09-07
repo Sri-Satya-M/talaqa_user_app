@@ -21,19 +21,15 @@ class _FAQScreenState extends State<FAQScreen> {
   @override
   Widget build(BuildContext context) {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    List<Widget> patientsList = [FAQCard(), FAQCard()];
     return Scaffold(
       appBar: AppBar(
         title: Text(langBloc.getString(Strings.faq)),
       ),
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: FutureBuilder(builder: (context, snapshot) {
-            List<Widget> patientsList = [FAQCard(), FAQCard()];
-            return ListView(
-              children: patientsList,
-            );
-          }),
+          children: patientsList,
         ),
       ),
     );
