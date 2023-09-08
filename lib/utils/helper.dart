@@ -63,7 +63,8 @@ class Helper {
       if (isAndroid) {
         directory = "/storage/emulated/0/Download";
       } else {
-        directory = '${(await getApplicationDocumentsDirectory()).path ?? ''}/Talaqa';
+        directory =
+            '${(await getApplicationDocumentsDirectory()).path ?? ''}/Talaqa';
       }
 
       print(directory);
@@ -157,15 +158,15 @@ class Helper {
   }
 
   static Future<void> openMap({
-    required double latitude,
-    required double longitude,
+    double? latitude,
+    double? longitude,
     required String name,
     required String address,
   }) async {
     if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
       await MapLauncher.showMarker(
         mapType: MapType.google,
-        coords: Coords(latitude, longitude),
+        coords: Coords(latitude ?? 17.3850, longitude ?? 78.4867),
         title: name,
         description: address,
         zoom: 14,

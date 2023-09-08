@@ -249,12 +249,12 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     onTap: () async {
                       await Helper.openMap(
                         latitude: double.parse(
-                          session!.patientAddress!.latitude!,
+                          '${session?.patientAddress?.latitude}',
                         ),
-                        longitude: double.parse(
-                          session!.patientAddress!.latitude!,
+                        longitude: double.tryParse(
+                          '${session?.patientAddress?.latitude}',
                         ),
-                        name: session!.patientProfile!.fullName!,
+                        name: session?.patientProfile?.fullName ?? '',
                         address: Helper.formatAddress(
                           address: session!.patientAddress,
                         ),
@@ -269,7 +269,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ReverseDetailsTile(
                     title: Text(langBloc.getString(Strings.symptoms)),
                     value: Text(
-                      '${session!.symptom}',
+                      session?.symptom ?? '',
                       style: textTheme.headline2,
                     ),
                   ),
@@ -278,7 +278,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.description)),
                   value: Text(
-                    '${session!.description}',
+                    session?.description ?? '',
                     style: textTheme.headline2,
                   ),
                 ),
@@ -309,11 +309,11 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ),
                 const SizedBox(height: 16),
                 BillDetailsWidget(
-                  noOfTimeslots: session!.sessionTimeslots!.length,
+                  noOfTimeslots: session?.sessionTimeslots?.length ?? 0,
                   totalAmount:
-                      (session!.sessionPayment!.totalAmount)!.toDouble(),
+                      (session?.sessionPayment?.totalAmount ?? 0).toDouble(),
                   consultationMode: Helper.textCapitalization(
-                    text: session!.consultationMode,
+                    text: session?.consultationMode ?? '',
                   ),
                 ),
                 const SizedBox(height: 16),
