@@ -176,7 +176,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
               const SizedBox(height: 16),
               BillDetailsWidget(
                 noOfTimeslots: session.sessionTimeslots!.length,
-                totalAmount: session.sessionPayment!.totalAmount!.toDouble(),
+                totalAmount: double.tryParse('${session.sessionPayment?.totalAmount ?? 0}') ?? 0,
                 consultationMode: Helper.textCapitalization(
                   text: session.consultationMode,
                 ),

@@ -47,7 +47,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 style: textTheme.headline4,
               ),
               getModeOfConsultation(
-                mode: sessionBloc.selectedModeOfConsultation!.type!,
+                mode: sessionBloc.selectedModeOfConsultation?.type ?? '',
               ),
             ],
           ),

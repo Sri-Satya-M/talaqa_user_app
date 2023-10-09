@@ -20,29 +20,32 @@ class MenuList extends StatefulWidget {
 class _MenuListState extends State<MenuList> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Image.asset(widget.icon, height: 30, width: 30),
-            const SizedBox(width: 14),
-            Text(widget.title),
-          ],
-        ),
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            color: MyColors.divider,
-            borderRadius: BorderRadius.circular(10),
+    return InkWell(
+      onTap: widget.onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Image.asset(widget.icon, height: 30, width: 30),
+              const SizedBox(width: 14),
+              Text(widget.title),
+            ],
           ),
-          child: IconButton(
-            onPressed: widget.onTap,
-            icon: const Icon(Icons.arrow_forward_ios, size: 14),
+          Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              color: MyColors.divider,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: IconButton(
+              onPressed: widget.onTap,
+              icon: const Icon(Icons.arrow_forward_ios, size: 14),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
