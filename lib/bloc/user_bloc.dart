@@ -163,4 +163,14 @@ class UserBloc with ChangeNotifier {
   Future<List<n.Notification>> getNotifications({required query}) {
     return _userRepo.getNotifications(query: query);
   }
+
+  Future getCliniciansByService({
+    required String serviceId,
+    required query,
+  }) async {
+    return await _userRepo.getCliniciansByService(
+      serviceId: serviceId,
+      query: query,
+    );
+  }
 }

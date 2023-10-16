@@ -98,4 +98,16 @@ class SessionRepo {
     var response = await apiClient.get(Api.services, query: query);
     return Services.fromJson(response);
   }
+
+  Future<List<TimeOfDay>> getClinicianAvailableTimeSlots({
+    required String id,
+    required query,
+  }) async {
+    var response = await apiClient.get(
+      '${Api.clinicians}/$id/available-time-slots',
+      query: query,
+    );
+    var list = response as List;
+    return list.map((e) => TimeOfDay.fromJson(e)).toList();
+  }
 }

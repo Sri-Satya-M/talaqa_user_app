@@ -134,6 +134,16 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.postDuration(body: body);
   }
 
+  Future<List<TimeOfDay>> getClinicianAvailableTimeSlots({
+    required String id,
+    required query,
+  }) async {
+    return await sessionRepo.getClinicianAvailableTimeSlots(
+      id: id,
+      query: query,
+    );
+  }
+
   Future createRazorPayOrder({required Session session}) async {
     var order = await sessionRepo.createRazorPayOrder(
       body: {"sessionId": session.id},

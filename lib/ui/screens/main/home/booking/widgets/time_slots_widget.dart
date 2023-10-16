@@ -10,7 +10,8 @@ import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
 
 class TimeSlotsWidget extends StatefulWidget {
-  const TimeSlotsWidget({super.key});
+  final String clinicianId;
+  const TimeSlotsWidget({super.key, required this.clinicianId});
 
   @override
   _TimeSlotsWidgetState createState() => _TimeSlotsWidgetState();
@@ -24,7 +25,8 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     return FutureBuilder<List<t.TimeOfDay>>(
-      future: sessionBloc.getTimeSlots(
+      future: sessionBloc.getClinicianAvailableTimeSlots(
+        id: widget.clinicianId,
         query: {
           'date': Helper.formatDate(date: sessionBloc.selectedDate),
           'time': DateTime.now(),

@@ -1,13 +1,13 @@
 import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/empty_widget.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
-import '../../../../../../utils/helper.dart';
 import '../../../../../widgets/custom_card.dart';
 import '../../../../../widgets/loading_widget.dart';
 import 'clinician_details_widget.dart';
@@ -15,11 +15,13 @@ import 'clinician_details_widget.dart';
 class SelectClinicianWidget extends StatefulWidget {
   final Function onTap;
   final String search;
+  final String serviceId;
 
   const SelectClinicianWidget({
     super.key,
     required this.onTap,
     required this.search,
+    required this.serviceId,
   });
 
   @override
@@ -42,17 +44,25 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
       var query = {
         'offset': clinicians.length.toString(),
         'limit': limit.toString(),
-        'date': Helper.formatDate(date: sessionBloc.selectedDate),
-        'timeslotIds': sessionBloc.selectedTimeSlotIds!.join(','),
-        'serviceId': sessionBloc.service!.id!,
-        'modeId': sessionBloc.selectedModeOfConsultation!.id!
+        // 'date': Helper.formatDate(date: sessionBloc.selectedDate),
+        // 'timeslotIds': sessionBloc.selectedTimeSlotIds!.join(','),
+        // 'serviceId': sessionBloc.service!.id!,
+        // 'modeId': sessionBloc.selectedModeOfConsultation!.id!
       };
 
       if (widget.search.isNotEmpty) {
         query['search'] = widget.search;
       }
 
-      var list = await context.read<UserBloc>().getAvailableClinicians(
+      if (widget.serviceId == 'null' || widget.serviceId == '') {
+        return ErrorSnackBar.show(
+          context,
+          'Please select the service in previous steps',
+        );
+      }
+
+      var list = await context.read<UserBloc>().getCliniciansByService(
+            serviceId: widget.serviceId,
             query: query,
           );
 
@@ -120,10 +130,12 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: InkWell(
-                        onTap: () => ClinicianDetailsScreen.open(
-                          context,
-                          clinician: clinicians[index],
-                        ),
+                        onTap: () {
+                          ClinicianDetailsScreen.open(
+                            context,
+                            clinician: clinicians[index],
+                          );
+                        },
                         child: ClinicianDetailsWidget(
                           clinician: clinicians[index],
                         ),

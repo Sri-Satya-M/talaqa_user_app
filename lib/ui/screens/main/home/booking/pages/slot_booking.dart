@@ -1,14 +1,15 @@
-import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
-import 'package:alsan_app/model/mode_of_consultation.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_mode_of_consultation.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/time_slots_widget.dart';
+import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../bloc/language_bloc.dart';
+import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../model/mode_of_consultation.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/strings.dart';
+import '../widgets/select_mode_of_consultation.dart';
+import '../widgets/time_slots_widget.dart';
 
 class SlotBooking extends StatefulWidget {
   final Function onTap;
@@ -30,6 +31,12 @@ class _SlotBookingState extends State<SlotBooking> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: true);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    if (sessionBloc.selectedClinician?.id == null) {
+      return ErrorSnackBar.show(
+        context,
+        'Please select clinician in previous step',
+      );
+    }
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -56,7 +63,7 @@ class _SlotBookingState extends State<SlotBooking> {
             style: textTheme.caption?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 16),
-          const TimeSlotsWidget(),
+          TimeSlotsWidget(clinicianId: '${sessionBloc.selectedClinician?.id}'),
           const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.description),
@@ -138,8 +145,8 @@ class _SlotBookingState extends State<SlotBooking> {
               if (day == "Sun") return;
               sessionBloc.setDate(date: currentDate.add(Duration(days: index)));
               selectedDate = currentDate.add(Duration(days: index));
-              sessionBloc.timeslots={};
-              sessionBloc.selectedTimeSlotIds=[];
+              sessionBloc.timeslots = {};
+              sessionBloc.selectedTimeSlotIds = [];
             },
             child: Container(
               height: 80,

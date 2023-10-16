@@ -146,4 +146,16 @@ class UserRepo {
     var list = response as List;
     return list.map((e) => Notification.fromJson(e)).toList();
   }
+
+  Future getCliniciansByService({
+    required String serviceId,
+    required query,
+  }) async {
+    var response = await apiClient.get(
+      '${Api.clinicians}/${Api.services}/$serviceId',
+      query: query,
+    );
+    var list = response['data'] as List;
+    return list.map((e) => Clinician.fromMap(e)).toList();
+  }
 }

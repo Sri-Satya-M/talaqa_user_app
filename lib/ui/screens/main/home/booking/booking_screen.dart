@@ -117,24 +117,29 @@ class _BookingScreenState extends State<BookingScreen> {
                   },
                 ),
                 const ChooseStatementPage(),
-                SlotBooking(
-                  onTap: (ModeOfConsultation mode) {
-                    if (mode != null) {
-                      if (mode.type == 'HOME') {
-                        addExtraStep();
-                      } else {
-                        removeExtraStep();
-                      }
-                      setState(() {});
-                    }
-                  },
-                ),
                 SelectClinician(
+                  serviceId: '${sessionBloc.service?.id}',
                   onTap: (clinician) {
                     sessionBloc.selectedClinician = clinician;
                     animateToNextPage();
                   },
                 ),
+                if (sessionBloc.selectedClinician?.id == null)
+                  ...[]
+                else ...[
+                  SlotBooking(
+                    onTap: (ModeOfConsultation mode) {
+                      if (mode != null) {
+                        if (mode.type == 'HOME') {
+                          addExtraStep();
+                        } else {
+                          removeExtraStep();
+                        }
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ],
                 if (sessionBloc.selectedModeOfConsultation?.type == 'HOME') ...[
                   const AddAddress(),
                 ],
@@ -167,9 +172,11 @@ class _BookingScreenState extends State<BookingScreen> {
                 maximumSize: const Size(150, 50),
               ),
               onPressed: (pageIndex == titles.length) ? bookNow : validateStep,
-              child: Text((pageIndex == titles.length)
-                  ? langBloc.getString(Strings.bookNow)
-                  : langBloc.getString(Strings.next)),
+              child: Text(
+                (pageIndex == titles.length)
+                    ? langBloc.getString(Strings.bookNow)
+                    : langBloc.getString(Strings.next),
+              ),
             ),
           ],
         ),

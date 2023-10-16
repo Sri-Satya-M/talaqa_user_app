@@ -1,16 +1,21 @@
-import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/select_clinician_widget.dart';
-import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../../../bloc/language_bloc.dart';
 import '../../../../../../resources/strings.dart';
+import '../../../../../widgets/custom_card.dart';
+import '../widgets/select_clinician_widget.dart';
 
 class SelectClinician extends StatefulWidget {
   final Function onTap;
+  final String serviceId;
 
-  const SelectClinician({super.key, required this.onTap});
+  const SelectClinician({
+    super.key,
+    required this.onTap,
+    required this.serviceId,
+  });
 
   @override
   State<SelectClinician> createState() => _SelectClinicianState();
@@ -76,6 +81,7 @@ class _SelectClinicianState extends State<SelectClinician> {
               return SelectClinicianWidget(
                 key: ValueKey(search),
                 onTap: () {},
+                serviceId: widget.serviceId,
                 search: search,
               );
             },

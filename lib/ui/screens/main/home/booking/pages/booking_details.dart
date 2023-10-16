@@ -52,21 +52,31 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          ReviewTimeSlotWidget(
-            dateTime: sessionBloc.selectedDate!,
-            timeslots: sessionBloc.timeslots.values.toList(),
-          ),
-          ServiceCard(service: sessionBloc.service!),
+          if (sessionBloc.selectedDate != null &&
+              sessionBloc.timeslots.isNotEmpty)
+            ReviewTimeSlotWidget(
+              dateTime: sessionBloc.selectedDate!,
+              timeslots: sessionBloc.timeslots.values.toList(),
+            )
+          else
+            SizedBox(),
+          if (sessionBloc.service != null)
+            ServiceCard(service: sessionBloc.service!)
+          else
+            SizedBox(),
           const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: MyColors.paleLightGreen,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: ClinicianDetailsWidget(
-              clinician: sessionBloc.selectedClinician!,
-            ),
-          ),
+          if (sessionBloc.selectedClinician != null)
+            Container(
+              decoration: BoxDecoration(
+                color: MyColors.paleLightGreen,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: ClinicianDetailsWidget(
+                clinician: sessionBloc.selectedClinician!,
+              ),
+            )
+          else
+            SizedBox(),
           // const SessionDetailsWidget(),
           const SizedBox(height: 16),
           BillDetailsWidget(
