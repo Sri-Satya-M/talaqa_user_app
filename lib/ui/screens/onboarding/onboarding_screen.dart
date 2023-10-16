@@ -114,7 +114,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            Routes.mobile,
+                            Routes.signUp,
                             (route) => false,
                           );
                         },
@@ -131,7 +131,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    Routes.mobile,
+                    Routes.signUp,
                     (route) => false,
                   );
                 },

@@ -42,11 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const SizedBox(height: 32),
             ProgressButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Routes.mobile,
-                  (route) => false,
-                );
+                Navigator.pushNamed(context, Routes.mobile);
               },
               child: Text(langBloc.getString(Strings.signUpWithMobileNumber)),
             ),
@@ -56,11 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 backgroundColor: MyColors.palePink,
               ),
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Routes.email,
-                  (route) => false,
-                );
+                Navigator.pushNamed(context, Routes.email);
               },
               child: Text(
                 langBloc.getString(Strings.signUpWithEmailAddress),

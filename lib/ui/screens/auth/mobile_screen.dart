@@ -53,7 +53,7 @@ class _MobileScreenState extends State<MobileScreen> {
                     },
                     textStyle: const TextStyle(color: Colors.black),
                     formatInput: false,
-                    maxLength: 10,
+                    // maxLength: 10,
                     errorMessage:
                         langBloc.getString(Strings.invalidPhoneNumber),
                     inputDecoration: InputDecoration(
