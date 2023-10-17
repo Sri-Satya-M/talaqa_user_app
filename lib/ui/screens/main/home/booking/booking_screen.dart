@@ -54,8 +54,8 @@ class _BookingScreenState extends State<BookingScreen> {
       langBloc.getString(Strings.selectProfile),
       langBloc.getString(Strings.selectService),
       langBloc.getString(Strings.chooseStatement),
-      langBloc.getString(Strings.consultationModeSlotBooking),
       langBloc.getString(Strings.selectClinicianProfile),
+      langBloc.getString(Strings.consultationModeSlotBooking),
       langBloc.getString(Strings.review),
     ];
   }
@@ -102,6 +102,7 @@ class _BookingScreenState extends State<BookingScreen> {
             flex: 5,
             child: PageView(
               controller: controller,
+              physics: const NeverScrollableScrollPhysics(),
               onPageChanged: (index) {
                 setState(() => pageIndex = index + 1);
               },
@@ -219,7 +220,7 @@ class _BookingScreenState extends State<BookingScreen> {
         if (pageIndex > value) {
           controller.animateToPage(
             value - 1,
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.linear,
           );
           setState(() {});
@@ -301,14 +302,13 @@ class _BookingScreenState extends State<BookingScreen> {
         break;
 
       case 3:
-        if (sessionBloc.selectedStatement == 1) {
-          if (sessionBloc.symptom == null) {
-            return ErrorSnackBar.show(context, 'Please select a Symptom');
-          }
+        if (sessionBloc.selectedStatement == null) {
+          flag = true;
+          msg = 'Please select a statement';
         }
         break;
 
-      case 4:
+      case 5:
         if (sessionBloc.selectedModeOfConsultation == null) {
           flag = true;
           msg = 'Please Select Mode of Consultation';
@@ -321,7 +321,7 @@ class _BookingScreenState extends State<BookingScreen> {
         }
         break;
 
-      case 5:
+      case 4:
         if (sessionBloc.selectedClinician?.id == null) {
           flag = true;
           msg = 'Please select a clinician';
