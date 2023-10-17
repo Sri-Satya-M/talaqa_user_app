@@ -10,7 +10,7 @@ class DioClient implements ApiClient {
   late Dio dio;
   String accessToken = "Bearer fiakb9318uishfsksn5oibbynn86gb3w";
   String baseUrl =
-      kReleaseMode ? 'https://api.talaqa.online' : 'http://192.168.1.7:7001';
+      kReleaseMode ? 'https://api.talaqa.online' : 'http://10.22.61.79:7001';
   String mapsKey = 'AIzaSyBTQ-RrVQbGz2ymNmdSkenm8vlkVR8Q_ec';
 
   DioClient() {
