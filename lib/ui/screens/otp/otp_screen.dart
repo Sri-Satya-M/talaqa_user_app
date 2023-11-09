@@ -39,17 +39,19 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var isEmail = userBloc.username.contains('@');
     var text = isEmail ? "email id" : "mobile number";
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(flex: 1, child: SizedBox()),
+            SizedBox(height: size.height * 0.11),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             Text(
@@ -131,7 +133,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
                     if (!response.containsKey('token')) {
                       return ErrorSnackBar.show(
-                          context, langBloc.getString(Strings.invalidError));
+                        context,
+                        langBloc.getString(Strings.invalidError),
+                      );
                     }
 
                     widget.token = response['token'];
@@ -143,7 +147,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ],
             ),
-            const Expanded(flex: 2, child: SizedBox()),
+            // const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

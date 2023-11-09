@@ -19,6 +19,7 @@ class MobileScreen extends StatefulWidget {
 
 class _MobileScreenState extends State<MobileScreen> {
   String mobileNumber = '';
+  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'SA');
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class _MobileScreenState extends State<MobileScreen> {
               Stack(
                 children: [
                   InternationalPhoneNumberInput(
+                    initialValue: phoneNumber,
                     onInputChanged: (value) {
                       if (value.phoneNumber == null) return;
                       mobileNumber = value.phoneNumber
