@@ -2,37 +2,40 @@ PODS:
   - agora_chat_sdk (0.0.1):
     - Flutter
     - HyphenateChat (= 3.9.9)
-  - agora_rtc_engine (6.1.0):
-    - AgoraIrisRTC_iOS (= 4.1.0-rc.2)
-    - AgoraRtcEngine_iOS (= 4.1.0)
+  - agora_rtc_engine (6.2.3):
+    - AgoraIrisRTC_iOS (= 4.2.3-build.3)
+    - AgoraRtcEngine_iOS (= 4.2.3)
     - Flutter
-  - AgoraIrisEventFlutter_iOS (2.0.0)
-  - AgoraIrisRTC_iOS (4.1.0-rc.2)
-  - AgoraRtcEngine_iOS (4.1.0):
-    - AgoraRtcEngine_iOS/AIAEC (= 4.1.0)
-    - AgoraRtcEngine_iOS/AINS (= 4.1.0)
-    - AgoraRtcEngine_iOS/AudioBeauty (= 4.1.0)
-    - AgoraRtcEngine_iOS/ClearVision (= 4.1.0)
-    - AgoraRtcEngine_iOS/ContentInspect (= 4.1.0)
-    - AgoraRtcEngine_iOS/DRM (= 4.1.0)
-    - AgoraRtcEngine_iOS/ReplayKit (= 4.1.0)
-    - AgoraRtcEngine_iOS/RtcBasic (= 4.1.0)
-    - AgoraRtcEngine_iOS/SpatialAudio (= 4.1.0)
-    - AgoraRtcEngine_iOS/SuperResolution (= 4.1.0)
-    - AgoraRtcEngine_iOS/VirtualBackground (= 4.1.0)
-    - AgoraRtcEngine_iOS/VQA (= 4.1.0)
-  - AgoraRtcEngine_iOS/AIAEC (4.1.0)
-  - AgoraRtcEngine_iOS/AINS (4.1.0)
-  - AgoraRtcEngine_iOS/AudioBeauty (4.1.0)
-  - AgoraRtcEngine_iOS/ClearVision (4.1.0)
-  - AgoraRtcEngine_iOS/ContentInspect (4.1.0)
-  - AgoraRtcEngine_iOS/DRM (4.1.0)
-  - AgoraRtcEngine_iOS/ReplayKit (4.1.0)
-  - AgoraRtcEngine_iOS/RtcBasic (4.1.0)
-  - AgoraRtcEngine_iOS/SpatialAudio (4.1.0)
-  - AgoraRtcEngine_iOS/SuperResolution (4.1.0)
-  - AgoraRtcEngine_iOS/VirtualBackground (4.1.0)
-  - AgoraRtcEngine_iOS/VQA (4.1.0)
+  - AgoraIrisRTC_iOS (4.2.3-build.3)
+  - AgoraRtcEngine_iOS (4.2.3):
+    - AgoraRtcEngine_iOS/AIAEC (= 4.2.3)
+    - AgoraRtcEngine_iOS/AINS (= 4.2.3)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.2.3)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.2.3)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.2.3)
+    - AgoraRtcEngine_iOS/DRM (= 4.2.3)
+    - AgoraRtcEngine_iOS/FaceDetection (= 4.2.3)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.2.3)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.2.3)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.2.3)
+    - AgoraRtcEngine_iOS/VideoCodecDec (= 4.2.3)
+    - AgoraRtcEngine_iOS/VideoCodecEnc (= 4.2.3)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.2.3)
+    - AgoraRtcEngine_iOS/VQA (= 4.2.3)
+  - AgoraRtcEngine_iOS/AIAEC (4.2.3)
+  - AgoraRtcEngine_iOS/AINS (4.2.3)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.2.3)
+  - AgoraRtcEngine_iOS/ClearVision (4.2.3)
+  - AgoraRtcEngine_iOS/ContentInspect (4.2.3)
+  - AgoraRtcEngine_iOS/DRM (4.2.3)
+  - AgoraRtcEngine_iOS/FaceDetection (4.2.3)
+  - AgoraRtcEngine_iOS/ReplayKit (4.2.3)
+  - AgoraRtcEngine_iOS/RtcBasic (4.2.3)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.2.3)
+  - AgoraRtcEngine_iOS/VideoCodecDec (4.2.3)
+  - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.3)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.2.3)
+  - AgoraRtcEngine_iOS/VQA (4.2.3)
   - DKImagePickerController/Core (4.3.4):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -117,11 +120,11 @@ PODS:
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.11.0):
+  - FirebaseCoreInternal (10.17.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseDynamicLinks (10.6.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseInstallations (10.11.0):
+  - FirebaseInstallations (10.17.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -156,7 +159,7 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - geocoding (1.0.5):
+  - geocoding_ios (1.0.5):
     - Flutter
   - geolocator_apple (1.2.0):
     - Flutter
@@ -183,50 +186,49 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.3):
+  - GoogleDataTransport (9.2.5):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMaps (6.2.1):
-    - GoogleMaps/Maps (= 6.2.1)
-  - GoogleMaps/Base (6.2.1)
-  - GoogleMaps/Maps (6.2.1):
+  - GoogleMaps (5.2.0):
+    - GoogleMaps/Maps (= 5.2.0)
+  - GoogleMaps/Base (5.2.0)
+  - GoogleMaps/Maps (5.2.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
+  - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.11.1):
+  - GoogleUtilities/Environment (7.12.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.1):
+  - GoogleUtilities/Logger (7.12.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.11.1):
+  - GoogleUtilities/MethodSwizzler (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.11.1):
+  - GoogleUtilities/Network (7.12.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.11.1)"
-  - GoogleUtilities/Reachability (7.11.1):
+  - "GoogleUtilities/NSData+zlib (7.12.0)"
+  - GoogleUtilities/Reachability (7.12.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.11.1):
+  - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
   - HyphenateChat (3.9.9)
   - image_picker_ios (0.0.1):
     - Flutter
-  - iris_event (0.0.1):
-    - AgoraIrisEventFlutter_iOS (= 2.0.0)
+  - iris_method_channel (0.0.1):
     - Flutter
   - libphonenumber_plugin (0.0.1):
     - Flutter
     - PhoneNumberKit
   - map_launcher (0.0.1):
     - Flutter
-  - nanopb (2.30909.0):
-    - nanopb/decode (= 2.30909.0)
-    - nanopb/encode (= 2.30909.0)
-  - nanopb/decode (2.30909.0)
-  - nanopb/encode (2.30909.0)
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
   - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
@@ -236,20 +238,20 @@ PODS:
   - PayTabsSDK (6.4.0)
   - permission_handler_apple (9.0.4):
     - Flutter
-  - PhoneNumberKit (3.3.4):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.4)
-    - PhoneNumberKit/UIKit (= 3.3.4)
-  - PhoneNumberKit/PhoneNumberKitCore (3.3.4)
-  - PhoneNumberKit/UIKit (3.3.4):
+  - PhoneNumberKit (3.6.8):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.6.8)
+    - PhoneNumberKit/UIKit (= 3.6.8)
+  - PhoneNumberKit/PhoneNumberKitCore (3.6.8)
+  - PhoneNumberKit/UIKit (3.6.8):
     - PhoneNumberKit/PhoneNumberKitCore
-  - PromisesObjC (2.2.0)
-  - razorpay-pod (1.3.2)
+  - PromisesObjC (2.3.1)
+  - razorpay-pod (1.3.4)
   - razorpay_flutter (1.1.10):
     - Flutter
     - razorpay-pod
-  - SDWebImage (5.16.0):
-    - SDWebImage/Core (= 5.16.0)
-  - SDWebImage/Core (5.16.0)
+  - SDWebImage (5.18.3):
+    - SDWebImage/Core (= 5.18.3)
+  - SDWebImage/Core (5.18.3)
   - shared_preferences_ios (0.0.1):
     - Flutter
   - sqflite (0.0.2):
@@ -280,11 +282,11 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_paytabs_bridge (from `.symlinks/plugins/flutter_paytabs_bridge/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
-  - geocoding (from `.symlinks/plugins/geocoding/ios`)
+  - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - iris_event (from `.symlinks/plugins/iris_event/ios`)
+  - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -299,7 +301,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AgoraIrisEventFlutter_iOS
     - AgoraIrisRTC_iOS
     - AgoraRtcEngine_iOS
     - DKImagePickerController
@@ -354,16 +355,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_paytabs_bridge/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
-  geocoding:
-    :path: ".symlinks/plugins/geocoding/ios"
+  geocoding_ios:
+    :path: ".symlinks/plugins/geocoding_ios/ios"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  iris_event:
-    :path: ".symlinks/plugins/iris_event/ios"
+  iris_method_channel:
+    :path: ".symlinks/plugins/iris_method_channel/ios"
   libphonenumber_plugin:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   map_launcher:
@@ -389,10 +390,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   agora_chat_sdk: f9772c5f21df937ab08f7b316e9474f4fbdfcc26
-  agora_rtc_engine: a84afbebf11801043623d3b5f994bb69d4159948
-  AgoraIrisEventFlutter_iOS: d7ee4acb57d9042dbe9d64229bfe9bf8e32b6f2f
-  AgoraIrisRTC_iOS: 820fbab2d78d870a1bad4b1a02f950a390c73b48
-  AgoraRtcEngine_iOS: 33f0136ad4196b2a31c8470e6b536fe77fb25f8b
+  agora_rtc_engine: cc22abc8de5d9050ecb697c3eb62e7f576d0b533
+  AgoraIrisRTC_iOS: e7d823fbc6c0aace26a3eb3d8444ee7f9bc7489c
+  AgoraRtcEngine_iOS: eb0a7e87dbc9e818b267d413b48f76a57959e6f4
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: ce3938a0df3cc1ef404671531facef740d03f920
@@ -403,40 +403,40 @@ SPEC CHECKSUMS:
   firebase_messaging: aace0061e3019eeeb18639af2b4d3bde3a3d4162
   FirebaseAnalytics: 9f382605c5ee412b039212f054bf7a403d9850c1
   FirebaseCore: fa80ad16a62d52f67274b5b88304c3a318bbf9a4
-  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
+  FirebaseCoreInternal: 2cf9202e226e3f78d2bf6d56c472686b935bfb7f
   FirebaseDynamicLinks: 99c501143953e925681a37aade96bb2db34b30ca
-  FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
+  FirebaseInstallations: 9387bf15abfc69a714f54e54f74a251264fdb79b
   FirebaseMessaging: fd93783258c53ae5cdb9b41bf0c51606a677f2d5
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_downloader: b7301ae057deadd4b1650dc7c05375f10ff12c39
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
+  flutter_inappwebview: acd4fc0f012cefd09015000c241137d82f01ba62
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_paytabs_bridge: 6a5a2afdecd5a7eb61c6e3a74c5a8b1782a3e32f
-  fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
+  fluttertoast: 48c57db1b71b0ce9e6bba9f31c940ff4b001293c
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
+  geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleAppMeasurement: 686b48c3c895f3c55c70719041913d5d150b74f6
-  GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
-  GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
-  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
+  GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
+  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
+  GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   HyphenateChat: 2237c9ece3f1bb54645dea0a9918f08e03e1516d
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
-  iris_event: fdcf9bbb53095fd9609ea19941df551d0398a789
+  iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
   libphonenumber_plugin: e8a7d64a6624a7c25f2c4ab0b7ead2a8e341e35e
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
-  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
   PayTabsSDK: 825c609aed2b03bef8e7e586bdd880bd54a56d41
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  PhoneNumberKit: 441e8b26ec88d598e3591de9061eff18f5dd12e8
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  razorpay-pod: b129f60de5f0d0952bebfb9480a10909d4fd6b6d
+  PhoneNumberKit: 962cb725d664c7d4ac5f3e6f93e2de5f543f0d05
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  razorpay-pod: df3aa440969489d242c40ec606db9a0c7095743f
   razorpay_flutter: 84b3bfd206ae9c9c2a9ba585524a1b3d8102b6c1
-  SDWebImage: 2aea163b50bfcb569a2726b6a754c54a4506fcf6
+  SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
@@ -447,4 +447,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3bc406fdd7f2c9d117789ee182db3f800e97db0d
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.2

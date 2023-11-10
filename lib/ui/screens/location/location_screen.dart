@@ -161,6 +161,12 @@ class _LocationScreenState extends State<LocationScreen> {
           case LocationPermission.denied:
           case LocationPermission.deniedForever:
             return ErrorSnackBar.show(context, 'Location Permission Denied');
+          case LocationPermission.whileInUse:
+            // TODO: Handle this case.
+          case LocationPermission.always:
+            // TODO: Handle this case.
+          case LocationPermission.unableToDetermine:
+            // TODO: Handle this case.
         }
 
         position = await Geolocator.getCurrentPosition(
