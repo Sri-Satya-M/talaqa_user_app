@@ -1,12 +1,12 @@
 PODS:
   - agora_chat_sdk (0.0.1):
     - Flutter
-    - HyphenateChat (= 3.9.9)
-  - agora_rtc_engine (6.2.3):
-    - AgoraIrisRTC_iOS (= 4.2.3-build.3)
+    - HyphenateChat (= 4.0.0)
+  - agora_rtc_engine (6.2.4):
+    - AgoraIrisRTC_iOS (= 4.2.3-build.4)
     - AgoraRtcEngine_iOS (= 4.2.3)
     - Flutter
-  - AgoraIrisRTC_iOS (4.2.3-build.3)
+  - AgoraIrisRTC_iOS (4.2.3-build.4)
   - AgoraRtcEngine_iOS (4.2.3):
     - AgoraRtcEngine_iOS/AIAEC (= 4.2.3)
     - AgoraRtcEngine_iOS/AINS (= 4.2.3)
@@ -190,10 +190,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMaps (5.2.0):
-    - GoogleMaps/Maps (= 5.2.0)
-  - GoogleMaps/Base (5.2.0)
-  - GoogleMaps/Maps (5.2.0):
+  - GoogleMaps (7.4.0):
+    - GoogleMaps/Maps (= 7.4.0)
+  - GoogleMaps/Base (7.4.0)
+  - GoogleMaps/Maps (7.4.0):
     - GoogleMaps/Base
   - GoogleUtilities/AppDelegateSwizzler (7.12.0):
     - GoogleUtilities/Environment
@@ -214,7 +214,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - HyphenateChat (3.9.9)
+  - HyphenateChat (4.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
   - iris_method_channel (0.0.1):
@@ -238,11 +238,11 @@ PODS:
   - PayTabsSDK (6.4.0)
   - permission_handler_apple (9.0.4):
     - Flutter
-  - PhoneNumberKit (3.6.8):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.6.8)
-    - PhoneNumberKit/UIKit (= 3.6.8)
-  - PhoneNumberKit/PhoneNumberKitCore (3.6.8)
-  - PhoneNumberKit/UIKit (3.6.8):
+  - PhoneNumberKit (3.7.4):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.7.4)
+    - PhoneNumberKit/UIKit (= 3.7.4)
+  - PhoneNumberKit/PhoneNumberKitCore (3.7.4)
+  - PhoneNumberKit/UIKit (3.7.4):
     - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (2.3.1)
   - razorpay-pod (1.3.4)
@@ -285,6 +285,7 @@ DEPENDENCIES:
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - GoogleMaps
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
@@ -389,9 +390,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  agora_chat_sdk: f9772c5f21df937ab08f7b316e9474f4fbdfcc26
-  agora_rtc_engine: cc22abc8de5d9050ecb697c3eb62e7f576d0b533
-  AgoraIrisRTC_iOS: e7d823fbc6c0aace26a3eb3d8444ee7f9bc7489c
+  agora_chat_sdk: ce66fe2e4f70ee969f006d5c200fde9ac9613d45
+  agora_rtc_engine: fb9292d3b1eec2df31a47a2f435937e57e724648
+  AgoraIrisRTC_iOS: 84ae4f5824d68480d1215cbdd8db261549a7c94e
   AgoraRtcEngine_iOS: eb0a7e87dbc9e818b267d413b48f76a57959e6f4
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -419,9 +420,9 @@ SPEC CHECKSUMS:
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleAppMeasurement: 686b48c3c895f3c55c70719041913d5d150b74f6
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
-  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
+  GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  HyphenateChat: 2237c9ece3f1bb54645dea0a9918f08e03e1516d
+  HyphenateChat: 9f6e4ac3b290e52cc0e52491f85d86097b35c285
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
   libphonenumber_plugin: e8a7d64a6624a7c25f2c4ab0b7ead2a8e341e35e
@@ -432,7 +433,7 @@ SPEC CHECKSUMS:
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
   PayTabsSDK: 825c609aed2b03bef8e7e586bdd880bd54a56d41
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  PhoneNumberKit: 962cb725d664c7d4ac5f3e6f93e2de5f543f0d05
+  PhoneNumberKit: e3c4dc9f65bc2036639898095c2ab1ef89348f64
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   razorpay-pod: df3aa440969489d242c40ec606db9a0c7095743f
   razorpay_flutter: 84b3bfd206ae9c9c2a9ba585524a1b3d8102b6c1
@@ -445,6 +446,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: 3bc406fdd7f2c9d117789ee182db3f800e97db0d
+PODFILE CHECKSUM: 1adf692d4e8abf9d1b14cdd786b6ccce969a4577
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.13.0

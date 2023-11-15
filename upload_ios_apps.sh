@@ -1,3 +1,3 @@
 flutter build ios --release
 cd ios
-fastlane beta
+bundle exec fastlane beta
