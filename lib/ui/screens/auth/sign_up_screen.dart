@@ -63,19 +63,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "${langBloc.getString(Strings.signUpWithMobileNumber)}?\t",
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EmailLogin()),
-                    );
-                  },
+                Expanded(
                   child: Text(
-                    langBloc.getString(Strings.loginToYourAccount),
-                    style: const TextStyle(color: MyColors.primaryColor),
+                    "${langBloc.getString(Strings.signUpWithMobileNumber)}?\t",
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EmailLogin()),
+                      );
+                    },
+                    child: Text(
+                      langBloc.getString(Strings.loginToYourAccount),
+                      style: const TextStyle(color: MyColors.primaryColor),
+                    ),
                   ),
                 )
               ],

@@ -136,7 +136,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   );
                 },
                 child: Text(
-                  'Skip',
+                  langBloc.getString(Strings.skip),
                   style: textTheme.bodyText2?.copyWith(
                     color: Colors.white,
                     decoration: TextDecoration.underline,
