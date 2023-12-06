@@ -77,27 +77,27 @@ class _DoctorCardState extends State<DoctorCard> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 5,
-                                    horizontal: 10,
-                                  ),
-                                  decoration: const BoxDecoration(
-                                    color: MyColors.paleBlue,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(25),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '${widget.clinician.experience} years Exp.',
-                                    style: textTheme.subtitle2,
-                                  ),
-                                ),
-                                const SizedBox(width: 18),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     Container(
+                            //       padding: const EdgeInsets.symmetric(
+                            //         vertical: 5,
+                            //         horizontal: 10,
+                            //       ),
+                            //       decoration: const BoxDecoration(
+                            //         color: MyColors.paleBlue,
+                            //         borderRadius: BorderRadius.all(
+                            //           Radius.circular(25),
+                            //         ),
+                            //       ),
+                            //       child: Text(
+                            //         '${widget.clinician.experience} years Exp.',
+                            //         style: textTheme.subtitle2,
+                            //       ),
+                            //     ),
+                            //     const SizedBox(width: 18),
+                            //   ],
+                            // ),
                             const SizedBox(height: 12),
                             Row(
                               children: [
