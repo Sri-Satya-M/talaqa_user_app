@@ -22,6 +22,7 @@ class MobileLogin extends StatefulWidget {
 
 class _MobileLoginState extends State<MobileLogin> {
   var mobileNumber = '';
+  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'SA');
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class _MobileLoginState extends State<MobileLogin> {
             Stack(
               children: [
                 InternationalPhoneNumberInput(
+                  initialValue: phoneNumber,
                   onInputChanged: (value) {
                     if (value.phoneNumber == null) return;
 
