@@ -10,6 +10,7 @@ import 'package:alsan_app/ui/screens/main/menu/profile/profile_screen.dart';
 import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
+import 'package:alsan_app/ui/widgets/webview_screen.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -129,16 +130,46 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           separatorBuilder: (context, index) => const Divider(),
         ),
         const SizedBox(height: 32),
-        Text(
-          langBloc.getString(Strings.privacyPolicy),
-          style: textTheme.caption,
+        GestureDetector(
+          onTap: () {
+            WebviewScreen.open(
+              context,
+              url: 'https://talaqa.online/privacy-policy',
+              title: 'Privacy Policy',
+            );
+          },
+          child: Text(
+            langBloc.getString(Strings.privacyPolicy),
+            style: textTheme.caption,
+          ),
         ),
         const SizedBox(height: 16),
-        Text(langBloc.getString(Strings.termsOfUse), style: textTheme.caption),
+        GestureDetector(
+          onTap: () {
+            WebviewScreen.open(
+              context,
+              url: 'https://talaqa.online/terms-conditions',
+              title: 'Terms & Conditions',
+            );
+          },
+          child: Text(
+            langBloc.getString(Strings.termsAndConditions),
+            style: textTheme.caption,
+          ),
+        ),
         const SizedBox(height: 16),
-        Text(
-          langBloc.getString(Strings.cancellationRefundPolicy),
-          style: textTheme.caption,
+        GestureDetector(
+          onTap: (){
+            WebviewScreen.open(
+              context,
+              url: 'https://talaqa.online/cancellation-refund-policy',
+              title: 'Cancellation & Refund Policy',
+            );
+          },
+          child: Text(
+            langBloc.getString(Strings.cancellationRefundPolicy),
+            style: textTheme.caption,
+          ),
         )
       ],
     );
