@@ -26,12 +26,12 @@ class EmptyWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              image ?? Images.logo,
-              height: size,
-              width: size,
-            ),
-            const SizedBox(height: 20),
+            // Image.asset(
+            //   image ?? Images.logo,
+            //   height: size,
+            //   width: size,
+            // ),
+            // const SizedBox(height: 20),
             Text(
               message,
               style: textTheme.headline5?.copyWith(
