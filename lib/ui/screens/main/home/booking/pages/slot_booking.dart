@@ -65,32 +65,32 @@ class _SlotBookingState extends State<SlotBooking> {
           const SizedBox(height: 16),
           TimeSlotsWidget(clinicianId: '${sessionBloc.selectedClinician?.id}'),
           const SizedBox(height: 16),
-          Text(
-            langBloc.getString(Strings.description),
-            style: textTheme.caption?.copyWith(color: Colors.black),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: MyColors.divider),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: MyColors.divider),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: MyColors.cerulean),
-              ),
-            ),
-            minLines: 3,
-            maxLines: 10,
-            onChanged: (value) {
-              sessionBloc.description = value;
-            },
-          ),
+          // Text(
+          //   langBloc.getString(Strings.description),
+          //   style: textTheme.caption?.copyWith(color: Colors.black),
+          // ),
+          // const SizedBox(height: 8),
+          // TextFormField(
+          //   decoration: InputDecoration(
+          //     border: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //       borderSide: const BorderSide(color: MyColors.divider),
+          //     ),
+          //     enabledBorder: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //       borderSide: const BorderSide(color: MyColors.divider),
+          //     ),
+          //     focusedBorder: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //       borderSide: const BorderSide(color: MyColors.cerulean),
+          //     ),
+          //   ),
+          //   minLines: 3,
+          //   maxLines: 10,
+          //   onChanged: (value) {
+          //     sessionBloc.description = value;
+          //   },
+          // ),
           const SizedBox(height: 32),
         ],
       ),
