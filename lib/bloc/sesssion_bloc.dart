@@ -31,7 +31,7 @@ class SessionBloc with ChangeNotifier {
   List<int>? selectedTimeSlotIds;
   String? description;
   int? selectedAddressId;
-  int? selectedStatement;
+  int selectedStatement = 3;
   Map<int, TimeSlot> timeslots = {};
   Address? selectedAddress;
 

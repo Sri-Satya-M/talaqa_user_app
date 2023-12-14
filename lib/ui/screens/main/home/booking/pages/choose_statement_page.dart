@@ -15,7 +15,6 @@ class ChooseStatementPage extends StatefulWidget {
 }
 
 class _ChooseStatementPageState extends State<ChooseStatementPage> {
-  int selectedIndex = -1;
   List<String> symptoms = [];
 
   @override
@@ -24,7 +23,9 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     symptoms =
-        sessionBloc.service?.symptoms?.map((e) => e.title!).toList() ?? [];
+        sessionBloc.service?.symptoms?.map((e) => e.title ?? '').toList() ?? [];
+    print('index ${sessionBloc.selectedStatement}');
+    sessionBloc.selectedStatement = -1;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
@@ -56,9 +57,9 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                   flex: 1,
                   child: Radio(
                     value: 1,
-                    groupValue: selectedIndex,
+                    groupValue: sessionBloc.selectedStatement,
                     onChanged: (value) {
-                      sessionBloc.selectedStatement = selectedIndex = 1;
+                      sessionBloc.selectedStatement = 1;
                       setState(() {});
                     },
                   ),
@@ -86,9 +87,9 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                   flex: 1,
                   child: Radio(
                     value: 2,
-                    groupValue: selectedIndex,
+                    groupValue: sessionBloc.selectedStatement,
                     onChanged: (value) {
-                      sessionBloc.selectedStatement = selectedIndex = 2;
+                      sessionBloc.selectedStatement = 2;
                       setState(() {});
                     },
                   ),
@@ -96,7 +97,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
               ],
             ),
           ),
-          if (selectedIndex == 1) ...[
+          if (sessionBloc.selectedStatement == 1) ...[
             const SizedBox(height: 16),
             Text(langBloc.getString(Strings.symptoms)),
             const SizedBox(height: 16),

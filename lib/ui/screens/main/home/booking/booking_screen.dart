@@ -302,7 +302,7 @@ class _BookingScreenState extends State<BookingScreen> {
         break;
 
       case 3:
-        if (sessionBloc.selectedStatement == null) {
+        if (sessionBloc.selectedStatement == -1) {
           flag = true;
           msg = 'Please select a statement';
         }
@@ -335,7 +335,7 @@ class _BookingScreenState extends State<BookingScreen> {
         }
         break;
       default:
-        return;
+        return 'here';
     }
 
     if (flag == true) {
