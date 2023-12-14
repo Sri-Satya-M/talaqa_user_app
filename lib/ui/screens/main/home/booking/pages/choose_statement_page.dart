@@ -18,6 +18,14 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
   List<String> symptoms = [];
 
   @override
+  void initState() {
+    super.initState();
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+    sessionBloc.selectedStatement = -1;
+    sessionBloc.symptom = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
@@ -25,7 +33,6 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
     symptoms =
         sessionBloc.service?.symptoms?.map((e) => e.title ?? '').toList() ?? [];
     print('index ${sessionBloc.selectedStatement}');
-    sessionBloc.selectedStatement = -1;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
@@ -56,8 +63,8 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                 Expanded(
                   flex: 1,
                   child: Radio(
-                    value: 1,
-                    groupValue: sessionBloc.selectedStatement,
+                    value: sessionBloc.selectedStatement,
+                    groupValue: 1,
                     onChanged: (value) {
                       sessionBloc.selectedStatement = 1;
                       setState(() {});
