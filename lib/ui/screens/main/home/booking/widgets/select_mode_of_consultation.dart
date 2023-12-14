@@ -49,7 +49,7 @@ class _SelectModeOfConsultationState extends State<SelectModeOfConsultation> {
               value: sessionBloc.selectedModeOfConsultation?.id,
               underline: null,
               isExpanded: true,
-              hint: Text(langBloc.getString(Strings.selectAType)),
+              hint: Text(langBloc.getString(Strings.selectModeOfConsultation)),
               items: [
                 for (var mode in modes)
                   DropdownMenuItem<int>(
