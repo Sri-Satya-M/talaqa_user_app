@@ -98,9 +98,10 @@ class _SlotBookingState extends State<SlotBooking> {
   }
 
   getColor(String day, String dateString) {
-    if (day == 'Sun') {
-      return Colors.grey.withOpacity(0.4);
-    } else if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString) {
+    // if (day == 'Sun') {
+      // return Colors.grey.withOpacity(0.4);
+    // } else
+      if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString) {
       return MyColors.primaryColor;
     } else {
       return Colors.transparent;
@@ -108,8 +109,7 @@ class _SlotBookingState extends State<SlotBooking> {
   }
 
   getTextColor(String day, String dateString) {
-    if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString ||
-        day == 'Sun') {
+    if (DateFormat('yyyy-MM-dd').format(selectedDate) == dateString) {
       return Colors.white;
     } else {
       return MyColors.primaryColor;
@@ -142,7 +142,7 @@ class _SlotBookingState extends State<SlotBooking> {
 
           return GestureDetector(
             onTap: () {
-              if (day == "Sun") return;
+              // if (day == "Sun") return;
               sessionBloc.setDate(date: currentDate.add(Duration(days: index)));
               selectedDate = currentDate.add(Duration(days: index));
               sessionBloc.timeslots = {};
@@ -153,14 +153,16 @@ class _SlotBookingState extends State<SlotBooking> {
               width: 70,
               margin: const EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
-                color: (day == 'Sun')
-                    ? Colors.grey.withOpacity(0.4)
-                    : getColor(day, dateString),
+                color: getColor(day, dateString),
+                  // (day == 'Sun')
+                  //   ? Colors.grey.withOpacity(0.4)
+                  //   :
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: (day == 'Sun')
-                      ? Colors.grey.withOpacity(0.4)
-                      : MyColors.primaryColor,
+                  color:MyColors.primaryColor,
+                  // (day == 'Sun')
+                  //     ? Colors.grey.withOpacity(0.4)
+                  //     :
                 ),
               ),
               child: Column(
