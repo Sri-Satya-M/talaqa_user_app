@@ -236,7 +236,7 @@ class _CreatePatientState extends State<CreatePatient> {
               const SizedBox(height: 12),
               CSCPicker(
                 layout: Layout.vertical,
-                defaultCountry: CscCountry.United_Arab_Emirates,
+                defaultCountry: CscCountry.Saudi_Arabia,
                 flagState: CountryFlag.DISABLE,
                 disableCountry: true,
                 showStates: true,
