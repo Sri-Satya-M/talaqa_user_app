@@ -22,7 +22,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  var banners = [Images.topBanner1];
+  // var banners = [Images.topBanner1];
+  var banners = [Images.talaqaBanner];
   int bannerIndex = 0;
 
   @override
@@ -39,18 +40,93 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         CarouselSlider(
           items: [
             for (int i = 0; i < banners.length; i++)
-              GestureDetector(
-                onTap: () => bookNow.call(index: i),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                    banners[i],
-                    fit: BoxFit.fitWidth,
-                    width: size.width * 0.9,
+              Stack(
+                children: [
+                  // Image at the bottom
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.asset(
+                      banners[i],
+                      fit: BoxFit.fitWidth,
+                      width: size.width * 0.9,
+                    ),
                   ),
-                ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                            18.0, 18, 0, 0), // Add padding to the entire column
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              langBloc.getString(Strings.speechTherapy),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "at Your Fingertips",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // OutlineButton with text "Book Now" on top
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(18.0, 18, 0, 0),
+                            child: SizedBox(
+                              width:
+                                  150, // Adjust the width of the button as needed
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: Colors.white),
+                                  foregroundColor: Colors
+                                      .white, // Change button text color to white
+                                ),
+                                onPressed: () => bookNow.call(index: i),
+                                child: Text(
+                                  langBloc.getString(Strings.bookNow),
+                                  style: const TextStyle(fontSize: 19),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
           ],
+
+          // items: [
+          //   for (int i = 0; i < banners.length; i++)
+          //     GestureDetector(
+          //       onTap: () => bookNow.call(index: i),
+          //       child: ClipRRect(
+          //         borderRadius: BorderRadius.circular(5),
+          //         child: Image.asset(
+          //           banners[i],
+          //           fit: BoxFit.fitWidth,
+          //           width: size.width * 0.9,
+          //         ),
+          //       ),
+          //     ),
+          // ],
           options: CarouselOptions(
               height: 160,
               aspectRatio: 16 / 9,

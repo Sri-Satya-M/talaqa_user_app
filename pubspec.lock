@@ -22,10 +22,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: bee47d50c6a27446522b3df73590215d640ecf6a
+      resolved-ref: "7edcd59589c1772dce6949ed4815eda41f0de997"
       url: "https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/"
     source: git
-    version: "6.2.4"
+    version: "6.2.6"
   archive:
     dependency: transitive
     description:
@@ -658,10 +658,10 @@ packages:
     dependency: transitive
     description:
       name: iris_method_channel
-      sha256: "708a862849b26452d86a0ab1ff010eb43d03cc811084b185270ceda45ff473e6"
+      sha256: "27851f437f00d88a699e14e9c5203a0a32fc1a063aa4e10ebab1d5ea84c0f402"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0-dev.4"
+    version: "2.0.0"
   js:
     dependency: transitive
     description:
