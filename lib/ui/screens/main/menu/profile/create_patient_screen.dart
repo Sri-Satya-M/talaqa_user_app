@@ -123,7 +123,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
