@@ -14,8 +14,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/images.dart';
 import '../../../resources/strings.dart';
 import '../../../utils/custom_notifications.dart';
+import '../language/language_screen.dart';
 import 'sessions/session_details_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -90,6 +92,12 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             "${userBloc.profile?.user?.fullName ?? ''}",
           ),
           actions: [
+            IconButton(
+              onPressed: () {
+                LanguageScreen.open(context: context, isFromLogin: false);
+              },
+              icon: Image.asset(Images.lan),
+            ),
             IconButton(
               onPressed: () => NotificationScreen.open(context),
               icon: Icon(
