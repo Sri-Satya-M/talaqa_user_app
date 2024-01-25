@@ -1,5 +1,6 @@
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
+import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +219,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           );
         } else {
           ErrorSnackBar.show(context, 'Language Changed Successfully');
-          Navigator.pop(context, true);
+         MainScreen.open(context);
         }
       },
     );
