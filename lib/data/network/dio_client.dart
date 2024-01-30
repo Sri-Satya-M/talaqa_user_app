@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../local/shared_prefs.dart';
 import 'api_client.dart';
@@ -9,8 +8,8 @@ import 'pretty_dio_logger.dart';
 class DioClient implements ApiClient {
   late Dio dio;
   String accessToken = "Bearer fiakb9318uishfsksn5oibbynn86gb3w";
-  String baseUrl =
-      true ? 'https://api.talaqa.online' : 'http://10.22.61.79:7001';
+  String baseUrl = 'https://api.talaqa.online';
+
   String mapsKey = 'AIzaSyBTQ-RrVQbGz2ymNmdSkenm8vlkVR8Q_ec';
 
   DioClient() {
