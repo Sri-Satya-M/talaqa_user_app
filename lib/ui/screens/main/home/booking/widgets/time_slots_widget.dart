@@ -37,11 +37,8 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
           return CustomErrorWidget(error: snapshot.error);
         }
         if (!snapshot.hasData) return const LoadingWidget();
-
         var timeOfDay = snapshot.data ?? [];
-
-        if (timeOfDay == null) return const EmptyWidget();
-
+        if (timeOfDay.isEmpty) return const EmptyWidget();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
