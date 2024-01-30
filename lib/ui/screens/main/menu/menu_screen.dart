@@ -134,7 +134,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           onTap: () {
             WebviewScreen.open(
               context,
-              url: 'https://talaqa.online/privacy-policy',
+              url: langBloc.appLanguage == 'English'
+                  ? 'https://talaqa.online/privacy-policy'
+                  : 'https://talaqa.online/ar/privacy-policy',
               title: 'Privacy Policy',
             );
           },
@@ -148,7 +150,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           onTap: () {
             WebviewScreen.open(
               context,
-              url: 'https://talaqa.online/terms-conditions',
+              url: langBloc.appLanguage == 'English'
+                  ? 'https://talaqa.online/terms-conditions'
+                  : 'https://talaqa.online/ar/terms-conditions',
               title: 'Terms & Conditions',
             );
           },
@@ -159,7 +163,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         ),
         const SizedBox(height: 16),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             WebviewScreen.open(
               context,
               url: 'https://talaqa.online/cancellation-refund-policy',
