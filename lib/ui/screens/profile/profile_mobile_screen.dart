@@ -11,7 +11,6 @@ import 'package:alsan_app/utils/helper.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +84,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
+                  // FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -167,7 +166,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               const SizedBox(height: 16),
               CSCPicker(
                 layout: Layout.vertical,
-                defaultCountry: CscCountry.United_Arab_Emirates,
+                defaultCountry: CscCountry.Saudi_Arabia,
                 disableCountry: true,
                 showStates: true,
                 showCities: true,
@@ -268,6 +267,9 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               "state": state,
               "country": country,
               "gender": gender,
+              'language': langBloc.currentLanguageText == 'English'
+                  ? '${langBloc.currentLanguageText}'.toUpperCase()
+                  : 'ARABIC',
             };
 
             var response = await userBloc.patientSignUp(body: body)

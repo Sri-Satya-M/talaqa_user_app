@@ -181,7 +181,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
             const SizedBox(height: 12),
             CSCPicker(
               layout: Layout.vertical,
-              defaultCountry: CscCountry.United_Arab_Emirates,
+              defaultCountry: CscCountry.Saudi_Arabia,
               stateDropdownLabel: state.text,
               flagState: CountryFlag.DISABLE,
               disableCountry: true,

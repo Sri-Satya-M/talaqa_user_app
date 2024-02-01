@@ -85,7 +85,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
+                  // FilteringTextInputFormatter.allow(RegExp('[A-Za-z]'))
                 ],
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -172,7 +172,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               const SizedBox(height: 16),
               CSCPicker(
                 layout: Layout.vertical,
-                defaultCountry: CscCountry.United_Arab_Emirates,
+                defaultCountry: CscCountry.Saudi_Arabia,
                 disableCountry: true,
                 showStates: true,
                 showCities: true,
@@ -334,6 +334,9 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               "city": city,
               "country": country,
               "gender": gender,
+              'language':  langBloc.currentLanguageText == 'English'
+                  ? '${langBloc.currentLanguageText}'.toUpperCase()
+                  : 'ARABIC',
             };
 
             var response = await userBloc.patientSignUp(body: body)
