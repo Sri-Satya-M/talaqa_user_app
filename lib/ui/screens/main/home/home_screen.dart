@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
                     top: 20,
                     left: 20,
                     child: Column(
@@ -71,32 +70,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             color: Colors.white,
                           ),
                         ),
-                        const Spacer(),
-                        Container(
-                          width: 110,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: InkWell(
-                            onTap: () => bookNow.call(index: i),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Center(
-                                child: Text(
-                                  langBloc.getString(Strings.bookNow),
-                                  style: textTheme.subtitle1!.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    height: 0.1,
-                                  ),
-                                ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    child: Container(
+                      width: 110,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: InkWell(
+                        onTap: () => bookNow.call(index: i),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Center(
+                            child: Text(
+                              langBloc.getString(Strings.bookNow),
+                              style: textTheme.subtitle1!.copyWith(
+                                color: Colors.white,
+                                fontSize: 12,
+                                height: 0.1,
                               ),
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
