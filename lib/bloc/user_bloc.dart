@@ -142,7 +142,7 @@ class UserBloc with ChangeNotifier {
     await messaging.requestPermission();
     var fcmToken = await messaging.getToken();
     print('FCM token: $fcmToken');
-    var body = {'token': fcmToken, 'type': profile!.user!.userType!};
+    var body = {'token': fcmToken, 'type': 'PATIENT'};
     await _userRepo.updateFCMToken(body: body);
   }
 
@@ -172,5 +172,9 @@ class UserBloc with ChangeNotifier {
       serviceId: serviceId,
       query: query,
     );
+  }
+
+  Future switchLanguage({required String language}) async {
+    return await _userRepo.switchLanguage(language: language);
   }
 }

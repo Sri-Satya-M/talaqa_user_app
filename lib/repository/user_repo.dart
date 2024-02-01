@@ -158,4 +158,12 @@ class UserRepo {
     var list = response['data'] as List;
     return list.map((e) => Clinician.fromMap(e)).toList();
   }
+
+  Future switchLanguage({required String language}) async {
+    var response = await apiClient.post(
+      '${Api.users}/switch-language',
+      {'language': language},
+    );
+    return response;
+  }
 }

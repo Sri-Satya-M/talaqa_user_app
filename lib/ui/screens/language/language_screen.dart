@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
@@ -203,6 +204,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   void onTap({required String lang}) async {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+
     ProgressUtils.handleProgress(
       context,
       task: () async {
@@ -210,6 +213,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
           language: lang.toLowerCase(),
           toApp: true,
         );
+        if (!widget.isLoggingIn) {
+          await userBloc.switchLanguage(
+            language: langBloc.currentLanguageText == 'English'
+                ? '${langBloc.currentLanguageText}'.toUpperCase()
+                : 'ARABIC',
+          );
+        }
       },
       onSuccess: () {
         if (widget.isLoggingIn) {
@@ -219,7 +229,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           );
         } else {
           ErrorSnackBar.show(context, 'Language Changed Successfully');
-         MainScreen.open(context);
+          MainScreen.open(context);
         }
       },
     );

@@ -74,6 +74,18 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
       length: 0,
       vsync: this,
     );
+    updateLan();
+  }
+
+  updateLan() async {
+    var userBloc = Provider.of<UserBloc>(context, listen: false);
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+
+    await userBloc.switchLanguage(
+      language: langBloc.currentLanguageText == 'English'
+          ? '${langBloc.currentLanguageText}'.toUpperCase()
+          : 'ARABIC',
+    );
   }
 
   @override
