@@ -30,8 +30,15 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
     var textTheme = Theme.of(context).textTheme;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
-    symptoms =
-        sessionBloc.service?.symptoms?.map((e) => e.title ?? '').toList() ?? [];
+    if (langBloc.currentLanguageText == 'English') {
+      symptoms =
+          sessionBloc.service?.symptoms?.map((e) => e.title ?? '').toList() ??
+              [];
+    } else {
+      symptoms =
+          sessionBloc.service?.symptoms?.map((e) => e.arabic ?? '').toList() ??
+              [];
+    }
     print('index ${sessionBloc.selectedStatement}');
     return Container(
       padding: const EdgeInsets.all(20),

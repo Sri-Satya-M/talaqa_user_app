@@ -35,13 +35,7 @@ class Helper {
     if (text == null) return 'NA';
     var a = text
         .split(' ')
-        .map((e) =>
-            e[0].toUpperCase() +
-            e
-                .substring(
-                  1,
-                )
-                .toLowerCase())
+        .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
         .toList()
         .join(' ');
     return a;
@@ -173,4 +167,18 @@ class Helper {
       );
     }
   }
+}
+
+
+extension StringCasingExtension on String {
+  String toCapitalized() {
+    return length > 0
+        ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}'
+        : '';
+  }
+
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }

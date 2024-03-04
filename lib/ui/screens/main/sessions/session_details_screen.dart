@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/payment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,6 +50,13 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   bool enablePay = false;
   var date = DateTime.now();
   Session? session;
+
+  @override
+  void initState() {
+    super.initState();
+    PaymentBloc paymentProvider = context.read<PaymentBloc>();
+    paymentProvider.init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +352,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
+
     return (session!.status == "APPROVED")
         ? Column(
             children: [
@@ -353,28 +361,37 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   Expanded(
                     child: ProgressButton(
                       onPressed: () async {
-                        if (session?.patient?.user?.email?.isEmpty == null ||
-                            session?.patient?.user?.mobileNumber == null)
+                        if (session?.patient?.user?.email == null ||
+                            session?.patient?.user?.mobileNumber == null) {
                           return ErrorSnackBar.show(
                             context,
                             'Please Update Email and Mobile Number to Complete the Session Payment',
                           );
-                        var response = await sessionBloc.createRazorPayOrder(
-                          session: session!,
-                        ) as Map<String, dynamic>;
-                        if (response.containsKey('status') &&
-                            response['status'] == 'success') {
-                          SuccessScreen.open(
-                            context,
-                            type: 'PAYMENT',
-                            message: response['message'],
-                          );
                         }
+
+                        var paymentBloc = Provider.of<PaymentBloc>(
+                          context,
+                          listen: false,
+                        );
+                        await paymentBloc.paymentWithCreditOrDebitCard(
+                          session: session!,
+                          onSucceeded: (result) {
+                            SuccessScreen.open(
+                              context,
+                              type: 'PAYMENT',
+                              message: 'Payment success',
+                            );
+                          },
+                          onFailed: (error) {
+                            print('Error');
+                          },
+                          onCancelled: () {},
+                        );
                       },
                       child: Text(langBloc.getString(Strings.payNow)),
                     ),
                   ),
-                  if (userBloc.profile?.user?.email != null &&
+                  if (userBloc.profile?.user?.email != null ||
                       userBloc.profile!.user!.email!.isNotEmpty) ...[
                     const SizedBox(width: 16),
                     Expanded(

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+// import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../model/address.dart';
 import '../model/chat.dart';
@@ -144,74 +144,74 @@ class SessionBloc with ChangeNotifier {
     );
   }
 
-  Future createRazorPayOrder({required Session session}) async {
-    var order = await sessionRepo.createRazorPayOrder(
-      body: {"sessionId": session.id},
-    );
-
-    var response = await executeRazorPay(order: order, session: session);
-
-    var body = {};
-
-    body['rzpOrderId'] = response.orderId;
-    body['rzpPaymentId'] = response.paymentId;
-    body['rzpSignature'] = response.signature;
-
-    var verifyResponse = await sessionRepo.verifyOrder(body: body);
-    clear();
-
-    return verifyResponse;
-  }
-
-  Completer<PaymentSuccessResponse>? razorpayCompleter;
-
-  executeRazorPay({
-    required CreateRazorPay order,
-    required Session session,
-  }) async {
-    print(Environment.razorPayKey);
-    var options = {
-      'order_id': order.rzpOrderId,
-      'key': Environment.razorPayKey,
-      'amount': order.rzpOrderAmount,
-      'currency': 'INR',
-      'name': 'Talaqa',
-      'description': 'Online Session Booking Payment',
-      'image': Images.logo,
-      'prefill': {
-        'contact': session.patient!.user!.mobileNumber!,
-        'email': session.patient!.user!.email!,
-      },
-      "theme": {"color": "#02283D"}
-    };
-
-    var _razorpay = Razorpay();
-    razorpayCompleter = Completer();
-
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-        (PaymentSuccessResponse response) {
-      razorpayCompleter!.complete(response);
-    });
-
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-        (PaymentFailureResponse response) {
-      print('Razorpay error : ${response.code}, ${response.message}');
-      try {
-        var error = jsonDecode(response.message ?? '')['error']['description'];
-        razorpayCompleter!.completeError(error);
-      } catch (e) {
-        print(e);
-        razorpayCompleter!.completeError('Something went wrong');
-      }
-    });
-
-    _razorpay.open(options);
-
-    var response = await razorpayCompleter!.future;
-    _razorpay.clear();
-
-    return response;
-  }
+  // Future createRazorPayOrder({required Session session}) async {
+  //   var order = await sessionRepo.createRazorPayOrder(
+  //     body: {"sessionId": session.id},
+  //   );
+  //
+  //   var response = await executeRazorPay(order: order, session: session);
+  //
+  //   var body = {};
+  //
+  //   body['rzpOrderId'] = response.orderId;
+  //   body['rzpPaymentId'] = response.paymentId;
+  //   body['rzpSignature'] = response.signature;
+  //
+  //   var verifyResponse = await sessionRepo.verifyOrder(body: body);
+  //   clear();
+  //
+  //   return verifyResponse;
+  // }
+  //
+  // Completer<PaymentSuccessResponse>? razorpayCompleter;
+  //
+  // executeRazorPay({
+  //   required CreateRazorPay order,
+  //   required Session session,
+  // }) async {
+  //   print(Environment.razorPayKey);
+  //   var options = {
+  //     'order_id': order.rzpOrderId,
+  //     'key': Environment.razorPayKey,
+  //     'amount': order.rzpOrderAmount,
+  //     'currency': 'INR',
+  //     'name': 'Talaqa',
+  //     'description': 'Online Session Booking Payment',
+  //     'image': Images.logo,
+  //     'prefill': {
+  //       'contact': session.patient!.user!.mobileNumber!,
+  //       'email': session.patient!.user!.email!,
+  //     },
+  //     "theme": {"color": "#02283D"}
+  //   };
+  //
+  //   var _razorpay = Razorpay();
+  //   razorpayCompleter = Completer();
+  //
+  //   _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+  //       (PaymentSuccessResponse response) {
+  //     razorpayCompleter!.complete(response);
+  //   });
+  //
+  //   _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+  //       (PaymentFailureResponse response) {
+  //     print('Razorpay error : ${response.code}, ${response.message}');
+  //     try {
+  //       var error = jsonDecode(response.message ?? '')['error']['description'];
+  //       razorpayCompleter!.completeError(error);
+  //     } catch (e) {
+  //       print(e);
+  //       razorpayCompleter!.completeError('Something went wrong');
+  //     }
+  //   });
+  //
+  //   _razorpay.open(options);
+  //
+  //   var response = await razorpayCompleter!.future;
+  //   _razorpay.clear();
+  //
+  //   return response;
+  // }
 
   Future<Services> getServices({required query}) {
     return sessionRepo.getServices(query: query);

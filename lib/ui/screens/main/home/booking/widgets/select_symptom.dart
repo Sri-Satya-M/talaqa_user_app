@@ -33,10 +33,10 @@ class _SelectSymptomsState extends State<SelectSymptoms> {
           isExpanded: true,
           hint: Text(langBloc.getString(Strings.selectAType)),
           items: [
-            for (String symptom in widget.symptoms)
+            for (var symptom in widget.symptoms)
               DropdownMenuItem<String>(
                 value: symptom,
-                child: Text(Helper.textCapitalization(text: symptom)),
+                child: Text(symptom.toTitleCase()),
               ),
           ],
           onChanged: (value) {

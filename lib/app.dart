@@ -1,8 +1,3 @@
-import 'package:alsan_app/bloc/location_bloc.dart';
-import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
-import 'package:alsan_app/bloc/user_bloc.dart';
-import 'package:alsan_app/resources/theme.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -10,9 +5,15 @@ import 'package:provider/provider.dart';
 
 import 'bloc/agora_bloc.dart';
 import 'bloc/language_bloc.dart';
+import 'bloc/location_bloc.dart';
+import 'bloc/main_bloc.dart';
+import 'bloc/payment_bloc.dart';
 import 'bloc/progress_bloc.dart';
+import 'bloc/sesssion_bloc.dart';
+import 'bloc/user_bloc.dart';
 import 'config/application.dart';
 import 'config/routes.dart';
+import 'resources/theme.dart';
 import 'ui/widgets/progress_block_widget.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -37,6 +38,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => SessionBloc()),
           ChangeNotifierProvider(create: (_) => LocationBloc()),
           ChangeNotifierProvider(create: (_) => AgoraBloc()),
+          ChangeNotifierProvider(create: (_) => PaymentBloc()),
           ChangeNotifierProvider.value(value: langBloc),
         ],
         child: ProgressBlockWidget(
