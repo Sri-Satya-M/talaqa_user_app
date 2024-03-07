@@ -410,18 +410,21 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   }
 
   Widget joinOrStartSessionButton(BuildContext context) {
-    // bool flag = (session!.status == "STARTED") &&
-    //     Helper.formatDate(date: DateTime.now()) ==
-    //         Helper.formatDate(date: session!.date);
+    bool flag = (session!.status == "STARTED") &&
+        Helper.formatDate(date: DateTime.now()) ==
+            Helper.formatDate(date: session!.date);
 
     var langBloc = Provider.of<LangBloc>(context, listen: false);
-
-    return ProgressButton(
-      onPressed: sessionOnTap,
-      child: Text(
-        "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
-      ),
-    );
+    if (flag) {
+      return ProgressButton(
+        onPressed: sessionOnTap,
+        child: Text(
+          "${langBloc.getString(Strings.joinSession)}${session!.consultationMode == 'HOME' ? ' ${langBloc.getString(Strings.atHome)}' : ''}",
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget finishButton() {
@@ -485,7 +488,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           context: context,
           session: session!,
           token: token['token'],
-          duration: const Duration(minutes: 60),
+          duration: const Duration(minutes: 40),
           hitTime: 15,
         ).then((value) async {
           setState(() {});
