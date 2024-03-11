@@ -8,13 +8,11 @@ import 'doctor_card.dart';
 
 class ClinicianList extends StatefulWidget {
   final Axis scrollDirection;
-  final Function onTap;
   final String search;
 
   const ClinicianList({
     super.key,
     required this.scrollDirection,
-    required this.onTap,
     this.search = '',
   });
 
@@ -91,10 +89,7 @@ class _ClinicianListState extends State<ClinicianList> {
             ),
           );
         }
-        return DoctorCard(
-          clinician: clinicians[index],
-          onTap: widget.onTap,
-        );
+        return DoctorCard(clinician: clinicians[index]);
       },
     );
   }

@@ -8,13 +8,13 @@ import '../../../../../widgets/custom_card.dart';
 import '../widgets/select_clinician_widget.dart';
 
 class SelectClinician extends StatefulWidget {
-  final Function onTap;
   final String serviceId;
+  final bool isClinician;
 
   const SelectClinician({
     super.key,
-    required this.onTap,
     required this.serviceId,
+    required this.isClinician,
   });
 
   @override
@@ -80,9 +80,9 @@ class _SelectClinicianState extends State<SelectClinician> {
               var search = snapshot.data ?? '';
               return SelectClinicianWidget(
                 key: ValueKey(search),
-                onTap: () {},
                 serviceId: widget.serviceId,
                 search: search,
+                isClinician: widget.isClinician,
               );
             },
           ),

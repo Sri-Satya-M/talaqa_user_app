@@ -125,27 +125,29 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
                 value: Text(widget.clinician.bio ?? 'NA'),
               ),
               const SizedBox(height: 16),
-              Builder(builder: (context) {
-                List<Service> services = list[0]?.services ?? [];
-                if (services.isEmpty) {
-                  return const EmptyWidget();
-                } else {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(langBloc.getString(Strings.services)),
-                      ListView.builder(
-                        itemCount: services.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ServiceCard(service: services[index]);
-                        },
-                      ),
-                    ],
-                  );
-                }
-              }),
+              Builder(
+                builder: (context) {
+                  List<Service> services = list[0]?.services ?? [];
+                  if (services.isEmpty) {
+                    return const EmptyWidget();
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(langBloc.getString(Strings.services)),
+                        ListView.builder(
+                          itemCount: services.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return ServiceCard(service: services[index]);
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
               // const SizedBox(height: 30),
               // Builder(builder: (context) {
               //   List<Review> reviews = list[1] ?? [];

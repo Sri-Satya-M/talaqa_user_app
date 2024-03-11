@@ -13,15 +13,15 @@ import '../../../../../widgets/loading_widget.dart';
 import 'clinician_details_widget.dart';
 
 class SelectClinicianWidget extends StatefulWidget {
-  final Function onTap;
   final String search;
   final String serviceId;
+  final bool isClinician;
 
   const SelectClinicianWidget({
     super.key,
-    required this.onTap,
     required this.search,
     required this.serviceId,
+    required this.isClinician,
   });
 
   @override
@@ -52,6 +52,10 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
 
       if (widget.search.isNotEmpty) {
         query['search'] = widget.search;
+      }
+
+      if (widget.isClinician) {
+        query['clinician'] = '${sessionBloc.selectedClinician?.id}';
       }
 
       if (widget.serviceId == 'null' || widget.serviceId == '') {
@@ -114,7 +118,6 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
                   ),
                 );
               }
-
               return CustomCard(
                 radius: 5,
                 child: Stack(

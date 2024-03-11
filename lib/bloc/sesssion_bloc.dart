@@ -71,7 +71,7 @@ class SessionBloc with ChangeNotifier {
     notifyListeners();
   }
 
-  clear() {
+  clear(bool isClinician) {
     selectedPatient = null;
     service = null;
     symptom = null;
@@ -79,7 +79,9 @@ class SessionBloc with ChangeNotifier {
     selectedDate = null;
     selectedTimeSlotIds?.clear();
     description = null;
-    selectedClinician = null;
+    if (!isClinician) {
+      selectedClinician = null;
+    }
     selectedAddressId = null;
     timeslots.clear();
     notifyListeners();

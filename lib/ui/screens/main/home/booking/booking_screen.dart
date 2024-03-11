@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bloc/user_bloc.dart';
-import '../../../../../model/clinicians.dart';
 import '../../../../../model/profile.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../../utils/helper.dart';
@@ -25,14 +24,14 @@ import '../../../../widgets/success_screen.dart';
 import 'pages/select_service_page.dart';
 
 class BookingScreen extends StatefulWidget {
-  final Clinician clinician;
+  final bool isClinician;
 
-  const BookingScreen({super.key, required this.clinician});
+  const BookingScreen({super.key, this.isClinician = false});
 
-  static Future open(BuildContext context, {required Clinician clinician}) {
+  static Future open(BuildContext context, {bool isClinician = false}) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BookingScreen(clinician: clinician),
+        builder: (context) => BookingScreen(isClinician: isClinician),
       ),
     );
   }
@@ -79,18 +78,19 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void initState() {
+    super.initState();
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
-    sessionBloc.clear();
+    sessionBloc.clear(widget.isClinician);
     sessionBloc.selectedDate = DateTime.now();
     controller = PageController(initialPage: pageIndex - 1);
     initializeTitles();
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    print('clinician ID${sessionBloc.selectedClinician?.id}');
     return Scaffold(
       backgroundColor: MyColors.bookingBgColor,
       appBar: AppBar(title: Text(langBloc.getString(Strings.bookSession))),
@@ -120,10 +120,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 const ChooseStatementPage(),
                 SelectClinician(
                   serviceId: '${sessionBloc.service?.id}',
-                  onTap: (clinician) {
-                    sessionBloc.selectedClinician = clinician;
-                    animateToNextPage();
-                  },
+                  isClinician: widget.isClinician,
                 ),
                 if (sessionBloc.selectedClinician?.id == null)
                   ...[]
@@ -399,7 +396,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   void dispose() {
-    context.read<SessionBloc>().clear();
+    context.read<SessionBloc>().clear(widget.isClinician);
     super.dispose();
   }
 }

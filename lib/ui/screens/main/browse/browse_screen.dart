@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/clinician_list.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -87,9 +87,6 @@ class _BrowseScreenState extends State<BrowseScreen> {
               key: ValueKey(search),
               search: search,
               scrollDirection: Axis.vertical,
-              onTap: (clinician) {
-                BookingScreen.open(context, clinician: clinician);
-              },
             );
           },
         ),

@@ -1,5 +1,4 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -72,9 +71,6 @@ class _SelectCliniciansState extends State<SelectClinicians> {
                 key: ValueKey(search),
                 search: search,
                 scrollDirection: Axis.vertical,
-                onTap: (clinician) {
-                  ClinicianDetailsScreen.open(context, clinician: clinician);
-                },
               );
             },
           ),

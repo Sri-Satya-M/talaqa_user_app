@@ -1,9 +1,7 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/model/clinicians.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
-import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/upcoming_sessions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -160,14 +158,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
         ),
-        SizedBox(
-          height: 160,
-          child: ClinicianList(
-            scrollDirection: Axis.horizontal,
-            onTap: (clinician) {
-              ClinicianDetailsScreen.open(context, clinician: clinician);
-            },
-          ),
+        const SizedBox(
+          height: 200,
+          child: ClinicianList(scrollDirection: Axis.horizontal),
         ),
         const SizedBox(height: 16),
         Text(langBloc.getString(Strings.resources), style: textTheme.bodyText1),
@@ -202,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bookNow({required int index}) {
     switch (index) {
       case 0:
-        BookingScreen.open(context, clinician: Clinician());
+        BookingScreen.open(context);
         break;
       default:
         return;

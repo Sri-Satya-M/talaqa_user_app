@@ -1,3 +1,5 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
+import 'package:alsan_app/bloc/sesssion_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
@@ -5,18 +7,16 @@ import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../model/clinicians.dart';
+import '../../../../../resources/strings.dart';
+import '../booking/booking_screen.dart';
 
 class DoctorCard extends StatefulWidget {
   final Clinician clinician;
-  final Function onTap;
 
-  const DoctorCard({
-    super.key,
-    required this.clinician,
-    required this.onTap,
-  });
+  const DoctorCard({super.key, required this.clinician});
 
   @override
   _DoctorCardState createState() => _DoctorCardState();
@@ -27,15 +27,13 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return CustomCard(
       width: size.width * 0.8,
       radius: 5,
       child: InkWell(
         onTap: () {
-          ClinicianDetailsScreen.open(
-            context,
-            clinician: widget.clinician,
-          );
+          ClinicianDetailsScreen.open(context, clinician: widget.clinician);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,23 +120,29 @@ class _DoctorCardState extends State<DoctorCard> {
                 ],
               ),
             ),
-            // const Spacer(),
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //     shape: const RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.only(
-            //         bottomRight: Radius.circular(5),
-            //         bottomLeft: Radius.circular(5),
-            //       ),
-            //     ),
-            //     // textStyle: textTheme.headline3,
-            //     fixedSize: const Size(140, 50),
-            //   ),
-            //   onPressed: () {
-            //     widget.onTap(widget.clinician);
-            //   },
-            //   child: Text(langBloc.getString(Strings.bookASession)),
-            // ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                  ),
+                ),
+                // textStyle: textTheme.headline3,
+                fixedSize: const Size(140, 50),
+              ),
+              onPressed: () {
+                var sessionBloc = Provider.of<SessionBloc>(
+                  context,
+                  listen: false,
+                );
+                BookingScreen.open(context, isClinician: true);
+                print('Heref ${widget.clinician.userId}');
+                sessionBloc.selectedClinician = widget.clinician;
+                print(sessionBloc.selectedClinician);
+              },
+              child: Text(langBloc.getString(Strings.bookASession)),
+            ),
           ],
         ),
       ),
