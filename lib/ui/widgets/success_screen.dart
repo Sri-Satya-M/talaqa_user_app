@@ -1,6 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:alsan_app/ui/screens/profile/profile_email_screen.dart';

@@ -9,7 +9,7 @@ import 'bloc/location_bloc.dart';
 import 'bloc/main_bloc.dart';
 import 'bloc/payment_bloc.dart';
 import 'bloc/progress_bloc.dart';
-import 'bloc/sesssion_bloc.dart';
+import 'bloc/session_bloc.dart';
 import 'bloc/user_bloc.dart';
 import 'config/application.dart';
 import 'config/routes.dart';

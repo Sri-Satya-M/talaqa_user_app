@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../bloc/language_bloc.dart';
-import '../../../../bloc/sesssion_bloc.dart';
+import '../../../../bloc/session_bloc.dart';
 import '../../../../bloc/user_bloc.dart';
 import '../../../../model/session.dart';
 import '../../../../resources/colors.dart';

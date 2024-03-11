@@ -1,5 +1,5 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/model/chat.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/other_bubble.dart';
 import 'package:alsan_app/ui/screens/main/sessions/agora/widgets/self_bubble.dart';

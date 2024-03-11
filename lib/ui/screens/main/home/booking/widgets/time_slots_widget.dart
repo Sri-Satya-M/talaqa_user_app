@@ -1,4 +1,4 @@
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';

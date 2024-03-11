@@ -1,17 +1,22 @@
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
-import 'package:alsan_app/model/service.dart';
-import 'package:alsan_app/ui/screens/main/home/booking/widgets/service_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../bloc/session_bloc.dart';
+import '../../../../../../model/service.dart';
 import '../../../../../widgets/empty_widget.dart';
 import '../../../../../widgets/error_widget.dart';
 import '../../../../../widgets/loading_widget.dart';
+import '../widgets/service_card.dart';
 
 class SelectServicePage extends StatefulWidget {
+  final bool isClinician;
   final Function(Service) onTap;
 
-  const SelectServicePage({super.key, required this.onTap});
+  const SelectServicePage({
+    super.key,
+    required this.onTap,
+    required this.isClinician,
+  });
 
   @override
   _SelectServicePageState createState() => _SelectServicePageState();
@@ -30,7 +35,10 @@ class _SelectServicePageState extends State<SelectServicePage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       child: FutureBuilder<Services>(
-        future: sessionBloc.getServices(query: {'offset': 0}),
+        future: widget.isClinician
+            ? sessionBloc.getClinicianServices(
+                id: '${sessionBloc.selectedClinician?.id}')
+            : sessionBloc.getServices(query: {'offset': 0}),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);

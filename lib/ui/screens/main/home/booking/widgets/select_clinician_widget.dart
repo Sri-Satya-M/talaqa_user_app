@@ -1,4 +1,4 @@
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/empty_widget.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';

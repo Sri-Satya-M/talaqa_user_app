@@ -1,5 +1,5 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/model/session.dart';
 import 'package:alsan_app/ui/screens/main/sessions/widgets/rating_widget.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';

@@ -3,7 +3,7 @@ import 'package:alsan_app/ui/screens/main/sessions/tabs/screens/completed_sessio
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../bloc/session_bloc.dart';
 import '../../../../../../model/session.dart';
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../resources/strings.dart';

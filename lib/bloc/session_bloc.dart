@@ -216,6 +216,10 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.getServices(query: query);
   }
 
+  Future<Services> getClinicianServices({required String id}) async {
+    return sessionRepo.getClinicianServices(id: id);
+  }
+
   ///Handling chat in bloc
 
   initializeStream() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../bloc/session_bloc.dart';
 import '../../../../../../model/address.dart';
 import 'address_details_widget.dart';
 

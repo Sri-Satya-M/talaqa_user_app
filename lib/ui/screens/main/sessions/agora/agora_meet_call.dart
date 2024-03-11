@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../bloc/session_bloc.dart';
 import '../../../../../resources/colors.dart';
 import '../../../../../resources/images.dart';
 import 'agora_chat_screen.dart';

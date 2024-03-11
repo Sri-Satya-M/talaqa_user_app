@@ -110,4 +110,9 @@ class SessionRepo {
     var list = response as List;
     return list.map((e) => TimeOfDay.fromJson(e)).toList();
   }
+
+  Future<Services> getClinicianServices({required String id}) async {
+    var response = await apiClient.get('${Api.services}/${Api.clinicians}/$id');
+    return Services.fromJson(response);
+  }
 }

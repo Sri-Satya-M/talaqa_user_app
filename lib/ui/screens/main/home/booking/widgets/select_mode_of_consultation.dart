@@ -3,7 +3,7 @@ import 'package:alsan_app/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../bloc/sesssion_bloc.dart';
+import '../../../../../../bloc/session_bloc.dart';
 import '../../../../../../model/mode_of_consultation.dart';
 import '../../../../../../resources/colors.dart';
 import '../../../../../../resources/images.dart';

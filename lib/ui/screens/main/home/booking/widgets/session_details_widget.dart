@@ -1,5 +1,5 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/bloc/sesssion_bloc.dart';
+import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/model/time_of_day.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/details_box.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
