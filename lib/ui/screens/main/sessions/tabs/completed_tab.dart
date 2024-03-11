@@ -60,7 +60,8 @@ class _CompletedTabState extends State<CompletedTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              EmptyWidget(message: langBloc.getString(Strings.noCompletedSessions)),
+              EmptyWidget(
+                  message: langBloc.getString(Strings.noCompletedSessions)),
             ],
           )
         : CustomScrollView(

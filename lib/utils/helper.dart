@@ -169,7 +169,6 @@ class Helper {
   }
 }
 
-
 extension StringCasingExtension on String {
   String toCapitalized() {
     return length > 0

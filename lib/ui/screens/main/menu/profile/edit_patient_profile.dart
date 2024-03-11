@@ -99,7 +99,7 @@ class _EditPatientProfileState extends State<EditPatientProfile> {
                           context, ImageSource.gallery);
                       setState(() {});
                     },
-                    child: const Icon(Icons.edit,color: MyColors.primaryColor),
+                    child: const Icon(Icons.edit, color: MyColors.primaryColor),
                   ),
                 ),
               ],

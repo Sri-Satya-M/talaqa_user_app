@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
 import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';

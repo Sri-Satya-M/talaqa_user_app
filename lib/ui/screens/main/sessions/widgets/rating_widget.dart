@@ -20,10 +20,9 @@ class _RatingWidgetState extends State<RatingWidget> {
     var textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: MyColors.divider,
-        border: Border.all(color: const Color(0xFF0D0D0D1A)),
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: MyColors.divider,
+          border: Border.all(color: const Color(0xFF0D0D0D1A)),
+          borderRadius: BorderRadius.circular(5)),
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [

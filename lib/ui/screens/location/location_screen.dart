@@ -113,7 +113,9 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
             );
           },
-          child: Text(langBloc.getString(Strings.confirmLocation),),
+          child: Text(
+            langBloc.getString(Strings.confirmLocation),
+          ),
         ),
       ),
     );
@@ -162,11 +164,11 @@ class _LocationScreenState extends State<LocationScreen> {
           case LocationPermission.deniedForever:
             return ErrorSnackBar.show(context, 'Location Permission Denied');
           case LocationPermission.whileInUse:
-            // TODO: Handle this case.
+          // TODO: Handle this case.
           case LocationPermission.always:
-            // TODO: Handle this case.
+          // TODO: Handle this case.
           case LocationPermission.unableToDetermine:
-            // TODO: Handle this case.
+          // TODO: Handle this case.
         }
 
         position = await Geolocator.getCurrentPosition(

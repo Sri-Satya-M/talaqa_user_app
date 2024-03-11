@@ -33,7 +33,6 @@ class Routes {
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFoundHandler;
 
-
     router.define(
       root,
       handler: rootHandler,

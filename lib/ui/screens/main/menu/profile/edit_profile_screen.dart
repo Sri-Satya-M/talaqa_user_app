@@ -7,7 +7,6 @@ import 'package:alsan_app/ui/widgets/date_picker.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -100,7 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         const Positioned(
                           bottom: 0,
                           right: 0,
-                          child: Icon(Icons.edit,color: MyColors.primaryColor),
+                          child: Icon(Icons.edit, color: MyColors.primaryColor),
                         ),
                       ],
                     ),
@@ -241,7 +240,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               "age": int.tryParse(age.text),
               if (profile?.user?.email != email.text) "email": email.text,
-              if (profile?.gender != email.text)"gender": gender,
+              if (profile?.gender != email.text) "gender": gender,
               if (profileImage != null) "imageUrl": imageResponse['key']
             };
 

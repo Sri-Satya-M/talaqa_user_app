@@ -27,16 +27,16 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    return InkWell(
-      onTap: () {
-        ClinicianDetailsScreen.open(
-          context,
-          clinician: widget.clinician,
-        );
-      },
-      child: CustomCard(
-        width: size.width * 0.8,
-        radius: 5,
+    return CustomCard(
+      width: size.width * 0.8,
+      radius: 5,
+      child: InkWell(
+        onTap: () {
+          ClinicianDetailsScreen.open(
+            context,
+            clinician: widget.clinician,
+          );
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,

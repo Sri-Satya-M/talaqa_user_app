@@ -1,4 +1,3 @@
-import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/location_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

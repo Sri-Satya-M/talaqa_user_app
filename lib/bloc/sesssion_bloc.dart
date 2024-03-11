@@ -1,22 +1,19 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:alsan_app/model/environment.dart';
 import 'package:alsan_app/model/service.dart';
 import 'package:flutter/cupertino.dart';
+
 // import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../model/address.dart';
 import '../model/chat.dart';
 import '../model/clinicians.dart';
-import '../model/create_razor_pay.dart';
 import '../model/mode_of_consultation.dart';
 import '../model/profile.dart';
 import '../model/reports.dart';
 import '../model/session.dart';
 import '../model/time_of_day.dart';
 import '../repository/session_repo.dart';
-import '../resources/images.dart';
 
 class SessionBloc with ChangeNotifier {
   final sessionRepo = SessionRepo();

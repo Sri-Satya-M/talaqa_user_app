@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../resources/colors.dart';
 import 'three_size_dot.dart';
 

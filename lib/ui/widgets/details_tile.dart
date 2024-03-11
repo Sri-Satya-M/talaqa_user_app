@@ -1,4 +1,3 @@
-import 'package:alsan_app/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 class DetailsTile extends StatelessWidget {

@@ -10,7 +10,6 @@ import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -334,7 +333,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               "city": city,
               "country": country,
               "gender": gender,
-              'language':  langBloc.currentLanguageText == 'English'
+              'language': langBloc.currentLanguageText == 'English'
                   ? '${langBloc.currentLanguageText}'.toUpperCase()
                   : 'ARABIC',
             };

@@ -1,7 +1,6 @@
 import 'package:amazon_payfort/amazon_payfort.dart';
 
 class PayfortConstants {
-
   static const FortEnvironment environment = FortEnvironment.test;
   static const String merchantIdentifier = '5c2017ce';
 

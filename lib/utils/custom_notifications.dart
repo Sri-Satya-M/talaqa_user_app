@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class CustomNotification {
@@ -9,7 +10,7 @@ class CustomNotification {
   get firebaseMessaging => _firebaseMessaging;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   var initializationSettingsAndroid;
   var initializationSettingsIOS;
@@ -18,7 +19,7 @@ class CustomNotification {
   void initialize() async {
     FirebaseMessaging.instance.requestPermission();
     initializationSettingsAndroid =
-    const AndroidInitializationSettings('notification_icon');
+        const AndroidInitializationSettings('notification_icon');
     initializationSettingsIOS = const IOSInitializationSettings(
       defaultPresentAlert: true,
       defaultPresentBadge: true,
@@ -44,7 +45,7 @@ class CustomNotification {
     );
 
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -57,12 +58,12 @@ class CustomNotification {
 
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
     FirebaseMessaging.onMessage.listen(
-          (RemoteMessage message) async {
+      (RemoteMessage message) async {
         RemoteNotification? notification = message.notification;
         if (notification != null) {
           // print(message.notification?.body);
           const AndroidNotificationDetails androidPlatformChannelSpecifics =
-          AndroidNotificationDetails(
+              AndroidNotificationDetails(
             'Talaqa',
             'General',
             importance: Importance.max,
@@ -72,7 +73,7 @@ class CustomNotification {
             styleInformation: BigTextStyleInformation(''),
           );
           IOSNotificationDetails iOSChannelSpecifics =
-          const IOSNotificationDetails(
+              const IOSNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,

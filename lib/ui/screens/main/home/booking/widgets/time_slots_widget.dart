@@ -11,6 +11,7 @@ import '../../../../../widgets/loading_widget.dart';
 
 class TimeSlotsWidget extends StatefulWidget {
   final String clinicianId;
+
   const TimeSlotsWidget({super.key, required this.clinicianId});
 
   @override

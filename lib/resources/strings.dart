@@ -1,4 +1,3 @@
-
 enum Strings {
   aboutTalaqa,
   accept,

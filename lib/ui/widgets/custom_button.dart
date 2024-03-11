@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../bloc/progress_bloc.dart';
 import '../../resources/colors.dart';
 import 'error_snackbar.dart';

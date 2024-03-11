@@ -33,10 +33,10 @@ class Api {
   static const dashboard = '/dashboard';
   static const duration = '/duration';
   static const services = '/services';
+
   // static const patientProfile = '/patientProfile';
   static const symptoms = '/symptoms';
   static const notifications = '/notifications';
   static const reviews = '/reviews';
   static const sessionClinician = '$sessions/update-session-clinician-patient';
-
 }

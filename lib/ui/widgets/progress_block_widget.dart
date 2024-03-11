@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
+
 import '../../bloc/progress_bloc.dart';
 import 'loading_widget.dart';
 

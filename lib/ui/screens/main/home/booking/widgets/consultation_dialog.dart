@@ -130,7 +130,8 @@ class _ConsultationDialogState extends State<ConsultationDialog> {
                                 Radius.circular(10),
                               ),
                             ),
-                            child: Text('${consultations[i].price} ${langBloc.getString(Strings.dirham)}'),
+                            child: Text(
+                                '${consultations[i].price} ${langBloc.getString(Strings.dirham)}'),
                           ),
                         ),
                         const SizedBox(height: 5),
