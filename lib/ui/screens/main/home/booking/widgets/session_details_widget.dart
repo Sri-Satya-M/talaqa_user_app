@@ -38,28 +38,28 @@ class SessionDetailsWidget extends StatelessWidget {
                   title: Text(langBloc.getString(Strings.speciality)),
                   value: Text(
                     '${sessionBloc.selectedClinician?.designation}',
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.modeOfConsultation)),
                   value: Text(
                     '${sessionBloc.selectedModeOfConsultation?.type}',
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.duration)),
                   value: Text(
                     '01:00 hrs',
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 ReverseDetailsTile(
                   title: Text(langBloc.getString(Strings.type)),
                   value: Text(
                     sessionBloc.symptom.toString(),
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
               ],
@@ -76,7 +76,7 @@ class SessionDetailsWidget extends StatelessWidget {
               title: Text(langBloc.getString(Strings.description)),
               value: Text(
                 description!,
-                style: textTheme.bodyText1,
+                style: textTheme.bodyLarge,
               ),
             ),
           ],

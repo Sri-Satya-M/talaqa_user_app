@@ -41,9 +41,9 @@
 //                     DetailsTile(
 //                       title: Text(
 //                         review.patient!.user!.fullName!,
-//                         style: textTheme.bodyText2,
+//                         style: textTheme.bodyMedium,
 //                       ),
-//                       value: Text(moment, style: textTheme.caption),
+//                       value: Text(moment, style: textTheme.bodySmall),
 //                     ),
 //                   ],
 //                 ),
@@ -67,7 +67,7 @@
 //                       const SizedBox(width: 4),
 //                       Text(
 //                         review.rating.toString(),
-//                         style: textTheme.bodyText1,
+//                         style: textTheme.bodyLarge,
 //                       ),
 //                     ],
 //                   ),

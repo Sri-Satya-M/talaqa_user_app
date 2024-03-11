@@ -46,7 +46,7 @@ class _ReportWidgetState extends State<ReportWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("${widget.session.sessionId}", style: textTheme.headline4),
+          Text("${widget.session.sessionId}", style: textTheme.headlineMedium),
           const SizedBox(height: 16),
           DynamicGridView(
             spacing: 0,
@@ -54,20 +54,20 @@ class _ReportWidgetState extends State<ReportWidget> {
             children: [
               DetailsTile(
                 title: Text(langBloc.getString(Strings.patient),
-                    style: textTheme.caption),
+                    style: textTheme.bodySmall),
                 value: Text(
                   "${widget.session.patientProfile!.fullName}",
-                  style: textTheme.headline3?.copyWith(
+                  style: textTheme.displaySmall?.copyWith(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
               DetailsTile(
                 title: Text(langBloc.getString(Strings.clinician),
-                    style: textTheme.caption),
+                    style: textTheme.bodySmall),
                 value: Text(
                   "${widget.session.clinician!.user!.fullName}",
-                  style: textTheme.headline3?.copyWith(
+                  style: textTheme.displaySmall?.copyWith(
                     fontWeight: FontWeight.w400,
                   ),
                 ),

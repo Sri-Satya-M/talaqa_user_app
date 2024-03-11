@@ -85,7 +85,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                 const SizedBox(height: 8),
                                 Text(
                                   langBloc.getString(Strings.fetchingVideos),
-                                  style: textTheme.caption!.copyWith(
+                                  style: textTheme.bodySmall!.copyWith(
                                     fontSize: 14,
                                   ),
                                 )
@@ -134,7 +134,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                   children: [
                                     Text(
                                       '${langBloc.getString(Strings.updatedOn)} ${DateFormat('dd MMM, yyyy').format(videos[index].updatedAt!)}',
-                                      style: textTheme.caption,
+                                      style: textTheme.bodySmall,
                                     ),
                                   ],
                                 ),

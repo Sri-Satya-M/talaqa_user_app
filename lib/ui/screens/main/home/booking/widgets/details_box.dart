@@ -27,7 +27,7 @@ class DetailsBox extends StatelessWidget {
             ),
             child: Text(
               title,
-              style: textTheme.caption?.copyWith(color: Colors.black),
+              style: textTheme.bodySmall?.copyWith(color: Colors.black),
             ),
           ),
           const Divider(),

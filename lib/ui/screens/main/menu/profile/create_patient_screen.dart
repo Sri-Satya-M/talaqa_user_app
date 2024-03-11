@@ -70,7 +70,7 @@ class _CreatePatientState extends State<CreatePatient> {
               Text(
                 langBloc.getString(Strings.enterPatientDetailsToCreateProfile),
                 textAlign: TextAlign.center,
-                style: textTheme.bodyText1
+                style: textTheme.bodyLarge
                     ?.copyWith(color: Colors.black.withOpacity(0.7)),
               ),
               const SizedBox(height: 18),

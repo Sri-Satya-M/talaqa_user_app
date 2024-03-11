@@ -54,12 +54,12 @@ class _LanguageScreenState extends State<LanguageScreen> {
               Text(
                 langBloc.getString(Strings.choose),
                 textAlign: TextAlign.center,
-                style: textTheme.headline6,
+                style: textTheme.titleLarge,
               ),
               Text(
                 langBloc.getString(Strings.yourLanguage),
                 textAlign: TextAlign.center,
-                style: textTheme.headline4?.copyWith(
+                style: textTheme.headlineMedium?.copyWith(
                   color: Colors.black.withOpacity(0.4),
                 ),
               ),

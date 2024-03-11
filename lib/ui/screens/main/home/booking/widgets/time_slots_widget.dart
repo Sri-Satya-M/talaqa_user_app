@@ -47,7 +47,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
               if (timeDay.slots != null && timeDay.slots!.isNotEmpty) ...[
                 Text(
                   timeDay.label!,
-                  style: textTheme.caption?.copyWith(
+                  style: textTheme.bodySmall?.copyWith(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 10,
                   ),
@@ -60,7 +60,7 @@ class _TimeSlotsWidgetState extends State<TimeSlotsWidget> {
                     for (var timeSlot in timeDay.slots!) ...[
                       FilterChip(
                         label: Text('${timeSlot.startAt} - ${timeSlot.endAt}'),
-                        labelStyle: textTheme.caption?.copyWith(
+                        labelStyle: textTheme.bodySmall?.copyWith(
                           fontSize: 10,
                           color: timeSlotIds.contains(timeSlot.id)
                               ? Colors.white

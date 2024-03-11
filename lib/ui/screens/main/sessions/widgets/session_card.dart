@@ -44,7 +44,7 @@ class _SessionCardState extends State<SessionCard> {
                 children: [
                   Text(
                     "${widget.session.sessionId}",
-                    style: textTheme.headline4,
+                    style: textTheme.headlineMedium,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class _SessionCardState extends State<SessionCard> {
                       Helper.textCapitalization(
                         text: widget.session.status!.split('_').join(' '),
                       ),
-                      style: textTheme.bodyText1?.copyWith(color: Colors.white),
+                      style: textTheme.bodyLarge?.copyWith(color: Colors.white),
                     ),
                   )
                 ],
@@ -77,7 +77,7 @@ class _SessionCardState extends State<SessionCard> {
                     title: Text("${widget.session.clinician?.user?.fullName}"),
                     value: Text(
                       "${widget.session.clinician?.designation}",
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                 ],
@@ -88,30 +88,30 @@ class _SessionCardState extends State<SessionCard> {
                 count: 2,
                 children: [
                   DetailsTile(
-                    title: Text("Experience", style: textTheme.caption),
+                    title: Text("Experience", style: textTheme.bodySmall),
                     value: Text(
                       "${widget.session.clinician?.experience} years exp",
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                   ReverseDetailsTile(
                     title:
-                        Text("Mode of consultation", style: textTheme.caption),
+                        Text("Mode of consultation", style: textTheme.bodySmall),
                     value: Text(
                       "${widget.session.consultationMode}",
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                   ReverseDetailsTile(
-                    title: Text("Patient", style: textTheme.caption),
+                    title: Text("Patient", style: textTheme.bodySmall),
                     value: Text("${widget.session.patientProfile?.fullName}",
-                        style: textTheme.bodyText1),
+                        style: textTheme.bodyLarge),
                   ),
                   ReverseDetailsTile(
                     title: const Text('Type'),
                     value: Text(
                       widget.session.symptom ?? 'NA',
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                   if (widget.session.consultationMode == "HOME" &&
@@ -129,7 +129,7 @@ class _SessionCardState extends State<SessionCard> {
                           Expanded(
                             child: Text(
                               getOtp(widget.session),
-                              style: textTheme.caption?.copyWith(
+                              style: textTheme.bodySmall?.copyWith(
                                 color: Colors.black,
                               ),
                             ),

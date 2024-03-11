@@ -75,7 +75,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                 children: [
                   Text(
                     langBloc.getString(Strings.speechTherapy),
-                    style: textTheme.headline4,
+                    style: textTheme.headlineMedium,
                   ),
                   if (session.consultationMode == 'HOME') ...[
                     Row(
@@ -88,7 +88,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                         const SizedBox(width: 6),
                         Text(
                           langBloc.getString(Strings.atHome),
-                          style: textTheme.bodyText1?.copyWith(
+                          style: textTheme.bodyLarge?.copyWith(
                             color: Colors.blue,
                           ),
                         ),
@@ -161,7 +161,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                   title: Text(langBloc.getString(Strings.symptoms)),
                   value: Text(
                     '${session.symptom}',
-                    style: textTheme.headline2,
+                    style: textTheme.displayMedium,
                   ),
                 ),
               ],
@@ -170,7 +170,7 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                 title: Text(langBloc.getString(Strings.description)),
                 value: Text(
                   '${session.description}',
-                  style: textTheme.headline2,
+                  style: textTheme.displayMedium,
                 ),
               ),
               const SizedBox(height: 16),
@@ -221,13 +221,13 @@ class _CompletedSessionScreenState extends State<CompletedSessionScreen> {
                                       Helper.formatAddress(
                                         address: session.patientAddress,
                                       ),
-                                      style: textTheme.caption,
+                                      style: textTheme.bodySmall,
                                     ),
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
                                     "${session.patientAddress!.mobileNumber}",
-                                    style: textTheme.bodyText1,
+                                    style: textTheme.bodyLarge,
                                   )
                                 ],
                               ),

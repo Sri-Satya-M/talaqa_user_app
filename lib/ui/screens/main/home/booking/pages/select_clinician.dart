@@ -58,7 +58,7 @@ class _SelectClinicianState extends State<SelectClinician> {
         children: [
           CustomCard(
             child: TextFormField(
-              style: textTheme.bodyText1?.copyWith(fontSize: 16),
+              style: textTheme.bodyLarge?.copyWith(fontSize: 16),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(16),
                 prefixIcon: IconButton(
@@ -66,7 +66,7 @@ class _SelectClinicianState extends State<SelectClinician> {
                   icon: const Icon(Icons.search),
                 ),
                 hintText: langBloc.getString(Strings.searchByClinicianName),
-                hintStyle: textTheme.caption?.copyWith(fontSize: 14),
+                hintStyle: textTheme.bodySmall?.copyWith(fontSize: 14),
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
               ),

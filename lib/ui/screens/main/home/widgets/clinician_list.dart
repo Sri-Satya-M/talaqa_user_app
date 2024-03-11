@@ -80,7 +80,7 @@ class _ClinicianListState extends State<ClinicianList> {
                   const SizedBox(height: 8),
                   Text(
                     'Fetching more Clinicians',
-                    style: textTheme.caption!.copyWith(
+                    style: textTheme.bodySmall!.copyWith(
                       fontSize: 14,
                     ),
                   )

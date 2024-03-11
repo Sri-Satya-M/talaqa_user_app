@@ -81,7 +81,7 @@ class _LocationSearchBoxState extends State<LocationSearchBox> {
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           hintText: 'Type location you want...',
-                          hintStyle: textTheme.caption,
+                          hintStyle: textTheme.bodySmall,
                           filled: true,
                           fillColor: Colors.white,
                           contentPadding: const EdgeInsets.all(18),
@@ -150,7 +150,7 @@ class _LocationSearchBoxState extends State<LocationSearchBox> {
                       Expanded(
                         child: Text(
                           'Type location you want...',
-                          style: textTheme.caption,
+                          style: textTheme.bodySmall,
                         ),
                       ),
                       Container(

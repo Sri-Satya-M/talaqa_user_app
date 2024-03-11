@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       children: [
                         Text(
                           langBloc.getString(Strings.speechTherapy),
-                          style: textTheme.subtitle1!.copyWith(
+                          style: textTheme.titleMedium!.copyWith(
                             color: Colors.white,
                             fontSize: 13,
                           ),
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         const SizedBox(height: 10),
                         Text(
                           "at Your Fingertips",
-                          style: textTheme.headline5!.copyWith(
+                          style: textTheme.headlineSmall!.copyWith(
                             color: Colors.white,
                           ),
                         ),
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           child: Center(
                             child: Text(
                               langBloc.getString(Strings.bookNow),
-                              style: textTheme.subtitle1!.copyWith(
+                              style: textTheme.titleMedium!.copyWith(
                                 color: Colors.white,
                                 fontSize: 12,
                                 height: 0.1,
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           children: [
             Text(
               langBloc.getString(Strings.featuredClinicians),
-              style: textTheme.bodyText1,
+              style: textTheme.bodyLarge,
             ),
             TextButton(
               onPressed: () {
@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               },
               child: Text(
                 langBloc.getString(Strings.seeAll),
-                style: textTheme.headline2?.copyWith(
+                style: textTheme.titleSmall?.copyWith(
                   color: MyColors.primaryColor,
                 ),
               ),
@@ -159,11 +159,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
         const SizedBox(
-          height: 200,
+          height: 210,
           child: ClinicianList(scrollDirection: Axis.horizontal),
         ),
         const SizedBox(height: 16),
-        Text(langBloc.getString(Strings.resources), style: textTheme.bodyText1),
+        Text(langBloc.getString(Strings.resources), style: textTheme.bodyLarge),
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {

@@ -121,7 +121,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   children: [
                     Text(
                       langBloc.getString(Strings.speechTherapy),
-                      style: textTheme.headline4,
+                      style: textTheme.headlineMedium,
                     ),
                     getModeOfConsultation(
                       mode: session!.consultationMode!,
@@ -278,7 +278,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                     title: Text(langBloc.getString(Strings.symptoms)),
                     value: Text(
                       session?.symptom ?? '',
-                      style: textTheme.headline2,
+                      style: textTheme.displayMedium,
                     ),
                   ),
                 ],
@@ -287,7 +287,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   title: Text(langBloc.getString(Strings.description)),
                   value: Text(
                     session?.description ?? '',
-                    style: textTheme.headline2,
+                    style: textTheme.displayMedium,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -558,7 +558,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         const SizedBox(width: 8),
         Text(
           modeText,
-          style: textTheme.bodyText1
+          style: textTheme.bodyLarge
               ?.copyWith(color: Colors.lightBlue, fontSize: 16),
         ),
       ],

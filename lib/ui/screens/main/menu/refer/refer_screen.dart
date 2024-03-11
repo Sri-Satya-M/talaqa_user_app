@@ -41,7 +41,7 @@ class _ReferScreenState extends State<ReferScreen> {
               langBloc.getString(Strings
                   .shareThisLinkWithYourFriendsAndAfterTheyInstallBothOfYouWillGetRewards),
               textAlign: TextAlign.center,
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
             OutlinedButton(
@@ -51,7 +51,7 @@ class _ReferScreenState extends State<ReferScreen> {
                 fixedSize: const Size(110, 36),
               ),
               onPressed: null,
-              child: Text("ALSN21", style: textTheme.headline4),
+              child: Text("ALSN21", style: textTheme.headlineMedium),
             ),
           ],
         ),

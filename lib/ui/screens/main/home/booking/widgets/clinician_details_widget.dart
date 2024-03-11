@@ -36,11 +36,11 @@ class ClinicianDetailsWidget extends StatelessWidget {
               children: [
                 Text(
                   clinician.user?.fullName ?? 'NA',
-                  style: textTheme.bodyText2,
+                  style: textTheme.bodyMedium,
                 ),
                 Text(
                   clinician.designation ?? 'NA',
-                  style: textTheme.caption?.copyWith(
+                  style: textTheme.bodySmall?.copyWith(
                     color: MyColors.cerulean,
                   ),
                 ),
@@ -53,7 +53,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
                       child: Text(
                         clinician.languagesKnown ?? 'NA',
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyText1,
+                        style: textTheme.bodyLarge,
                       ),
                     ),
                   ],
@@ -72,7 +72,7 @@ class ClinicianDetailsWidget extends StatelessWidget {
             ),
             child: Text(
               '${clinician.experience} ${langBloc.getString(Strings.yearsExp)}',
-              style: textTheme.subtitle2,
+              style: textTheme.titleSmall,
             ),
           ),
         ],

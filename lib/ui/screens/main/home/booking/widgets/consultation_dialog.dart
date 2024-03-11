@@ -28,7 +28,7 @@ class ConsultationDialog extends StatefulWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(langBloc.getString(Strings.modeOfConsultation),
-                  style: textTheme.headline4),
+                  style: textTheme.headlineMedium),
               IconButton(
                 onPressed: () => Navigator.pop(context, null),
                 icon: Icon(

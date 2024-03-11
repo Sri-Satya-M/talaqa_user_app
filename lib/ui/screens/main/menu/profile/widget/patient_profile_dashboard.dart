@@ -26,7 +26,7 @@ class PatientProfileDashboard extends StatelessWidget {
       children: [
         Text(
           langBloc.getString(Strings.sessionAnalytics),
-          style: textTheme.subtitle2,
+          style: textTheme.titleSmall,
         ),
         const SizedBox(height: 14),
         FutureBuilder<Dashboard>(
@@ -48,7 +48,7 @@ class PatientProfileDashboard extends StatelessWidget {
                   children: [
                     Text(
                       langBloc.getString(Strings.noSessionsOnThisPatient),
-                      style: textTheme.caption,
+                      style: textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -64,7 +64,7 @@ class PatientProfileDashboard extends StatelessWidget {
               children: [
                 Text(
                   langBloc.getString(Strings.sessionDetails),
-                  style: textTheme.subtitle2?.copyWith(
+                  style: textTheme.titleSmall?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
                 ),
@@ -93,7 +93,7 @@ class PatientProfileDashboard extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   langBloc.getString(Strings.modeOfConsultation),
-                  style: textTheme.subtitle2?.copyWith(
+                  style: textTheme.titleSmall?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
                 ),
@@ -117,7 +117,7 @@ class PatientProfileDashboard extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   langBloc.getString(Strings.sessionInformation),
-                  style: textTheme.subtitle2?.copyWith(
+                  style: textTheme.titleSmall?.copyWith(
                     color: Colors.black.withOpacity(1),
                   ),
                 ),

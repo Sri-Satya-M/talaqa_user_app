@@ -36,7 +36,7 @@ class CustomErrorWidget extends StatelessWidget {
         child: Text(
           ErrorHandling.parseError(error),
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
         ),
       ),
     );

@@ -34,7 +34,7 @@ class BillDetailsWidget extends StatelessWidget {
         children: [
           Text(
             langBloc.getString(Strings.consultationBillDetails),
-            style: textTheme.bodyText1,
+            style: textTheme.bodyLarge,
           ),
           const SizedBox(height: 8),
           const Divider(),

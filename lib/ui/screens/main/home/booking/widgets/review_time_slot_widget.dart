@@ -63,7 +63,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                   const SizedBox(width: 16),
                   Text(
                     Helper.formatDate(date: dateTime, pattern: 'dd E'),
-                    style: textTheme.bodyText1?.copyWith(
+                    style: textTheme.bodyLarge?.copyWith(
                       color: MyColors.deepBlue,
                     ),
                   ),
@@ -79,7 +79,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                   for (var timeslot in timeslots)
                     Text(
                       "${timeslot.startAt} - ${timeslot.endAt}",
-                      style: textTheme.subtitle1,
+                      style: textTheme.titleMedium,
                     ),
                 ],
               ),
@@ -118,7 +118,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                     title: Text(langBloc.getString(Strings.duration)),
                     value: Text(
                       formatTime(),
-                      style: textTheme.bodyText1,
+                      style: textTheme.bodyLarge,
                     ),
                   ),
                 ],

@@ -40,7 +40,7 @@ class TimeslotDetailsWidget extends StatelessWidget {
                 Text(dateTime.day.toString()),
                 Text(
                   Helper.formatDate(date: dateTime, pattern: 'MMM'),
-                  style: textTheme.caption,
+                  style: textTheme.bodySmall,
                 ),
               ],
             ),
@@ -52,13 +52,13 @@ class TimeslotDetailsWidget extends StatelessWidget {
               children: [
                 Text(
                   langBloc.getString(Strings.timeSlot),
-                  style: textTheme.caption,
+                  style: textTheme.bodySmall,
                 ),
                 const SizedBox(height: 4),
                 for (var timeslot in timeslots)
                   Text(
                     "${timeslot.startAt} - ${timeslot.endAt}",
-                    style: textTheme.subtitle1,
+                    style: textTheme.titleMedium,
                   ),
               ],
             ),

@@ -152,7 +152,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                 children: [
                   Text(
                     langBloc.getString(Strings.medicalRecords),
-                    style: textTheme.subtitle2,
+                    style: textTheme.titleSmall,
                   ),
                   const SizedBox(height: 4),
                   FutureBuilder<List<MedicalRecord>>(
@@ -178,7 +178,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                                 langBloc.getString(
                                   Strings.noMedicalRecordsOnThisPatient,
                                 ),
-                                style: textTheme.caption,
+                                style: textTheme.bodySmall,
                               ),
                             ],
                           ),

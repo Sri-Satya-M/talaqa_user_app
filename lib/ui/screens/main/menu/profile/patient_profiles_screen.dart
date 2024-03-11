@@ -80,7 +80,7 @@ class _PatientProfilesState extends State<PatientProfiles> {
                             children: [
                               Text(
                                 profiles[index].age?.toString() ?? 'NA',
-                                style: textTheme.caption,
+                                style: textTheme.bodySmall,
                               ),
                               const SizedBox(width: 12),
                               Container(
@@ -94,7 +94,7 @@ class _PatientProfilesState extends State<PatientProfiles> {
                                 ),
                                 child: Text(
                                   profiles[index].gender ?? 'NA',
-                                  style: textTheme.subtitle2,
+                                  style: textTheme.titleSmall,
                                 ),
                               ),
                             ],
@@ -102,7 +102,7 @@ class _PatientProfilesState extends State<PatientProfiles> {
                           const SizedBox(height: 6),
                           Text(
                             '${profiles[index].city ?? 'NA'},\n${profiles[index].state ?? 'NA'},\n${profiles[index].country ?? 'NA'}',
-                            style: textTheme.subtitle2,
+                            style: textTheme.titleSmall,
                           ),
                         ],
                       ),

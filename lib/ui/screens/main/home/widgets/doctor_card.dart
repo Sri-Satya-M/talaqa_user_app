@@ -65,11 +65,11 @@ class _DoctorCardState extends State<DoctorCard> {
                             DetailsTile(
                               title: Text(
                                 widget.clinician.user?.fullName ?? ' NA',
-                                style: textTheme.headline2,
+                                style: textTheme.displayMedium,
                               ),
                               value: Text(
                                 widget.clinician.designation ?? 'NA',
-                                style: textTheme.caption?.copyWith(
+                                style: textTheme.bodySmall?.copyWith(
                                   color: MyColors.cerulean,
                                 ),
                               ),
@@ -90,7 +90,7 @@ class _DoctorCardState extends State<DoctorCard> {
                             //       ),
                             //       child: Text(
                             //         '${widget.clinician.experience} years Exp.',
-                            //         style: textTheme.subtitle2,
+                            //         style: textTheme.titleSmall,
                             //       ),
                             //     ),
                             //     const SizedBox(width: 18),
@@ -100,12 +100,12 @@ class _DoctorCardState extends State<DoctorCard> {
                             Row(
                               children: [
                                 Image.asset(Images.voice,
-                                    height: 16, width: 16),
+                                    height: 16, width: 16,),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     widget.clinician.languagesKnown ?? 'NA',
-                                    style: textTheme.bodyText1,
+                                    style: textTheme.bodyLarge,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -128,7 +128,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     bottomLeft: Radius.circular(5),
                   ),
                 ),
-                // textStyle: textTheme.headline3,
+                // textStyle: textTheme.displaySmall,
                 fixedSize: const Size(140, 50),
               ),
               onPressed: () {

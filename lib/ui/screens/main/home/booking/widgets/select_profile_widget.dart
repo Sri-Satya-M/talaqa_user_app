@@ -64,7 +64,7 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
                       children: [
                         Text(
                           '${widget.profile.age?.toString()} ${langBloc.getString(Strings.years)}',
-                          style: textTheme.caption,
+                          style: textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -73,11 +73,11 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
                       children: [
                         Text(
                           '${widget.profile.city ?? 'NA'}, ',
-                          style: textTheme.subtitle2,
+                          style: textTheme.titleSmall,
                         ),
                         Text(
                           widget.profile.country ?? 'NA',
-                          style: textTheme.subtitle2,
+                          style: textTheme.titleSmall,
                         ),
                       ],
                     ),
@@ -100,7 +100,7 @@ class _SelectProfileWidgetState extends State<SelectProfileWidget> {
                         Helper.textCapitalization(
                           text: widget.profile.gender,
                         ),
-                        style: textTheme.subtitle2,
+                        style: textTheme.titleSmall,
                       ),
                     ),
                     Radio(

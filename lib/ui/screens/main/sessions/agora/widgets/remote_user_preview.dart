@@ -69,7 +69,7 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
                   const SizedBox(height: 16),
                   Text(
                     name,
-                    style: textTheme.headline4?.copyWith(color: Colors.black),
+                    style: textTheme.headlineMedium?.copyWith(color: Colors.black),
                   )
                 ],
               ),
@@ -80,12 +80,12 @@ class _RemoteUserPreviewState extends State<RemoteUserPreview> {
           children: [
             TextSpan(
               text: "${langBloc.getString(Strings.waitingFor)} ",
-              style: textTheme.headline3,
+              style: textTheme.displaySmall,
             ),
-            TextSpan(text: name, style: textTheme.headline4),
+            TextSpan(text: name, style: textTheme.headlineMedium),
             TextSpan(
               text: " ${langBloc.getString(Strings.toJoin)}",
-              style: textTheme.headline3,
+              style: textTheme.displaySmall,
             ),
           ],
         ),

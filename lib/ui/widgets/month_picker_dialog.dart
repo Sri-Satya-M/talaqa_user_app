@@ -51,7 +51,7 @@ class _MonthPickerDialogState extends State<MonthPickerDialog> {
           },
           selectedDate: selectedDate,
           datePickerStyles:
-              dp.DatePickerStyles(selectedDateStyle: textTheme.bodyText2),
+              dp.DatePickerStyles(selectedDateStyle: textTheme.bodyMedium),
           firstDate: DateTime(2000),
           lastDate: DateTime(2100),
         ),

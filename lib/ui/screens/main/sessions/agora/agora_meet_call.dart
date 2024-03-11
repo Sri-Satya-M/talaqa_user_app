@@ -352,7 +352,7 @@ class _AgoraMeetScreenState extends State<AgoraMeetScreen> {
                             '${(duration.inHours % 60).toString().padLeft(2, '0')}:'
                             '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:'
                             '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                            style: textTheme.bodyText1?.copyWith(
+                            style: textTheme.bodyLarge?.copyWith(
                               color: Colors.black,
                             ),
                           ),

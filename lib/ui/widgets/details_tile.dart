@@ -24,12 +24,12 @@ class DetailsTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DefaultTextStyle(
-            style: textTheme.bodyText2!,
+            style: textTheme.bodyMedium!,
             child: title!,
           ),
           SizedBox(height: gap ?? 4),
           DefaultTextStyle(
-            style: textTheme.bodyText1!,
+            style: textTheme.bodyLarge!,
             child: value!,
           ),
         ],

@@ -105,14 +105,14 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                     children: [
                                       Text(
                                         '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
-                                        style: textTheme.caption,
+                                        style: textTheme.bodySmall,
                                       ),
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
                                     '${profiles[index].city ?? 'NA'},\n${profiles[index].state ?? 'NA'},\n${profiles[index].country ?? 'NA'}',
-                                    style: textTheme.subtitle2,
+                                    style: textTheme.titleSmall,
                                   ),
                                 ],
                               ),
@@ -133,7 +133,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                     Helper.textCapitalization(
                                       text: profiles[index].gender,
                                     ),
-                                    style: textTheme.subtitle2,
+                                    style: textTheme.titleSmall,
                                   ),
                                 ),
                                 Radio(
@@ -268,7 +268,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                   langBloc.getString(
                                     Strings.uploadMedicalRecord,
                                   ),
-                                  style: textTheme.bodyText1,
+                                  style: textTheme.bodyLarge,
                                 ),
                               ],
                             ),
@@ -305,7 +305,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                       const SizedBox(width: 18),
                       Text(
                         langBloc.getString(Strings.addAPatient),
-                        style: textTheme.caption,
+                        style: textTheme.bodySmall,
                       ),
                     ],
                   ),

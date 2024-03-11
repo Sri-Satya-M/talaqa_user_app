@@ -47,7 +47,7 @@ class _AddAddressState extends State<AddAddress> {
             children: [
               Text(
                 langBloc.getString(Strings.selectYourSavedLocation),
-                style: textTheme.caption?.copyWith(color: Colors.black),
+                style: textTheme.bodySmall?.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 16),
               if (addresses.isNotEmpty) AddressList(addresses: addresses),
@@ -73,7 +73,7 @@ class _AddAddressState extends State<AddAddress> {
                       ),
                       Text(
                         '+ ${langBloc.getString(Strings.addNewAddress)}',
-                        style: textTheme.caption,
+                        style: textTheme.bodySmall,
                       ),
                     ],
                   ),

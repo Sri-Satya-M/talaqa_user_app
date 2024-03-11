@@ -201,7 +201,7 @@ class _BookingScreenState extends State<BookingScreen> {
             const SizedBox(height: 16),
             Text(
               titles[pageIndex - 1],
-              style: textTheme.headline4,
+              style: textTheme.headlineMedium,
             ),
           ],
         ),

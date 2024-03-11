@@ -10,7 +10,7 @@ class ErrorSnackBar {
       SnackBar(
         content: Text(
           ErrorHandling.parseError(e),
-          style: textTheme.subtitle2?.copyWith(
+          style: textTheme.titleSmall?.copyWith(
             color: Colors.white,
           ),
           textAlign: TextAlign.center,

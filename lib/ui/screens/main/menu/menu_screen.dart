@@ -93,7 +93,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 children: [
                   Text(
                     userBloc.profile?.user?.fullName ?? 'NA',
-                    style: textTheme.headline4,
+                    style: textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 8),
                   Container(
@@ -106,7 +106,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       Helper.textCapitalization(
                         text: userBloc.profile?.gender ?? 'NA',
                       ),
-                      style: textTheme.subtitle2,
+                      style: textTheme.titleSmall,
                     ),
                   ),
                 ],
@@ -142,7 +142,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           },
           child: Text(
             langBloc.getString(Strings.privacyPolicy),
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
         ),
         const SizedBox(height: 16),
@@ -158,7 +158,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           },
           child: Text(
             langBloc.getString(Strings.termsAndConditions),
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
         ),
         const SizedBox(height: 16),
@@ -172,7 +172,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           },
           child: Text(
             langBloc.getString(Strings.cancellationRefundPolicy),
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
         )
       ],

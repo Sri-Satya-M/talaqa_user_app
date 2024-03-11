@@ -53,21 +53,21 @@ class _SlotBookingState extends State<SlotBooking> {
           const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.selectDate),
-            style: textTheme.caption?.copyWith(color: Colors.black),
+            style: textTheme.bodySmall?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 8),
           buildCalendar(),
           const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.availableTimeSlots),
-            style: textTheme.caption?.copyWith(color: Colors.black),
+            style: textTheme.bodySmall?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 16),
           TimeSlotsWidget(clinicianId: '${sessionBloc.selectedClinician?.id}'),
           const SizedBox(height: 16),
           // Text(
           //   langBloc.getString(Strings.description),
-          //   style: textTheme.caption?.copyWith(color: Colors.black),
+          //   style: textTheme.bodySmall?.copyWith(color: Colors.black),
           // ),
           // const SizedBox(height: 8),
           // TextFormField(
@@ -171,11 +171,11 @@ class _SlotBookingState extends State<SlotBooking> {
                 children: [
                   Text(
                     day,
-                    style: textTheme.caption?.copyWith(color: textColor),
+                    style: textTheme.bodySmall?.copyWith(color: textColor),
                   ),
                   Text(
                     date,
-                    style: textTheme.caption?.copyWith(color: textColor),
+                    style: textTheme.bodySmall?.copyWith(color: textColor),
                   ),
                 ],
               ),

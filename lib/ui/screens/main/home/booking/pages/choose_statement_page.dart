@@ -64,7 +64,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                   flex: 7,
                   child: Text(
                     "I know what i have, I've been diagnosed before",
-                    style: textTheme.headline3,
+                    style: textTheme.displaySmall,
                   ),
                 ),
                 Expanded(
@@ -94,7 +94,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                   flex: 7,
                   child: Text(
                     "I don't know what I might have",
-                    style: textTheme.headline3,
+                    style: textTheme.displaySmall,
                   ),
                 ),
                 Expanded(

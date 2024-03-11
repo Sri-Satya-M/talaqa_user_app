@@ -23,7 +23,7 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     var initials = getInitials(name);
     double fontSize = size / 2;
-    var style = Theme.of(context).textTheme.bodyText1!.copyWith(
+    var style = Theme.of(context).textTheme.bodyLarge!.copyWith(
           fontSize: fontSize,
           color: Theme.of(context).colorScheme.secondary,
         );

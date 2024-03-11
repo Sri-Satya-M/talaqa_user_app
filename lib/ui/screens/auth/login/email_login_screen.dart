@@ -46,7 +46,7 @@ class _EmailLoginState extends State<EmailLogin> {
             const SizedBox(height: 16),
             Text(
               "${langBloc.getString(Strings.loginToYourAccountWithEmailAddress)}...!",
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),

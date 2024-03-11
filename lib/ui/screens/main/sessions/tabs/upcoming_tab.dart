@@ -90,7 +90,7 @@ class _UpcomingTabState extends State<UpcomingTab> {
                               const SizedBox(height: 8),
                               Text(
                                 langBloc.getString(Strings.fetchingSessions),
-                                style: textTheme.caption!.copyWith(
+                                style: textTheme.bodySmall!.copyWith(
                                   fontSize: 14,
                                 ),
                               )

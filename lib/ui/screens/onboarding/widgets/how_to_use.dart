@@ -103,10 +103,10 @@ class HowToUse extends StatelessWidget {
               contentsBuilder: (_, index) {
                 return DetailsTile(
                   padding: const EdgeInsets.only(left: 16),
-                  title: Text(steps[index].title, style: textTheme.headline5),
+                  title: Text(steps[index].title, style: textTheme.headlineSmall),
                   value: Text(
                     steps[index].subtitle,
-                    style: textTheme.caption,
+                    style: textTheme.bodySmall,
                   ),
                 );
               },

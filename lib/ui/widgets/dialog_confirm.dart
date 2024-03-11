@@ -23,7 +23,7 @@ class ConfirmDialog {
                   children: [
                     Text(
                       title,
-                      style: textTheme.headline4!.copyWith(color: Colors.black),
+                      style: textTheme.headlineMedium!.copyWith(color: Colors.black),
                     ),
                     const SizedBox(height: 8),
                     const Divider(),
@@ -32,7 +32,7 @@ class ConfirmDialog {
               : null,
           content: Text(
             message,
-            style: textTheme.bodyText1!.copyWith(color: Colors.black),
+            style: textTheme.bodyLarge!.copyWith(color: Colors.black),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

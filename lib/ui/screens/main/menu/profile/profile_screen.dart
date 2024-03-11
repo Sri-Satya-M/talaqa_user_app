@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Helper.textCapitalization(
                                   text: userBloc.profile?.gender ?? 'NA',
                                 ),
-                                style: textTheme.subtitle2,
+                                style: textTheme.titleSmall,
                               ),
                             ),
                           ),

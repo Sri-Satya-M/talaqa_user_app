@@ -76,7 +76,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
         const SizedBox(height: 12),
         Text(
           langBloc.getString(Strings.topRatedClinicians),
-          style: textTheme.subtitle2,
+          style: textTheme.titleSmall,
         ),
         const SizedBox(height: 12),
         StreamBuilder<String>(

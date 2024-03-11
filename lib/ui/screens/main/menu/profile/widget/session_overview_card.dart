@@ -29,11 +29,11 @@ class SessionOverviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(Images.pendingSession),
-                Text(count, style: textTheme.headline5),
+                Text(count, style: textTheme.headlineSmall),
               ],
             ),
             const SizedBox(height: 20),
-            Text(title, style: textTheme.caption),
+            Text(title, style: textTheme.bodySmall),
           ],
         ),
       ),

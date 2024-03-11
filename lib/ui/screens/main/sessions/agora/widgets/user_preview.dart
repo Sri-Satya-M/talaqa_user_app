@@ -51,7 +51,7 @@ class _UserPreviewState extends State<UserPreview> {
                   const SizedBox(height: 16),
                   Text(
                     widget.username,
-                    style: textTheme.headline4?.copyWith(color: Colors.white),
+                    style: textTheme.headlineMedium?.copyWith(color: Colors.white),
                   )
                 ],
               ),

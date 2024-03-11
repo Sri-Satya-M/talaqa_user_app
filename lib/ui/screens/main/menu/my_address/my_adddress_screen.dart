@@ -57,7 +57,7 @@ class _MyAddressScreenState extends State<MyAddressScreen> {
                   ),
                   Text(
                     '+ ${langBloc.getString(Strings.addNewAddress)}',
-                    style: textTheme.caption,
+                    style: textTheme.bodySmall,
                   ),
                 ],
               ),

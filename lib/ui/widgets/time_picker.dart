@@ -22,7 +22,7 @@ class TimePicker extends StatelessWidget {
     return TextFormField(
       readOnly: true,
       controller: timeCtrl,
-      style: textTheme.bodyText1!.copyWith(height: 44 / 20),
+      style: textTheme.bodyLarge!.copyWith(height: 44 / 20),
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());
         time = await showTimePicker(

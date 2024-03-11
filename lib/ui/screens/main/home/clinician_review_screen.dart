@@ -83,7 +83,7 @@
 //                           const SizedBox(height: 8),
 //                           Text(
 //                             'Fetching more Reviews',
-//                             style: textTheme.caption!.copyWith(
+//                             style: textTheme.bodySmall!.copyWith(
 //                               fontSize: 14,
 //                             ),
 //                           )

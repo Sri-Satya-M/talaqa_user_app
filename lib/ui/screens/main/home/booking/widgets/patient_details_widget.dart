@@ -26,13 +26,13 @@ class PatientDetailsWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(patient.fullName ?? 'NA', style: textTheme.bodyText2),
+                Text(patient.fullName ?? 'NA', style: textTheme.bodyMedium),
                 const SizedBox(height: 4),
                 Row(
                   children: [
                     Text(
                       patient.age?.toString() ?? 'NA',
-                      style: textTheme.caption,
+                      style: textTheme.bodySmall,
                     ),
                     const SizedBox(width: 12),
                     Container(
@@ -45,14 +45,14 @@ class PatientDetailsWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(3),
                       ),
                       child: Text(patient.gender ?? 'NA',
-                          style: textTheme.subtitle2),
+                          style: textTheme.titleSmall),
                     ),
                   ],
                 ),
                 const SizedBox(height: 6),
                 Text(
                   '${patient.city ?? 'NA'},\n${patient.state ?? 'NA'},\n${patient.country ?? 'NA'}',
-                  style: textTheme.subtitle2,
+                  style: textTheme.titleSmall,
                 ),
               ],
             ),

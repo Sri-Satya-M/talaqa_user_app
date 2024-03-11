@@ -33,7 +33,7 @@ class EmptyWidget extends StatelessWidget {
             // const SizedBox(height: 20),
             Text(
               message,
-              style: textTheme.headline5?.copyWith(
+              style: textTheme.headlineSmall!.copyWith(
                 color: fontColor,
                 fontSize: 22,
               ),
@@ -43,7 +43,7 @@ class EmptyWidget extends StatelessWidget {
             if (subtitle != null)
               Text(
                 '$subtitle',
-                style: textTheme.caption,
+                style: textTheme.bodySmall,
                 textAlign: TextAlign.center,
               )
           ],

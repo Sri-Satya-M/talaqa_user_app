@@ -59,13 +59,13 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
               children: [
                 Text(
                   langBloc.getString(Strings.upcomingSessions),
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyLarge,
                 ),
                 TextButton(
                   onPressed: widget.onTap,
                   child: Text(
                     langBloc.getString(Strings.seeAll),
-                    style: textTheme.headline2?.copyWith(
+                    style: textTheme.titleSmall?.copyWith(
                       color: MyColors.primaryColor,
                     ),
                   ),

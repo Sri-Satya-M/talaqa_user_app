@@ -84,11 +84,11 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
                       children: [
                         Text(
                           widget.clinician.user?.fullName ?? 'NA',
-                          style: textTheme.bodyText2,
+                          style: textTheme.bodyMedium,
                         ),
                         Text(
                           widget.clinician.designation ?? 'NA',
-                          style: textTheme.caption?.copyWith(
+                          style: textTheme.bodySmall?.copyWith(
                             color: MyColors.cerulean,
                           ),
                         ),
@@ -96,7 +96,7 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
                         Text(
                           '${widget.clinician.experience} '
                           '${langBloc.getString(Strings.yearsExp)}',
-                          style: textTheme.subtitle2,
+                          style: textTheme.titleSmall,
                         ),
                       ],
                     ),
@@ -161,7 +161,7 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
               //           children: [
               //             Text(
               //               langBloc.getString(Strings.reviews),
-              //               style: textTheme.bodyText1,
+              //               style: textTheme.bodyLarge,
               //             ),
               //             TextButton(
               //               onPressed: () => ClinicianReviewsScreen.open(
@@ -169,7 +169,7 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
               //                   id: widget.clinician.id.toString()),
               //               child: Text(
               //                 langBloc.getString(Strings.seeAll),
-              //                 style: textTheme.headline2?.copyWith(
+              //                 style: textTheme.displayMedium?.copyWith(
               //                   color: MyColors.primaryColor,
               //                 ),
               //               ),

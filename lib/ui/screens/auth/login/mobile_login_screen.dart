@@ -45,7 +45,7 @@ class _MobileLoginState extends State<MobileLogin> {
             const SizedBox(height: 16),
             Text(
               "${langBloc.getString(Strings.loginToYourAccountWithEmailAddress)}...!",
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),

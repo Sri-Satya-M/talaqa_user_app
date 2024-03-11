@@ -89,7 +89,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
             title: Text(eventsList[index].title),
             value: Text(
               eventsList[index].time?.toString() ?? "",
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
             ),
           );
         },

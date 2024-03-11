@@ -32,14 +32,14 @@ class OnBoardingWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: textTheme.headline6,
+                  style: textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 Text(
                   description,
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyText2?.copyWith(
+                  style: textTheme.bodyMedium?.copyWith(
                     color: Colors.black.withOpacity(0.85),
                   ),
                 ),

@@ -44,7 +44,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             children: [
               Text(
                 langBloc.getString(Strings.speechTherapy),
-                style: textTheme.headline4,
+                style: textTheme.headlineMedium,
               ),
               getModeOfConsultation(
                 mode: sessionBloc.selectedModeOfConsultation?.type ?? '',
@@ -115,7 +115,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           if (sessionBloc.symptom != null) ...[
             ReverseDetailsTile(
               title: Text(langBloc.getString(Strings.symptoms)),
-              value: Text('${sessionBloc.symptom}', style: textTheme.headline4),
+              value: Text('${sessionBloc.symptom}', style: textTheme.headlineMedium),
             ),
           ],
           const SizedBox(height: 16),
@@ -123,7 +123,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
             title: Text(langBloc.getString(Strings.description)),
             value: Text(
               'Vivamus eget aliquam dui. Integer eu arcu vel arcu suscipit ultrices quis non mauris. Aenean scelerisque, sem eu dictum commodo.',
-              style: textTheme.bodyText1,
+              style: textTheme.bodyLarge,
             ),
           ),
           const SizedBox(height: 16),
@@ -188,7 +188,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
         const SizedBox(width: 8),
         Text(
           modeText,
-          style: textTheme.bodyText1
+          style: textTheme.bodyLarge
               ?.copyWith(color: Colors.lightBlue, fontSize: 16),
         ),
       ],

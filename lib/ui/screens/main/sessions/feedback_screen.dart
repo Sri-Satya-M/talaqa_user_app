@@ -110,7 +110,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               langBloc.getString(
                 Strings.yourSessionHasBeenSuccessfullyCompleted,
               ),
-              style: textTheme.headline3,
+              style: textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
           ),
@@ -146,7 +146,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             children: [
               Text(
                 langBloc.getString(Strings.wantASchoolReport),
-                style: textTheme.caption?.copyWith(fontSize: 14),
+                style: textTheme.bodySmall?.copyWith(fontSize: 14),
               ),
               const SizedBox(height: 4),
               Row(
@@ -176,7 +176,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 },
                 child: Text(
                   langBloc.getString(Strings.skip),
-                  style: textTheme.caption?.copyWith(
+                  style: textTheme.bodySmall?.copyWith(
                     fontSize: 16,
                     color: MyColors.primaryColor,
                   ),

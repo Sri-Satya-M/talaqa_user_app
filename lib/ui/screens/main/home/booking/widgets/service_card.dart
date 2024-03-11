@@ -25,14 +25,14 @@ class ServiceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(service.title ?? '--', style: textTheme.headline5),
+            Text(service.title ?? '--', style: textTheme.headlineSmall),
             const SizedBox(height: 16),
             ReverseDetailsTile(
               title: const Text('Symptoms'),
               value: Text(
                 service.symptoms?.map((e) => e.title).toList().join(", ") ??
                     'NA',
-                style: textTheme.bodyText1,
+                style: textTheme.bodyLarge,
               ),
             ),
             const SizedBox(height: 16),
@@ -40,7 +40,7 @@ class ServiceCard extends StatelessWidget {
               title: const Text('Description'),
               value: Text(
                 service.description ?? 'NA',
-                style: textTheme.bodyText1,
+                style: textTheme.bodyLarge,
               ),
             ),
           ],

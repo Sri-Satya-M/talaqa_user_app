@@ -91,7 +91,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                       children: [
                         Text(
                           langBloc.getString(Strings.speechTherapy),
-                          style: textTheme.bodyText2?.copyWith(fontSize: 12),
+                          style: textTheme.bodyMedium?.copyWith(fontSize: 12),
                         ),
                         const Spacer(),
                         Container(
@@ -108,7 +108,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                       title: Text(session.clinician!.user!.fullName!),
                       value: Text(
                         session.clinician?.designation ?? 'NA',
-                        style: textTheme.caption?.copyWith(
+                        style: textTheme.bodySmall?.copyWith(
                           color: MyColors.cerulean,
                         ),
                       ),
@@ -121,14 +121,14 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                             langBloc.getString(
                               Strings.yourSessionHasBeenStarted,
                             ),
-                            style: textTheme.caption?.copyWith(fontSize: 14),
+                            style: textTheme.bodySmall?.copyWith(fontSize: 14),
                           ),
                           const SizedBox(width: 16),
                           Text(
                             '${(duration.inHours % 60).toString().padLeft(2, '0')}:'
                             '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:'
                             '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                            style: textTheme.bodyText1?.copyWith(
+                            style: textTheme.bodyLarge?.copyWith(
                               color: Colors.black,
                             ),
                           ),
@@ -187,7 +187,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
                   ),
                   child: Text(
                     session.otp.toString()[i],
-                    style: textTheme.bodyText1?.copyWith(
+                    style: textTheme.bodyLarge?.copyWith(
                       color: MyColors.cerulean,
                     ),
                   ),
@@ -214,7 +214,7 @@ class _SessionAtHomeScreenState extends State<SessionAtHomeScreen> {
           const SizedBox(height: 16),
           Text(
             '*${langBloc.getString(Strings.pleaseShareTheOtpWithTheTherapistWhenTheSessionHasStarted)}',
-            style: textTheme.caption,
+            style: textTheme.bodySmall,
           ),
         ],
       ),

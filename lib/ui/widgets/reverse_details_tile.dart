@@ -20,12 +20,12 @@ class ReverseDetailsTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         DefaultTextStyle(
-          style: textTheme.caption!,
+          style: textTheme.bodySmall!,
           child: title,
         ),
         SizedBox(height: gap ?? 4),
         DefaultTextStyle(
-          style: textTheme.headline5!,
+          style: textTheme.headlineSmall!,
           child: value,
         ),
       ],

@@ -45,7 +45,7 @@ class SelfBubble extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     message,
-                    style: textTheme.subtitle2?.copyWith(
+                    style: textTheme.titleSmall?.copyWith(
                       color: Colors.white,
                       fontSize: 18,
                     ),

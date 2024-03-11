@@ -85,7 +85,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 const SizedBox(height: 8),
                                 Text(
                                   langBloc.getString(Strings.fetchingArticles),
-                                  style: textTheme.caption!.copyWith(
+                                  style: textTheme.bodySmall!.copyWith(
                                     fontSize: 14,
                                   ),
                                 )
@@ -140,7 +140,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                         resources[index].description!,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 3,
-                                        style: textTheme.caption,
+                                        style: textTheme.bodySmall,
                                       ),
                                       const SizedBox(height: 8),
                                       Text(

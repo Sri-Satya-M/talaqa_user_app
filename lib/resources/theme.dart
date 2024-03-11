@@ -12,7 +12,8 @@ class AppTheme {
       bodyColor: Colors.black,
       displayColor: Colors.black,
     );
-    var headline6 = const TextStyle(
+
+    var titleLarge = const TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w600,
       fontFamily: 'ReadexPro',
@@ -20,16 +21,26 @@ class AppTheme {
       height: 30 / 24,
       letterSpacing: 0,
     );
-    var headline5 = const TextStyle(
-      fontSize: 20,
+
+    var titleMedium = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
       fontFamily: 'ReadexPro',
-      fontWeight: FontWeight.w600,
-      height: 26 / 20,
       color: Colors.black,
+      height: 16 / 14,
       letterSpacing: 0,
-      fontStyle: FontStyle.normal,
     );
-    var headline4 = const TextStyle(
+
+    var titleSmall = TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'ReadexPro',
+      height: 14 / 12,
+      letterSpacing: 0,
+      color: Colors.black.withOpacity(0.7),
+    );
+
+    var headlineMedium = const TextStyle(
       fontSize: 18,
       fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w600,
@@ -39,7 +50,17 @@ class AppTheme {
       fontStyle: FontStyle.normal,
     );
 
-    var headline3 = const TextStyle(
+    var headlineSmall = const TextStyle(
+      fontSize: 20,
+      fontFamily: 'ReadexPro',
+      fontWeight: FontWeight.w600,
+      height: 26 / 20,
+      color: Colors.black,
+      letterSpacing: 0,
+      fontStyle: FontStyle.normal,
+    );
+
+    var displaySmall = const TextStyle(
       fontSize: 16,
       fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w600,
@@ -49,7 +70,7 @@ class AppTheme {
       fontStyle: FontStyle.normal,
     );
 
-    var headline2 = const TextStyle(
+    var displayMedium = const TextStyle(
       fontSize: 14,
       fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w500,
@@ -59,7 +80,16 @@ class AppTheme {
       fontStyle: FontStyle.normal,
     );
 
-    var bodyText2 = const TextStyle(
+    var bodyLarge = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'ReadexPro',
+      height: 18 / 14,
+      letterSpacing: 0,
+      color: Colors.black,
+    );
+
+    var bodyMedium = const TextStyle(
       fontSize: 14,
       fontFamily: 'ReadexPro',
       height: 18 / 14,
@@ -67,39 +97,8 @@ class AppTheme {
       letterSpacing: 0,
       fontWeight: FontWeight.w600,
     );
-    var subtitle2 = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-      fontFamily: 'ReadexPro',
-      height: 14 / 12,
-      letterSpacing: 0,
-      color: Colors.black.withOpacity(0.7),
-    );
-    var bodyText1 = const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      fontFamily: 'ReadexPro',
-      height: 18 / 14,
-      letterSpacing: 0,
-      color: Colors.black,
-    );
-    var subtitle1 = const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      fontFamily: 'ReadexPro',
-      color: Colors.black,
-      height: 16 / 14,
-      letterSpacing: 0,
-    );
-    var button = const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      fontFamily: 'ReadexPro',
-      height: 20 / 16,
-      color: Colors.white,
-      letterSpacing: 0,
-    );
-    var caption = TextStyle(
+
+    var bodySmall = TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w500,
       fontFamily: 'ReadexPro',
@@ -108,7 +107,16 @@ class AppTheme {
       color: Colors.black.withOpacity(0.5),
     );
 
-    var overline = const TextStyle(
+    var labelLarge = const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'ReadexPro',
+      height: 20 / 16,
+      color: Colors.white,
+      letterSpacing: 0,
+    );
+
+    var labelSmall = const TextStyle(
       fontSize: 10,
       fontFamily: 'ReadexPro',
       fontWeight: FontWeight.w400,
@@ -118,18 +126,18 @@ class AppTheme {
     );
 
     textTheme = textTheme.copyWith(
-      headline6: headline6,
-      headline5: headline5,
-      headline4: headline4,
-      headline3: headline3,
-      headline2: headline2,
-      bodyText2: bodyText2,
-      subtitle2: subtitle2,
-      bodyText1: bodyText1,
-      subtitle1: subtitle1,
-      caption: caption,
-      button: button,
-      overline: overline,
+      titleLarge: titleLarge,
+      headlineSmall: headlineSmall,
+      headlineMedium: headlineMedium,
+      displayMedium: displayMedium,
+      displaySmall: displaySmall,
+      bodyMedium: bodyMedium,
+      titleSmall: titleSmall,
+      bodyLarge: bodyLarge,
+      titleMedium: titleMedium,
+      bodySmall: bodySmall,
+      labelLarge: labelLarge,
+      labelSmall: labelSmall,
     );
 
     var border = OutlineInputBorder(
@@ -175,8 +183,8 @@ class AppTheme {
         ),
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: false,
-        titleTextStyle: headline4,
-        toolbarTextStyle: textTheme.caption,
+        titleTextStyle: headlineMedium,
+        toolbarTextStyle: textTheme.bodySmall,
       ),
       dialogTheme: DialogTheme(
         shape: RoundedRectangleBorder(
@@ -195,8 +203,9 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
+          foregroundColor: Colors.white,
           // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          textStyle: headline3,
+          textStyle: displaySmall,
           fixedSize: const Size(140, 60),
         ),
       ),
@@ -204,7 +213,7 @@ class AppTheme {
         style: TextButton.styleFrom(
           backgroundColor: Colors.white,
           padding: EdgeInsets.zero,
-          textStyle: subtitle1,
+          textStyle: titleSmall,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -215,7 +224,7 @@ class AppTheme {
           ),
           side: BorderSide(width: 1, color: primaryColor),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: headline5,
+          textStyle: headlineSmall,
           fixedSize: const Size(100, 50),
         ),
       ),
@@ -247,13 +256,13 @@ class AppTheme {
             width: 1.5,
           ),
         ),
-        labelStyle: caption.copyWith(
+        labelStyle: bodySmall.copyWith(
           fontStyle: FontStyle.normal,
           color: Colors.black.withOpacity(0.5),
           fontSize: 12,
           height: 25 / 12,
         ),
-        hintStyle: caption.copyWith(color: Colors.black.withOpacity(0.3)),
+        hintStyle: bodySmall.copyWith(color: Colors.black.withOpacity(0.3)),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -301,8 +310,8 @@ class AppTheme {
         selectedColor: primaryColor,
         secondarySelectedColor: primaryColor,
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-        labelStyle: bodyText1.copyWith(height: 1.2, color: Colors.black),
-        secondaryLabelStyle: bodyText1.copyWith(
+        labelStyle: bodyLarge.copyWith(height: 1.2, color: Colors.black),
+        secondaryLabelStyle: bodyLarge.copyWith(
           height: 1.2,
           color: Colors.white,
         ),
@@ -318,12 +327,12 @@ class AppTheme {
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: MyColors.cerulean,
         unselectedLabelColor: Colors.black.withOpacity(0.7),
-        labelStyle: bodyText1.copyWith(
+        labelStyle: bodyLarge.copyWith(
           fontWeight: FontWeight.w400,
           color: MyColors.cerulean,
           fontSize: 14,
         ),
-        unselectedLabelStyle: caption.copyWith(
+        unselectedLabelStyle: bodySmall.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14,
         ),
