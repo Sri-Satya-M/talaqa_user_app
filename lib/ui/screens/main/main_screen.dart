@@ -36,8 +36,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
-  void _handleMessage(RemoteMessage? message,
-      {var localNotificationMessage}) async {
+  void _handleMessage(
+    RemoteMessage? message, {
+    var localNotificationMessage,
+  }) async {
     var data = message?.data;
     var details = data?['data'];
     MainScreen.open(context);
@@ -188,7 +190,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           selectedLabelStyle: textTheme.bodySmall?.copyWith(
             color: MyColors.cerulean,
           ),
-          unselectedLabelStyle: textTheme.bodySmall?.copyWith(color: Colors.grey),
+          unselectedLabelStyle:
+              textTheme.bodySmall?.copyWith(color: Colors.grey),
           items: [
             BottomNavigationBarItem(
               icon: const Icon(Icons.home_outlined),

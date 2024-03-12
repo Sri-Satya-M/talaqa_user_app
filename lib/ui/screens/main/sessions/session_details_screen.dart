@@ -205,9 +205,10 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                   Expanded(
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          minimumSize: const Size(30, 45),
-                                          maximumSize: const Size(30, 45)),
+                                        backgroundColor: Colors.white,
+                                        minimumSize: const Size(30, 45),
+                                        maximumSize: const Size(30, 45),
+                                      ),
                                       onPressed: () async {
                                         changeClinician(
                                           context: this.context,
@@ -220,7 +221,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                                       },
                                       child: Text(
                                         langBloc.getString(Strings.reject),
-                                        style: textTheme.button?.copyWith(
+                                        style: textTheme.labelLarge?.copyWith(
                                           color: Colors.red,
                                         ),
                                       ),

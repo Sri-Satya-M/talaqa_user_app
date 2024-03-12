@@ -252,7 +252,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
                 child: Text(
                   '$value',
-                  style: textTheme.button?.copyWith(
+                  style: textTheme.labelLarge?.copyWith(
                     color: MyColors.primaryColor,
                   ),
                 ),

@@ -56,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
               child: Text(
                 langBloc.getString(Strings.signUpWithEmailAddress),
-                style: textTheme.button?.copyWith(color: Colors.black),
+                style: textTheme.labelLarge?.copyWith(color: Colors.black),
               ),
             ),
             const SizedBox(height: 30),
