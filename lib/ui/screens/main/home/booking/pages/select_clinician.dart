@@ -56,24 +56,26 @@ class _SelectClinicianState extends State<SelectClinician> {
       ),
       child: ListView(
         children: [
-          CustomCard(
-            child: TextFormField(
-              style: textTheme.bodyLarge?.copyWith(fontSize: 16),
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(16),
-                prefixIcon: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search),
+          if (!widget.isClinician) ...[
+            CustomCard(
+              child: TextFormField(
+                style: textTheme.bodyLarge?.copyWith(fontSize: 16),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(16),
+                  prefixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.search),
+                  ),
+                  hintText: langBloc.getString(Strings.searchByClinicianName),
+                  hintStyle: textTheme.bodySmall?.copyWith(fontSize: 14),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
-                hintText: langBloc.getString(Strings.searchByClinicianName),
-                hintStyle: textTheme.bodySmall?.copyWith(fontSize: 14),
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
+                onChanged: onSearch,
               ),
-              onChanged: onSearch,
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
+          ],
           StreamBuilder<String>(
             stream: searchStream,
             builder: (context, snapshot) {
