@@ -14,6 +14,7 @@ import '../../../widgets/details_tile.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/error_widget.dart';
 import '../../../widgets/loading_widget.dart';
+import 'booking/booking_screen.dart';
 import 'booking/widgets/service_card.dart';
 
 class ClinicianDetailsScreen extends StatefulWidget {
@@ -191,6 +192,34 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
             ],
           );
         },
+      ),
+      extendBody: true,
+      bottomNavigationBar: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+              ),
+            ),
+            // textStyle: textTheme.displaySmall,
+            fixedSize: const Size(140, 50),
+          ),
+          onPressed: () {
+            var sessionBloc = Provider.of<SessionBloc>(
+              context,
+              listen: false,
+            );
+            BookingScreen.open(context, isClinician: true);
+            print('Heref ${widget.clinician.userId}');
+            sessionBloc.selectedClinician = widget.clinician;
+            print(sessionBloc.selectedClinician);
+          },
+          child: Text(langBloc.getString(Strings.bookASession)),
+        ),
       ),
     );
   }
