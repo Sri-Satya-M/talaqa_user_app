@@ -133,6 +133,6 @@ class ReviewTimeSlotWidget extends StatelessWidget {
   formatTime() {
     if (duration != null) return duration;
     var time = timeslots.length;
-    return '$time ${time > 1 ? 'hrs' : 'hr'}';
+    return '40 Min\'s';
   }
 }
