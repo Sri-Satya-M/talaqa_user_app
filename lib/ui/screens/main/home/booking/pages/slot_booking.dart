@@ -53,14 +53,14 @@ class _SlotBookingState extends State<SlotBooking> {
           const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.selectDate),
-            style: textTheme.bodySmall?.copyWith(color: Colors.black),
+            style: textTheme.displaySmall?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 8),
           buildCalendar(),
           const SizedBox(height: 16),
           Text(
             langBloc.getString(Strings.availableTimeSlots),
-            style: textTheme.bodySmall?.copyWith(color: Colors.black),
+            style: textTheme.displaySmall?.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 16),
           TimeSlotsWidget(clinicianId: '${sessionBloc.selectedClinician?.id}'),

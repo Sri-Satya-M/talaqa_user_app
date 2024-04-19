@@ -1,11 +1,11 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../bloc/session_bloc.dart';
 import '../../../../../model/session.dart';
-import '../../../../../resources/colors.dart';
 import '../../../../../resources/strings.dart';
 import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
@@ -63,19 +63,13 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                 ),
                 TextButton(
                   onPressed: widget.onTap,
-                  child: Text(
-                    langBloc.getString(Strings.seeAll),
-                    style: textTheme.titleSmall?.copyWith(
-                      color: MyColors.primaryColor,
-                    ),
-                  ),
+                  child: Text(langBloc.getString(Strings.seeAll)),
                 ),
               ],
             ),
             SizedBox(
-              height: 400,
+              height: 319,
               child: ListView.builder(
-                padding: EdgeInsets.zero,
                 itemCount: sessions.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {

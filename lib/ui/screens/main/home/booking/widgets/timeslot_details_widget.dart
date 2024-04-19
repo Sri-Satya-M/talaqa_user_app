@@ -21,9 +21,8 @@ class TimeslotDetailsWidget extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return SizedBox(
-      height: 75,
+      height: 50,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 50,
@@ -45,24 +44,26 @@ class TimeslotDetailsWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  langBloc.getString(Strings.timeSlot),
-                  style: textTheme.bodySmall,
-                ),
-                const SizedBox(height: 4),
-                for (var timeslot in timeslots)
+          if (timeslots.isNotEmpty) ...[
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    "${timeslot.startAt} - ${timeslot.endAt}",
+                    langBloc.getString(Strings.timeSlot),
+                    style: textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "${timeslots.first.startAt} - ${timeslots.first.endAt}",
                     style: textTheme.titleMedium,
                   ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

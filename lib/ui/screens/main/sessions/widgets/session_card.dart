@@ -26,14 +26,15 @@ class _SessionCardState extends State<SessionCard> {
     var textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
     return CustomCard(
-      width: size.width * 0.85,
+      width: size.width * 0.9,
+      radius: 5,
+      margin: EdgeInsets.zero,
       child: InkWell(
         onTap: widget.onTap,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

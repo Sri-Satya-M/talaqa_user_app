@@ -118,7 +118,7 @@ class ReviewTimeSlotWidget extends StatelessWidget {
                     title: Text(langBloc.getString(Strings.duration)),
                     value: Text(
                       formatTime(),
-                      style: textTheme.bodyLarge,
+                      style: textTheme.titleMedium!.copyWith(fontSize: 12),
                     ),
                   ),
                 ],

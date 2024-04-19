@@ -87,6 +87,7 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Avatar(
                               url: profiles[index].imageUrl,
@@ -101,24 +102,22 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                 children: [
                                   Text(profiles[index].fullName ?? 'NA'),
                                   const SizedBox(height: 4),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
-                                        style: textTheme.bodySmall,
-                                      ),
-                                    ],
+                                  Text(
+                                    '${profiles[index].age?.toString()} ${langBloc.getString(Strings.years)}',
+                                    style: textTheme.bodySmall,
                                   ),
                                   const SizedBox(height: 6),
                                   Text(
-                                    '${profiles[index].city ?? 'NA'},\n${profiles[index].state ?? 'NA'},\n${profiles[index].country ?? 'NA'}',
-                                    style: textTheme.titleSmall,
+                                    '${profiles[index].city ?? 'NA'}, ${profiles[index].state ?? 'NA'}, ${profiles[index].country ?? 'NA'}',
+                                    style: textTheme.titleSmall!
+                                        .copyWith(fontSize: 10),
                                   ),
                                 ],
                               ),
                             ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
@@ -149,8 +148,8 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
                         if (index == selectedIndex) ...[
+                          const SizedBox(height: 16),
                           for (var record
                               in profiles[index].medicalRecords ?? []) ...[
                             GestureDetector(
