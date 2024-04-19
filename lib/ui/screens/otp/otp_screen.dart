@@ -4,7 +4,7 @@ import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/auth/mobile_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
-import 'package:alsan_app/ui/screens/terms_conditions/terms_conditions.dart';
+import 'package:alsan_app/ui/screens/terms_conditions/terms_conditions_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
 import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';

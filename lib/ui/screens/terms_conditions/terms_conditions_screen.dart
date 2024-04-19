@@ -5,6 +5,7 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../resources/strings.dart';
 
@@ -26,6 +27,7 @@ class TermsConditions extends StatefulWidget {
 class _TermsConditionsState extends State<TermsConditions> {
   bool check = false;
   late bool isEmail;
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +52,24 @@ class _TermsConditionsState extends State<TermsConditions> {
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  child: ListView(
-                    padding: const EdgeInsets.all(25),
-                    children: [
-                      Text(
-                        "${langBloc.getString(Strings.termsAndConditions)}\n",
-                        textAlign: TextAlign.center,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: WebView(
+                        onProgress: (value) {
+                          const CircularProgressIndicator();
+                        },
+                        initialUrl: langBloc.appLanguage == 'English'
+                            ? 'https://talaqa.online/terms-conditions'
+                            : 'https://talaqa.online/ar/terms-conditions',
+                        javascriptMode: JavascriptMode.unrestricted,
+                        onPageFinished: (finish) {
+                          isLoading = false;
+                          setState(() {});
+                        },
                       ),
-                      Text(
-                        "Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit. Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies",
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
