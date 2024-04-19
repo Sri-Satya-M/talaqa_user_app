@@ -24,6 +24,7 @@ class _MobileScreenState extends State<MobileScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var textTheme = Theme.of(context).textTheme;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
       body: ListView(
@@ -38,8 +39,7 @@ class _MobileScreenState extends State<MobileScreen> {
               Text(
                 langBloc.getString(Strings.signUpWithMobileNumber),
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                style: textTheme.headlineMedium,
               ),
               const SizedBox(height: 48),
               Stack(
@@ -84,16 +84,6 @@ class _MobileScreenState extends State<MobileScreen> {
               const SizedBox(height: 64),
               ProgressButton(
                 onPressed: () async {
-                  if (mobileNumber.length < 10) {
-                    ErrorSnackBar.show(
-                      context,
-                      langBloc.getString(
-                        Strings.enter10DigitMobileNumber,
-                      ),
-                    );
-                    return;
-                  }
-
                   var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
 
                   var userBloc = Provider.of<UserBloc>(context, listen: false);

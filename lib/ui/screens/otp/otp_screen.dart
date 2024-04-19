@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../data/local/shared_prefs.dart';
 import '../../../resources/strings.dart';
+import '../auth/widgets/resend_otp_button.dart';
 
 class OtpScreen extends StatefulWidget {
   String token;
@@ -40,6 +41,7 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var isEmail = userBloc.username.contains('@');
     var text = isEmail ? "email id" : "mobile number";
@@ -56,10 +58,13 @@ class _OtpScreenState extends State<OtpScreen> {
             const SizedBox(height: 32),
             Text(
               langBloc.getString(Strings.otpVerification),
+              style: textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 10),
             Text(
               "${langBloc.getString(Strings.enterTheOtpCodeSentToYour)} \n$text ",
+              style: textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
@@ -121,33 +126,26 @@ class _OtpScreenState extends State<OtpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("${langBloc.getString(Strings.didntReceiveTheOtp)}?\t"),
-                TextButton(
-                  onPressed: () async {
-                    var body = {};
-                    body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
-                    body[isEmail ? 'email' : 'mobileNumber'] =
-                        userBloc.username;
+                Column(
+                  children: [
+                    const SizedBox(height: 2),
+                    ResendOtpButton(
+                      mobile: userBloc.username,
+                      onTap: () async {
+                        var body = {};
+                        body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
+                        body[isEmail ? 'email' : 'mobileNumber'] =
+                            userBloc.username;
 
-                    var response = await userBloc.sendOTP(body: body)
-                        as Map<String, dynamic>;
+                        var response = await userBloc.sendOTP(body: body);
 
-                    if (!response.containsKey('token')) {
-                      return ErrorSnackBar.show(
-                        context,
-                        langBloc.getString(Strings.invalidError),
-                      );
-                    }
-
-                    widget.token = response['token'];
-                  },
-                  child: Text(
-                    langBloc.getString(Strings.resend),
-                    style: const TextStyle(color: MyColors.primaryColor),
-                  ),
+                        widget.token = response['token'];
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
-            // const Expanded(flex: 2, child: SizedBox()),
           ],
         ),
       ),

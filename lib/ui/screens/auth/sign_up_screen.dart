@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
             ),
             Text(
-              langBloc.getString(Strings.enter10DigitMobileNumber),
+              langBloc.getString(Strings.createAnAccount),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    "${langBloc.getString(Strings.signUpWithMobileNumber)}?\t",
+                    "${langBloc.getString(Strings.alreadyAnExistingUser)}?\t",
                   ),
                 ),
                 Expanded(
@@ -78,7 +78,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text(
                       langBloc.getString(Strings.loginToYourAccount),
-                      style: const TextStyle(color: MyColors.primaryColor),
+                      style: textTheme.displaySmall!.copyWith(
+                        color: MyColors.primaryColor,
+                      ),
                     ),
                   ),
                 )
