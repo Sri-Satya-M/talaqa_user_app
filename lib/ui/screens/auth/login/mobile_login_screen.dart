@@ -29,23 +29,19 @@ class _MobileLoginState extends State<MobileLogin> {
     var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(height: size.height * 0.10),
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             Text(
-              "${langBloc.getString(Strings.welcomeBack)} !",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "${langBloc.getString(Strings.loginToYourAccountWithEmailAddress)}...!",
-              style: textTheme.bodySmall,
+              langBloc.getString(Strings.loginWithMobileNumber),
+              style: textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -132,14 +128,23 @@ class _MobileLoginState extends State<MobileLogin> {
               ],
             ),
             const SizedBox(height: 32),
-            ProgressButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.palePink,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EmailLogin()),
                 );
               },
-              child: Text(langBloc.getString(Strings.loginWithEmailAddress)),
+              child: Text(
+                langBloc.getString(Strings.loginWithEmailAddress),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
             ),
             const SizedBox(height: 32),
             Row(

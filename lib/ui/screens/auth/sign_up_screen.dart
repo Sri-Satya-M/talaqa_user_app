@@ -31,12 +31,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             Text(
-              langBloc.getString(Strings.welcomeBack),
+              '${langBloc.getString(Strings.welcomeBack)} !',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+              style: textTheme.headlineMedium,
             ),
+            const SizedBox(height: 8),
             Text(
               langBloc.getString(Strings.createAnAccount),
+              style: textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),

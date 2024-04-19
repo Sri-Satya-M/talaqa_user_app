@@ -8,7 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/colors.dart';
 import '../../../resources/strings.dart';
+import 'login/email_login_screen.dart';
+import 'login/mobile_login_screen.dart';
 
 class MobileScreen extends StatefulWidget {
   const MobileScreen({super.key});
@@ -101,58 +104,75 @@ class _MobileScreenState extends State<MobileScreen> {
                 },
                 child: Text(langBloc.getString(Strings.getOtp)),
               ),
-
-              // const SizedBox(height: 48),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       margin: const EdgeInsets.symmetric(horizontal: 10),
-              //       width: 50,
-              //       height: 1,
-              //       color: Colors.black.withOpacity(0.2),
-              //     ),
-              //     Text(langBloc.getString(Strings.or)),
-              //     Container(
-              //       margin: const EdgeInsets.symmetric(horizontal: 10),
-              //       width: 50,
-              //       height: 1,
-              //       color: Colors.black.withOpacity(0.2),
-              //     ),
-              //   ],
-              // ),
-              // const SizedBox(height: 40),
-              // ProgressButton(
-              //   onPressed: () {
-              //     Navigator.of(context).pushNamedAndRemoveUntil(
-              //       Routes.email,
-              //           (route) => false,
-              //     );
-              //   },
-              //   child: Text(langBloc.getString(Strings.signUpWithEmailAddress)),
-              // ),
-              // const SizedBox(height: 32),
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => const MobileLogin(),
-              //           ),
-              //         );
-              //       },
-              //       child: Text(
-              //         langBloc.getString(Strings.loginToYourAccount),
-              //         style: const TextStyle(color: MyColors.primaryColor),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: 50,
+                    height: 1,
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                  Text(langBloc.getString(Strings.or)),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: 50,
+                    height: 1,
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: MyColors.palePink,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EmailLogin()),
+                  );
+                },
+                child: Text(
+                  langBloc.getString(Strings.loginWithEmailAddress),
+                  style: textTheme.labelLarge?.copyWith(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      "${langBloc.getString(Strings.alreadyAnExistingUser)}?\t",
+                      style: textTheme.displaySmall!.copyWith(fontSize: 12),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MobileLogin(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        langBloc.getString(Strings.loginToYourAccount),
+                        style: textTheme.displaySmall!.copyWith(
+                          color: MyColors.primaryColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           )
         ],

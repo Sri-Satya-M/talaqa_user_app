@@ -28,7 +28,6 @@ class _EmailLoginState extends State<EmailLogin> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -39,14 +38,8 @@ class _EmailLoginState extends State<EmailLogin> {
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             Text(
-              "${langBloc.getString(Strings.welcomeBack)} !",
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "${langBloc.getString(Strings.loginToYourAccountWithEmailAddress)}...!",
-              style: textTheme.bodySmall,
+              langBloc.getString(Strings.loginWithEmailAddress),
+              style: textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),

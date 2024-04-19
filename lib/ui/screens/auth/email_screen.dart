@@ -99,14 +99,23 @@ class _EmailScreenState extends State<EmailScreen> {
               ],
             ),
             const SizedBox(height: 32),
-            ProgressButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.palePink,
+              ),
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.mobile,
                   (route) => false,
                 );
               },
-              child: Text(langBloc.getString(Strings.signUpWithMobileNumber)),
+              child: Text(
+                langBloc.getString(Strings.signUpWithMobileNumber),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
             ),
             const SizedBox(height: 32),
             Row(
