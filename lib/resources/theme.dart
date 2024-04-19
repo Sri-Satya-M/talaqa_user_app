@@ -147,13 +147,8 @@ class AppTheme {
         width: 1,
       ),
     );
+
     return ThemeData(
-      colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        secondary: primaryColor,
-        onSecondary: Colors.white,
-        brightness: Brightness.light,
-      ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: Colors.black,
         selectionColor: primaryColor.withOpacity(0.3),
@@ -163,7 +158,6 @@ class AppTheme {
       indicatorColor: primaryColor,
       toggleableActiveColor: primaryColor,
       canvasColor: Colors.white,
-      backgroundColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       textTheme: textTheme,
       primaryTextTheme: textTheme,
@@ -205,15 +199,15 @@ class AppTheme {
           ),
           foregroundColor: Colors.white,
           // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          textStyle: displaySmall,
-          fixedSize: const Size(140, 60),
+          textStyle: displaySmall.copyWith(fontSize: 14),
+          fixedSize: const Size(140, 50),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           backgroundColor: Colors.white,
           padding: EdgeInsets.zero,
-          textStyle: titleSmall,
+          textStyle: displaySmall.copyWith(fontSize: 14),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -224,7 +218,7 @@ class AppTheme {
           ),
           side: BorderSide(width: 1, color: primaryColor),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: headlineSmall,
+          textStyle: displaySmall,
           fixedSize: const Size(100, 50),
         ),
       ),
@@ -340,6 +334,12 @@ class AppTheme {
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.transparent,
       ),
+      colorScheme: ColorScheme.light(
+        primary: primaryColor,
+        secondary: primaryColor,
+        onSecondary: Colors.white,
+        brightness: Brightness.light,
+      ).copyWith(background: Colors.white),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/config/routes.dart';
-import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/auth/login/email_login_screen.dart';
 import 'package:alsan_app/ui/screens/otp/otp_screen.dart';
@@ -10,6 +9,7 @@ import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../resources/colors.dart';
 import '../../../resources/strings.dart';
 
 class EmailScreen extends StatefulWidget {
@@ -24,6 +24,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var size = MediaQuery.of(context).size;
@@ -111,17 +112,27 @@ class _EmailScreenState extends State<EmailScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${langBloc.getString(Strings.alreadyAnExistingUser)}?\t"),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EmailLogin()),
-                    );
-                  },
+                Expanded(
                   child: Text(
-                    langBloc.getString(Strings.loginToYourAccount),
-                    style: const TextStyle(color: MyColors.primaryColor),
+                    "${langBloc.getString(Strings.alreadyAnExistingUser)}?\t",
+                    style: textTheme.displaySmall!.copyWith(fontSize: 12),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EmailLogin()),
+                      );
+                    },
+                    child: Text(
+                      langBloc.getString(Strings.loginToYourAccount),
+                      style: textTheme.displaySmall!.copyWith(
+                        color: MyColors.primaryColor,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
               ],

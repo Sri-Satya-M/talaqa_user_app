@@ -61,11 +61,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Text(
                     "${langBloc.getString(Strings.alreadyAnExistingUser)}?\t",
+                    style: textTheme.displaySmall!.copyWith(
+                      fontSize: 12,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -80,6 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       langBloc.getString(Strings.loginToYourAccount),
                       style: textTheme.displaySmall!.copyWith(
                         color: MyColors.primaryColor,
+                        fontSize: 14,
                       ),
                     ),
                   ),

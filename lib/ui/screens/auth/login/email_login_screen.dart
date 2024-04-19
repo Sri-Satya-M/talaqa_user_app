@@ -132,14 +132,23 @@ class _EmailLoginState extends State<EmailLogin> {
               ],
             ),
             const SizedBox(height: 32),
-            ProgressButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.palePink,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MobileLogin()),
                 );
               },
-              child: Text(langBloc.getString(Strings.loginWithMobileNumber)),
+              child: Text(
+                langBloc.getString(Strings.loginWithMobileNumber),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -151,12 +160,12 @@ class _EmailLoginState extends State<EmailLogin> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EmailScreen()),
+                        builder: (context) => const EmailScreen(),
+                      ),
                     );
                   },
                   child: Text(
-                    // "Create an account",
-                    langBloc.getString(Strings.hello),
+                    langBloc.getString(Strings.createAnAccount),
                     style: const TextStyle(color: MyColors.primaryColor),
                   ),
                 ),

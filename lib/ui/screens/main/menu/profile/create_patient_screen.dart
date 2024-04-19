@@ -195,7 +195,7 @@ class _CreatePatientState extends State<CreatePatient> {
               ),
               const SizedBox(height: 12),
               TextFormField(
-                enabled: false,
+                readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
                 ),
