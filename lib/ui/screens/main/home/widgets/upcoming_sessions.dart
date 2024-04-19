@@ -29,18 +29,20 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return FutureBuilder<List<Session>>(
-      future: sessionBloc.getSessions(query: {
-        "status": [
-          "PENDING",
-          "APPROVED",
-          "PAID",
-          'STARTED',
-          'NEW_CLINICIAN_ASSIGNED',
-          'CLINICIAN_ACCEPTED',
-          'CLINICIAN_REJECTED'
-        ],
-        "patientId": userBloc.profile?.id,
-      }),
+      future: sessionBloc.getSessions(
+        query: {
+          "patientId": userBloc.profile?.id,
+          "status": [
+            "PENDING",
+            "APPROVED",
+            "PAID",
+            'STARTED',
+            'NEW_CLINICIAN_ASSIGNED',
+            'CLINICIAN_ACCEPTED',
+            'CLINICIAN_REJECTED'
+          ],
+        },
+      ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return CustomErrorWidget(error: snapshot.error);
@@ -49,9 +51,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
           return const LoadingWidget();
         }
         var sessions = snapshot.data ?? [];
-
         if (sessions.isEmpty) return const SizedBox();
-
         return Column(
           children: [
             Row(
@@ -73,7 +73,7 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
               ],
             ),
             SizedBox(
-              height: 410,
+              height: 400,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: sessions.length,
@@ -81,10 +81,12 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                 itemBuilder: (context, index) {
                   return SessionCard(
                     session: sessions[index],
-                    onTap: () => SessionDetailsScreen.open(
-                      context,
-                      id: sessions[index].id.toString(),
-                    ),
+                    onTap: () {
+                      SessionDetailsScreen.open(
+                        context,
+                        id: sessions[index].id.toString(),
+                      );
+                    },
                   );
                 },
               ),

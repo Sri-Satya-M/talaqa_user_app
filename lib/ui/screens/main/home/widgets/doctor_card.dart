@@ -29,8 +29,9 @@ class _DoctorCardState extends State<DoctorCard> {
     var textTheme = Theme.of(context).textTheme;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return CustomCard(
-      width: size.width * 0.8,
+      width: size.width * 0.9,
       radius: 5,
+      margin: EdgeInsets.zero,
       child: InkWell(
         onTap: () {
           ClinicianDetailsScreen.open(context, clinician: widget.clinician);

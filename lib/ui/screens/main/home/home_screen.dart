@@ -1,10 +1,8 @@
 import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/booking_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/select_clinicians_screen.dart';
 import 'package:alsan_app/ui/screens/main/home/widgets/upcoming_sessions.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,91 +33,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       padding: const EdgeInsets.all(16),
       physics: const ScrollPhysics(),
       children: [
-        CarouselSlider(
-          items: [
-            for (int i = 0; i < banners.length; i++)
-              Stack(
+        Stack(
+          children: [
+            Image.asset(Images.talaqaBanner, width: double.maxFinite),
+            Positioned(
+              top: 20,
+              left: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset(
-                      banners[i],
-                      fit: BoxFit.fitWidth,
-                      width: size.width * 0.9,
+                  Text(
+                    langBloc.getString(Strings.speechTherapy),
+                    style: textTheme.titleMedium!.copyWith(
+                      color: Colors.white,
+                      fontSize: 12,
                     ),
                   ),
-                  Positioned(
-                    top: 20,
-                    left: 20,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          langBloc.getString(Strings.speechTherapy),
-                          style: textTheme.titleMedium!.copyWith(
-                            color: Colors.white,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "at Your Fingertips",
-                          style: textTheme.headlineSmall!.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    left: 20,
-                    child: Container(
-                      width: 110,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: InkWell(
-                        onTap: () => bookNow.call(index: i),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Center(
-                            child: Text(
-                              langBloc.getString(Strings.bookNow),
-                              style: textTheme.titleMedium!.copyWith(
-                                color: Colors.white,
-                                fontSize: 12,
-                                height: 0.1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "at Your Fingertips",
+                    style: textTheme.headlineSmall!.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
                   ),
                 ],
               ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              child: Container(
+                width: 110,
+                height: 45,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: InkWell(
+                  onTap: () => bookNow.call(index: 0),
+                  child: Center(
+                    child: Text(
+                      langBloc.getString(Strings.bookNow),
+                      style: textTheme.titleMedium!.copyWith(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
-          options: CarouselOptions(
-              height: 160,
-              aspectRatio: 16 / 9,
-              viewportFraction: 0.99,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              autoPlayInterval: const Duration(seconds: 3),
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              enlargeFactor: 0.3,
-              onPageChanged: (index, _) {
-                setState(() {
-                  bannerIndex = index;
-                });
-              }),
         ),
         const SizedBox(height: 8),
         UpcomingSessions(
@@ -132,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             mainBloc.changeIndex(2);
           },
         ),
-        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -149,17 +113,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 );
               },
-              child: Text(
-                langBloc.getString(Strings.seeAll),
-                style: textTheme.titleSmall?.copyWith(
-                  color: MyColors.primaryColor,
-                ),
-              ),
+              child: Text(langBloc.getString(Strings.seeAll)),
             ),
           ],
         ),
         const SizedBox(
-          height: 210,
+          height: 185,
           child: ClinicianList(scrollDirection: Axis.horizontal),
         ),
         const SizedBox(height: 16),

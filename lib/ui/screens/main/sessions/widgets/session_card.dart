@@ -14,11 +14,7 @@ class SessionCard extends StatefulWidget {
   final Session session;
   final VoidCallback onTap;
 
-  const SessionCard({
-    super.key,
-    required this.onTap,
-    required this.session,
-  });
+  const SessionCard({super.key, required this.onTap, required this.session});
 
   @override
   State<SessionCard> createState() => _SessionCardState();
@@ -95,8 +91,10 @@ class _SessionCardState extends State<SessionCard> {
                     ),
                   ),
                   ReverseDetailsTile(
-                    title:
-                        Text("Mode of consultation", style: textTheme.bodySmall),
+                    title: Text(
+                      "Mode of consultation",
+                      style: textTheme.bodySmall,
+                    ),
                     value: Text(
                       "${widget.session.consultationMode}",
                       style: textTheme.bodyLarge,
@@ -122,7 +120,9 @@ class _SessionCardState extends State<SessionCard> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 8),
+                        vertical: 4,
+                        horizontal: 8,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

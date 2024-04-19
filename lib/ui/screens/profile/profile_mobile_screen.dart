@@ -52,6 +52,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
     var userBloc = Provider.of<UserBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Scaffold(
@@ -70,6 +71,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 langBloc.getString(
                   Strings.enterYourDetailsToCompleteUserProfile,
                 ),
+                style: textTheme.displaySmall,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
@@ -95,7 +97,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               ),
               const SizedBox(height: 8),
               TextFormField(
-                enabled: false,
+                readOnly: true,
                 initialValue: userBloc.username,
                 decoration: InputDecoration(
                     hintText: "${langBloc.getString(Strings.mobileNumber)}*"),
@@ -153,7 +155,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 },
               ),
               TextFormField(
-                enabled: false,
+                readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
                 ),
