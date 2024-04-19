@@ -23,7 +23,7 @@ class ConfirmLogout {
           elevation: 5,
           content: Text(
             '${langBloc.getString(Strings.areYouSureYouWantToLogout)} ?',
-            style: textTheme.headlineSmall,
+            style: textTheme.displaySmall,
           ),
           actions: [
             TextButton(

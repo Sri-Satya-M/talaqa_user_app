@@ -345,7 +345,7 @@ const englishTranslations = {
   Strings.writeReview: 'write Review',
   Strings.years: 'Years',
   Strings.yearsExp: 'Years Exp',
-  Strings.yes: 'yes',
+  Strings.yes: 'Yes',
   Strings.yourEmailIdHasBeenSuccessfullyVerified:
       'your Email ID Has Been Successfully Verified',
   Strings.yourLanguage: 'Your Language',

@@ -131,7 +131,7 @@ class _SuccessScreenState extends State<SuccessScreen>
                       textAlign: TextAlign.center,
                       style: textTheme.displaySmall,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 12),
                     Text(
                       widget.subtitle ?? '',
                       textAlign: TextAlign.center,
