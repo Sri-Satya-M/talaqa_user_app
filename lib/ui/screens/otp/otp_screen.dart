@@ -2,7 +2,6 @@ import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
-import 'package:alsan_app/ui/screens/auth/mobile_screen.dart';
 import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:alsan_app/ui/screens/terms_conditions/terms_conditions_screen.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
@@ -80,12 +79,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     minimumSize: const Size(0, 18),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MobileScreen(),
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   child: Image.asset(Images.editIcon, height: 16, width: 16),
                 ),
