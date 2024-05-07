@@ -1,12 +1,12 @@
-import 'package:alsan_app/bloc/main_bloc.dart';
-import 'package:alsan_app/bloc/user_bloc.dart';
-import 'package:alsan_app/ui/screens/language/language_screen.dart';
-import 'package:alsan_app/ui/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../bloc/main_bloc.dart';
+import '../../../bloc/user_bloc.dart';
 import '../../../data/local/shared_prefs.dart';
 import '../../../resources/images.dart';
+import '../language/language_screen.dart';
+import '../main/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,13 +16,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  checks() async {
-    Future.delayed(const Duration(seconds: 2), () async {
-      var token = await Prefs.getToken();
+  bool selected = false;
 
+  checks() async {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () => setState(() => selected = true),
+    );
+    Future.delayed(const Duration(seconds: 3), () async {
+      var userBloc = Provider.of<UserBloc>(context, listen: false);
+      var mainBloc = Provider.of<MainBloc>(context, listen: false);
+
+      var token = await Prefs.getToken();
       if (token != null) {
-        var userBloc = Provider.of<UserBloc>(context, listen: false);
-        var mainBloc = Provider.of<MainBloc>(context, listen: false);
         await userBloc.getProfile();
         MainScreen.open(context);
         mainBloc.changeIndex(0);
@@ -41,8 +47,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Image.asset(Images.logo, height: 250, width: 250),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedPositioned(
+            top: !selected ? 0 : (MediaQuery.of(context).size.height / 2) - 110,
+            duration: const Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
+            child: Image.asset(Images.logo_1, height: 80, width: 80),
+          ),
+          AnimatedPositioned(
+            bottom:
+                !selected ? 0 : (MediaQuery.of(context).size.height / 2) - 70,
+            duration: const Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn,
+            child: Image.asset(Images.logo_2, height: 110, width: 110),
+          )
+        ],
       ),
     );
   }
