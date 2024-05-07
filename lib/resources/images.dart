@@ -38,6 +38,8 @@ class Images {
   static const timer = 'assets/icons/timer.png';
   static const card = 'assets/icons/card.png';
   static const cards = 'assets/icons/cards.png';
+  static const logo_1 = 'assets/icons/logo_1.png';
+  static const logo_2 = 'assets/icons/logo_2.png';
 
   static const sessionNotify = "assets/icons/notify/session_notify.png";
   static const clinicianNotify = "assets/icons/notify/clinician_notify.png";
