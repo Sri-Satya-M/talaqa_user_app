@@ -28,7 +28,7 @@ class _SessionCardState extends State<SessionCard> {
     return CustomCard(
       width: size.width * 0.9,
       radius: 5,
-      margin: EdgeInsets.zero,
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
         onTap: widget.onTap,
         child: Padding(

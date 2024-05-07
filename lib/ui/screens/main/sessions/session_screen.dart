@@ -18,7 +18,7 @@ class _SessionScreenState extends State<SessionScreen> {
   Widget build(BuildContext context) {
     var mainBloc = Provider.of<MainBloc>(context, listen: true);
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(10),
       child: Builder(
         builder: (context) {
           switch (mainBloc.tab) {
