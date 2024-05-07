@@ -186,7 +186,7 @@ const englishTranslations = {
   Strings.offlineConsultations: 'Offline Consultations',
   Strings.ok: 'Ok',
   Strings.onlineConsultations: 'Online Consultations',
-  Strings.or: 'Or',
+  Strings.or: 'OR',
   Strings.other: 'Other',
   Strings.otp: 'OTP',
   Strings.otpVerification: 'OTP Verification',
@@ -370,5 +370,8 @@ const englishTranslations = {
   Strings.findTheIdealClinicianWhoUnderstands:
       'Find the ideal clinician who understands your unique requirements.',
   Strings.easilyScheduleYourTherapySessionOnline:
-      'Easily schedule your therapy session online for convenience and comfort.'
+      'Easily schedule your therapy session online for convenience and comfort.',
+  Strings.iKnowIHaveDiagnosed:
+      'I know what i have, I\'ve been diagnosed before',
+  Strings.iDontKnow: 'I don\'t know what I might have',
 };

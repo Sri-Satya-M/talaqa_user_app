@@ -370,4 +370,6 @@ const arabicTranslations = {
       "ابحث عن الأخصائي المثالي الذي يفهم احتياجاتك الفريدة.",
   Strings.easilyScheduleYourTherapySessionOnline:
       "قم بجدولة جلستك العلاجية عبر الإنترنت بسهولة للراحة والراحة.",
+  Strings.iKnowIHaveDiagnosed: 'أعرف ما لدي، لقد تم تشخيصي من قبل',
+  Strings.iDontKnow: 'أنا لا أعرف ما قد يكون لدي',
 };

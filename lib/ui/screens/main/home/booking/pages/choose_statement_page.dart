@@ -63,7 +63,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "I know what i have, I've been diagnosed before",
+                    langBloc.getString(Strings.iKnowIHaveDiagnosed),
                     style: textTheme.displaySmall,
                   ),
                 ),
@@ -93,7 +93,7 @@ class _ChooseStatementPageState extends State<ChooseStatementPage> {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "I don't know what I might have",
+                    langBloc.getString(Strings.iDontKnow),
                     style: textTheme.displaySmall,
                   ),
                 ),

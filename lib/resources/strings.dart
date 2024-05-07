@@ -347,5 +347,7 @@ enum Strings {
   bookOnlineTherapySession,
   identifyYourSymptom,
   findTheIdealClinicianWhoUnderstands,
-  easilyScheduleYourTherapySessionOnline
+  easilyScheduleYourTherapySessionOnline,
+  iKnowIHaveDiagnosed,
+  iDontKnow,
 }
