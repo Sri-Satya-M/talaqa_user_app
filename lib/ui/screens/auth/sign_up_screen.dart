@@ -31,9 +31,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Image.asset(Images.logo, height: 140),
             const SizedBox(height: 32),
             Text(
-              '${langBloc.getString(Strings.welcomeBack)} !',
+              '${langBloc.getString(Strings.welcomeBack)}!',
               textAlign: TextAlign.center,
-              style: textTheme.headlineMedium,
+              style: textTheme.headlineMedium!.copyWith(fontSize: 20),
             ),
             const SizedBox(height: 8),
             Text(
@@ -46,7 +46,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: () {
                 Navigator.pushNamed(context, Routes.mobile);
               },
-              child: Text(langBloc.getString(Strings.signUpWithMobileNumber)),
+              child: Text(
+                langBloc.getString(Strings.signUpWithMobileNumber),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -58,7 +64,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
               child: Text(
                 langBloc.getString(Strings.signUpWithEmailAddress),
-                style: textTheme.labelLarge?.copyWith(color: Colors.black),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
               ),
             ),
             const SizedBox(height: 30),

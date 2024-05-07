@@ -98,12 +98,15 @@ class _EmailLoginState extends State<EmailLogin> {
 
                 await userBloc.getProfile();
 
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                    (route) => false);
+                MainScreen.open(context);
               },
-              child: Text(langBloc.getString(Strings.login)),
+              child: Text(
+                langBloc.getString(Strings.login),
+                style: textTheme.labelLarge?.copyWith(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
             ),
             const SizedBox(height: 32),
             Row(
