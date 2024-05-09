@@ -5,7 +5,6 @@ import 'package:alsan_app/bloc/user_bloc.dart';
 import 'package:alsan_app/data/local/shared_prefs.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/widgets/error_snackbar.dart';
-import 'package:alsan_app/ui/widgets/progress_button.dart';
 import 'package:alsan_app/ui/widgets/success_screen.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:file_picker/file_picker.dart';
@@ -63,10 +62,10 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              Text(
-                langBloc.getString(Strings.enterProfileDetails),
-                textAlign: TextAlign.center,
-              ),
+              // Text(
+              //   langBloc.getString(Strings.enterProfileDetails),
+              //   textAlign: TextAlign.center,
+              // ),
               Text(
                 langBloc
                     .getString(Strings.enterYourDetailsToCompleteUserProfile),
@@ -75,9 +74,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               const SizedBox(height: 8),
               TextFormField(
                 onChanged: (value) {
-                  setState(() {
-                    name = value;
-                  });
+                  setState(() => name = value);
                 },
                 decoration: InputDecoration(
                   hintText: "${langBloc.getString(Strings.name)}*",
@@ -97,7 +94,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               const SizedBox(height: 8),
               TextFormField(
                 initialValue: userBloc.username,
-                enabled: false,
+                readOnly: true,
                 decoration: InputDecoration(
                   hintText: "${langBloc.getString(Strings.emailAddress)}*",
                 ),
@@ -158,7 +155,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 },
               ),
               TextFormField(
-                enabled: false,
+                readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
                 ),
@@ -305,7 +302,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: ProgressButton(
+        child: ElevatedButton(
           onPressed: () async {
             if (!formKey.currentState!.validate()) {
               ErrorSnackBar.show(
@@ -353,12 +350,14 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
 
             await userBloc.getProfile();
 
-            await userBloc.saveMedicalRecords(
-              body: {
-                'patientProfileId': userBloc.profile!.patientProfile!.id!,
-                'fileKeys': uploadKeys
-              },
-            ) as Map<String, dynamic>;
+            if (uploadKeys.isNotEmpty) {
+              await userBloc.saveMedicalRecords(
+                body: {
+                  'patientProfileId': userBloc.profile!.patientProfile!.id!,
+                  'fileKeys': uploadKeys
+                },
+              ) as Map<String, dynamic>;
+            }
 
             SuccessScreen.open(
               context,
@@ -368,7 +367,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
               ),
             );
           },
-          color: MyColors.primaryColor,
+          // color: MyColors.primaryColor,
           child: Text(langBloc.getString(Strings.submit)),
         ),
       ),
