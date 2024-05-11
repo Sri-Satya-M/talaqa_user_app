@@ -22,6 +22,8 @@ class MobileLogin extends StatefulWidget {
 
 class _MobileLoginState extends State<MobileLogin> {
   var mobileNumber = '';
+  String countryCode = '';
+
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'SA');
 
   @override
@@ -51,22 +53,22 @@ class _MobileLoginState extends State<MobileLogin> {
                   initialValue: phoneNumber,
                   onInputChanged: (value) {
                     if (value.phoneNumber == null) return;
-
                     mobileNumber = value.phoneNumber
                         .toString()
                         .replaceFirst(value.dialCode.toString(), '')
                         .trim();
+                    countryCode = '${value.dialCode}';
                   },
                   textStyle: const TextStyle(color: Colors.black),
                   formatInput: false,
-                  maxLength: 10,
                   errorMessage: langBloc.getString(Strings.invalidPhoneNumber),
                   inputDecoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: langBloc.getString(Strings.mobileNumber),
                   ),
                   selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                  ),
                   spaceBetweenSelectorAndTextField: 0,
                 ),
                 Positioned(
@@ -87,14 +89,17 @@ class _MobileLoginState extends State<MobileLogin> {
                 if (mobileNumber.length < 10) {
                   return ErrorSnackBar.show(
                     context,
-                    "${langBloc.getString(Strings.enter10DigitMobileNumber)}",
+                    langBloc.getString(Strings.enter10DigitMobileNumber),
                   );
                 }
 
-                var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
+                var body = {
+                  'type': 'MOBILE',
+                  'mobileNumber': mobileNumber,
+                  'countryCode': countryCode,
+                };
 
-                var response =
-                    await userBloc.sendOTP(body: body) as Map<String, dynamic>;
+                var response = await userBloc.sendOTP(body: body);
 
                 if (!response.containsKey('token')) {
                   return ErrorSnackBar.show(

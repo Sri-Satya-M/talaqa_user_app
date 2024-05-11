@@ -22,6 +22,7 @@ class MobileScreen extends StatefulWidget {
 
 class _MobileScreenState extends State<MobileScreen> {
   String mobileNumber = '';
+  String countryCode = '';
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'SA');
 
   @override
@@ -55,10 +56,10 @@ class _MobileScreenState extends State<MobileScreen> {
                           .toString()
                           .replaceFirst(value.dialCode.toString(), '')
                           .trim();
+                      countryCode = '${value.dialCode}';
                     },
                     textStyle: const TextStyle(color: Colors.black),
                     formatInput: false,
-                    // maxLength: 10,
                     errorMessage:
                         langBloc.getString(Strings.invalidPhoneNumber),
                     inputDecoration: InputDecoration(
@@ -87,7 +88,11 @@ class _MobileScreenState extends State<MobileScreen> {
               const SizedBox(height: 64),
               ProgressButton(
                 onPressed: () async {
-                  var body = {'type': 'MOBILE', 'mobileNumber': mobileNumber};
+                  var body = {
+                    'type': 'MOBILE',
+                    'mobileNumber': mobileNumber,
+                    'countryCode': countryCode,
+                  };
 
                   var userBloc = Provider.of<UserBloc>(context, listen: false);
                   var response = await userBloc.sendOTP(body: body)
