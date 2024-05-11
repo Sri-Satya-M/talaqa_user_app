@@ -262,6 +262,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
               'type': 'MOBILE',
               "age": int.parse(age),
               'mobileNumber': userBloc.username,
+              'countryCode': userBloc.countryCode,
               "dob": DateFormat('yyyy-MM-dd').format(
                 DateTime.parse(dateCtrl.text),
               ),

@@ -105,6 +105,7 @@ class _MobileScreenState extends State<MobileScreen> {
                     );
                   }
                   userBloc.username = mobileNumber;
+                  userBloc.countryCode = countryCode;
                   OtpScreen.open(context, token: response['token']);
                 },
                 child: Text(langBloc.getString(Strings.getOtp)),

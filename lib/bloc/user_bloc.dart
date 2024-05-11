@@ -17,6 +17,7 @@ class UserBloc with ChangeNotifier {
   final _userRepo = UserRepo();
 
   String username = '';
+  String countryCode = '';
 
   Profile? profile;
 
