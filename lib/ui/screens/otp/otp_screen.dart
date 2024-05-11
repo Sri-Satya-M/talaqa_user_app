@@ -128,8 +128,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       onTap: () async {
                         var body = {};
                         body['type'] = isEmail ? 'EMAIL' : 'MOBILE';
-                        body[isEmail ? 'email' : 'mobileNumber'] =
-                            userBloc.username;
+                        body[isEmail ? 'email' : 'mobileNumber'] = isEmail
+                            ? userBloc.username
+                            : userBloc.countryCode + userBloc.username;
 
                         var response = await userBloc.sendOTP(body: body);
 
