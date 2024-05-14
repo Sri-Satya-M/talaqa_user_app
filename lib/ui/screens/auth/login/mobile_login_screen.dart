@@ -86,13 +86,6 @@ class _MobileLoginState extends State<MobileLogin> {
             const SizedBox(height: 32),
             ProgressButton(
               onPressed: () async {
-                if (mobileNumber.length < 10) {
-                  return ErrorSnackBar.show(
-                    context,
-                    langBloc.getString(Strings.enter10DigitMobileNumber),
-                  );
-                }
-
                 var body = {
                   'type': 'MOBILE',
                   'mobileNumber': mobileNumber,
