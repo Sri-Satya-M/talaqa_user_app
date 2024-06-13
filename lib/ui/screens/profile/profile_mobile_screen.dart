@@ -105,8 +105,6 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return langBloc.getString(Strings.enterTheMobileNumber);
-                  } else if (value.length < 10) {
-                    return langBloc.getString(Strings.enter10DigitMobileNumber);
                   }
                   return null;
                 },

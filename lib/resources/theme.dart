@@ -156,7 +156,6 @@ class AppTheme {
       ),
       primaryColor: primaryColor,
       indicatorColor: primaryColor,
-      toggleableActiveColor: primaryColor,
       canvasColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       textTheme: textTheme,
@@ -340,6 +339,28 @@ class AppTheme {
         onSecondary: Colors.white,
         brightness: Brightness.light,
       ).copyWith(background: Colors.white),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return primaryColor;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return primaryColor;
+          }
+          return null;
+        }),
+      ),
     );
   }
 

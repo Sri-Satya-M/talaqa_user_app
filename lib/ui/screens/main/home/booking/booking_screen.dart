@@ -162,7 +162,8 @@ class _BookingScreenState extends State<BookingScreen> {
               ReverseDetailsTile(
                 title: Text(langBloc.getString(Strings.totalCharges)),
                 value: Text(
-                    ' د.إ  ${sessionBloc.selectedModeOfConsultation!.price! * sessionBloc.timeslots.length}'),
+                  ' د.إ  ${sessionBloc.selectedModeOfConsultation!.price! * sessionBloc.timeslots.length}',
+                ),
               ),
             const Spacer(),
             ElevatedButton(
