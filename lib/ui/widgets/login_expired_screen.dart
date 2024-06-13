@@ -1,9 +1,9 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
-import 'package:alsan_app/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app.dart';
+import '../../config/routes.dart';
 import '../../data/local/shared_prefs.dart';
 import '../../resources/images.dart';
 import '../../resources/strings.dart';
@@ -61,10 +61,9 @@ class LoginExpiredScreen extends StatelessWidget {
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.pushNamedAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const SplashScreen()),
+                          Routes.root,
                           (route) => false,
                         );
                       },

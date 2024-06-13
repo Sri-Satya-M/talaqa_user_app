@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:dio/dio.dart';
 
+import '../../ui/widgets/login_expired_screen.dart';
+
 class PrettyDioLogger extends Interceptor {
   /// Print request [Options]
   final bool request;
@@ -95,6 +97,9 @@ class PrettyDioLogger extends Interceptor {
         if (err.response != null && err.response?.data != null) {
           logPrint('╔ ${err.type.toString()}');
           _printResponse(err.response!);
+          if (err.response?.statusCode == 401) {
+            Future.delayed(const Duration(seconds: 1), LoginExpiredScreen.open);
+          }
         }
         _printLine('╚');
         logPrint('');
