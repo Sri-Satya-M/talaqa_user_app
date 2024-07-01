@@ -64,6 +64,7 @@ class _ClinicianListState extends State<ClinicianList> {
       scrollDirection: widget.scrollDirection,
       itemCount: clinicians.length + ((isFinished) ? 0 : 1),
       shrinkWrap: true,
+      physics: ScrollPhysics(),
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
         if (index == clinicians.length) {

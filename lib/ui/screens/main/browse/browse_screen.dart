@@ -44,7 +44,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
     var textTheme = Theme.of(context).textTheme;
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ListView(
-      shrinkWrap: true,
+      // shrinkWrap: true,
       padding: const EdgeInsets.all(20),
       physics: const ScrollPhysics(),
       children: [
@@ -61,8 +61,10 @@ class _BrowseScreenState extends State<BrowseScreen> {
                 child: TextFormField(
                   controller: searchCtrl,
                   decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                    hintText: langBloc.getString(Strings.searchByClinicianName),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 16),
+                    hintText:
+                        langBloc.getString(Strings.searchByClinicianName),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                   ),

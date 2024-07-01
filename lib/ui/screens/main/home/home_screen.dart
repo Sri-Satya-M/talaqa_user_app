@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
         const SizedBox(
-          height: 185,
+          height: 192,
           child: ClinicianList(scrollDirection: Axis.horizontal),
         ),
         const SizedBox(height: 16),

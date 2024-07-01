@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/ui/screens/main/home/booking/widgets/timeslot_details_widget.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
@@ -7,8 +8,10 @@ import 'package:alsan_app/ui/widgets/dynamic_grid_view.dart';
 import 'package:alsan_app/ui/widgets/reverse_details_tile.dart';
 import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../model/session.dart';
+import '../../../../../resources/strings.dart';
 
 class SessionCard extends StatefulWidget {
   final Session session;
@@ -25,6 +28,7 @@ class _SessionCardState extends State<SessionCard> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var size = MediaQuery.of(context).size;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return CustomCard(
       width: size.width * 0.9,
       radius: 5,
@@ -85,7 +89,10 @@ class _SessionCardState extends State<SessionCard> {
                 count: 2,
                 children: [
                   DetailsTile(
-                    title: Text("Experience", style: textTheme.bodySmall),
+                    title: Text(
+                      langBloc.getString(Strings.experience),
+                      style: textTheme.bodySmall,
+                    ),
                     value: Text(
                       "${widget.session.clinician?.experience} years exp",
                       style: textTheme.bodyLarge,
@@ -93,7 +100,7 @@ class _SessionCardState extends State<SessionCard> {
                   ),
                   ReverseDetailsTile(
                     title: Text(
-                      "Mode of consultation",
+                      langBloc.getString(Strings.modeOfConsultation),
                       style: textTheme.bodySmall,
                     ),
                     value: Text(
@@ -102,15 +109,21 @@ class _SessionCardState extends State<SessionCard> {
                     ),
                   ),
                   ReverseDetailsTile(
-                    title: Text("Patient", style: textTheme.bodySmall),
+                    title: Text(
+                      langBloc.getString(Strings.patient),
+                      style: textTheme.bodySmall,
+                    ),
                     value: Text("${widget.session.patientProfile?.fullName}",
                         style: textTheme.bodyLarge),
                   ),
                   ReverseDetailsTile(
-                    title: const Text('Type'),
+                    title: Text(langBloc.getString(Strings.type)),
                     value: Text(
                       widget.session.symptom ?? 'NA',
-                      style: textTheme.bodyLarge,
+                      style: textTheme.bodyLarge!,
+                      maxLines: 1,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   if (widget.session.consultationMode == "HOME" &&

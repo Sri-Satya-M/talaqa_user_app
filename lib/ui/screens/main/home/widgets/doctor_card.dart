@@ -31,7 +31,7 @@ class _DoctorCardState extends State<DoctorCard> {
     return CustomCard(
       width: size.width * 0.9,
       radius: 5,
-      margin: EdgeInsets.zero,
+      margin: const EdgeInsets.all(5),
       child: InkWell(
         onTap: () {
           ClinicianDetailsScreen.open(context, clinician: widget.clinician);
@@ -100,8 +100,11 @@ class _DoctorCardState extends State<DoctorCard> {
                             const SizedBox(height: 12),
                             Row(
                               children: [
-                                Image.asset(Images.voice,
-                                    height: 16, width: 16,),
+                                Image.asset(
+                                  Images.voice,
+                                  height: 16,
+                                  width: 16,
+                                ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
