@@ -18,73 +18,63 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  // var banners = [Images.topBanner1];
-  var banners = [Images.talaqaBanner];
-  int bannerIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var textTheme = Theme.of(context).textTheme;
+    var mainBloc = Provider.of<MainBloc>(context, listen: false);
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(16),
       physics: const ScrollPhysics(),
       children: [
-        Stack(
-          children: [
-            Image.asset(Images.talaqaBanner, width: double.maxFinite),
-            Positioned(
-              top: 20,
-              left: 15,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    langBloc.getString(Strings.speechTherapy),
-                    style: textTheme.titleMedium!.copyWith(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "at Your Fingertips",
-                    style: textTheme.headlineSmall!.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
+        Container(
+          width: double.maxFinite,
+          height: 160,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 1),
+            borderRadius: BorderRadius.circular(8),
+            image: const DecorationImage(
+              image: AssetImage(Images.talaqaBanner),
+              fit: BoxFit.fitWidth,
             ),
-            Positioned(
-              bottom: 20,
-              left: 20,
-              child: Container(
-                width: 110,
-                height: 45,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: InkWell(
-                  onTap: () => bookNow.call(index: 0),
-                  child: Center(
-                    child: Text(
-                      langBloc.getString(Strings.bookNow),
-                      style: textTheme.titleMedium!.copyWith(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                langBloc.getString(Strings.speechTherapy),
+                style: textTheme.titleMedium!.copyWith(
+                  color: Colors.white,
+                  fontSize: 12,
                 ),
               ),
-            )
-          ],
+              const SizedBox(height: 5),
+              Text(
+                "at Your Fingertips",
+                style: textTheme.headlineSmall!.copyWith(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              const Spacer(),
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.white),
+                  fixedSize: const Size(100, 40),
+                ),
+                onPressed: () => bookNow.call(index: 0),
+                child: Text(
+                  langBloc.getString(Strings.bookNow),
+                  style: textTheme.titleMedium!.copyWith(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         const SizedBox(height: 8),
         UpcomingSessions(
