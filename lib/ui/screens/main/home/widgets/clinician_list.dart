@@ -1,3 +1,5 @@
+import 'package:alsan_app/ui/widgets/empty_widget.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,35 +62,39 @@ class _ClinicianListState extends State<ClinicianList> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return ListView.builder(
-      scrollDirection: widget.scrollDirection,
-      itemCount: clinicians.length + ((isFinished) ? 0 : 1),
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        if (index == clinicians.length) {
-          fetchMore();
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const LoadingWidget(),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Fetching more Clinicians',
-                    style: textTheme.bodySmall!.copyWith(
-                      fontSize: 14,
-                    ),
-                  )
-                ],
+    if (clinicians.isEmpty) {
+      return const EmptyWidget(message: 'No clinicians available');
+    } else {
+      return ExpandablePageView.builder(
+        scrollDirection: widget.scrollDirection,
+        itemCount: clinicians.length + ((isFinished) ? 0 : 1),
+        // shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        // padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          if (index == clinicians.length) {
+            fetchMore();
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const LoadingWidget(),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Fetching more Clinicians',
+                      style: textTheme.bodySmall!.copyWith(
+                        fontSize: 14,
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
-        }
-        return DoctorCard(clinician: clinicians[index]);
-      },
-    );
+            );
+          }
+          return DoctorCard(clinician: clinicians[index]);
+        },
+      );
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/user_bloc.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -66,23 +67,19 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 323,
-              child: ListView.builder(
-                itemCount: sessions.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return SessionCard(
-                    session: sessions[index],
-                    onTap: () {
-                      SessionDetailsScreen.open(
-                        context,
-                        id: sessions[index].id.toString(),
-                      );
-                    },
-                  );
-                },
-              ),
+            ExpandablePageView.builder(
+              itemCount: sessions.length,
+              itemBuilder: (context, index) {
+                return SessionCard(
+                  session: sessions[index],
+                  onTap: () {
+                    SessionDetailsScreen.open(
+                      context,
+                      id: sessions[index].id.toString(),
+                    );
+                  },
+                );
+              },
             ),
           ],
         );
