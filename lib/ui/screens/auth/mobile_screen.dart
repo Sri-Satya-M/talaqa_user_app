@@ -92,6 +92,7 @@ class _MobileScreenState extends State<MobileScreen> {
                     'type': 'MOBILE',
                     'mobileNumber': mobileNumber,
                     'countryCode': countryCode,
+                    'existingUser': false,
                   };
 
                   var userBloc = Provider.of<UserBloc>(context, listen: false);

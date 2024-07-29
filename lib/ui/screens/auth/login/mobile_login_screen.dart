@@ -90,6 +90,7 @@ class _MobileLoginState extends State<MobileLogin> {
                   'type': 'MOBILE',
                   'mobileNumber': mobileNumber,
                   'countryCode': countryCode,
+                  'existingUser': true,
                 };
 
                 var response = await userBloc.sendOTP(body: body);
