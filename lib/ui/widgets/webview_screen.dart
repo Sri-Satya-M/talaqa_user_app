@@ -25,7 +25,33 @@ class WebviewScreen extends StatefulWidget {
 }
 
 class _WebviewScreenState extends State<WebviewScreen> {
-  bool isLoading = true;
+  int progress = 0;
+  WebViewController controller = WebViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +65,14 @@ class _WebviewScreenState extends State<WebviewScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          WebView(
-            onProgress: (value) {
-              const CircularProgressIndicator();
-            },
-            initialUrl: widget.url,
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: (finish) {
-              isLoading = false;
-              setState(() {});
-            },
-          ),
-          isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Stack(),
+          if (progress != 100)
+            LinearProgressIndicator(value: progress / 100.0, minHeight: 2)
+          else
+            Expanded(child: WebViewWidget(controller: controller)),
         ],
       ),
     );

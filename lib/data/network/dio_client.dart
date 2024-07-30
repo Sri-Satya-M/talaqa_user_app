@@ -16,8 +16,8 @@ class DioClient implements ApiClient {
     dio = Dio();
     dio.options = BaseOptions(
       baseUrl: baseUrl,
-      connectTimeout: 100000,
-      receiveTimeout: 100000,
+      connectTimeout: const Duration(milliseconds: 100000),
+      receiveTimeout: const Duration(milliseconds: 100000),
     );
 
     dio.interceptors
