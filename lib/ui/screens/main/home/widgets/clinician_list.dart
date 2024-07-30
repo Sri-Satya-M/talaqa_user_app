@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/clinicians.dart';
+import '../../../../widgets/error_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 import 'doctor_card.dart';
 
@@ -56,6 +57,7 @@ class _ClinicianListState extends State<ClinicianList> {
 
   @override
   void initState() {
+    fetchMore();
     super.initState();
   }
 
