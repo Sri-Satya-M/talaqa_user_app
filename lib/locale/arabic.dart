@@ -372,4 +372,5 @@ const arabicTranslations = {
       'قم بجدولة جلستك العلاجية عن بعد بسهولة',
   Strings.iKnowIHaveDiagnosed: 'أعرف ما لدي، لقد تم تشخيصي من قبل',
   Strings.iDontKnow: 'أنا لا أعرف ما قد يكون لدي',
+  Strings.noCliniciansAvailable: 'لا يتوفر أطباء',
 };

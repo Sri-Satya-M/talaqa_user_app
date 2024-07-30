@@ -350,4 +350,5 @@ enum Strings {
   easilyScheduleYourTherapySessionOnline,
   iKnowIHaveDiagnosed,
   iDontKnow,
+  noCliniciansAvailable,
 }

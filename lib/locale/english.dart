@@ -374,4 +374,5 @@ const englishTranslations = {
   Strings.iKnowIHaveDiagnosed:
       'I know what i have, I\'ve been diagnosed before',
   Strings.iDontKnow: 'I don\'t know what I might have',
+  Strings.noCliniciansAvailable: 'No clinicians available',
 };

@@ -2,8 +2,10 @@ import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../bloc/language_bloc.dart';
 import '../../../../../bloc/user_bloc.dart';
 import '../../../../../model/clinicians.dart';
+import '../../../../../resources/strings.dart';
 import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/loading_widget.dart';
 import 'doctor_card.dart';
@@ -63,16 +65,17 @@ class _ClinicianListState extends State<ClinicianList> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     if (clinicians.isEmpty) {
-      return const EmptyWidget(message: 'No clinicians available');
+      return EmptyWidget(
+        message: langBloc.getString(Strings.noCliniciansAvailable),
+      );
     } else {
       if (widget.scrollDirection == Axis.horizontal) {
         return ExpandablePageView.builder(
           scrollDirection: widget.scrollDirection,
           itemCount: clinicians.length + ((isFinished) ? 0 : 1),
-          // shrinkWrap: true,
           physics: const ScrollPhysics(),
-          // padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
             if (index == clinicians.length) {
               fetchMore();
