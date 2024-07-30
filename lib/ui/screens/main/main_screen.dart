@@ -110,7 +110,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               onPressed: () {
                 LanguageScreen.open(context: context, isFromLogin: false);
               },
-              icon: Image.asset(Images.lan),
+              icon: Image.asset(Images.lan, width: 30, height: 30),
             ),
             IconButton(
               onPressed: () => NotificationScreen.open(context),
