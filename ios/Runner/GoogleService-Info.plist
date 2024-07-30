@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1022577936384-9t0lbrrpjnolbenncaa243jt0ls6k2vs.apps.googleusercontent.com</string>
+	<string>1022577936384-medvndk8hbq84lkfpji1gkcsr9pd5jb1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1022577936384-9t0lbrrpjnolbenncaa243jt0ls6k2vs</string>
+	<string>com.googleusercontent.apps.1022577936384-medvndk8hbq84lkfpji1gkcsr9pd5jb1</string>
 	<key>API_KEY</key>
 	<string>AIzaSyArW8YqsStzzDPDSg7p2lg5G2n3WFib4Ok</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1022577936384:ios:4e9d440332b3a0998330e5</string>
+	<string>1:1022577936384:ios:342f852d0e12a65a8330e5</string>
 	<key>DATABASE_URL</key>
 	<string>https://talaqah-clinic-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
