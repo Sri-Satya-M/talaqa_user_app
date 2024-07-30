@@ -174,6 +174,8 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: Colors.transparent,
         ),
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.black54,
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: false,
         titleTextStyle: headlineMedium,
@@ -274,23 +276,24 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
-        side: MaterialStateBorderSide.resolveWith(
-          (states) =>
-              const BorderSide(width: 1, color: MyColors.secondaryColor),
+        side: WidgetStateBorderSide.resolveWith(
+          (states) {
+            return const BorderSide(width: 1, color: MyColors.secondaryColor);
+          },
         ),
-        checkColor: MaterialStateProperty.all(MyColors.primaryColor),
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        checkColor: WidgetStateProperty.all(MyColors.primaryColor),
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return Colors.white;
           }
           return const Color(0xFFFFFFFF);
         }),
-        overlayColor: MaterialStateProperty.all(const Color(0xFFFFFFFF)),
+        overlayColor: WidgetStateProperty.all(const Color(0xFFFFFFFF)),
       ),
       radioTheme: RadioThemeData(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return primaryColor;
           } else {
             return const Color(0xFFB5B5B5);
@@ -338,24 +341,26 @@ class AppTheme {
         secondary: primaryColor,
         onSecondary: Colors.white,
         brightness: Brightness.light,
-      ).copyWith(background: Colors.white),
+      ).copyWith(
+        surface: Colors.white,
+      ),
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
+        thumbColor:
+            WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) {
             return null;
           }
-          if (states.contains(MaterialState.selected)) {
+          if (states.contains(WidgetState.selected)) {
             return primaryColor;
           }
           return null;
         }),
-        trackColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
+        trackColor:
+            WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) {
             return null;
           }
-          if (states.contains(MaterialState.selected)) {
+          if (states.contains(WidgetState.selected)) {
             return primaryColor;
           }
           return null;
