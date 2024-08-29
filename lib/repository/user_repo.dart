@@ -89,7 +89,7 @@ class UserRepo {
   }
 
   Future<List<Clinician>> getClinicians({query}) async {
-    var response = await apiClient.get(Api.clinicians, query: query);
+    var response = await apiClient.get('/clinicians', query: query);
     var list = response['clinicians'] as List;
     return list.map((e) => Clinician.fromMap(e)).toList();
   }

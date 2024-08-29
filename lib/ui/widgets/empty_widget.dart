@@ -1,8 +1,12 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../resources/strings.dart';
 
 class EmptyWidget extends StatelessWidget {
   final String? image;
-  final String message;
+  final String? message;
   final String? subtitle;
   final double size;
   final Color? fontColor;
@@ -10,8 +14,8 @@ class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
     Key? key,
     this.image,
-    this.message = 'Nothing to show here',
-    this.size = 180,
+    this.message,
+    this.size = 120,
     this.subtitle,
     this.fontColor,
   }) : super(key: key);
@@ -19,6 +23,7 @@ class EmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     return Center(
       child: FractionallySizedBox(
         widthFactor: 0.75,
@@ -32,7 +37,7 @@ class EmptyWidget extends StatelessWidget {
             // ),
             // const SizedBox(height: 20),
             Text(
-              message,
+              message ?? langBloc.getString(Strings.nothingShowHere),
               style: textTheme.headlineSmall!.copyWith(
                 color: fontColor,
                 fontSize: 22,

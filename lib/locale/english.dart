@@ -375,4 +375,9 @@ const englishTranslations = {
       'I know what i have, I\'ve been diagnosed before',
   Strings.iDontKnow: 'I don\'t know what I might have',
   Strings.noCliniciansAvailable: 'No clinicians available',
+  Strings.nothingShowHere: 'Nothing to show here',
+  Strings.yourSpeechTherapyRequestPlacedSuccessfully:
+      'Your speech therapy request has been placed successfully.',
+  Strings.updatesWillBeSentYourRegisteredMobileNumberAddress:
+      'Updates Will be sent to your registered mobile number or email address.'
 };

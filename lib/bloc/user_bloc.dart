@@ -43,6 +43,9 @@ class UserBloc with ChangeNotifier {
 
   Future getProfile() async {
     profile = await _userRepo.getProfile();
+    if(profile?.toJson() == {}){
+      await Prefs.clearPrefs();
+    }
     notifyListeners();
   }
 
@@ -115,8 +118,9 @@ class UserBloc with ChangeNotifier {
     return response.containsKey('id') ? true : false;
   }
 
-  Future<List<Clinician>> getClinicians({query}) {
-    return _userRepo.getClinicians(query: query);
+  Future<List<Clinician>> getClinicians({query}) async {
+    var res =  await _userRepo.getClinicians(query: query);
+    return res;
   }
 
   Future<List<Clinician>> getAvailableClinicians({query}) {

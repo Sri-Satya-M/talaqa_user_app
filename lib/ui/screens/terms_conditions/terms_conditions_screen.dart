@@ -28,35 +28,6 @@ class _TermsConditionsState extends State<TermsConditions> {
   bool check = false;
   late bool isEmail;
   bool isLoading = true;
-  WebViewController controller = WebViewController();
-
-  @override
-  void initState() {
-    super.initState();
-    var langBloc = Provider.of<LangBloc>(context, listen: false);
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(langBloc.appLanguage == 'English'
-          ? 'https://talaqa.online/terms-conditions'
-          : 'https://talaqa.online/ar/terms-conditions'));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +55,19 @@ class _TermsConditionsState extends State<TermsConditions> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: WebViewWidget(controller: controller),
+                      child: WebView(
+                        onProgress: (value) {
+                          const CircularProgressIndicator();
+                        },
+                        initialUrl: langBloc.appLanguage == 'English'
+                            ? 'https://talaqa.online/terms-conditions'
+                            : 'https://talaqa.online/ar/terms-conditions',
+                        javascriptMode: JavascriptMode.unrestricted,
+                        onPageFinished: (finish) {
+                          isLoading = false;
+                          setState(() {});
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -111,33 +94,33 @@ class _TermsConditionsState extends State<TermsConditions> {
       bottomNavigationBar: (!check)
           ? const SizedBox()
           : Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 32,
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+          bottom: 32,
+        ),
+        child: ProgressButton(
+          onPressed: () {
+            var message = isEmail
+                ? langBloc.getString(
+              Strings.yourEmailIdHasBeenSuccessfullyVerified,
+            )
+                : langBloc.getString(
+              Strings.yourMobileNumberHasBeenSuccessfullyVerified,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SuccessScreen(
+                  message: message,
+                  type: isEmail ? 'EMAIL' : 'MOBILE',
+                ),
               ),
-              child: ProgressButton(
-                onPressed: () {
-                  var message = isEmail
-                      ? langBloc.getString(
-                          Strings.yourEmailIdHasBeenSuccessfullyVerified,
-                        )
-                      : langBloc.getString(
-                          Strings.yourMobileNumberHasBeenSuccessfullyVerified,
-                        );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SuccessScreen(
-                        message: message,
-                        type: isEmail ? 'EMAIL' : 'MOBILE',
-                      ),
-                    ),
-                  );
-                },
-                child: Text(langBloc.getString(Strings.proceed)),
-              ),
-            ),
+            );
+          },
+          child: Text(langBloc.getString(Strings.proceed)),
+        ),
+      ),
     );
   }
 }

@@ -350,8 +350,9 @@ class _BookingScreenState extends State<BookingScreen> {
     ProgressUtils.handleProgress(
       context,
       task: () async {
-        var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
         var userBloc = Provider.of<UserBloc>(context, listen: false);
+        var langBloc = Provider.of<LangBloc>(context, listen: false);
+        var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
         var description =
             sessionBloc.description == null || sessionBloc.description!.isEmpty
                 ? 'NA'
@@ -385,10 +386,12 @@ class _BookingScreenState extends State<BookingScreen> {
           SuccessScreen.open(
             context,
             type: '',
-            message:
-                'Your speech therapy request has been placed successfully.',
-            subtitle:
-                'Updates Will be sent to your registered mobile number or email address.',
+            message: langBloc.getString(
+              Strings.yourSpeechTherapyRequestPlacedSuccessfully,
+            ),
+            subtitle: langBloc.getString(
+              Strings.updatesWillBeSentYourRegisteredMobileNumberAddress,
+            ),
             sessionId: response['id'].toString(),
           );
         }

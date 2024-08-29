@@ -11,7 +11,7 @@ import '../model/session.dart';
 class SessionRepo {
   Future<List<ModeOfConsultation>> getModeOfConsultation() async {
     var response = await apiClient.get(Api.modeOfConsultation);
-    var list = response as List;
+    var list = response['consultations'] as List;
     return list.map((e) => ModeOfConsultation.fromMap(e)).toList();
   }
 

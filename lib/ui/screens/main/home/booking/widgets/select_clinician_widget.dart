@@ -1,3 +1,4 @@
+import 'package:alsan_app/bloc/language_bloc.dart';
 import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
 import 'package:alsan_app/ui/widgets/empty_widget.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../../../../bloc/user_bloc.dart';
 import '../../../../../../model/clinicians.dart';
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/custom_card.dart';
 import '../../../../../widgets/loading_widget.dart';
 import 'clinician_details_widget.dart';
@@ -88,9 +90,12 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return (isFinished && clinicians.isEmpty)
-        ? const EmptyWidget(message: 'Clinicians Not available')
+        ? EmptyWidget(
+            message: langBloc.getString(Strings.noCliniciansAvailable),
+          )
         : ListView.builder(
             shrinkWrap: true,
             itemCount: clinicians.length + ((isFinished) ? 0 : 1),
@@ -134,10 +139,15 @@ class _SelectClinicianWidgetState extends State<SelectClinicianWidget> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          ClinicianDetailsScreen.open(
-                            context,
-                            clinician: clinicians[index],
-                          );
+                          if (widget.isClinician) {
+                            ClinicianDetailsScreen.open(
+                              context,
+                              clinician: clinicians[index],
+                            );
+                          } else {
+                            sessionBloc.selectedClinician = clinicians[index];
+                            setState(() {});
+                          }
                         },
                         child: ClinicianDetailsWidget(
                           clinician: clinicians[index],

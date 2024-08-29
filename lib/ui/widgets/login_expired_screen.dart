@@ -55,7 +55,8 @@ class LoginExpiredScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       langBloc.getString(
-                          Strings.yourSessionHasExpiredPleaseLoginAgain),
+                        Strings.yourSessionHasExpiredPleaseLoginAgain,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),

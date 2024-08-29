@@ -351,4 +351,7 @@ enum Strings {
   iKnowIHaveDiagnosed,
   iDontKnow,
   noCliniciansAvailable,
+  nothingShowHere,
+  yourSpeechTherapyRequestPlacedSuccessfully,
+  updatesWillBeSentYourRegisteredMobileNumberAddress,
 }

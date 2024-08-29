@@ -86,13 +86,13 @@ class PrettyDioLogger extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     if (error) {
-      if (err.type == DioExceptionType.badResponse) {
+      if (err.type == DioErrorType.response) {
         final uri = err.response?.requestOptions.uri;
         _printBoxed(
             header:
-            'DioException ║ Status: ${err.response?.statusCode} ${err.response?.statusMessage}',
+            'DioError ║ Status: ${err.response?.statusCode} ${err.response?.statusMessage}',
             text: uri.toString());
         if (err.response != null && err.response?.data != null) {
           logPrint('╔ ${err.type.toString()}');
@@ -100,19 +100,11 @@ class PrettyDioLogger extends Interceptor {
           if (err.response?.statusCode == 401) {
             Future.delayed(const Duration(seconds: 1), LoginExpiredScreen.open);
           }
-          if (uri == Uri.parse('https://api.vparkapp.com/users/profile')) {
-            if (err.response?.statusCode == 404) {
-              Future.delayed(
-                const Duration(seconds: 1),
-                LoginExpiredScreen.open,
-              );
-            }
-          }
         }
         _printLine('╚');
         logPrint('');
       } else {
-        _printBoxed(header: 'DioException ║ ${err.type}', text: err.message);
+        _printBoxed(header: 'DioError ║ ${err.type}', text: err.message);
       }
     }
     super.onError(err, handler);
@@ -206,10 +198,10 @@ class PrettyDioLogger extends Interceptor {
         bool isListItem = false,
         bool isLast = false,
       }) {
-    var multiTabs = tabs;
-    final isRoot = multiTabs == initialTab;
-    final initialIndent = _indent(multiTabs);
-    multiTabs++;
+    var _tabs = tabs;
+    final isRoot = _tabs == initialTab;
+    final initialIndent = _indent(_tabs);
+    _tabs++;
 
     if (isRoot || isListItem) logPrint('║$initialIndent{');
 
@@ -217,35 +209,35 @@ class PrettyDioLogger extends Interceptor {
       final isLast = index == data.length - 1;
       dynamic value = data[key];
       if (value is String) {
-        value = '"${value.toString().replaceAll(RegExp(r'([\r\n])+'), " ")}"';
+        value = '"${value.toString().replaceAll(RegExp(r'(\r|\n)+'), " ")}"';
       }
       if (value is Map) {
         if (compact && _canFlattenMap(value)) {
-          logPrint('║${_indent(multiTabs)} $key: $value${!isLast ? ',' : ''}');
+          logPrint('║${_indent(_tabs)} $key: $value${!isLast ? ',' : ''}');
         } else {
-          logPrint('║${_indent(multiTabs)} $key: {');
-          _printPrettyMap(value, tabs: multiTabs);
+          logPrint('║${_indent(_tabs)} $key: {');
+          _printPrettyMap(value, tabs: _tabs);
         }
       } else if (value is List) {
         if (compact && _canFlattenList(value)) {
-          logPrint('║${_indent(multiTabs)} $key: ${value.toString()}');
+          logPrint('║${_indent(_tabs)} $key: ${value.toString()}');
         } else {
-          logPrint('║${_indent(multiTabs)} $key: [');
-          _printList(value, tabs: multiTabs);
-          logPrint('║${_indent(multiTabs)} ]${isLast ? '' : ','}');
+          logPrint('║${_indent(_tabs)} $key: [');
+          _printList(value, tabs: _tabs);
+          logPrint('║${_indent(_tabs)} ]${isLast ? '' : ','}');
         }
       } else {
         final msg = value.toString().replaceAll('\n', '');
-        final indent = _indent(multiTabs);
+        final indent = _indent(_tabs);
         final linWidth = maxWidth - indent.length;
         if (msg.length + indent.length > linWidth) {
           final lines = (msg.length / linWidth).ceil();
           for (var i = 0; i < lines; ++i) {
             logPrint(
-                '║${_indent(multiTabs)} ${msg.substring(i * linWidth, math.min<int>(i * linWidth + linWidth, msg.length))}');
+                '║${_indent(_tabs)} ${msg.substring(i * linWidth, math.min<int>(i * linWidth + linWidth, msg.length))}');
           }
         } else {
-          logPrint('║${_indent(multiTabs)} $key: $msg${!isLast ? ',' : ''}');
+          logPrint('║${_indent(_tabs)} $key: $msg${!isLast ? ',' : ''}');
         }
       }
     });
@@ -280,7 +272,7 @@ class PrettyDioLogger extends Interceptor {
   }
 
   void _printMapAsTable(Map map, {String? header}) {
-    if (map.isEmpty) return;
+    if (map == null || map.isEmpty) return;
     logPrint('╔ $header ');
     map.forEach(
             (dynamic key, dynamic value) => _printKV(key.toString(), value));

@@ -11,9 +11,9 @@ class ErrorHandling {
     print('###ErrorHandling###');
     print(error);
     try {
-      if (error is DioException) {
+      if (error is DioError) {
         switch (error.type) {
-          case DioExceptionType.badResponse:
+          case DioErrorType.response:
             if (error.response?.statusCode == 400) {
               var map = error.response?.data;
               return badRequestMsg(map);
@@ -22,31 +22,26 @@ class ErrorHandling {
             } else if (error.response?.statusCode == 404) {
               return error.response?.data?['message'];
             } else if (error.response?.statusCode == 401) {
-              Future.delayed(
-                const Duration(seconds: 1),
-                    () {
-                  LoginExpiredScreen.open;
-                },
-              );
+              Future.delayed(Duration(seconds: 1), LoginExpiredScreen.open);
               if (error.response?.data?['message'] != null) {
                 return error.response?.data?['message'];
               }
               return 'Session expired';
             }
-            return error.response?.data?['message'];
-          case DioExceptionType.unknown:
+            return error.message;
+          case DioErrorType.other:
             if (error.error is SocketException) {
-              Future.delayed(const Duration(seconds: 1), NoInternetScreen.open);
+              Future.delayed(Duration(seconds: 1), NoInternetScreen.open);
               print('SocketException');
               print(error.error);
               if (kReleaseMode) return 'Unable to connect';
               return (error.error as SocketException).message;
             }
             if (kReleaseMode) return 'Unknown error!';
-            return error.response?.data?['message'];
+            return error.message;
           default:
             if (kReleaseMode) return 'Unknown error!';
-            return error.response?.data?['message'];
+            return error.message;
         }
       } else if (error is Exception) {
         return error.toString().replaceFirst('Exception: ', '');

@@ -9,10 +9,10 @@ class WebviewScreen extends StatefulWidget {
       : super(key: key);
 
   static Future open(
-    BuildContext context, {
-    required String url,
-    required String title,
-  }) {
+      BuildContext context, {
+        required String url,
+        required String title,
+      }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => WebviewScreen(url: url, title: title),
@@ -25,33 +25,7 @@ class WebviewScreen extends StatefulWidget {
 }
 
 class _WebviewScreenState extends State<WebviewScreen> {
-  int progress = 0;
-  WebViewController controller = WebViewController();
-
-  @override
-  void initState() {
-    super.initState();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(widget.url));
-  }
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -59,20 +33,30 @@ class _WebviewScreenState extends State<WebviewScreen> {
       appBar: (widget.title.isEmpty)
           ? null
           : AppBar(
-              title: Text(
-                widget.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
+        title: Text(
+          widget.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      body: Stack(
         children: [
-          if (progress != 100)
-            LinearProgressIndicator(value: progress / 100.0, minHeight: 2)
-          else
-            Expanded(child: WebViewWidget(controller: controller)),
+          WebView(
+            onProgress: (value) {
+              const CircularProgressIndicator();
+            },
+            initialUrl: widget.url,
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: (finish) {
+              isLoading = false;
+              setState(() {});
+            },
+          ),
+          isLoading
+              ? const Center(
+            child: CircularProgressIndicator(),
+          )
+              : Stack(),
         ],
       ),
     );

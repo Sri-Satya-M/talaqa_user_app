@@ -44,7 +44,7 @@ class NoInternetScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Image.asset(Images.logo, height: 160),
+                    Image.asset(Images.logo, height: 120),
                     const SizedBox(height: 16),
                     const Text(
                       'Unable to connect!\n'

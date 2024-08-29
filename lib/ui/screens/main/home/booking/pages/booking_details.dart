@@ -115,17 +115,22 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
           if (sessionBloc.symptom != null) ...[
             ReverseDetailsTile(
               title: Text(langBloc.getString(Strings.symptoms)),
-              value: Text('${sessionBloc.symptom}', style: textTheme.headlineMedium),
+              value: Text('${sessionBloc.symptom}',
+                  style: textTheme.headlineMedium),
             ),
           ],
-          const SizedBox(height: 16),
-          ReverseDetailsTile(
-            title: Text(langBloc.getString(Strings.description)),
-            value: Text(
-              'Vivamus eget aliquam dui. Integer eu arcu vel arcu suscipit ultrices quis non mauris. Aenean scelerisque, sem eu dictum commodo.',
-              style: textTheme.bodyLarge,
+          if (sessionBloc.service != null) ...[
+            const SizedBox(height: 16),
+            ReverseDetailsTile(
+              title: Text(langBloc.getString(Strings.description)),
+              value: Text(
+                langBloc.currentLanguageText == 'English'
+                    ? sessionBloc.service?.description ?? 'NA'
+                    : sessionBloc.service?.arabicDescription ?? 'NA',
+                style: textTheme.bodyLarge,
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: 16),
           if (sessionBloc.selectedPatient?.medicalRecords != null &&
               sessionBloc.selectedPatient!.medicalRecords!.isNotEmpty) ...[

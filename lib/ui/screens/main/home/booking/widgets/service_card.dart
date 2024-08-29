@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../resources/colors.dart';
+import '../../../../../../resources/strings.dart';
 import '../../../../../widgets/details_tile.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -28,17 +29,27 @@ class ServiceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(service.title ?? 'NA', style: textTheme.headlineSmall),
+            Text(
+              langBloc.currentLanguageText == 'English'
+                  ? service.title ?? 'NA'
+                  : service.arabicTitle ?? 'NA',
+              style: textTheme.headlineSmall,
+            ),
             const SizedBox(height: 16),
             DetailsTile(
-              title: const Text('Description'),
+              title: Text(langBloc.getString(Strings.description)),
               value: Text(
-                service.description ?? 'NA',
+                langBloc.currentLanguageText == 'English'
+                    ? service.description ?? 'NA'
+                    : service.arabicDescription ?? 'NA',
                 style: textTheme.titleSmall,
               ),
             ),
             const SizedBox(height: 16),
-            Text('Symptoms', style: textTheme.bodyMedium),
+            Text(
+              langBloc.getString(Strings.symptoms),
+              style: textTheme.bodyMedium,
+            ),
             for (var i = 0; i < service.symptoms!.length; i++) ...[
               Text(
                 '${i + 1}. ${langBloc.currentLanguageText == 'English' ? '${service.symptoms?[i].title ?? 'NA'}' : '${service.symptoms?[i].arabic ?? ' '}'}',

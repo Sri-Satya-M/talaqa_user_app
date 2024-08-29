@@ -373,4 +373,9 @@ const arabicTranslations = {
   Strings.iKnowIHaveDiagnosed: 'أعرف ما لدي، لقد تم تشخيصي من قبل',
   Strings.iDontKnow: 'أنا لا أعرف ما قد يكون لدي',
   Strings.noCliniciansAvailable: 'لا يتوفر أطباء',
+  Strings.nothingShowHere: 'لا شيء لإظهاره هنا',
+  Strings.yourSpeechTherapyRequestPlacedSuccessfully:
+      'لقد تم تقديم طلب علاج النطق الخاص بك بنجاح.',
+  Strings.updatesWillBeSentYourRegisteredMobileNumberAddress:
+      'سيتم إرسال التحديثات إلى رقم هاتفك المحمول المسجل أو عنوان البريد الإلكتروني.'
 };

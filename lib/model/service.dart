@@ -23,7 +23,9 @@ class Services {
 class Service {
   int? id;
   String? title;
+  String? arabicTitle;
   String? description;
+  String? arabicDescription;
   DateTime? createdAt;
   DateTime? updatedAt;
   List<Symptom>? symptoms;
@@ -31,7 +33,9 @@ class Service {
   Service({
     this.id,
     this.title,
+    this.arabicTitle,
     this.description,
+    this.arabicDescription,
     this.createdAt,
     this.updatedAt,
     this.symptoms,
@@ -40,7 +44,9 @@ class Service {
   factory Service.fromJson(Map<String, dynamic> json) => Service(
     id: json["id"] == null? null: json["id"],
     title: json["title"] == null? null: json["title"],
+    arabicTitle: json["arabicTitle"] == null? null: json["arabicTitle"],
     description: json["description"] == null? null: json["description"],
+    arabicDescription: json["arabicDescription"] == null? null: json["arabicDescription"],
     createdAt: json["createdAt"] == null? null: DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null? null: DateTime.parse(json["updatedAt"]),
     symptoms: json["symptoms"] == null? null: List<Symptom>.from(json["symptoms"].map((x) => Symptom.fromJson(x))),
@@ -49,7 +55,9 @@ class Service {
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
+    "arabicTitle": arabicTitle,
     "description": description,
+    "arabicDescription": arabicDescription,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "symptoms": List<dynamic>.from(symptoms?.map((x) => x.toJson())??[]),
