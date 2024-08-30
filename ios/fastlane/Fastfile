@@ -17,8 +17,6 @@ default_platform(:ios)
 
 platform :ios do
 before_all do
-    ENV["FASTLANE_USER"] = "satya@janaspandana.in"
-    ENV["FASTLANE_PASSWORD"] = "Bhavs@281221149"
   end
   desc "Push a new beta build to TestFlight"
   lane :beta do
