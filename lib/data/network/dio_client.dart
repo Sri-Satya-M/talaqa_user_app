@@ -9,7 +9,8 @@ import 'pretty_dio_logger.dart';
 class DioClient implements ApiClient {
   late Dio dio;
   String accessToken = "Bearer fiakb9318uishfsksn5oibbynn86gb3w";
-  String baseUrl = kReleaseMode?'https://api.talaqa.online'  : 'http://10.0.0.138:3008';
+  String baseUrl =
+      kReleaseMode ? 'https://api.talaqa.online' : 'http://10.0.0.138:3008';
 
   String mapsKey = 'AIzaSyBTQ-RrVQbGz2ymNmdSkenm8vlkVR8Q_ec';
 

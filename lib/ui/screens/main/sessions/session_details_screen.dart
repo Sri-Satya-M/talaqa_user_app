@@ -23,6 +23,7 @@ import '../home/booking/widgets/clinician_details_widget.dart';
 import '../home/booking/widgets/patient_details_widget.dart';
 import '../home/booking/widgets/review_time_slot_widget.dart';
 import '../home/booking/widgets/service_card.dart';
+import '../main_screen.dart';
 import '../menu/profile/edit_profile_screen.dart';
 import '../menu/profile/patient_profile_screen.dart';
 import 'agora/agora_meet_call.dart';
@@ -327,6 +328,18 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 ),
                 const SizedBox(height: 16),
                 payNow(),
+                session!.status == 'PAID'
+                    ? ProgressButton(
+                        onPressed: () async {
+                          await sessionBloc.updateSession(
+                            id: '${session?.id}',
+                            body: {'status': 'CANCELLED'},
+                          );
+                          MainScreen.open(context);
+                        },
+                        child: const Text('Cancel Session'),
+                      )
+                    : const SizedBox(),
                 joinOrStartSessionButton(context),
                 const SizedBox(height: 16),
                 finishButton(),
@@ -353,7 +366,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
   Widget payNow() {
     var langBloc = Provider.of<LangBloc>(context, listen: false);
     var userBloc = Provider.of<UserBloc>(context, listen: false);
-
+    var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
     return (session!.status == "APPROVED")
         ? Column(
             children: [
@@ -376,7 +389,11 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                         );
                         await paymentBloc.paymentWithCreditOrDebitCard(
                           session: session!,
-                          onSucceeded: (result) {
+                          onSucceeded: (result) async {
+                            await sessionBloc.updateSession(
+                              id: '${session?.id}',
+                              body: {'status': 'PAID'},
+                            );
                             SuccessScreen.open(
                               context,
                               type: 'PAYMENT',
@@ -392,8 +409,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       child: Text(langBloc.getString(Strings.payNow)),
                     ),
                   ),
-                  if (userBloc.profile?.user?.email != null ||
-                      userBloc.profile!.user!.email!.isNotEmpty) ...[
+                  if (userBloc.profile?.user?.email == null) ...[
                     const SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
