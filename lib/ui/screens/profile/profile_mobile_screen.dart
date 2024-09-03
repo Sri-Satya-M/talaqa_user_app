@@ -152,6 +152,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                   setState(() {});
                 },
               ),
+              const SizedBox(height: 8),
               TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(

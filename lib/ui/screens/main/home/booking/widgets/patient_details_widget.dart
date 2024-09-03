@@ -44,8 +44,10 @@ class PatientDetailsWidget extends StatelessWidget {
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(3),
                       ),
-                      child: Text(patient.gender ?? 'NA',
-                          style: textTheme.titleSmall),
+                      child: Text(
+                        patient.gender ?? 'NA',
+                        style: textTheme.titleSmall,
+                      ),
                     ),
                   ],
                 ),

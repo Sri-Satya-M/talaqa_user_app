@@ -106,14 +106,14 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
               ),
               const SizedBox(height: 16),
               DetailsTile(
-                title: const Text('Languages Known'),
+                title: Text(langBloc.getString(Strings.languagesKnown)),
                 value: Row(
                   children: [
                     Image.asset(Images.voice, width: 12),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        widget.clinician.languagesKnown ?? 'NA',
+                        widget.clinician.languagesKnown ?? langBloc.getString(Strings.na),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -130,7 +130,7 @@ class _ClinicianDetailsScreenState extends State<ClinicianDetailsScreen> {
                 builder: (context) {
                   List<Service> services = list[0]?.services ?? [];
                   if (services.isEmpty) {
-                    return const EmptyWidget();
+                    return const EmptyWidget(message: '');
                   } else {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

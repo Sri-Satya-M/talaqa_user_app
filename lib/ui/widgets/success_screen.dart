@@ -67,7 +67,10 @@ class _SuccessScreenState extends State<SuccessScreen>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset(Images.success, height: 250, width: 250),
+              AspectRatio(
+                aspectRatio: 16 / 11,
+                child: Lottie.asset(Images.success, fit: BoxFit.fitWidth),
+              ),
               const SizedBox(height: 32),
               if (widget.sessionId != null) ...[
                 FutureBuilder(
@@ -76,11 +79,8 @@ class _SuccessScreenState extends State<SuccessScreen>
                     if (snapshot.hasError) {
                       return CustomErrorWidget(error: snapshot.error);
                     }
-
                     if (!snapshot.hasData) return const LoadingWidget();
-
                     var session = snapshot.data;
-
                     return Column(
                       children: [
                         Row(

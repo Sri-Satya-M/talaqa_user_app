@@ -379,5 +379,11 @@ const englishTranslations = {
   Strings.yourSpeechTherapyRequestPlacedSuccessfully:
       'Your speech therapy request has been placed successfully.',
   Strings.updatesWillBeSentYourRegisteredMobileNumberAddress:
-      'Updates Will be sent to your registered mobile number or email address.'
+      'Updates Will be sent to your registered mobile number or email address.',
+  Strings.selectPatientProfile: 'Select patient profile.',
+  Strings.nothingToShowHere: 'Nothing to show here',
+  Strings.pleaseSelectPatient: 'Please select a patient',
+  Strings.pleaseSelectService: 'Please select a Service',
+  Strings.languagesKnown: 'Languages Known',
+  Strings.pleaseSelectModeOfConsultation: '',
 };

@@ -354,4 +354,10 @@ enum Strings {
   nothingShowHere,
   yourSpeechTherapyRequestPlacedSuccessfully,
   updatesWillBeSentYourRegisteredMobileNumberAddress,
+  selectPatientProfile,
+  nothingToShowHere,
+  pleaseSelectPatient,
+  pleaseSelectService,
+  languagesKnown,
+  pleaseSelectModeOfConsultation,
 }

@@ -88,16 +88,6 @@ class _SessionCardState extends State<SessionCard> {
                 spacing: 16,
                 count: 2,
                 children: [
-                  DetailsTile(
-                    title: Text(
-                      langBloc.getString(Strings.experience),
-                      style: textTheme.bodySmall,
-                    ),
-                    value: Text(
-                      "${widget.session.clinician?.experience} years exp",
-                      style: textTheme.bodyLarge,
-                    ),
-                  ),
                   ReverseDetailsTile(
                     title: Text(
                       langBloc.getString(Strings.modeOfConsultation),

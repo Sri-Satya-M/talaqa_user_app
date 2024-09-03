@@ -95,11 +95,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
                 const Spacer(),
                 (currentIndex < 3)
-                    ? ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(55, 55),
-                          maximumSize: const Size(55, 55),
-                          alignment: Alignment.center,
+                    ? FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         onPressed: () {
                           pageController.animateToPage(
@@ -108,7 +106,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             curve: Curves.fastOutSlowIn,
                           );
                         },
-                        child: const Icon(Icons.arrow_forward_ios_outlined),
+                        child: const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 20,
+                        ),
                       )
                     : ProgressButton(
                         onPressed: () {

@@ -282,6 +282,8 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   validateStep() {
+    var langBloc = Provider.of<LangBloc>(context, listen: false);
+
     var msg = 'Please select all the fields';
     var flag = false;
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
@@ -289,14 +291,14 @@ class _BookingScreenState extends State<BookingScreen> {
       case 1:
         if (sessionBloc.selectedPatient?.id == null) {
           flag = true;
-          msg = 'Please select a patient';
+          msg = langBloc.getString(Strings.pleaseSelectPatient);
         }
         break;
 
       case 2:
         if (sessionBloc.service == null) {
           flag = true;
-          msg = 'Please select a Service';
+          msg = langBloc.getString(Strings.pleaseSelectService);
         }
         break;
 

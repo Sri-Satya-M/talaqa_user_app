@@ -19,7 +19,7 @@ class HowToUse extends StatelessWidget {
       StepDetails(
         icon: Images.step1,
         title: '${langBloc.getString(Strings.step)} 1',
-        subtitle: 'Select patient profile.',
+        subtitle: langBloc.getString(Strings.selectPatientProfile),
       ),
       StepDetails(
         icon: Images.step2,
@@ -51,6 +51,7 @@ class HowToUse extends StatelessWidget {
                 text: '${langBloc.getString(Strings.howTo)} ',
                 style: const TextStyle(
                   fontSize: 24,
+                  color: MyColors.darkGreenAccent,
                   fontWeight: FontWeight.bold,
                 ),
               ),

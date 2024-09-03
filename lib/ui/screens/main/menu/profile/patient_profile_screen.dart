@@ -52,13 +52,9 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
           if (snapshot.hasError) {
             return CustomErrorWidget(error: snapshot.error);
           }
-
           if (!snapshot.hasData) return const LoadingWidget();
-
           var profile = snapshot.data;
-
           if (profile == null) return const EmptyWidget();
-
           return ListView(
             shrinkWrap: true,
             padding: const EdgeInsets.all(20),
@@ -80,28 +76,22 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                             context,
                             task: () async {
                               List<File>? files = await Helper.pickFiles();
-
                               if (files == null) return;
-
                               var filesFormData = await userBloc.uploadFiles(
                                 paths: files.map((f) => f.path).toList(),
                                 body: {},
                               );
-
                               int count = 0;
                               List<String> uploadKeys = [];
-
                               for (var fileFormData in filesFormData) {
                                 var response =
                                     await userBloc.uploadMedicalRecords(
                                   body: fileFormData,
                                 ) as Map<String, dynamic>;
-
                                 if (response.containsKey('key')) {
                                   uploadKeys.add(response['key']);
                                   count++;
                                 }
-
                                 if (count == filesFormData.length) {
                                   var result =
                                       await userBloc.saveMedicalRecords(
@@ -163,11 +153,8 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                       if (snapshot.hasError) {
                         return CustomErrorWidget(error: snapshot.error);
                       }
-
                       if (!snapshot.hasData) return const LoadingWidget();
-
                       var medicalRecords = snapshot.data ?? [];
-
                       if (medicalRecords.isEmpty) {
                         return SizedBox(
                           height: 20,
@@ -184,8 +171,6 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                           ),
                         );
                       }
-                      ;
-
                       return ListView.separated(
                         itemCount: medicalRecords.length,
                         shrinkWrap: true,
