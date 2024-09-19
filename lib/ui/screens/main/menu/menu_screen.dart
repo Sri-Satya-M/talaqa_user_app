@@ -103,9 +103,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       borderRadius: BorderRadius.circular(3),
                     ),
                     child: Text(
-                      Helper.textCapitalization(
-                        text: userBloc.profile?.gender ?? 'NA',
-                      ),
+                      userBloc.profile?.gender?.toCapitalized() == 'MALE'
+                          ? langBloc.getString(Strings.male)
+                          : userBloc.profile?.gender?.toCapitalized() ==
+                                  'FEMALE'
+                              ? langBloc.getString(Strings.female)
+                              : langBloc.getString(Strings.other),
                       style: textTheme.titleSmall,
                     ),
                   ),
@@ -137,7 +140,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
               url: langBloc.appLanguage == 'English'
                   ? 'https://talaqa.online/privacy-policy'
                   : 'https://talaqa.online/ar/privacy-policy',
-              title: 'Privacy Policy',
+              title: langBloc.getString(Strings.privacyPolicy),
             );
           },
           child: Text(
@@ -153,7 +156,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
               url: langBloc.appLanguage == 'English'
                   ? 'https://talaqa.online/terms-conditions'
                   : 'https://talaqa.online/ar/terms-conditions',
-              title: 'Terms & Conditions',
+              title: langBloc.getString(Strings.termsAndConditions),
             );
           },
           child: Text(
@@ -167,7 +170,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             WebviewScreen.open(
               context,
               url: 'https://talaqa.online/cancellation-refund-policy',
-              title: 'Cancellation & Refund Policy',
+              title: langBloc.getString(Strings.cancellationRefundPolicy),
             );
           },
           child: Text(

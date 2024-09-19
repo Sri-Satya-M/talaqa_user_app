@@ -129,9 +129,15 @@ class _SelectPatientProfileState extends State<SelectPatientProfile> {
                                     borderRadius: BorderRadius.circular(3),
                                   ),
                                   child: Text(
-                                    Helper.textCapitalization(
-                                      text: profiles[index].gender,
-                                    ),
+                                    profiles[index].gender?.toCapitalized() ==
+                                            'MALE'
+                                        ? langBloc.getString(Strings.male)
+                                        : profiles[index]
+                                                    .gender
+                                                    ?.toCapitalized() ==
+                                                'FEMALE'
+                                            ? langBloc.getString(Strings.female)
+                                            : langBloc.getString(Strings.other),
                                     style: textTheme.titleSmall,
                                   ),
                                 ),
