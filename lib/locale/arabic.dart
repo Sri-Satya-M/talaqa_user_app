@@ -22,7 +22,7 @@ const arabicTranslations = {
   Strings.atHome: 'في المنزل',
   Strings.audio: 'صوتي',
   Strings.video: 'فيديو',
-  Strings.availableTimeSlots:  'الأوقات المتاحة',
+  Strings.availableTimeSlots: 'الأوقات المتاحة',
   Strings.basicInformation: 'معلومات اساسية',
   Strings.bio: 'السيرة الذاتية',
   Strings.bookASession: 'احجز جلسة',
@@ -384,4 +384,6 @@ const arabicTranslations = {
   Strings.pleaseSelectService: 'نرجو اختيار الخدمة',
   Strings.languagesKnown: 'اللغات',
   Strings.pleaseSelectModeOfConsultation: 'الرجاء اختيار طريقة الإستشارة',
+  Strings.viewBlogDescription:
+      'عرض أحدث \nالمقالات ومقاطع الفيديو \nوالأسئلة الشائعة وغيرها الكثير',
 };

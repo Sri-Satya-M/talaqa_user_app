@@ -386,4 +386,6 @@ const englishTranslations = {
   Strings.pleaseSelectService: 'Please select a Service',
   Strings.languagesKnown: 'Languages Known',
   Strings.pleaseSelectModeOfConsultation: '',
+  Strings.viewBlogDescription:
+      'View Latest blog \narticles, videos, \nFAQ\'s and many more',
 };

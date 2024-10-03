@@ -360,4 +360,5 @@ enum Strings {
   pleaseSelectService,
   languagesKnown,
   pleaseSelectModeOfConsultation,
+  viewBlogDescription,
 }

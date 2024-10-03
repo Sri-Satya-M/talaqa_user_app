@@ -132,9 +132,44 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color: Colors.black.withOpacity(0.1),
               ),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(Images.resourcesBanner),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(Images.resourcesBanner),
+                ),
+                Positioned(
+                  left: 150,
+                  top: 35,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        langBloc.getString(Strings.resources),
+                        style: textTheme.titleSmall!.copyWith(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        langBloc.getString(Strings.viewBlogDescription),
+                        style: textTheme.titleSmall!.copyWith(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 1,
+                          height: 1.2,
+                        ),
+                        maxLines: 4,
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
