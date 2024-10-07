@@ -20,7 +20,7 @@ class CustomNotification {
     FirebaseMessaging.instance.requestPermission();
     initializationSettingsAndroid =
         const AndroidInitializationSettings('notification_icon');
-    initializationSettingsIOS = const IOSInitializationSettings(
+    initializationSettingsIOS = const DarwinInitializationSettings(
       defaultPresentAlert: true,
       defaultPresentBadge: true,
       defaultPresentSound: true,
@@ -39,24 +39,25 @@ class CustomNotification {
     required Function(RemoteMessage? message) handleMessage,
   }) async {
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
+      alert: false,
+      badge: false,
+      sound: false,
     );
 
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
 
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (String? payload) async {
-        if (payload != null) {
-          // debugPrint('notification payload: ' + payload);
+      onDidReceiveNotificationResponse: (payload) async {
+        if (context.mounted) {
+          handleMessage.call(initialMessage);
         }
       },
     );
 
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) async {
         RemoteNotification? notification = message.notification;
@@ -72,8 +73,8 @@ class CustomNotification {
             visibility: NotificationVisibility.public,
             styleInformation: BigTextStyleInformation(''),
           );
-          IOSNotificationDetails iOSChannelSpecifics =
-              const IOSNotificationDetails(
+          DarwinNotificationDetails iOSChannelSpecifics =
+              const DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
@@ -90,13 +91,6 @@ class CustomNotification {
             message.notification?.body,
             platformChannelSpecifics,
             payload: jsonEncode(message.data),
-          );
-          await flutterLocalNotificationsPlugin.initialize(
-            initializationSettings,
-            onSelectNotification: (value) async {
-              // print("In app notifications");
-              await handleMessage.call(message);
-            },
           );
         }
       },
