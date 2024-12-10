@@ -50,15 +50,20 @@ class PaymentBloc with ChangeNotifier {
       PayfortTokenResponse? sdkTokenResponse = await _generateSdkToken();
 
       if (sdkTokenResponse != null && sdkTokenResponse.sdkToken == null) {
-        return onFailed(sdkTokenResponse.responseMessage ?? '');
+        return onFailed(
+          PayFortFailureResult(message: sdkTokenResponse.responseMessage ?? ''),
+        );
       }
 
       if (session.sessionPayment?.totalAmount == null ||
           (session.sessionPayment?.totalAmount ?? 0) < 10) {
-        return onFailed('Session amount is undefined');
+        return onFailed(
+          const PayFortFailureResult(message: 'Session amount is undefined'),
+        );
       }
 
       FortRequest request = FortRequest(
+        command: FortCommand.authorization,
         amount: (session.sessionPayment?.totalAmount ?? 0) * 100,
         customerName: session.patient?.user?.fullName ?? 'NA',
         customerEmail: session.patient?.user?.email ?? 'NA',
@@ -78,7 +83,7 @@ class PaymentBloc with ChangeNotifier {
         ),
       );
     } catch (e) {
-      onFailed(e.toString());
+      onFailed(PayFortFailureResult(message: e.toString()));
     }
   }
 }
