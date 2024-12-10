@@ -135,7 +135,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         const SizedBox(height: 32),
         GestureDetector(
           onTap: () {
-            WebviewScreen.open(
+            WebViewScreen.open(
               context,
               url: langBloc.appLanguage == 'English'
                   ? 'https://talaqa.online/privacy-policy'
@@ -151,7 +151,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            WebviewScreen.open(
+            WebViewScreen.open(
               context,
               url: langBloc.appLanguage == 'English'
                   ? 'https://talaqa.online/terms-conditions'
@@ -167,7 +167,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            WebviewScreen.open(
+            WebViewScreen.open(
               context,
               url: 'https://talaqa.online/cancellation-refund-policy',
               title: langBloc.getString(Strings.cancellationRefundPolicy),

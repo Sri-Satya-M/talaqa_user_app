@@ -98,7 +98,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                         padding: const EdgeInsets.only(bottom: 20),
                         child: InkWell(
                           onTap: () {
-                            WebviewScreen.open(
+                            WebViewScreen.open(
                               context,
                               url: resources[index].link!,
                               title: resources[index].title!,

@@ -1,62 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class WebviewScreen extends StatefulWidget {
+import '../../../resources/theme.dart';
+
+class WebViewScreen extends StatefulWidget {
   final String url;
   final String title;
 
-  const WebviewScreen({Key? key, required this.url, required this.title})
-      : super(key: key);
+  const WebViewScreen({
+    Key? key,
+    required this.url,
+    required this.title,
+  }) : super(key: key);
 
   static Future open(
-      BuildContext context, {
-        required String url,
-        required String title,
-      }) {
+    BuildContext context, {
+    required String url,
+    required String title,
+  }) {
     return Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => WebviewScreen(url: url, title: title),
+        builder: (context) => WebViewScreen(url: url, title: title),
       ),
     );
   }
 
   @override
-  _WebviewScreenState createState() => _WebviewScreenState();
+  _WebViewScreenState createState() => _WebViewScreenState();
 }
 
-class _WebviewScreenState extends State<WebviewScreen> {
-  bool isLoading = true;
+class _WebViewScreenState extends State<WebViewScreen> {
+  int progress = 0;
+  WebViewController controller = WebViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.url);
+    var textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: (widget.title.isEmpty)
-          ? null
-          : AppBar(
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           widget.title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      body: Stack(
-        children: [
-          WebView(
-            onProgress: (value) {
-              const CircularProgressIndicator();
-            },
-            initialUrl: widget.url,
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: (finish) {
-              isLoading = false;
-              setState(() {});
-            },
+          style: textTheme.titleLarge!.copyWith(
+            color: Colors.white,
+            fontSize: 18,
           ),
-          isLoading
-              ? const Center(
-            child: CircularProgressIndicator(),
-          )
-              : Stack(),
+        ),
+        leading: const BackButton(color: Colors.white),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (progress != 100)
+            LinearProgressIndicator(
+              value: progress / 100.0,
+              minHeight: 2,
+            ),
+          Expanded(
+            child: WebViewWidget(
+              controller: controller,
+            ),
+          ),
         ],
       ),
     );
