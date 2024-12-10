@@ -3,9 +3,9 @@ import 'package:alsan_app/bloc/session_bloc.dart';
 import 'package:alsan_app/resources/colors.dart';
 import 'package:alsan_app/resources/images.dart';
 import 'package:alsan_app/ui/screens/main/home/clinician_details_screen.dart';
+import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/custom_card.dart';
 import 'package:alsan_app/ui/widgets/details_tile.dart';
-import 'package:alsan_app/ui/widgets/image_from_net.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,13 +49,13 @@ class _DoctorCardState extends State<DoctorCard> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ImageFromNet(
-                        imageUrl: widget.clinician.imageUrl,
+                      Avatar(
+                        url: widget.clinician.imageUrl,
                         borderRadius: const BorderRadius.all(
                           Radius.circular(10),
                         ),
-                        height: 100,
-                        width: 100,
+                        size: 100,
+                        name: widget.clinician.user?.fullName,
                       ),
                       const SizedBox(width: 16),
                       Expanded(
