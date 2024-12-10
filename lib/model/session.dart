@@ -42,20 +42,20 @@ class Session {
       this.service,
       });
 
-  int? id;
+  num? id;
   String? sessionId;
   List<String>? clinicianTimeSlotIds;
   DateTime? date;
   String? day;
   String? description;
   String? consultationMode;
-  int? totalAmount;
-  int? patientId;
-  int? patientProfileId;
-  int? patientAddressId;
-  int? clinicianId;
+  num? totalAmount;
+  num? patientId;
+  num? patientProfileId;
+  num? patientAddressId;
+  num? clinicianId;
   String? status;
-  int? otp;
+  num? otp;
   String? reportDocument;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -71,7 +71,7 @@ class Session {
   List<SessionTimeslot>? sessionTimeslots;
   SessionClinician? sessionClinician;
   SessionPayment? sessionPayment;
-  int? serviceId;
+  num? serviceId;
   Service? service;
 
   factory Session.fromMap(Map<String, dynamic> json) => Session(
@@ -160,8 +160,8 @@ class SessionStatus {
     this.updatedAt,
   });
 
-  int? id;
-  int? sessionId;
+  num? id;
+  num? sessionId;
   String? status;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -201,10 +201,10 @@ class SessionClinician {
     this.updatedAt,
   });
 
-  int? id;
-  int? sessionId;
-  int? clinicianId;
-  int? newClinicianId;
+  num? id;
+  num? sessionId;
+  num? clinicianId;
+  num? newClinicianId;
   bool? isNewClinicianAccepted;
   bool? isPatientAccepted;
   Clinician? clinician;

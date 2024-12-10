@@ -36,6 +36,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String? gender;
   Profile? profile;
   final TextEditingController email = TextEditingController();
+  final TextEditingController mobile = TextEditingController();
   final TextEditingController age = TextEditingController();
   final TextEditingController dateCtrl = TextEditingController();
   File? profileImage;
@@ -49,6 +50,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     gender = profile!.gender!.toUpperCase();
     age.text = profile!.age.toString();
     email.text = profile?.user?.email ?? '';
+    mobile.text = profile?.user?.mobileNumber ?? '';
     dateCtrl.text = profile!.dob?.toString() ?? '';
     super.initState();
   }
@@ -121,18 +123,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               const SizedBox(height: 18),
               TextFormField(
-                enabled: false,
-                initialValue: userBloc.profile?.user?.mobileNumber,
-                onChanged: (value) {},
+                controller: mobile,
+                keyboardType: Platform.isIOS
+                    ? const TextInputType.numberWithOptions(
+                        signed: true,
+                        decimal: false,
+                      )
+                    : TextInputType.number,
+                onSaved: (text) {
+                  mobile.text = text?.trim() ?? '';
+                },
                 decoration: InputDecoration(
                   labelText: langBloc.getString(Strings.mobileNumber),
                   contentPadding: const EdgeInsets.only(left: 16),
-                  counter: const SizedBox(),
-                  fillColor: MyColors.divider,
-                  filled: true,
                 ),
-                keyboardType: TextInputType.number,
-                maxLength: 10,
               ),
               TextFormField(
                 controller: email,
@@ -193,7 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "${langBloc.getString(Strings.selectGender)}";
+                    return langBloc.getString(Strings.selectGender);
                   } else {
                     return null;
                   }
@@ -243,6 +247,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               if (profile?.gender != email.text) "gender": gender,
               if (profileImage != null) "imageUrl": imageResponse['key']
             };
+
+            if (profile?.user?.mobileNumber != mobile.text) {
+              body["mobileNumber"] = mobile.text;
+            }
 
             await userBloc.updateProfile(body: body);
             await userBloc.getProfile();

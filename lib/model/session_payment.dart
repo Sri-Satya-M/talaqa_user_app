@@ -1,10 +1,10 @@
 class SessionPayment {
-  int? id;
-  int? sessionId;
-  int? totalAmount;
-  int? clinicianCommision;
-  int? clinicianAmount;
-  int? alsanAmount;
+  num? id;
+  num? sessionId;
+  num? totalAmount;
+  num? clinicianCommision;
+  num? clinicianAmount;
+  num? alsanAmount;
   bool? paymentStatus;
   DateTime? createdAt;
   DateTime? updatedAt;

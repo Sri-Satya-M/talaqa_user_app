@@ -409,11 +409,16 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                       child: Text(langBloc.getString(Strings.payNow)),
                     ),
                   ),
-                  if (userBloc.profile?.user?.email == null) ...[
+                  if (userBloc.profile?.user?.email == null ||
+                      userBloc.profile?.user?.mobileNumber == null) ...[
                     const SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => EditProfileScreen.open(context),
+                        onPressed: () async {
+                          var res = await EditProfileScreen.open(context);
+                          if (res == null) return;
+                          setState(() {});
+                        },
                         child: const Text('Update Profile'),
                       ),
                     ),
@@ -518,7 +523,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
     required BuildContext context,
     required String msg,
     required String type,
-    required int id,
+    required num id,
   }) async {
     var sessionBloc = Provider.of<SessionBloc>(context, listen: false);
 

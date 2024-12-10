@@ -12,11 +12,11 @@ import '../../../../widgets/loading_widget.dart';
 import '../../../../widgets/pdf_viewer_screen.dart';
 
 class ReportsScreen extends StatefulWidget {
-  final int id;
+  final num id;
 
   const ReportsScreen({super.key, required this.id});
 
-  static Future open(BuildContext context, {required int id}) {
+  static Future open(BuildContext context, {required num id}) {
     return Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => ReportsScreen(id: id)),
     );

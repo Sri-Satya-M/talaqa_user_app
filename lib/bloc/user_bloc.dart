@@ -43,7 +43,7 @@ class UserBloc with ChangeNotifier {
 
   Future getProfile() async {
     profile = await _userRepo.getProfile();
-    if(profile?.toJson() == {}){
+    if (profile?.toJson() == {} || profile == null) {
       await Prefs.clearPrefs();
     }
     notifyListeners();
@@ -119,7 +119,7 @@ class UserBloc with ChangeNotifier {
   }
 
   Future<List<Clinician>> getClinicians({query}) async {
-    var res =  await _userRepo.getClinicians(query: query);
+    var res = await _userRepo.getClinicians(query: query);
     return res;
   }
 

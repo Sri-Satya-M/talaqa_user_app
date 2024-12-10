@@ -101,7 +101,7 @@ class SessionBloc with ChangeNotifier {
     return await sessionRepo.updateSession(id: id, body: body);
   }
 
-  Future postPaymentDetails({required int id, required body}) async {
+  Future postPaymentDetails({required num id, required body}) async {
     return await sessionRepo.postPaymentDetails(id: id, body: body);
   }
 
@@ -113,11 +113,11 @@ class SessionBloc with ChangeNotifier {
     return sessionRepo.generateToken(channel, userId);
   }
 
-  Future postSessionFeedback({required int id, body}) {
+  Future postSessionFeedback({required num id, body}) {
     return sessionRepo.postSessionFeedback(id: id, body: body);
   }
 
-  Future<List<Report>> getSessionReports({required int id, required query}) {
+  Future<List<Report>> getSessionReports({required num id, required query}) {
     return sessionRepo.getSessionReports(id: id, query: query);
   }
 

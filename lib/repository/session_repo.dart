@@ -47,7 +47,7 @@ class SessionRepo {
     return await apiClient.get(Api.join, query: query);
   }
 
-  Future postPaymentDetails({required int id, required body}) async {
+  Future postPaymentDetails({required num id, required body}) async {
     var response = await apiClient.post('${Api.payment}/$id', body);
     return response;
   }
@@ -59,12 +59,12 @@ class SessionRepo {
     );
   }
 
-  Future postSessionFeedback({required int id, body}) {
+  Future postSessionFeedback({required num id, body}) {
     return apiClient.post('${Api.reviews}/$id', body);
   }
 
   Future<List<Report>> getSessionReports({
-    required int id,
+    required num id,
     required query,
   }) async {
     var res = await apiClient.get('${Api.reports}/$id', query: query);
