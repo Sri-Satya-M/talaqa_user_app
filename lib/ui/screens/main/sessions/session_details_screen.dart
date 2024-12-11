@@ -506,8 +506,8 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
           session!.sessionId!,
           session!.patientProfile!.id!,
         ) as Map<String, dynamic>;
-        if(token == null) {
-          AgoraMeetScreen.open(
+        // if(token == null) {
+        AgoraMeetScreen.open(
           context: context,
           session: session!,
           token: token['token'],
@@ -516,7 +516,7 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
         ).then((value) async {
           setState(() {});
         });
-        }
+        // }
         break;
     }
   }
