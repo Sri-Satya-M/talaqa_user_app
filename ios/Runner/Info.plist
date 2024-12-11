@@ -54,6 +54,8 @@
 	<string>This app requires access to photo library to upload profile picture</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This required access to send notifications</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
