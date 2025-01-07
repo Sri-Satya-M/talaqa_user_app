@@ -11,7 +11,6 @@ import 'package:alsan_app/ui/screens/main/menu/profile/widget/menu_list.dart';
 import 'package:alsan_app/ui/screens/main/menu/reports/report_screen.dart';
 import 'package:alsan_app/ui/widgets/avatar.dart';
 import 'package:alsan_app/ui/widgets/webview_screen.dart';
-import 'package:alsan_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -103,10 +102,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       borderRadius: BorderRadius.circular(3),
                     ),
                     child: Text(
-                      userBloc.profile?.gender?.toCapitalized() == 'MALE'
+                      userBloc.profile?.gender?.toUpperCase() == 'MALE'
                           ? langBloc.getString(Strings.male)
-                          : userBloc.profile?.gender?.toCapitalized() ==
-                                  'FEMALE'
+                          : userBloc.profile?.gender?.toUpperCase() == 'FEMALE'
                               ? langBloc.getString(Strings.female)
                               : langBloc.getString(Strings.other),
                       style: textTheme.titleSmall,
