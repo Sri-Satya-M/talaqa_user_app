@@ -337,7 +337,7 @@ const englishTranslations = {
   Strings.useTalaqaApp: 'use Talaqa app',
   Strings.videos: 'Videos',
   Strings.videosNotAvailableAtTheMoment: 'Videos not available at the moment',
-  Strings.viewPatientProfiles: 'view Patient Profiles',
+  Strings.viewPatientProfiles: 'View Patient Profiles',
   Strings.voice: 'voice',
   Strings.waitingFor: 'Waiting for',
   Strings.wantASchoolReport: 'want a School Report',
@@ -396,7 +396,7 @@ const englishTranslations = {
       'Book Your Session:\nSchedule your first session at a time that works for you',
   Strings.step4:
       'Start Improving:\nBegin your personalized therapy sessions and take steps towards better communication',
-  Strings.atFingerTips: 'at Your Fingertips',
+  Strings.atFingerTips: 'Speak with confidence through Talaqah',
   Strings.continueee: 'Continue',
   Strings.onBoarding1Des:
       'We are thrilled to have you on board. Talaqa is your go-to platform for connecting with expert speech therapists from the comfort of your home. Whether you’re looking to improve your communication skills or need professional guidance, we’ve got you covered.',

@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 langBloc.getString(Strings.atFingerTips),
                 style: textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
-                  fontSize: langBloc.currentLanguageText == 'English' ? 18 : 14,
+                  fontSize: langBloc.currentLanguageText == 'English' ? 16 : 14,
                 ),
               ),
               const Spacer(),
