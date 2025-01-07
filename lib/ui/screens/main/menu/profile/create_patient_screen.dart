@@ -198,6 +198,7 @@ class _CreatePatientState extends State<CreatePatient> {
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
+                  filled: false,
                 ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(

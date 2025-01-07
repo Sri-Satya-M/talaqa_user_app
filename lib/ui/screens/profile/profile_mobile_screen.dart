@@ -100,7 +100,9 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 readOnly: true,
                 initialValue: userBloc.username,
                 decoration: InputDecoration(
-                    hintText: "${langBloc.getString(Strings.mobileNumber)}*"),
+                  hintText: "${langBloc.getString(Strings.mobileNumber)}*",
+                  filled: false,
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -157,6 +159,7 @@ class _ProfileMobileScreenState extends State<ProfileMobileScreen> {
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
+                  filled: false,
                 ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(

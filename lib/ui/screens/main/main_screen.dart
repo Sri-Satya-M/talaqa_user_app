@@ -190,8 +190,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           selectedLabelStyle: textTheme.bodySmall?.copyWith(
             color: MyColors.cerulean,
           ),
-          unselectedLabelStyle:
-              textTheme.bodySmall?.copyWith(color: Colors.grey),
+          unselectedLabelStyle: textTheme.bodySmall?.copyWith(
+            color: Colors.grey,
+          ),
           items: [
             BottomNavigationBarItem(
               icon: const Icon(Icons.home_outlined),

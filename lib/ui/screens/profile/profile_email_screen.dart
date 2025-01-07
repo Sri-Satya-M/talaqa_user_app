@@ -97,6 +97,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: "${langBloc.getString(Strings.emailAddress)}*",
+                  filled: false,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -159,6 +160,7 @@ class _ProfileEmailScreenState extends State<ProfileEmailScreen> {
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: langBloc.getString(Strings.age),
+                  filled: false,
                 ),
                 keyboardType: TextInputType.number,
                 controller: TextEditingController(
