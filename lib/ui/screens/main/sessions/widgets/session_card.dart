@@ -106,7 +106,8 @@ class _SessionCardState extends State<SessionCard> {
                     value: Text("${widget.session.patientProfile?.fullName}",
                         style: textTheme.bodyLarge),
                   ),
-                  ReverseDetailsTile(
+                  if (widget.session.symptom != null)
+                    ReverseDetailsTile(
                     title: Text(langBloc.getString(Strings.type)),
                     value: Text(
                       widget.session.symptom ?? 'NA',
