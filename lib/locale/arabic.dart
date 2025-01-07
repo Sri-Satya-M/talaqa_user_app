@@ -373,7 +373,7 @@ const arabicTranslations = {
   Strings.iKnowIHaveDiagnosed: 'أعرف ما لدي، لقد تم تشخيصي من قبل',
   Strings.iDontKnow: 'أنا لا أعرف ما قد يكون لدي',
   Strings.noCliniciansAvailable: 'لا يتوفر أطباء',
-  Strings.nothingShowHere: 'لا شيء لإظهاره هنا',
+  Strings.nothingShowHere: 'لا يوجد محتوى للعرض',
   Strings.yourSpeechTherapyRequestPlacedSuccessfully:
       'لقد تم تقديم طلب علاج النطق الخاص بك بنجاح.',
   Strings.updatesWillBeSentYourRegisteredMobileNumberAddress:

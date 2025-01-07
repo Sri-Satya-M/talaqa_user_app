@@ -135,7 +135,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 },
                 decoration: InputDecoration(
                   labelText: langBloc.getString(Strings.mobileNumber),
-                  contentPadding: const EdgeInsets.only(left: 16),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
               TextFormField(
