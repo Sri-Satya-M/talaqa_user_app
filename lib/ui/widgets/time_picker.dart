@@ -50,6 +50,7 @@ class TimePicker extends StatelessWidget {
         return null;
       },
       decoration: InputDecoration(
+        filled: false,
         hintText: hintText ?? '',
         labelText: labelText ?? '',
         suffixIcon: const Icon(

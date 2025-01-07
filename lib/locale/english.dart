@@ -134,7 +134,7 @@ const englishTranslations = {
   Strings.hello: 'Hello',
   Strings.hi: 'Hi,',
   Strings.home: 'Home',
-  Strings.howTo: 'How to',
+  Strings.howTo: 'Get started now',
   Strings.iAgreeToTheTermsAndConditions: 'I Agree to the Terms and Conditions',
   Strings.invalidError: 'Invalid Error',
   Strings.invalidPhoneNumber: 'Invalid Phone Number',
@@ -388,4 +388,20 @@ const englishTranslations = {
   Strings.pleaseSelectModeOfConsultation: '',
   Strings.viewBlogDescription:
       'View Latest blog \narticles, videos, \nFAQ\'s and many more',
+  Strings.step1:
+      'Create Your Profile:\nComplete your profile to help us understand your needs better',
+  Strings.step2:
+      'Find Your Therapist:\nBrowse our list of certified speech therapists and select the one who best suits you.',
+  Strings.step3:
+      'Book Your Session:\nSchedule your first session at a time that works for you',
+  Strings.step4:
+      'Start Improving:\nBegin your personalized therapy sessions and take steps towards better communication',
+  Strings.atFingerTips: 'at Your Fingertips',
+  Strings.continueee: 'Continue',
+  Strings.onBoarding1Des:
+      'We are thrilled to have you on board. Talaqa is your go-to platform for connecting with expert speech therapists from the comfort of your home. Whether you’re looking to improve your communication skills or need professional guidance, we’ve got you covered.',
+  Strings.onBoarding2Des:
+      'Access a network of highly qualified and experienced speech therapist Flexible Scheduling: Book sessions at times that fit your schedule Personalized Therapy Plans: Receive tailored therapy plansdesigned to meet your unique needs. Secure and Confidential: Enjoy secure, private sessions with full confidentiality. User-Friendly Interface: Easy-to- navigate app making it simple to connect with your therapist',
+  Strings.certifiedTherapist: 'Certified Therapists',
+  Strings.welcomeToTalaqa: 'Welcome to Talaqa',
 };

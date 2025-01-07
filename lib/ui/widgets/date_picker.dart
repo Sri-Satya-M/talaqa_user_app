@@ -53,6 +53,7 @@ class DatePicker extends StatelessWidget {
       },
       onSaved: (v) => dateCtrl.text = v!,
       decoration: InputDecoration(
+        filled: false,
         hintText: hintText ?? '',
         labelText: labelText ?? '',
         suffixIcon: Row(

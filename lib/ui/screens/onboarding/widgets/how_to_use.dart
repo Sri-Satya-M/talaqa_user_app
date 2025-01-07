@@ -19,22 +19,22 @@ class HowToUse extends StatelessWidget {
       StepDetails(
         icon: Images.step1,
         title: '${langBloc.getString(Strings.step)} 1',
-        subtitle: langBloc.getString(Strings.selectPatientProfile),
+        subtitle: langBloc.getString(Strings.step1),
       ),
       StepDetails(
         icon: Images.step2,
         title: '${langBloc.getString(Strings.step)} 2',
-        subtitle: langBloc.getString(Strings.selectClinicianProfile),
+        subtitle: langBloc.getString(Strings.step2),
       ),
       StepDetails(
         icon: Images.step3,
         title: '${langBloc.getString(Strings.step)} 3',
-        subtitle: langBloc.getString(Strings.selectModeOfConsultation),
+        subtitle: langBloc.getString(Strings.step3),
       ),
       StepDetails(
         icon: Images.step4,
         title: '${langBloc.getString(Strings.step)} 4',
-        subtitle: langBloc.getString(Strings.selectASlot),
+        subtitle: langBloc.getString(Strings.step4),
       ),
     ];
     return Column(
@@ -55,21 +55,22 @@ class HowToUse extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              TextSpan(
-                text: langBloc.getString(Strings.useTalaqaApp),
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: MyColors.darkGreenAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // TextSpan(
+              //   text: langBloc.getString(Strings.useTalaqaApp),
+              //   style: const TextStyle(
+              //     fontSize: 24,
+              //     color: MyColors.darkGreenAccent,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
         ),
         const SizedBox(height: 16),
         Padding(
-          padding: const EdgeInsets.only(left: 32),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: FixedTimeline.tileBuilder(
+            mainAxisSize: MainAxisSize.min,
             theme: TimelineTheme.of(context).copyWith(
               nodePosition: 0,
               connectorTheme: TimelineTheme.of(context).connectorTheme.copyWith(
@@ -81,22 +82,24 @@ class HowToUse extends StatelessWidget {
             ),
             builder: TimelineTileBuilder(
               itemCount: steps.length,
-              indicatorBuilder: (_, index) => SizedBox(
-                height: 100.0,
-                child: TimelineNode(
-                  indicator: Card(
+              indicatorBuilder: (context, index) {
+                return SizedBox(
+                  height: 100.0,
+                  child: TimelineNode(
+                    indicator: Card(
                     margin: EdgeInsets.zero,
                     child: Image.asset(
                       steps[index].icon,
-                      height: 60,
-                      width: 60,
-                    ),
+                        height: 50,
+                        width: 50,
+                      ),
                   ),
                   startConnector: (index == 0) ? null : getConnector(),
                   endConnector:
                       (index == steps.length - 1) ? null : getConnector(),
                 ),
-              ),
+                );
+              },
               itemExtentBuilder: (_, index) => 100,
               nodeItemOverlapBuilder: (_, index) {
                 return (index != 0 || index != 5) ? true : null;
@@ -107,7 +110,7 @@ class HowToUse extends StatelessWidget {
                   title: Text(steps[index].title, style: textTheme.headlineSmall),
                   value: Text(
                     steps[index].subtitle,
-                    style: textTheme.bodySmall,
+                    style: textTheme.bodySmall!.copyWith(fontSize: 10),
                   ),
                 );
               },

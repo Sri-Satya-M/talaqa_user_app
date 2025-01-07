@@ -45,30 +45,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             children: [
               OnBoardingWidget(
                 image: Images.onBoardingImage1,
-                title: langBloc.getString(
-                  Strings.selectService,
-                ),
-                description: langBloc.getString(
-                  Strings.identifyYourSymptom,
-                ),
-              ),
-              OnBoardingWidget(
-                image: Images.onBoardingImage2,
-                title: langBloc.getString(
-                  Strings.chooseClinician,
-                ),
-                description: langBloc.getString(
-                  Strings.findTheIdealClinicianWhoUnderstands,
-                ),
+                title: langBloc.getString(Strings.welcomeToTalaqa),
+                description: langBloc.getString(Strings.onBoarding1Des),
               ),
               OnBoardingWidget(
                 image: Images.onBoardingImage3,
-                title: langBloc.getString(
-                  Strings.bookOnlineTherapySession,
-                ),
-                description: langBloc.getString(
-                  Strings.easilyScheduleYourTherapySessionOnline,
-                ),
+                title: langBloc.getString(Strings.certifiedTherapist),
+                description: langBloc.getString(Strings.onBoarding2Des),
               ),
               HowToUse()
             ],
@@ -82,7 +65,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               children: [
                 Row(
                   children: [
-                    for (int i = 0; i < 4; i++) ...[
+                    for (int i = 0; i < 3; i++) ...[
                       CircleAvatar(
                         radius: 4,
                         backgroundColor: (currentIndex == i)
@@ -94,7 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ],
                 ),
                 const Spacer(),
-                (currentIndex < 3)
+                (currentIndex < 2)
                     ? FloatingActionButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -124,7 +107,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ],
             ),
           ),
-          if (currentIndex < 3)
+          if (currentIndex < 2)
             Positioned(
               top: 60,
               right: 30,

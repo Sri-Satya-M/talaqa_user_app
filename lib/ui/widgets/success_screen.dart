@@ -182,7 +182,7 @@ class _SuccessScreenState extends State<SuccessScreen>
                 );
             }
           },
-          child: const Text("Continue"),
+          child: Text(langBloc.getString(Strings.continueee)),
         ),
       ),
     );

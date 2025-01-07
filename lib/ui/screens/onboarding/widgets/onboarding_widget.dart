@@ -42,6 +42,9 @@ class OnBoardingWidget extends StatelessWidget {
                   style: textTheme.bodyMedium?.copyWith(
                     color: Colors.black.withOpacity(0.85),
                   ),
+                  maxLines: 6,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
