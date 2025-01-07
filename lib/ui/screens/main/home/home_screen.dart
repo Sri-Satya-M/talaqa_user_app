@@ -52,10 +52,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               const SizedBox(height: 5),
               Text(
-                "at Your Fingertips",
+                langBloc.getString(Strings.atFingerTips),
                 style: textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: langBloc.currentLanguageText == 'English' ? 18 : 14,
                 ),
               ),
               const Spacer(),
@@ -136,7 +136,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(Images.resourcesBanner),
+                  child: Image.asset(
+                    langBloc.appLanguage == 'English'
+                        ? Images.resourcesEn
+                        : Images.resourcesAr,
+                  ),
                 ),
                 Positioned(
                   left: 150,

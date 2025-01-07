@@ -67,8 +67,8 @@ class Images {
   static const talaqaBanner = 'assets/images/talaqaBanner.png';
   static const topBanner2 = 'assets/images/topBanner2.png';
   static const midBanner = 'assets/images/midBanner.png';
-  static const resourcesBanner = 'assets/images/resourcesBanner.png';
-
+  static const resourcesEn = 'assets/images/resource_en.png';
+  static const resourcesAr = 'assets/images/resource_ar.png';
   static const lan = 'assets/icons/lan.png';
   static const doneIcon = "assets/icons/done_icon.png";
   static const notDoneIcon = "assets/icons/not_done_icon.png";
