@@ -23,11 +23,10 @@ class OnBoardingWidget extends StatelessWidget {
           flex: 8,
           child: Image.asset(image, fit: BoxFit.fitWidth),
         ),
-        const SizedBox(height: 16),
         Expanded(
           flex: 4,
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               children: [
                 Text(
@@ -38,13 +37,11 @@ class OnBoardingWidget extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   description,
-                  textAlign: TextAlign.center,
                   style: textTheme.bodyMedium?.copyWith(
                     color: Colors.black.withOpacity(0.85),
+                    fontSize: 12,
                   ),
-                  maxLines: 6,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
