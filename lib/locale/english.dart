@@ -362,7 +362,7 @@ const englishTranslations = {
   Strings.yourSessionHasBeenSuccessfullyCompleted:
       'Your Session Has Been Successfully Completed',
   Strings.yourSessionHasExpiredPleaseLoginAgain:
-      'Your Session Has Expired Please Login Again',
+      'Your login has been expired.\nPlease login again',
   Strings.selectService: 'Select Service',
   Strings.chooseClinician: 'Choose Clinician',
   Strings.bookOnlineTherapySession: 'Book Online Therapy Session',

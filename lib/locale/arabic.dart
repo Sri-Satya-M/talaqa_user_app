@@ -362,7 +362,7 @@ const arabicTranslations = {
   Strings.yourSessionHasBeenStarted: 'تم بدء جلستك',
   Strings.yourSessionHasBeenSuccessfullyCompleted: 'تم اكتمال الجلسة بنجاح',
   Strings.yourSessionHasExpiredPleaseLoginAgain:
-      'جلسة العمل الخاصة بك قد انتهت ، الرجاء تسجيل الدخول مرة أخرى',
+      'لقد انتهت صلاحية تسجيل الدخول الخاص بك.\nالرجاء تسجيل الدخول مرة أخرى',
   Strings.chooseClinician: 'اختر الأخصائي',
   Strings.bookOnlineTherapySession: 'احجز جلسة علاج عبر الإنترنت',
   Strings.identifyYourSymptom: 'حدد الخدمة والأعراض التي تشعر بها',
